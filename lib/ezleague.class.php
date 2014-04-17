@@ -591,7 +591,7 @@
  * START INSTALLATION FUNCTIONALITY
  */
 		
-		function runInstaller($database, $prefix) {
+		function runInstaller($site_name) {
 		
 		 $test_connection = mysqli_connect($this->host,$this->username,$this->password,$this->database) or die("Error " . mysqli_error($link));
 		  if($test_connection) {
@@ -788,8 +788,10 @@
 			  PRIMARY KEY (`id`)
 			) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 			";
-			
+				$set_settings = "INSERT INTO `" . $this->prefix . "settings` SET site_name = '$site_name', site_url = '$this->site_url'
+							    ";
 			$this->link->query($sql13);
+			 $this->link->query($set_settings);
 			
 			$sql14 = "
 			CREATE TABLE `" . $this->prefix . "users` (

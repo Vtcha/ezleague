@@ -16,7 +16,8 @@ class DB_Class {
 		var $username = ""; //database username
 		var $password = ""; //database password
 		var $database = ""; //mysql database
-		var $prefix = ""; //database table prefix
+		var $prefix	  = ""; //table prefix
+		var $site_url = ""; //url to install directory (ex: http://www.mdloring.com/ezleague)
 		
 		public function __construct() {
 			global $connection;

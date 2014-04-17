@@ -3,8 +3,9 @@ include('lib/db.class.php');
 include('lib/ezleague.class.php');
 
  $ez = new ezLeaguePub();
-
+ 
 ?>
+
 <!DOCTYPE html>
 <html>
 
@@ -35,9 +36,17 @@ include('lib/ezleague.class.php');
                         <h3 class="panel-title">ezLeague <em>Installation</em></h3> 
                     </div>
                     <div class="panel-body">
-                      <small>Edit these values in: <em>/lib/db.class.php</em>, otherwise the installation will fail.</small>
+                      <small>Edit your MySQL &amp; Site URL values in: <em>/lib/db.class.php</em>, otherwise the installation will fail.</small>
                         <form role="form" id="ezLeagueInstallation" name="ezLeagueInstallation" method="POST">
                             <fieldset>
+                            	<div class="form-group">
+                                  <label>Site Name</label>
+                                    <input class="form-control" id="site_name" name="site_name" type="text">
+                                </div>
+                                <div class="form-group">
+                                  <label>URL to <em>ezLeague</em> Installation<br/> <small>(ex: http://www.mdloring.com/ezleague)</small></label>
+                                    <input disabled class="form-control" id="site_url" name="site_url" type="text" value="<?php print $ez->site_url; ?>">
+                                </div>
                                 <div class="form-group">
                                   <label>Database Name</label>
                                     <input disabled class="form-control" id="database" name="database" type="text" value="<?php print $ez->database; ?>">

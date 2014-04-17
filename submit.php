@@ -28,9 +28,8 @@ $ez_username = $_SESSION['ez_username'];
 		 		break;
 		 		
 		 	case 'installer':
-		 		$db			= $_POST['db'];
-		 		$prefix		= $_POST['prefix'];
-		 		 $ez->runInstaller($db, $prefix);
+		 		$site_name  = $_POST['site_name'];
+		 		 $ez->runInstaller($site_name);
 		 		break;
 		 		
 /*
@@ -79,6 +78,13 @@ $ez_username = $_SESSION['ez_username'];
 		 		$date = date('m/d/y h:ia', strtotime('now'));
 		 		 $response = "[<em>" . $date . "</em>] " . "<strong>" . $ez_username . "</strong> " . $body;
 		 		 $ez->updateChallengeResponse($id, $response, $ez_username);
+		 		break;
+		 		
+		 	case 'dispute':
+		 		$id				= $_POST['id'];
+		 		$description 	= $_POST['description'];
+		 		$filer			= $_POST['filer'];
+		 		 $ez->addDispute($id, $description, $filer);
 		 		break;
 		 		
 /*
