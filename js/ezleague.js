@@ -8,7 +8,7 @@
 * Project: ezLeague - http://www.mdloring.com/ezleague
 * Contact: E-Mail - mdloring@gmail.com ~ Web - http://www.mdloring.com
 */
-	var site_url = 'http://www.mdloring.com/ezleague';
+
 	var url  = site_url + '/submit.php';
 		url2 = site_url + '/get_challenge.php';
 
