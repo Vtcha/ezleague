@@ -51,17 +51,78 @@
 			$salt = sprintf("$2a$%02d$", $strength) . $salt;
 			$hash = crypt($password, $salt);
 			 //check to make sure this username or email does not already exist
-			$result = $this->link->query("SELECT * FROM `" . $this->prefix . "" . $this->prefix . "users` WHERE (username = '$username') OR (email = '$email')");
+			$result = $this->link->query("SELECT * FROM `" . $this->prefix . "users` WHERE (username = '$username') OR (email = '$email')");
 			$count = $this->numRows($result);
 			if($count > 0) {
 				print "<strong>Error</strong> Username or E-Mail already exists";
 			} else {
-				$this->link->query("INSERT INTO `" . $this->prefix . "" . $this->prefix . "users` SET username = '$username', email = '$email', salt = '$salt',
+				$this->link->query("INSERT INTO `" . $this->prefix . "users` SET username = '$username', email = '$email', salt = '$salt',
 						hash = '$hash', role = 'user'
 						");
 				print "<strong>Success!</strong> Account has been created. You may now login.";
 			}
 		
+		}
+		
+		function resetPassword($email) {
+			$data = $this->fetch("SELECT * FROM `" . $this->prefix . "users` WHERE email = '$email'");
+			 if(!empty($data)) {
+			 	$password_string = md5(mt_rand());
+			 	 $this->link->query("UPDATE `" . $this->prefix . "users` SET forget = '$password_string' WHERE (email = '$email') AND (role = 'admin')");
+			 	
+			 	$to = $email;
+			 	
+			 	$subject = 'ezLeague - Password Reset';
+			 	
+			 	$headers = "From: " . $email . "\r\n";
+			 	$headers .= "Reply-To: ". $email . "\r\n";
+			 	$headers .= "MIME-Version: 1.0\r\n";
+			 	$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
+			 	
+			 	$message = '<html><body>';
+			 	$message .= '<h1>ezLeague Password Reset</h1>';
+			 	$message .= '<p>Click the link below (or paste it in your browser) to complete resetting your password.<br>';
+			 	$message .= '<a href=\'' . $this->site_url . '/reset.php?f=' . $password_string . '\'>' . $this->site_url . '/reset.php?f=' . $password_string . '</a></p>';
+			 	$message .= '<p>If you did not request this password reset, please disregard this email.</p>';
+			 	$message .= '</body></html>';
+			 	
+			 	mail($to, $subject, $message, $headers);
+			 	
+			 	print "<strong>Success</strong> Password Reset instructions have been sent.";
+			 } else {
+			 	print "<strong>Error</strong> $email does not match any account";
+			 }
+		}
+		
+		function validateCode($code) {
+			$data = $this->fetch("SELECT * FROM `" . $this->prefix . "users` WHERE forget = '$code'");
+			 if(!empty($data)) {
+			  $id = $data['0']['id'];
+			 	return $id;
+			 } else {
+			 	return false;
+			 }
+		}
+		
+		function changePassword($id, $password) {
+			$strength = '5';
+			$salt = strtr(base64_encode(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM)), '+', '.');
+			//blowfish algorithm
+			$salt = sprintf("$2a$%02d$", $strength) . $salt;
+			$hash = crypt($password, $salt);
+
+				$this->link->query("UPDATE `" . $this->prefix . "users` SET salt = '$salt', hash = '$hash'
+									WHERE id = '$id'
+								   ");
+				print "<strong>Success!</strong> Account has been created. You may now login.";
+		
+		}
+		
+		function updateEmail($id, $email) {
+			$this->link->query("UPDATE `" . $this->prefix . "users` SET email = '$email'
+									WHERE id = '$id'
+							  ");
+				print "<strong>Success!</strong> Account has been created. You may now login.";
 		}
 			
 /*
@@ -124,6 +185,17 @@
 			$data = $this->fetch("SELECT guild FROM `" . $this->prefix . "users` WHERE username = '$user'");
 			 $guild_id = $data['0']['guild'];
 			  return $guild_id;
+		}
+		
+		function getUserSettings($username) {
+			$data = $this->fetch("SELECT id, email FROM `" . $this->prefix . "users` WHERE username = '$username'");
+			 $user_id 	 = $data['0']['id'];
+			 $user_email = $data['0']['email'];
+			  $settings = array(
+			  					 'id' 	 => $user_id,
+			  				     'email' => $user_email
+			  				   );
+			  return $settings;
 		}
 		
 /*
@@ -805,6 +877,7 @@
 			  `salt` varchar(100) DEFAULT NULL,
 			  `hash` varchar(100) DEFAULT NULL,
 			  `status` int(1) DEFAULT '0',
+			  `forget` varchar(250) DEFAULT NULL,
 			  PRIMARY KEY (`id`)
 			) ENGINE=MyISAM AUTO_INCREMENT=104 DEFAULT CHARSET=latin1;
 			";

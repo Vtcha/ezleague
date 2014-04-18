@@ -27,6 +27,23 @@ $ez_username = $_SESSION['ez_username'];
 		 		 $ez->register($username, $password, $email);
 		 		break;
 		 		
+		 	case 'reset_password':
+		 		$email 		= $_POST['email'];
+		 		 $ez->resetPassword($email);
+		 		break;
+		 		
+		 	case 'new_password':
+		 		$id 		= $_POST['user_id'];
+		 		$password	= $_POST['password'];
+		 		 $ez->changePassword($id, $password);
+		 		break;
+		 		
+		 	case 'new_email':
+		 		$id 		= $_POST['user_id'];
+		 		$email		= $_POST['email'];
+		 		 $ez->updateEmail($id, $email);
+		 		break;
+		 		
 		 	case 'installer':
 		 		$site_name  = $_POST['site_name'];
 		 		 $ez->runInstaller($site_name);

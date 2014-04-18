@@ -49,4 +49,13 @@
  .suspended {
 	padding:5px;
  	border-radius:2px;
+ }
+ 
+ span.search {
+ 	font-weight:700;		
+ 	color:#47A447;
+ }
+ 
+ div.search {
+	margin-top:10px;
  }

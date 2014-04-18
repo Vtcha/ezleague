@@ -18,6 +18,10 @@ $ez = new ezLeaguePub();
   		 }
   		 
   }
+  
+  $captcha1 = rand(2,10);
+  $captcha2 = rand(2,10);
+  $captcha  = $captcha1 + $captcha2;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -83,7 +87,7 @@ $ez = new ezLeaguePub();
             <li><a href="#" data-target="#loginModal" data-toggle="modal">Login</a></li>
             <li><a href="#" data-target="#registerModal" data-toggle="modal">Register</a></li>
            <?php } else { ?>
-            <li><a href="#">My Settings (<?php echo $_SESSION['ez_username']; ?>)</a></li>
+            <li><a href="<?php echo $site_url; ?>/settings">My Settings (<?php echo $_SESSION['ez_username']; ?>)</a></li>
              <?php if(isset($_SESSION['ez_admin'])) { ?>
             <li><a href="<?php echo $site_url; ?>/admin">Admin</a></li>
              <?php } ?>

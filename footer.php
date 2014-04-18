@@ -18,6 +18,7 @@
             <div class="form-group">
               <h5>Password</h5>
               <input id="login-password" class="form-control password placeholder" placeholder="Password" name="password" autocomplete="off" type="password">
+              <small><a href="<?php print $site_url; ?>/forget.php">Forgot Password?</a></small>
             </div>
          	<div class="login_success">
 			 <span class="login_success_text"></span>
@@ -44,6 +45,7 @@
         <div class="row">
          <div class="col-lg-6">
           <form role="form" name="ezLeagueRegister" id="ezLeagueRegister" method="POST">
+           <input type="hidden" name="register-answer" id="register-answer" value="<?php print $captcha; ?>" />
             <div class="form-group">
               <h5>Username</h5>
               <input id="register-username" class="form-control text placeholder" placeholder="Username" name="username" type="text">
@@ -55,10 +57,16 @@
             <div class="form-group">
               <h5>Password</h5>
               <input id="register-password" class="form-control password placeholder" placeholder="Password" name="password" autocomplete="off" type="password">
+              <small>must be at least 6 characters</small>
             </div>
             <div class="form-group">
               <h5>Confirm</h5>
               <input id="register-confirm" class="form-control password placeholder" placeholder="Password" name="confirm" autocomplete="off" type="password">
+            </div>
+            <hr/>
+            <div class="form-group">
+              <h5>What is <?php print $captcha1 . " + " . $captcha2; ?></h5>
+              <input id="register-captcha" class="form-control text placeholder" placeholder="CAPTCHA" name="captcha" autocomplete="off" type="text">
             </div>
             <div class="register_success">
 			 <span class="register_success_text"></span>

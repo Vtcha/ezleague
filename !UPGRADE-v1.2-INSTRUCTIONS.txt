@@ -1,0 +1,21 @@
+Welcome to ezLeague v1.2
+
+If you are upgrading your installation from a previous version, follow the steps below, otherwise these upgrades have already been included in the new version.
+
+HOW TO UPGRADE YOUR INSTALLATION AND WHAT IS BEING DONE
+1) Login to your Admin Panel, and navigate to: your-site.com/admin/upgrade.php
+2) If successful, a message will appear. If not, please check your DB settings in db.class.php
+3) Delete the upgrade.php file from your server
+
+The only operation this upgrade does is adding a new COLUMN (forget) to the USERS table.
+
+Any issues, please post them on GitHub or my blog.
+
+https://github.com/stoopkid1/ezleague
+http://www.mdloring.com
+
+--------------------------------------------------------------------
+Michael
+mdloring@gmail.com
+http://www.mdloring.com
+https://github.com/stoopkid1/ezleague

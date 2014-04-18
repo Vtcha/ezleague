@@ -435,6 +435,11 @@
 			 print "<strong>Success!</strong> User Account has been deleted...reloading";
 			 return;
 		}
+		
+		function searchUsers($string) {
+			$data = $this->fetch("SELECT * FROM `users` WHERE (username LIKE '%$string%') OR (email LIKE '%$string%')");
+			 return $data;
+		}
 
 /*
  * END USER FUNCTIONALITY
@@ -566,6 +571,11 @@
 			}
 		
 			return false;
+		}
+		
+		function upgrade() {
+			$this->link->query("ALTER TABLE `users` ADD COLUMN forget VARCHAR(250)");
+			 print "Upgrade completed. Please delete <em>upgrade.php</em> from your server.";
 		}
 		
 /*
