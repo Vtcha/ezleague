@@ -23,6 +23,19 @@ Admin Panel to control and modify all Leagues, Matches, Users and Data
 ------------------------------------------------------------------------------------------------------------------------
 BUG FIXES AND UPDATES
 ------------------------------------------------------------------------------------------------------------------------
+v1.2
+ - forget/reset password option available for users -- ./reset.php, ./forget.php, ./lib/ezleague.class.php, ./js/ezleague.js, ./submit.php
+ 
+ - update user settings (email & password) -- ./settings.php, ./js/ezleague.js, ./submit.php, ./lib/ezleague.js
+ 
+ - user search/lookup for admins -- ./admin/users_all.php, ./admin/lib/ezleague.class.php
+ 
+ - captcha code for registration -- ./footer.php, ./lib/ezleague.class.php, ./js/ezleague.js
+ 
+ - settings page added to .htaccess -- .htaccess
+ 
+ - registration/install functionality cleanup -- final fix applied to the registration and installation bugs.
+
 v1.1
  - removed installation step #2 -- ./header.php, ./js/ezleague.js
  
