@@ -132,7 +132,7 @@
 			      $(".success").fadeIn(1000, "linear");
 			      $('.success_text').fadeIn("slow");
 			      $('.success_text').html(msg);
-			     // setTimeout(function(){location.reload()},3000);
+			      setTimeout(function(){window.location='news_view.php'},3000);
 		  });
 	
 	});
@@ -356,13 +356,14 @@
 //add new game (settings page)
 	$('#addSettingsGame').submit(function(e) {
 		var game		= $("#game").val();
+			slug		= $("#slug").val();
 		
 		e.preventDefault();
 		 $.ajax({
 		     type: "POST",
 		     async: false,
 		     url: "submit.php",
-		     data: "form=addNewGame&game=" + game
+		     data: "form=addNewGame&game=" + game + "&slug=" + slug
 		   }).success(function( msg ) {
 			   	  $('.success').css("display", "");
 			      $(".success").fadeIn(1000, "linear");

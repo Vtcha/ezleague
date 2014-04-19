@@ -486,15 +486,15 @@
  * START SETTINGS FUNCTIONALITY
  */		
 		
-		function addSettingsGame($game) {
-			$result = $this->link->query("SELECT game FROM `" . $this->prefix . "games` WHERE game = '$game'");
+		function addSettingsGame($game, $slug) {
+			$result = $this->link->query("SELECT game FROM `" . $this->prefix . "games` WHERE (game = '$game') OR (slug = '$slug')");
 			  $count = $this->numRows($result);
 			  if($count > 0) {
 				  echo "<strong>Error</strong> Game already exists";
 			  } else {
 				  $game = $this->link->real_escape_string($game);
-				  $this->link->query("INSERT INTO `" . $this->prefix . "games` SET game = '$game'");
-				  print "<strong>Success!</strong> $game added...reloading";
+				  $this->link->query("INSERT INTO `" . $this->prefix . "games` SET game = '$game', slug = '$slug'");
+				  print "<strong>Success!</strong> $game ($slug) added...reloading";
 			  }
 				return;
 		}

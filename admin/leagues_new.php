@@ -29,7 +29,8 @@
 									<div class="form-group">
 										<label>Max Teams</label>
 										<select class="form-control" name="maxTeams" id="maxTeams">
-										 <?php for($i=2; $i <= 34; $i = $i + 2) { ?>
+											<option value="5000">Unlimited</option>
+										 <?php for($i=2; $i <= 64; $i = $i + 2) { ?>
 										 	<option value="<?php echo $i; ?>"><?php echo $i; ?></option>
 										 <?php } ?>
 										</select>
@@ -105,7 +106,7 @@
                                             <td><?php echo $league['league']; ?></td>
                                             <td><?php echo $league['game']; ?></td>
                                             <td></td>
-                                            <td><?php echo $league['teams']; ?></td>
+                                            <td><?php echo ($league['teams'] == 5000 ? 'Unlimited' : $league['teams']); ?></td>
                                             <td>
 							            		<button type="button" onclick="deleteLeague('<?php echo $league['id']; ?>')" class="btn btn-danger btn-xs">Delete</button>
 							            	</td>

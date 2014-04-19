@@ -23,8 +23,12 @@
                                  <form method="POST" id="addSettingsGame" name="addSettingsGame">
                                   <input type="hidden" name="form" value="addSettingsGame" />
                                 	<div class="form-group">
-									    <label>Game</label>
+									    <label>Game (ex: World of Warcraft)</label>
 									    <input class="form-control" id="game" name="game" placeholder="Game Name" />
+									</div>
+									<div class="form-group">
+									    <label>Slug (ex: wow)</label>
+									    <input class="form-control" id="slug" name="slug" placeholder="Game Slug" />
 									</div>
 									<div class="form-group">
 										<button class="btn btn-success" type="submit">Add Game</button>

@@ -159,7 +159,8 @@
  */    	 	 
     	 	 case 'addNewGame':
     	 	 	$game		= $_POST['game'];
-    	 	 	 $ez->addSettingsGame($game);
+    	 	 	$slug		= $_POST['slug'];
+    	 	 	 $ez->addSettingsGame($game, $slug);
     	 	  break;
     	 	  
     	 	 case 'siteSettingsName':
