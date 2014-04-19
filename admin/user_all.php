@@ -53,6 +53,8 @@
 							            	</td>
                                         </tr>
                            <?php } ?>
+                           </tbody>
+                           </table>
                     <?php } elseif(isset($_POST['submit'])) { ?>
                     	<?php $search = $_POST['search-username']; 
                     			$results = $ez->searchUsers($search);

@@ -514,7 +514,7 @@
 	}
 
 //delete account	
-	function deleteUser(id) {
+	function deleteAccount(id) {
 		$.ajax({
 		     type: "POST",
 		     async: false,
@@ -528,6 +528,55 @@
 			      setTimeout(function(){window.location='user_all.php'},3000);
 		  });
 	}
+	
+//create new password
+	$('#ezLeagueNewPassword').submit(function(e) {
+
+		var password    = $("#new-password").val();
+			confirm     = $("#new-confirm").val();
+			user_id     = $("#user_id").val();
+
+		 e.preventDefault();
+
+	if(password == confirm && password != '' && password.length >= 6) {
+	 $.ajax({
+	     type: "POST",
+	     url: "submit.php",
+	     data: { form: 'new_password', user_id: '' + user_id + '', password: '' + password + '' }
+	   }).success(function( msg ) {
+		      $('.success').css("display", "");
+		      $(".success").fadeIn(1000, "linear");
+		      $('.success_text').fadeIn("slow");
+		      $('.success_text').html('<strong>Success</strong> Password has been updated. You may now login.');
+	  });
+	} else {
+			$('.success').css("display", "");
+	        $(".success").fadeIn(1000, "linear");
+	        $('.success_text').fadeIn("slow");
+	        $('.success_text').html('<strong>Error</strong> Passwords do not match, or is less than 6 characters');
+	}
+	});
+	
+//update email address
+	$('#ezLeagueNewEmail').submit(function(e) {
+
+		var email	    = $("#new-email").val();
+			user_id     = $("#user_id").val();
+
+		 e.preventDefault();
+
+	 $.ajax({
+	     type: "POST",
+	     url: "submit.php",
+	     data: { form: 'new_email', user_id: '' + user_id + '', email: '' + email + '' }
+	   }).success(function( msg ) {
+		      $('.success').css("display", "");
+		      $(".success").fadeIn(1000, "linear");
+		      $('.success_text').fadeIn("slow");
+		      $('.success_text').html('<strong>Success</strong> E-Mail has been updated.');
+		      setTimeout(function(){location.reload()},3000);
+	  });
+	});	
 	
 /*
  * END SETTINGS FUNCTIONALITY

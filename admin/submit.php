@@ -20,6 +20,18 @@
     	 	 	$email		= $_POST['email'];
     	 	 	 $ez->register($username, $password, $email);
     	 	 	break;
+    	 	 	
+    	 	 case 'new_password':
+    	 	 	$id 		= $_POST['user_id'];
+    	 	 	$password	= $_POST['password'];
+    	 	 	 $ez->changePassword($id, $password);
+    	 	 	break;
+    	 	 		 
+    	 	 case 'new_email':
+    	 	 	$id 		= $_POST['user_id'];
+    	 	 	$email		= $_POST['email'];
+    	 	 	 $ez->updateEmail($id, $email);
+    	 	 	break;
     	 		
 /*
  * START NEWS

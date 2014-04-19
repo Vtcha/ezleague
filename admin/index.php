@@ -15,7 +15,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <i class="fa fa-user fa-fw"></i> Recent User Registrations
-                             <a href="users_view.php" class="btn btn-success btn-xs pull-right">View All Users</a>
+                             <a href="user_all.php" class="btn btn-success btn-xs pull-right">View All Users</a>
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">

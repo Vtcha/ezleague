@@ -82,16 +82,16 @@
                         <!-- /.nav-second-level -->
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-table"></i> Site Settings</a>
+                        <a href="#"><i class="fa fa-table"></i> Site Settings<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="settings_games.php">Games</a>
+                                <a href="site_games.php">Games</a>
                             </li>
                             <li>
-                                <a href="settings_admins.php">Admin Users</a>
+                                <a href="site_admins.php">Admin Users</a>
                             </li>
                             <li>
-                            	<a href="settings_site.php">Site</a>
+                            	<a href="site_site.php">Site</a>
                             </li>
                         </ul>
                         <!-- /.nav-second-level -->
