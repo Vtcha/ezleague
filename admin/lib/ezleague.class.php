@@ -6,8 +6,7 @@
  * START LOGIN & REGISTRATION FUNCTIONALITY
  */
 		
-		function login($username, $password) {
-
+		function login($username, $password) {
 			$saltData = $this->fetch("SELECT salt, hash FROM `" . $this->prefix . "users` 
 									  WHERE (username = '$username') AND (role = 'admin')
 								    ");
@@ -20,46 +19,36 @@
 				  	print "Logging in...";
   				} else {
   					print "Incorrect username or password";
-  				}
-
+  				}
 		}
 		
-		function register($username, $password, $email) {
-
-			$strength = '5';
-
-			$salt = strtr(base64_encode(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM)), '+', '.');
-
-			//blowfish algorithm
-
-			$salt = sprintf("$2a$%02d$", $strength) . $salt;
-
-			$hash = crypt($password, $salt);
-
-			//check to make sure this username or email does not already exist
-
-			$result = $this->link->query("SELECT * FROM `" . $this->prefix . "users` WHERE (username = '$username') OR (email = '$email')");
-
-			$count = $this->numRows($result);
-
-			if($count > 0) {
-
-				print "<strong>Error</strong> Username or E-Mail already exists";
-
-			} else {
-
-				$this->link->query("INSERT INTO `" . $this->prefix . "users` SET username = '$username', email = '$email', salt = '$salt',
-
-						hash = '$hash', role = 'user'
-
-						");
-
-				print "<strong>Success!</strong> Account has been created. You may now login.";
-
-			}
-
+		function register($username, $password, $email) {
+			$strength = '5';
+			$salt = strtr(base64_encode(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM)), '+', '.');
+			//blowfish algorithm
+			$salt = sprintf("$2a$%02d$", $strength) . $salt;
+			$hash = crypt($password, $salt);
+			//check to make sure this username or email does not already exist
+			$result = $this->link->query("SELECT * FROM `" . $this->prefix . "users` WHERE (username = '$username') OR (email = '$email')");
+			$count = $this->numRows($result);
+			if($count > 0) {
+				print "<strong>Error</strong> Username or E-Mail already exists";
+			} else {
+				$this->link->query("INSERT INTO `" . $this->prefix . "users` SET username = '$username', email = '$email', salt = '$salt',
+						hash = '$hash', role = 'user'
+						");
+				print "<strong>Success!</strong> Account has been created. You may now login.";
+			}
+		
+		}
 		
-
+		function getUserSettings($username) {
+			$data = $this->fetch("SELECT id, email FROM `" . $this->prefix . "users` WHERE username = '$username'");
+			 $settings = array(
+			 					'id' 	=> $data['0']['id'],
+			 					'email' => $data['0']['email']
+			 				  );
+			  return $settings;
 		}
 		
 		function checkForAdmins() {
@@ -69,108 +58,50 @@
 			  return $count;
 		}
 		
-		function createAdmin($username, $password, $email) {
-
-			$salt = strtr(base64_encode(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM)), '+', '.');
-
-			$salt = sprintf("$2a$%02d$", 5) . $salt;
-
-			$hash = crypt($password, $salt);
-
+		function createAdmin($username, $password, $email) {
+			$salt = strtr(base64_encode(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM)), '+', '.');
+			$salt = sprintf("$2a$%02d$", 5) . $salt;
+			$hash = crypt($password, $salt);
 				
-			$result = $this->link->query("SELECT * FROM `" . $this->prefix . "users` WHERE (username = '$username') AND (role = 'admin')");
-
-			  $count = $this->numRows($result);
-
-				if($count > 0) {
-
-					print "<strong>Error</strong> Username already exists";
-
-				} else {
-
+			$result = $this->link->query("SELECT * FROM `" . $this->prefix . "users` WHERE (username = '$username') AND (role = 'admin')");
+			  $count = $this->numRows($result);
+				if($count > 0) {
+					print "<strong>Error</strong> Username already exists";
+				} else {
 					$this->link->query("INSERT INTO `" . $this->prefix . "users` SET username = '$username', email = '$email', salt = '$salt', 
-								  hash = '$hash', role = 'admin'
-
-								");
-
-					 print "<strong>Success!</strong> Account has been created. You may now login.";
-
-				}
-
-				
-
+								  hash = '$hash', role = 'admin'
+								");
+					 print "<strong>Success!</strong> Account has been created. You may now login.";
+				}
+				
 		}
-/*
-		function updatePassword($email, $oldPassword, $newPassword) {
-
-			$saltData = $this->fetch("SELECT id, salt, hash_string
-
-					FROM $this->db_table.[dbo].[SONCO_SITE_USERS]
-
-					WHERE (email = '$email') AND (type = 'admin')
-
-					");
-
 		
-
-			$admin_id = $saltData['0']['id'];
-
-			$salt 	  = $saltData['0']['salt'];
-
-			$hash 	  = $saltData['0']['hash_string'];
-
-			$hashCheck = crypt($oldPassword, $hash);
-
-				
-
-			if($hashCheck === $hash) {
-
-			$cost = 5;
-
-				$salt = strtr(base64_encode(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM)), '+', '.');
-
-				$salt = sprintf("$2a$%02d$", $cost) . $salt;
-
-				$hash = crypt($newPassword, $salt);
-
-					
-
-				$this->query("UPDATE $this->db_table.[dbo].[SONCO_SITE_USERS]
-
-				SET salt = '$salt', hash_string = '$hash'
-
-				WHERE id = '$admin_id'
-
-				");
-
-				echo "<div class=\"login-error\">";
-
-				echo "<h3 style=\"text-align:center;\">Success! <em>Password updated</em></h3>";
-
-				//echo "<hr/>";
-
-				echo "</div>";
-
+		function changePassword($id, $password) {
+			$strength = '5';
+			$salt = strtr(base64_encode(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM)), '+', '.');
+			//blowfish algorithm
+			$salt = sprintf("$2a$%02d$", $strength) . $salt;
+			$hash = crypt($password, $salt);
+		
+			  $this->link->query("UPDATE `" . $this->prefix . "users` SET salt = '$salt', hash = '$hash'
+								  WHERE id = '$id'
+								 ");
+				print "<strong>Success!</strong> Account has been created. You may now login.";
+		
+		}
+		
+		function updateEmail($id, $email) {
+			$this->link->query("UPDATE `" . $this->prefix . "users` SET email = '$email'
+							    WHERE id = '$id'
+							   ");
+				print "<strong>Success!</strong> Account has been created. You may now login.";
+		}
 		
-
-			} else {
-
-			echo "<div class=\"login-error\">";
-
-				echo "<h3 style=\"text-align:center;\">Sorry <strong>incorrect</strong> <em>Current Password</em></h3>";
-
-				//echo "<hr/>";
-
-				echo "</div>";
-
+		function getAdmins() {
+			$data = $this->fetch("SELECT * FROM `" . $this->prefix . "users` WHERE role = 'admin'");
+			 return $data;
+		}
 		
-
-				}
-
-					
-
-				}
-*/				
 		
 /*
  * END LOGIN & REGISTRATION FUNCTIONALITY
@@ -230,31 +161,19 @@
 			 	return;
 		}
 		
-		function editNews($id, $title, $body, $author, $category, $game, $published) {
-
-			$body = $this->link->real_escape_string($body);
-
-			$title = $this->link->real_escape_string($title);
-
-			 $this->link->query("UPDATE `" . $this->prefix . "news` SET title = '$title', body = '$body', author = '$author',
-
+		function editNews($id, $title, $body, $author, $category, $game, $published) {
+			$body = $this->link->real_escape_string($body);
+			$title = $this->link->real_escape_string($title);
+			 $this->link->query("UPDATE `" . $this->prefix . "news` SET title = '$title', body = '$body', author = '$author',
 								 category = '$category', game = '$game', published = '$published'
-			 					 WHERE id = '$id'
-
-							   ");
-
-				if($published == 0) {
-
-					print "<strong>Success!</strong> Draft has been saved...redirecting";
-
-				} else {
-
-					print "<strong>Success!</strong> Post has been published";
-
-				}
-
-				return;
-
+			 					 WHERE id = '$id'
+							   ");
+				if($published == 0) {
+					print "<strong>Success!</strong> Draft has been saved...redirecting";
+				} else {
+					print "<strong>Success!</strong> Post has been published";
+				}
+				return;
 		}
 		
 		function unpublishPost($id) {
@@ -311,8 +230,7 @@
  * START MATCHES FUNCTIONALITY
  */
 		
-		function getMatches($league_id) {
-
+		function getMatches($league_id) {
 			$data = $this->fetch("SELECT t.id, t.challenger, t.league_id, t.match_date, t.created, t.completed, t.challengee_accepted, t.challenger_accepted, t.challenger_score, t.challengee_score, t.g_challenger, t.challengee, g2.guild AS g_challengee
 								  FROM (
 								    SELECT c1.id, c1.challenger, c1.created, c1.match_date, c1.league_id, c1.completed, c1.challengee_accepted, c1.challenger_accepted, c1.challenger_score, c1.challengee_score, g1.guild AS g_challenger, c1.challengee
@@ -324,12 +242,9 @@
 								  ON g2.id = t.challengee
 								  WHERE (t.league_id = '$league_id') AND (t.challengee_accepted != 2 AND t.challenger_accepted != 2)
 								  ORDER BY t.created DESC	
-								");
-
-					
-
-			return $data;
-
+								");
+					
+			return $data;
 		}
 		
 		function getMatch($id) {
@@ -344,36 +259,25 @@
 								  ON g2.id = t.challengee
 								  WHERE t.id = '$id'
 								");
-			$match_details = array (
-
-									'cid' 			   	  => $data['0']['id'],
-
-									'league_id'		  	  => $data['0']['league_id'],
-
-									'challenger_id'       => $data['0']['challenger'],
-
-									'challenger'	      => $data['0']['g_challenger'],
-
+			$match_details = array (
+									'cid' 			   	  => $data['0']['id'],
+									'league_id'		  	  => $data['0']['league_id'],
+									'challenger_id'       => $data['0']['challenger'],
+									'challenger'	      => $data['0']['g_challenger'],
 									'challenger_score'    => $data['0']['challenger_score'],
-									'challenger_accepted' => $data['0']['challenger_accepted'],
-
-									'challengee_id'	      => $data['0']['challengee'],
-
-									'challengee'	      => $data['0']['g_challengee'],
-
+									'challenger_accepted' => $data['0']['challenger_accepted'],
+									'challengee_id'	      => $data['0']['challengee'],
+									'challengee'	      => $data['0']['g_challengee'],
 									'challengee_score'    => $data['0']['challengee_score'],
-									'challengee_accepted' => $data['0']['challengee_accepted'],
-
+									'challengee_accepted' => $data['0']['challengee_accepted'],
 									'match_date'	      => $data['0']['match_date'],
 									'match_hour'	      => $data['0']['match_hour'],
 									'match_min'		      => $data['0']['match_min'],
 									'match_pod'		      => $data['0']['match_pod'],
 									'match_zone'	      => $data['0']['match_zone'],
 									'chat_log'		      => $data['0']['chat_log'],
-									'created'		      => $data['0']['created'],
-
-									'completed'		      => $data['0']['completed']
-
+									'created'		      => $data['0']['created'],
+									'completed'		      => $data['0']['completed']
 								  );
 				return $match_details;
 		}
@@ -417,29 +321,18 @@
 			 return $data;
 		}
 		
-		function addLeague($league, $game, $teams, $start, $end, $games) {
-
-			$result = $this->link->query("SELECT league FROM `" . $this->prefix . "leagues` WHERE (league = '$league') AND (game = '$game')");
-
-			 $count = $this->numRows($result);
-
-			  if($count > 0) {
-
-				  echo "<strong>Error</strong> League Name already exists";
-
-			  } else {
-
-				  $league = $this->link->real_escape_string($league);
-
+		function addLeague($league, $game, $teams, $start, $end, $games) {
+			$result = $this->link->query("SELECT league FROM `" . $this->prefix . "leagues` WHERE (league = '$league') AND (game = '$game')");
+			 $count = $this->numRows($result);
+			  if($count > 0) {
+				  echo "<strong>Error</strong> League Name already exists";
+			  } else {
+				  $league = $this->link->real_escape_string($league);
 				  $this->link->query("INSERT INTO `" . $this->prefix . "leagues` SET league = '$league', game = '$game', teams = '$teams',
-				  					  start_date = '$start', end_date = '$end', total_games = '$games'");
-
-				  print "<strong>Success!</strong> $league League added...reloading";
-
-			  }
-
-				return;
-
+				  					  start_date = '$start', end_date = '$end', total_games = '$games'");
+				  print "<strong>Success!</strong> $league League added...reloading";
+			  }
+				return;
 		}
 		
 		function deleteLeague($id) {
@@ -457,14 +350,10 @@
 			 	return $league;
 		}
 		
-		function getLeagueName($league_id) {
-
-			$data = $this->fetch("SELECT league FROM `" . $this->prefix . "leagues` WHERE id = '$league_id'");
-
-			 $league = $data['0']['league'];
-
-				return $league;
-
+		function getLeagueName($league_id) {
+			$data = $this->fetch("SELECT league FROM `" . $this->prefix . "leagues` WHERE id = '$league_id'");
+			 $league = $data['0']['league'];
+				return $league;
 		}
 		
 		function getLeagueDisputes($league_id) {
@@ -500,24 +389,15 @@
 			 if(empty($data)) {
 			 	$data = $this->fetch("SELECT * FROM `" . $this->prefix . "users` WHERE id = '$id'");
 			 	
-			 	$user = array(
-
-					 			'id' 	   	 => $data['0']['id'],
-
-					 			'username'	 => $data['0']['username'],
-
-					 			'email'	   	 => $data['0']['email'],
-
-					 			'guild_id'   => '',
-
-					 			'role'	     => $data['0']['role'],
-
-					 			'created'    => $data['0']['created'],
-
-					 			'guild_name' => 'None',
-
-					 			'status'     => $data['0']['status']
-
+			 	$user = array(
+					 			'id' 	   	 => $data['0']['id'],
+					 			'username'	 => $data['0']['username'],
+					 			'email'	   	 => $data['0']['email'],
+					 			'guild_id'   => '',
+					 			'role'	     => $data['0']['role'],
+					 			'created'    => $data['0']['created'],
+					 			'guild_name' => 'None',
+					 			'status'     => $data['0']['status']
 			 				);
 			 } else {
 			 
@@ -575,28 +455,17 @@
 		
 		function getTeam($id) {
 			$data = $this->fetch("SELECT * FROM `" . $this->prefix . "guilds` WHERE id = '$id'");
-			 $team = array(
-
-							'id'	  => $data['0']['id'],
-
-							'name'    => $data['0']['guild'],
-
-							'abbr'    => $data['0']['abbreviation'],
-
-							'gm'      => $data['0']['gm'],
-
-							'agm'     => $data['0']['agm'],
-
-							'site'    => $data['0']['website'],
-
-							'admin'   => $data['0']['admin'],
-
-							'elo'     => $data['0']['elo'],
-
-							'game'    => $data['0']['game'],
-
-							'leagues' => $data['0']['leagues']
-
+			 $team = array(
+							'id'	  => $data['0']['id'],
+							'name'    => $data['0']['guild'],
+							'abbr'    => $data['0']['abbreviation'],
+							'gm'      => $data['0']['gm'],
+							'agm'     => $data['0']['agm'],
+							'site'    => $data['0']['website'],
+							'admin'   => $data['0']['admin'],
+							'elo'     => $data['0']['elo'],
+							'game'    => $data['0']['game'],
+							'leagues' => $data['0']['leagues']
 						  );
 			  return $team;
 		}
@@ -618,24 +487,15 @@
  */		
 		
 		function addSettingsGame($game) {
-			$result = $this->link->query("SELECT game FROM `" . $this->prefix . "games` WHERE game = '$game'");
-
-			  $count = $this->numRows($result);
-
-			  if($count > 0) {
-
-				  echo "<strong>Error</strong> Game already exists";
-
-			  } else {
-
-				  $game = $this->link->real_escape_string($game);
-
-				  $this->link->query("INSERT INTO `" . $this->prefix . "games` SET game = '$game'");
-
-				  print "<strong>Success!</strong> $game added...reloading";
-
-			  }
-
+			$result = $this->link->query("SELECT game FROM `" . $this->prefix . "games` WHERE game = '$game'");
+			  $count = $this->numRows($result);
+			  if($count > 0) {
+				  echo "<strong>Error</strong> Game already exists";
+			  } else {
+				  $game = $this->link->real_escape_string($game);
+				  $this->link->query("INSERT INTO `" . $this->prefix . "games` SET game = '$game'");
+				  print "<strong>Success!</strong> $game added...reloading";
+			  }
 				return;
 		}
 		
@@ -658,8 +518,7 @@
 			 } else {
 			 	$this->link->query("UPDATE `" . $this->prefix . "settings` SET site_name = '$name' WHERE id = '1'");
 			 }
-			 print "<strong>Success!</strong> Site Name updated...reloading";
-
+			 print "<strong>Success!</strong> Site Name updated...reloading";
 				return;
 		}
 		
@@ -695,38 +554,22 @@
 		 * USED IN: 
 		 * Matches View -> Check if match has an open dispute [status = 0]
 		 */	
-		function multidimensional_search($parents, $searched) {
-
-			if (empty($searched) || empty($parents)) {
-
-				return false;
-
-			}
-
-		
-
-			foreach ($parents as $key => $value) {
-
-				$exists = true;
-
-				foreach ($searched as $skey => $svalue) {
-
-					$exists = ($exists && IsSet($parents[$key][$skey]) && $parents[$key][$skey] == $svalue);
-
-				}
-
-				if($exists){
-
-					return true;
-
-				}
-
-			}
-
-		
-
-			return false;
-
+		function multidimensional_search($parents, $searched) {
+			if (empty($searched) || empty($parents)) {
+				return false;
+			}
+		
+			foreach ($parents as $key => $value) {
+				$exists = true;
+				foreach ($searched as $skey => $svalue) {
+					$exists = ($exists && IsSet($parents[$key][$skey]) && $parents[$key][$skey] == $svalue);
+				}
+				if($exists){
+					return true;
+				}
+			}
+		
+			return false;
 		}
 		
 		function upgrade() {
