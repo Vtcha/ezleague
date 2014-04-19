@@ -5,6 +5,7 @@ ezLeague v1.2
 (bug fixes listed at the bottom)
 
 http://www.mdloring.com
+demo: http://ezleague.mdloring.com
 
 After writing 2-3 different PHP Gaming League scripts, I've received numerous emails over the past 6months asking to offer it up for download...but it wasn't exactly user friendly. So that's what ezLeague is.
 
