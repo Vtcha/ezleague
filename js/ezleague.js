@@ -92,6 +92,26 @@
 		  });
 	}
 	
+//leave league
+	$('#leaveLeague').submit(function(e) {
+		var team_id	    = $("#team_id").val();
+			league_id   = $("#league_id").val();
+
+		 e.preventDefault();
+
+	 $.ajax({
+	     type: "POST",
+	     url: "submit.php",
+	     data: { form: 'leaveLeague', team_id: '' + team_id + '', league_id: '' + league_id + '', reason: '' + reason + '' }
+	   }).success(function( msg ) {
+		      $('.success').css("display", "");
+		      $(".success").fadeIn(1000, "linear");
+		      $('.success_text').fadeIn("slow");
+		      $('.success_text').html(msg);
+		      setTimeout(function(){location.reload()},3000);
+	  });
+	});	
+	
 	
 /*
  * TEAMS
@@ -433,4 +453,35 @@
 		        $('.success_text').html('<strong>Error</strong> Passwords do not match');
 		}
 		});
+	
+//leave league
+	function leaveLeague(league_id, team_id) {
+		$.ajax({
+		     type: "POST",
+		     url: site_url + "/get_leave_league.php",
+		     data: "league_id=" + league_id + "&team_id=" + team_id
+		   }).success(function( msg ) {
+		 	  $('#leaveLeagueModal').html(msg);
+		  });
+    }
+	
+//confirm leave league
+	$('#confirmLeaveLeague').submit(function(e) {
+		var team_id	    = $("#team_id").val();
+			league_id   = $("#league_id").val();
+
+		 e.preventDefault();
+
+	 $.ajax({
+	     type: "POST",
+	     url: url,
+	     data: { form: 'leaveLeague', team_id: '' + team_id + '', league_id: '' + league_id + '' }
+	   }).success(function( msg ) {
+		      $('.success').css("display", "");
+		      $(".success").fadeIn(1000, "linear");
+		      $('.success_text').fadeIn("slow");
+		      $('.success_text').html(msg);
+		      setTimeout(function(){location.reload()},3000);
+	  });
+	});
 	

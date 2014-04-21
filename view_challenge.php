@@ -282,10 +282,12 @@ include('sidebar.php');
                	    </div>
                	   </div>
                	   <?php } //end match completed ?>
-               	   
                	  <?php } else { //end if user is not a guild member and admin 
-		           		print $challengee_admin . " - " . $challenger_admin; ?>
-               	   <h3>You are not authorized to view this page</h3>
+               	  			$score = $ez->getChallengeScore($cid);
+		          ?>
+		           		<h3>Match Score</h3>
+               	       <h4><?php print $challenger; ?> <span class="text-primary"><?php print $score['challenger_score']; ?></span></h4>
+               	       <h4><?php print $challengee; ?> <span class="text-info"><?php print $score['challengee_score']; ?></span></h4>
                	  <?php } ?>
 				 </div>
               </div>

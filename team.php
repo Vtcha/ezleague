@@ -14,16 +14,6 @@
                   <h3 class="panel-title"><span class="bolder"><?php echo $current_game; ?></span> - <span class="italic"><?php echo $team_details['0']['guild']; ?></span></h3>
                 </div>
                 <div class="panel-body">
-                 <div class="col-sm-3">
-                  <h3 class="center">Admins</h3>
-                  <div class="well">
-                 	<h4 class="left">GM <span class="gm"><?php print $team_details['0']['gm']; ?></span></h4>
-                 	<h4 class="left">AGM <span class="agm"><?php print $team_details['0']['agm']; ?></span></h4>
-                 	<h4 class="left">URL <span class="website"><a href="<?php print $team_details['0']['website']; ?>">team site</a></span></h4>
-                 	<hr/>
-                 	<h4 class="left">Record <span class="website">32-8</span></h4>
-                  </div>
-                 </div>
                  <div class="col-sm-4">
                   <h3 class="center">Recent Matches</h3>
                   <div class="well">
@@ -36,23 +26,46 @@
 					    </tr>
 					   </thead>
 					   <tbody>			 
-					    <tr>
-					      <td class="win">W</td>
-					      <td>compLexity</td>
-					      <td>3/12 <a href="<?php echo $site_url; ?>/game/matches/id/<?php  ?>" class="btn btn-info btn-xs"><i class="fa fa-search"></i></a></td>
-					    </tr>
-					    <tr>
-					      <td class="loss">L</td>
-					      <td>Meeps</td>
-					      <td>3/15 <a href="<?php echo $site_url; ?>/game/matches/id/<?php  ?>" class="btn btn-info btn-xs"><i class="fa fa-search"></i></a></td>
-					    </tr>
-					    <tr>
-					      <td class="win">W</td>
-					      <td>oBsolete</td>
-					      <td>3/18 <a href="<?php echo $site_url; ?>/game/matches/id/<?php  ?>" class="btn btn-info btn-xs"><i class="fa fa-search"></i></a></td>
-					    </tr>
+					    <?php $matches = $ez->getTeamRecentMatches($id); 
+								 $wins   = 0;
+							 	 $losses = 0;
+							 foreach($matches as $match) { 	
+						 		 if($match['challenger'] == $id) {
+						 		 	if($match['challenger_score'] > $match['challengee_score']) {
+						 		 		$result = 'win';	
+						 		 		 $wins++;
+						 		 	} else {
+						 		 		$result = 'loss';	
+						 		 		 $losses++;
+						 		 	}
+						 		 } elseif($match['challengee'] == $id) {
+						 		 	if($match['challengee_score'] > $match['challenger_score']) {
+						 		 		$result = 'win';
+						 		 		 $wins++;
+						 		 	} else {
+						 		 		$result = 'loss';
+						 		 		 $losses++;
+						 		 	}	 	
+						 		 }
+						 ?>
+							    <tr>
+							      <td class="<?php print $result; ?>"><?php print substr(ucfirst($result), 0, 1); ?></td>
+							      <td><?php print ($match['challenger'] == $id ? $match['g_challengee'] : $match['g_challenger']); ?></td>
+							      <td><?php print date('m/d/y', strtotime($match['match_date'])); ?> <a href="<?php print $site_url; ?>/challenges/view/id/<?php print $match['id']; ?>" class="btn btn-info btn-xs"><i class="fa fa-search"></i> View Match</a></td>
+							    </tr>
+						 <?php } ?>
 					   </tbody>
 					  </table>
+                  </div>
+                 </div>
+                 <div class="col-sm-3">
+                  <h3 class="center">Details</h3>
+                  <div class="well">
+                 	<h4 class="left">GM <span class="gm"><?php print $team_details['0']['gm']; ?></span></h4>
+                 	<h4 class="left">AGM <span class="agm"><?php print $team_details['0']['agm']; ?></span></h4>
+                 	<h4 class="left">URL <span class="website"><a href="<?php print $team_details['0']['website']; ?>">team site</a></span></h4>
+                 	<hr/>
+                 	<h4 class="left">Record <span class="website"><?php print $wins . "-" . $losses; ?></span></h4>
                   </div>
                  </div>
                  <div class="col-sm-5">
@@ -71,7 +84,7 @@
 					    <tr>
 					      <td class="hidden-xs"><?php print $member['id']; ?></td>
 					      <td><?php print $member['username']; ?></td>
-					      <td><a href="<?php echo $site_url; ?>/users/id/<?php echo $member['id']; ?>" class="btn btn-info btn-xs"><i class="fa fa-search"></i> view</a></td>
+					      <td><a href="<?php echo $site_url; ?>/users/id/<?php echo $member['id']; ?>" class="btn btn-info btn-xs"><i class="fa fa-search"></i> View</a></td>
 					    </tr>
 	<?php } ?>				    
 					   </tbody>
@@ -79,7 +92,7 @@
 					 </div>
                 </div>
                 <?php } else { ?>
-                 <h3>Please select a news post to view</h3>
+                 <h3>Please select a news post to View</h3>
                 <?php } ?>
               </div>
 

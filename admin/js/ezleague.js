@@ -454,6 +454,27 @@
 	
 	});
 	
+//update league rules
+	$('#editLeagueRules').submit(function(e) {
+		var league_id	= $("#league_id").val();
+			rules		= CKEDITOR.instances['body'].getData();
+			
+		e.preventDefault();
+		 $.ajax({
+		     type: "POST",
+		     async: false,
+		     url: "submit.php",
+		     data: { form: 'editRules', league_id: '' + league_id + '', rules: '' + rules + '' }
+		   }).success(function( msg ) {
+			   	  $('.success').css("display", "");
+			      $(".success").fadeIn(1000, "linear");
+			      $('.success_text').fadeIn("slow");
+			      $('.success_text').html(msg);
+			      setTimeout(function(){location.reload()},3000);
+		  });
+	
+	});
+	
 //close dispute
 	function updateDispute(challenge_id, status) {
 		$.ajax({
@@ -579,6 +600,27 @@
 	  });
 	});	
 	
+//confirm kick team from league
+	$('#confirmKickTeam').submit(function(e) {
+		var team_id	    = $("#team_id").val();
+			league_id   = $("#league_id").val();
+			reason		= $("textarea#reason").val();
+
+		 e.preventDefault();
+
+	 $.ajax({
+	     type: "POST",
+	     url: "submit.php",
+	     data: { form: 'kickTeam', team_id: '' + team_id + '', league_id: '' + league_id + '', reason: '' + reason + '' }
+	   }).success(function( msg ) {
+		      $('.success').css("display", "");
+		      $(".success").fadeIn(1000, "linear");
+		      $('.success_text').fadeIn("slow");
+		      $('.success_text').html(msg);
+		      setTimeout(function(){location.reload()},3000);
+	  });
+	});	
+	
 /*
  * END SETTINGS FUNCTIONALITY
  */	
@@ -599,6 +641,16 @@
 		     data: "id=" + id
 		   }).success(function( msg ) {
 		 	  $('#viewRulesModal').html(msg);
+		  });
+    }
+	
+	function kickTeam(league_id, team_id) {
+		$.ajax({
+		     type: "POST",
+		     url: "leagues_kick_team.php",
+		     data: "league_id=" + league_id + "&team_id=" + team_id
+		   }).success(function( msg ) {
+		 	  $('#kickTeamModal').html(msg);
 		  });
     }
 	

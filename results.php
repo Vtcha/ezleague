@@ -30,7 +30,7 @@
                   <h3 class="panel-title"><span class="bolder"><?php echo $current_game; ?></span> - <span class="italic">Results</span></h3>
                 </div>
                 <div class="panel-body">
-                 <div class="col-lg-6">
+                 <div class="col-lg-10">
                   <h3><?php print $ez->getLeagueName($league_id) . " Results"; ?></h3>
                   	<table class="table table-striped table-hover ">
 					   <thead>
@@ -38,7 +38,6 @@
 					      <th>Matchup</th>
 					      <th>Score</th>
 					      <th>Match Date</th>
-					      <th></th>
 					    </tr>
 					   </thead>
 					   <tbody>

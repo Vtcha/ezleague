@@ -304,8 +304,8 @@
 		function updateTeamSettings($id, $gm, $agm, $site, $admin) {
 			$site = $this->link->real_escape_string($site);
 			 $this->link->query("UPDATE `" . $this->prefix . "guilds` SET gm = '$gm', agm = '$agm', website = '$site', admin = '$admin'
-			 			   WHERE id = '$id'
-			 			 ");
+			 			  		 WHERE id = '$id'
+			 			 	   ");
 
 			  print "<strong>Success!</strong> Team Settings have been updated.";
 		}
@@ -326,18 +326,35 @@
 			return $data;
 		}
 		
-		function getTeamRecentMatches($team_id) {
-			$data = $this->fetch("SELECT * FROM `" . $this->prefix . "results` WHERE guild_id = '$team_id' ORDER BY id LIMIT 5");
-			 return $data;
-		}
-		
 		function getTeamPendingChallenges($id) {
 			$result = $this->link->query("SELECT * FROM `" . $this->prefix . "challenges` WHERE (challenger = '$id' OR challengee = '$id') 
-								  AND (completed = '0') 
-								  AND (challenger_accepted != '2' AND challengee_accepted != '2')
-								");
+								  		  AND (completed = '0') 
+								  		  AND (challenger_accepted != '2' AND challengee_accepted != '2')
+										");
 			 $count = $this->numRows($result);
 			  return $count;
+		}
+		
+		function getTeamRecentMatches($team_id) {
+			$data = $this->fetch("SELECT t.id, t.challenger, t.challenger_score, t.league_id, t.match_date, t.created, t.completed, t.challengee_accepted, t.challengee_score, t.challenger_accepted, t.g_challenger, t.challengee, g2.guild AS g_challengee
+								  FROM (
+								    SELECT c1.id, c1.challenger, c1.challenger_score, c1.created, c1.match_date, c1.league_id, c1.completed, c1.challengee_accepted, c1.challengee_score, c1.challenger_accepted, g1.guild AS g_challenger, c1.challengee
+								    FROM `" . $this->prefix . "guilds` g1
+								    JOIN `" . $this->prefix . "challenges` c1
+								    ON g1.id = c1.challenger
+								  ) t 
+								  JOIN `" . $this->prefix . "guilds` g2
+								  ON g2.id = t.challengee
+								  WHERE (t.completed = 1) AND (t.challengee = '$team_id' OR t.challenger = '$team_id')
+								  ORDER BY t.created DESC
+								");	
+				return $data;
+		}
+		
+		function getTeamGame($team_id) {
+			$data = $this->fetch("SELECT game FROM `" . $this->prefix . "guilds` WHERE id = '$id'");
+			 $game = $data['0']['game'];
+			  return $game;
 		}
 		
 /*
@@ -377,6 +394,16 @@
 			   $this->link->query("UPDATE `" . $this->prefix . "guilds` SET leagues = '$new_leagues' WHERE id = '$guild'");
 			    print "<strong>Success!</strong> Your guild has joined the league.";
 			  return;
+		}
+		
+		function leaveLeague($league_id, $team_id) {
+			$data = $this->fetch("SELECT leagues FROM `" . $this->prefix . "guilds` WHERE id = '$team_id'");
+			 $team_leagues = $data['0']['leagues'];
+			  $leagues = explode(",", $team_leagues);
+			   $new_leagues = ezLeague::removeArrayValue($league_id, $leagues);
+			    $new_leagues = implode(",", $new_leagues);
+				 $this->link->query("UPDATE `" . $this->prefix . "guilds` SET leagues = '$new_leagues' WHERE id = '$team_id'");
+				 print "<strong>Success!</strong> Your Team has left the League";
 		}
 		
 		function getLeagueStandings($id) {

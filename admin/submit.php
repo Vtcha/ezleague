@@ -94,6 +94,19 @@
     	 		$league_id	= $_POST['id'];
     	 		 $ez->deleteLeague($league_id);
     	 	 break;
+    	 	 
+    	 	case 'editRules':
+    	 		$league_id  = $_POST['league_id'];
+    	 		$rules		= $_POST['rules'];
+    	 		 $ez->editLeagueRules($league_id, $rules);
+    	 	 break;
+    	 	 
+    	 	case 'kickTeam':
+    	 		$team_id	= $_POST['team_id'];
+    	 		$league_id  = $_POST['league_id'];
+    	 		$reason		= $_POST['reason'];
+    	 		 $ez->kickTeamFromLeague($league_id, $team_id, $reason);
+    	 	 break;
 
 /*
  * END LEAGUES

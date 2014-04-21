@@ -59,6 +59,33 @@
                  	  </div>
                  	</form>
                   </div>
+                  
+                  <h3 class="center">Leagues</h3>
+                  <div class="well">
+                 	<table class="table table-striped table-hover ">
+					   <thead>
+					    <tr>
+					      <th class="hidden-xs">Game</th>
+					      <th>League</th>
+					      <th></th>
+					    </tr>
+					   </thead>
+					   <tbody>
+					   <?php $team_leagues_data = $ez->getTeamLeagues($id); 
+					    	  $team_leagues = explode(",", $team_leagues_data);
+							 foreach($team_leagues as $league) { 
+								$league_data = $ez->getLeague($league);
+						?>				 
+					    <tr>
+					      <td class="hidden-xs"><?php print $league_data['0']['game']; ?></td>
+					      <td><?php print $league_data['0']['league']; ?></td>
+					      <td><a href="<?php echo $site_url; ?>/game/<?php print strtolower($league_data['0']['game']); ?>/leagues" class="btn btn-info btn-xs"><i class="fa fa-search"></i> view</a></td>
+					    </tr>
+						<?php } ?>				    
+					   </tbody>
+					  </table>
+                  </div>
+                 
                  </div>
                  <div class="col-sm-7">
                   <h3 class="center">Roster</h3>
@@ -85,7 +112,7 @@
 					
 				<div class="row">
 				 <div class="col-sm-5">
-                  <h3 class="center">Recent Matches</h3>
+                  <h3 class="center">Completed Matches</h3>
                   <div class="well">
                  	<table class="table table-striped table-hover ">
 					   <thead>
@@ -96,26 +123,37 @@
 					    </tr>
 					   </thead>
 					   <tbody>			 
-				<?php $matches = $ez->getTeamRecentMatches($id); ?>
-				 <?php //foreach($matches as $match) { ?>
+				<?php $matches = $ez->getTeamRecentMatches($id); 
+					 	$wins   = 0;
+					 	$losses = 0;
+					 foreach($matches as $match) { 	
+				 		 if($match['challenger'] == $id) {
+				 		 	if($match['challenger_score'] > $match['challengee_score']) {
+				 		 		$result = 'win';	
+				 		 		 $wins++;
+				 		 	} else {
+				 		 		$result = 'loss';	
+				 		 		 $losses++;
+				 		 	}
+				 		 } elseif($match['challengee'] == $id) {
+				 		 	if($match['challengee_score'] > $match['challenger_score']) {
+				 		 		$result = 'win';
+				 		 		 $wins++;
+				 		 	} else {
+				 		 		$result = 'loss';
+				 		 		 $losses++;
+				 		 	}	 	
+				 		 }
+				 ?>
 					    <tr>
-					      <td class="win">W</td>
-					      <td>compLexity</td>
-					      <td>3/12 <a href="<?php echo $site_url; ?>/game/matches/id/<?php  ?>" class="btn btn-info btn-xs"><i class="fa fa-search"></i></a></td>
+					      <td class="<?php print $result; ?>"><?php print substr(ucfirst($result), 0, 1); ?></td>
+					      <td><?php print ($match['challenger'] == $id ? $match['g_challengee'] : $match['g_challenger']); ?></td>
+					      <td><?php print date('m/d/y', strtotime($match['match_date'])); ?> <a href="<?php print $site_url; ?>/challenges/view/id/<?php print $match['id']; ?>" class="btn btn-info btn-xs"><i class="fa fa-search"></i></a></td>
 					    </tr>
-				 <?php //} ?>
-					    <tr>
-					      <td class="loss">L</td>
-					      <td>Meeps</td>
-					      <td>3/15 <a href="<?php echo $site_url; ?>/game/matches/id/<?php  ?>" class="btn btn-info btn-xs"><i class="fa fa-search"></i></a></td>
-					    </tr>
-					    <tr>
-					      <td class="win">W</td>
-					      <td>oBsolete</td>
-					      <td>3/18 <a href="<?php echo $site_url; ?>/game/matches/id/<?php  ?>" class="btn btn-info btn-xs"><i class="fa fa-search"></i></a></td>
-					    </tr>
+				 <?php } ?>
 					   </tbody>
 					  </table>
+					  <h4 class="left">Record <span class="website"><?php print $wins . "-" . $losses; ?></span></h4>
                   </div>
                  </div>
                  
@@ -178,6 +216,6 @@
           </div>
         
 	</div>
-
+<div id="leaveLeagueModal" class="modal"></div>
 
 <?php include('footer.php'); ?>

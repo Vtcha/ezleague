@@ -18,12 +18,13 @@
                   		  $team_admin = $ez->getTeamAdmin($ez_guild['0']['id']);
                   		   if($team_admin == $_SESSION['ez_username']) {
                   		   	$_SESSION['ez_admin'] = $_SESSION['ez_username'];
+                  		   	 $team_game = $ez->getTeamGame($ez_guild_id);
                   		   }
                   		 foreach($leagues as $league) {
                   		 	$total_teams = $ez->getTotalLeagueTeams($league['id']);
                   		 	$max_teams = $league['teams'];
                   		 	print "<h4>" . $league['league'] . " &#8211; (" . $total_teams . " of " . $max_teams . " max teams) </h4>";
-                  		   if(!strpos("x" . $team_leagues, $league['id']) && isset($_SESSION['ez_admin'])) { ?>
+                  		   if(!strpos("x" . $team_leagues, $league['id']) && isset($_SESSION['ez_admin']) && $league['game'] == $team_game) { ?>
                   		 		<button onclick="joinLeague('<?php print $league['id']; ?>', '<?php print $ez_guild_id; ?>');" class="btn btn-info btn-xs">Join League</button>
                   <?php    } else { ?>
                   				<a href="<?php print $site_url; ?>/challenges/make/<?php print $league['id']; ?>" class="btn btn-primary btn-xs"><i class="fa fa-sitemap"></i> Challenges</a>

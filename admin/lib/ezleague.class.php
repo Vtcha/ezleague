@@ -321,6 +321,22 @@
 			 return $data;
 		}
 		
+		function getLeague($league_id) {
+			$data = $this->fetch("SELECT * FROM `" . $this->prefix . "leagues` WHERE id = '$league_id'");
+			 $league = array(
+			 					'id'		 => $data['0']['id'],
+			 					'league'	 => $data['0']['league'],
+			 					'teams'		 => $data['0']['teams'],
+			 					'game'		 => $data['0']['game'],
+			 					'status'	 => $data['0']['open'],
+			 					'start_date' => date('F d, Y', strtotime($data['0']['start_date'])),
+			 					'end_date' 	 => date('F d, Y', strtotime($data['0']['end_date'])),
+			 					'games'		 => $data['0']['total_games'],
+			 					'rules'		 => $data['0']['rules']
+			 				);
+			 	return $league;
+		}
+		
 		function addLeague($league, $game, $teams, $start, $end, $games) {
 			$result = $this->link->query("SELECT league FROM `" . $this->prefix . "leagues` WHERE (league = '$league') AND (game = '$game')");
 			 $count = $this->numRows($result);
@@ -350,6 +366,13 @@
 			 	return $league;
 		}
 		
+		function editLeagueRules($league_id, $rules) {
+			$rules = $this->link->real_escape_string($rules);
+			 $this->link->query("UPDATE `" . $this->prefix . "leagues` SET rules = '$rules' WHERE id = '$league_id'");
+			  print "UPDATE `" . $this->prefix . "leagues` SET rules = '$rules' WHERE id = '$league_id'";
+			  print "<strong>Success!</strong> League Rules have been updated...reloading";
+		}
+		
 		function getLeagueName($league_id) {
 			$data = $this->fetch("SELECT league FROM `" . $this->prefix . "leagues` WHERE id = '$league_id'");
 			 $league = $data['0']['league'];
@@ -359,6 +382,58 @@
 		function getLeagueDisputes($league_id) {
 			$data = $this->fetch("SELECT * FROM `" . $this->prefix . "disputes` WHERE status = '0'");
 				return $data;
+		}
+		
+		function getLeagueTotalTeams($league_id) {
+			$result = $this->link->query("SELECT guild FROM `" . $this->prefix . "guilds` WHERE leagues LIKE '%,$league_id' OR leagues LIKE '$league_id,%' OR leagues LIKE '$league_id'");
+			 $count = $this->numRows($result);
+			  return $count;
+		}
+		
+		function getLeagueTeams($league_id) {
+			$data = $this->fetch("SELECT * FROM `" . $this->prefix . "guilds` WHERE leagues LIKE '%,$league_id' OR leagues LIKE '$league_id,%' OR leagues LIKE '$league_id'");
+			 return $data;
+		}
+		
+		function kickTeamFromLeague($league_id, $team_id, $reason) {
+			$data = $this->fetch("SELECT leagues FROM `" . $this->prefix . "guilds` WHERE id = '$team_id'");
+			 $team_leagues = $data['0']['leagues'];
+			  $leagues = explode(",", $team_leagues);
+			   $new_leagues = ezLeague::removeArrayValue($league_id, $leagues);
+			    $new_leagues = implode(",", $new_leagues);
+			     $this->link->query("UPDATE `" . $this->prefix . "guilds` SET leagues = '$new_leagues' WHERE id = '$team_id'");
+			   	
+			     	$team_admin = ezLeague::getTeamAdminEmail($team_id);
+			     	//get the name of your site
+			     	$site_settings = ezLeague::getSiteSettings();
+			     	 $site_name = $site_settings['name'];
+			     	
+			     //email message sent to teams gm
+			     $to = $team_admin['email'];
+			     	
+			     $subject = '' . $site_name . ' - ' . $team_admin['team'] . ' Kicked from League';
+			     	
+			     $headers = "From: no-reply@ezleague.com\r\n";
+			     $headers .= "Reply-To: no-reply@ezleague.com\r\n";
+			     $headers .= "MIME-Version: 1.0\r\n";
+			     $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
+			     	
+			     $message = '<html><body>';
+			     $message .= '<h1>' . $site_name . '</h1><h3>Team Kicked From League</h3>';
+			     $message .= '<p>Your Team has been kicked from League ID #' . $league_id . ' for:</p>';
+			     $message .= '<p><em>' . $reason . '</em></p>';
+			     $message .= '<p>Please contact an admin if you wish to dispute this action.</p>';
+			     $message .= '<small>You received this message because the email account is registered on ' . $this->site_url . '.</small>';
+			     $message .= '</body></html>';
+			     	
+			     mail($to, $subject, $message, $headers);
+			     
+			     print "<strong>Success!</strong> Team has been kicked from League";
+		}
+		
+		function getTeamLeagues($team_id) {
+			$data = $this->fetch("SELECT leagues FROM `" . $this->prefix . "guilds` WHERE id = '$team_id'");
+			 return $data;
 		}
 		
 
@@ -478,6 +553,18 @@
 			$data = $this->fetch("SELECT * FROM `" . $this->prefix . "users` WHERE guild = '$id'");
 			 return $data;
 		}
+		
+		function getTeamAdminEmail($team_id) {
+			$data = $this->fetch("SELECT `" . $this->prefix . "users`.*, `" . $this->prefix . "guilds`.* FROM `" . $this->prefix . "users`
+								   INNER JOIN `" . $this->prefix . "guilds`
+								  WHERE `" . $this->prefix . "guilds`.id = '$team_id' AND `" . $this->prefix . "guilds`.gm = `" . $this->prefix . "users`.username
+								");
+			 $admin = array(
+			 				'email'		=> $data['0']['email'],
+			 				'team'		=> $data['0']['guild']
+			 			   );
+			 	return $admin;
+		}
 /*
  * END TEAM FUNCTIONALITY
  */		
@@ -570,6 +657,15 @@
 			}
 		
 			return false;
+		}
+		
+		function removeArrayValue($string, $array) {
+			//$array = unserialize($array);
+			if(($key = array_search($string, $array)) !== false) {
+				unset($array[$key]);
+			}
+		
+			return $array;
 		}
 		
 		function upgrade() {

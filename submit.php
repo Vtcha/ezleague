@@ -58,6 +58,12 @@ $ez_username = $_SESSION['ez_username'];
 		 		 $ez->joinLeague($guild, $league);
 		 		break;
 		 		
+		 	case 'leaveLeague':
+		 		$team_id	= $_POST['team_id'];
+		 		$league_id  = $_POST['league_id'];		 		
+		 		 $ez->leaveLeague($league_id, $team_id);
+		 		break;
+		 		
 		 	case 'makeChallenge':
 		 		$guild			= $_POST['guild'];
 		 		$challenger		= $_POST['challenger'];
