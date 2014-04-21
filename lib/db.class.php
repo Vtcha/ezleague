@@ -12,12 +12,12 @@ class DB_Class {
 	
 		var $link;
 		
-		var $host = ""; //database host
+		var $host     = ""; //database host
 		var $username = ""; //database username
 		var $password = ""; //database password
 		var $database = ""; //mysql database
-		var $prefix	  = ""; //table prefix
-		var $site_url = ""; //url to install directory (ex: http://www.mdloring.com/ezleague)
+		var $prefix   = ""; //table prefix
+		var $site_url = ""; //url to install directory (ex: http://www.mdloring.com/ezleague -- no trailing /)
 		
 		public function __construct() {
 			global $connection;
