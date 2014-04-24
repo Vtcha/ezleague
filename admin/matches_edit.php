@@ -28,6 +28,9 @@
                          <?php $match = $ez->getMatch($match_id); ?>
                          <form class="form-horizontal" id="editMatchDetails" name="editMatchDetails" method="POST">
                           <input type="hidden" name="matchId" id="matchId" value="<?php print $match['cid']; ?>" />
+                          <input type="hidden" name="challengerId" id="challengerId" value="<?php print $match['challenger_id']; ?>" />
+                          <input type="hidden" name="challengeeId" id="challengeeId" value="<?php print $match['challengee_id']; ?>" />
+                          <input type="hidden" name="leagueId" id="leagueId" value="<?php print $match['league_id']; ?>" />
                          <div class="row">
                           <div class="col-lg-12">
 	                          <div class="form-group">
@@ -153,7 +156,7 @@
 	                          </div>
 	                          <div class="form-group">
 	                           <label class="col-lg-2 control-label">Created</label>
-	                         	<div class="col-lg-5">
+	                         	<div class="col-lg-7">
 	                         	 <input type="text" class="form-control" value="<?php print date('F d, Y h:ia', strtotime($match['created'])); ?>" disabled />
 	                         	</div>
 	                          </div>

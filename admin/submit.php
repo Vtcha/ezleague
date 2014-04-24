@@ -87,7 +87,10 @@
     	 		$start		= $_POST['start'];
     	 		$end		= $_POST['end'];
     	 		$games		= $_POST['games'];
-    	 		 $ez->addLeague($league, $game, $teams, $start, $end, $games);
+    	 		$win		= $_POST['win'];
+    	 		$loss		= $_POST['loss'];
+    	 		$tie		= $_POST['tie'];
+    	 		 $ez->addLeague($league, $game, $teams, $start, $end, $games, $win, $loss, $tie);
     	 	 break;
     	 	 
     	 	case 'deleteLeague':
@@ -99,6 +102,14 @@
     	 		$league_id  = $_POST['league_id'];
     	 		$rules		= $_POST['rules'];
     	 		 $ez->editLeagueRules($league_id, $rules);
+    	 	 break;
+    	 	 
+    	 	case 'editPoints':
+    	 		$league_id	= $_POST['league_id'];
+    	 		$win		= $_POST['win'];
+    	 		$loss		= $_POST['loss'];
+    	 		$tie		= $_POST['tie'];
+    	 		 $ez->updateLeaguePoints($league_id, $win, $loss, $tie);
     	 	 break;
     	 	 
     	 	case 'kickTeam':
@@ -118,11 +129,14 @@
     	 	 
     	 	case 'editMatch':
     	 		$match_id		   = $_POST['match_id'];
+    	 		$league_id		   = $_POST['league_id'];
+    	 		$challenger		   = $_POST['challenger'];
     	 		$challenger_score  = $_POST['challenger_score'];
     	 		$challenger_status = $_POST['challenger_status'];
+    	 		$challengee		   = $_POST['challengee'];
     	 		$challengee_score  = $_POST['challengee_score'];
     	 		$challengee_status = $_POST['challengee_status'];
-    	 		 $ez->editMatch($match_id, $challenger_score, $challenger_status, $challengee_score, $challengee_status);
+    	 		 $ez->editMatch($league_id, $match_id, $challenger, $challenger_score, $challenger_status, $challengee, $challengee_score, $challengee_status);
     	 		break;
     	 		
     	 	case 'updateDispute':

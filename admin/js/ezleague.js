@@ -313,13 +313,16 @@
 			start		= $("#league-start-date").val();
 			end			= $("#league-end-date").val();
 			games		= $("#total-games").val();
+			win			= $("league-points-win").val();
+			loss		= $("league-points-loss").val();
+			tie			= $("league-points-tie").val();
 		
 		e.preventDefault();
 		 $.ajax({
 		     type: "POST",
 		     async: false,
 		     url: "submit.php",
-		     data: "form=addNewLeague&league=" + league + "&game=" + game + "&teams=" + teams + "&start=" + start + "&end=" + end + "&games=" + games
+		     data: "form=addNewLeague&league=" + league + "&game=" + game + "&teams=" + teams + "&start=" + start + "&end=" + end + "&games=" + games + "&win=" + win + "&loss=" + loss + "&tie=" + tie
 		   }).success(function( msg ) {
 			   	  $('.success').css("display", "");
 			      $(".success").fadeIn(1000, "linear");
@@ -433,17 +436,26 @@
 //edit match score & status
 	$('#editMatchDetails').submit(function(e) {
 		var match_id			= $("#matchId").val();
+			challenger			= $("#challengerId").val();
 			challenger_score	= $("#challengerScore").val();
 			challenger_status   = $("#challengerStatus").val();
+			challengee			= $("#challengeeId").val();
 			challengee_score	= $("#challengeeScore").val();
 			challengee_status	= $("#challengeeStatus").val();
+			league_id			= $("#leagueId").val();
 		
 		e.preventDefault();
+		if(challenger_score < 0 || challengee_score < 0) { //check to make sure a score isnt negative
+				  $('.success').css("display", "");
+		      	  $(".success").fadeIn(1000, "linear");
+		      	  $('.success_text').fadeIn("slow");
+		      	  $('.success_text').html('<strong>Error</strong> Scores cannot be negative');
+		} else {
 		 $.ajax({
 		     type: "POST",
 		     async: false,
 		     url: "submit.php",
-		     data: { form: 'editMatch', match_id: '' + match_id + '', challenger_score: '' + challenger_score + '', challenger_status: '' + challenger_status + '', challengee_score: '' + challengee_score + '', challengee_status: '' + challengee_status + '' }
+		     data: { form: 'editMatch', match_id: '' + match_id + '', league_id: '' + league_id + '', challenger: '' + challenger + '', challenger_score: '' + challenger_score + '', challenger_status: '' + challenger_status + '', challengee: '' + challengee + '', challengee_score: '' + challengee_score + '', challengee_status: '' + challengee_status + '' }
 		   }).success(function( msg ) {
 			   	  $('.success').css("display", "");
 			      $(".success").fadeIn(1000, "linear");
@@ -451,6 +463,7 @@
 			      $('.success_text').html(msg);
 			      setTimeout(function(){location.reload()},3000);
 		  });
+		}
 	
 	});
 	
@@ -465,6 +478,29 @@
 		     async: false,
 		     url: "submit.php",
 		     data: { form: 'editRules', league_id: '' + league_id + '', rules: '' + rules + '' }
+		   }).success(function( msg ) {
+			   	  $('.success').css("display", "");
+			      $(".success").fadeIn(1000, "linear");
+			      $('.success_text').fadeIn("slow");
+			      $('.success_text').html(msg);
+			      setTimeout(function(){location.reload()},3000);
+		  });
+	
+	});
+	
+//edit league points
+	$('#editLeaguePoints').submit(function(e) {
+		var league_id	= $("#league_id").val();
+			win			= $("#points_win").val();
+			loss		= $("#points_loss").val();
+			tie			= $("#points_tie").val();
+			
+		e.preventDefault();
+		 $.ajax({
+		     type: "POST",
+		     async: false,
+		     url: "submit.php",
+		     data: { form: 'editPoints', league_id: '' + league_id + '', win: '' + win + '', loss: '' + loss + '', tie: '' + tie + '' }
 		   }).success(function( msg ) {
 			   	  $('.success').css("display", "");
 			      $(".success").fadeIn(1000, "linear");

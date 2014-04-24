@@ -257,17 +257,24 @@
 			match_id 	 = $("#match-id").val();
 
 		 e.preventDefault();
-	 $.ajax({
-	     type: "POST",
-	     url: url,
-	     data: { form: 'submitScore', id: '' + match_id + '', challenger: '' + challenger + '', challengee: '' + challengee + '' }
-	   }).success(function( msg ) {
-		   	  $('.success').css("display", "");
-		      $(".success").fadeIn(1000, "linear");
-		      $('.success_text').fadeIn("slow");
-		      $('.success_text').html(msg);
-		      setTimeout(function(){location.reload()},3000);
-	  });
+	if(challenger < 0 || challengee < 0) { //if either score is negative, reject the submission
+				  $('.success').css("display", "");
+				  $(".success").fadeIn(1000, "linear");
+	      		  $('.success_text').fadeIn("slow");
+	      		  $('.success_text').html('<strong>Error</strong> Scores cannot be negative');
+	} else {
+		$.ajax({
+		     type: "POST",
+		     url: url,
+		     data: { form: 'submitScore', id: '' + match_id + '', challenger: '' + challenger + '', challengee: '' + challengee + '' }
+		   }).success(function( msg ) {
+			   	  $('.success').css("display", "");
+			      $(".success").fadeIn(1000, "linear");
+			      $('.success_text').fadeIn("slow");
+			      $('.success_text').html(msg);
+			      setTimeout(function(){location.reload()},3000);
+		  });
+	}
 	});
 	
 	

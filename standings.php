@@ -19,7 +19,7 @@
 				    <tr>
 				      <th>Standing</th>
 				      <th>Guild</th>
-				      <th>ELO</th>
+				      <th>Points</th>
 				      <th></th>
 				    </tr>
 				   </thead>
@@ -29,8 +29,8 @@
 				    <tr>
 				      <td class="bolder"><?php print $standing; ?></td>
 				      <td><?php print $team['guild']; ?></td>
-				      <td><?php print $team['elo']; ?></td>
-				      <td><a href="<?php echo $site_url; ?>/game/<?php echo $game_slug; ?>/teams/id/<?php echo $team['id']; ?>" class="btn btn-info btn-xs"><i class="fa fa-search"></i> View Team</a></td>
+				      <td><?php print $team['points']; ?></td>
+				      <td><a href="<?php echo $site_url; ?>/game/<?php echo $game_slug; ?>/teams/id/<?php echo $team['team_id']; ?>" class="btn btn-info btn-xs"><i class="fa fa-search"></i> View Team</a></td>
 				    </tr>
 	<?php } ?>				    
 				   </tbody>

@@ -321,7 +321,7 @@
 								  ) t 
 								  JOIN " . $this->prefix . "guilds g2
 								  ON g2.id = t.challengee
-								  WHERE challenger = '$team_id' OR challengee = '$team_id'
+								  WHERE challenger = '$team_id' OR challengee = '$team_id' ORDER BY t.id DESC
 								");	
 			return $data;
 		}
@@ -407,8 +407,29 @@
 		}
 		
 		function getLeagueStandings($id) {
-			$data = $this->fetch("SELECT guild, id, elo, leagues FROM `" . $this->prefix . "guilds` WHERE leagues LIKE '%$id%' ORDER BY elo DESC");
-			  return $data;
+			$data = $this->fetch("SELECT guild, id, leagues FROM `" . $this->prefix . "guilds` WHERE leagues LIKE '%,$id' OR leagues LIKE '$id,%' OR leagues LIKE '$id' ORDER BY elo DESC");
+			 foreach($data as $team) {
+			 	$team_results = $this->fetch("SELECT * FROM `" . $this->prefix . "results` WHERE guild_id = '$team[id]' AND league_id = '$id'");
+			 	 $team_points = 0;
+			 	  if($team_results) {	 //if the guild has any results submitted for this league
+				 	 foreach($team_results as $result) {
+				 	 	$team_points = $team_points + $result['points_given'];
+				 	 }
+				 	 $league_results[] = array('guild' => $team['guild'], 'team_id' => $team['id'], 'points' => $team_points);
+			 	  } else { //if the guild has no results submitted, set their points to 0
+			 	  	$league_results[] = array('guild' => $team['guild'], 'team_id' => $team['id'], 'points' => 0);
+			 	  }
+			 }
+			 
+			 foreach ($league_results as $key => $row) {
+			 	$guild[$key]  = $row['guild'];
+			 	$points[$key] = $row['points'];
+			 }
+			 
+			 // Sort the guild points data with points descending, guild ascending
+			 // Add $league_results as the last parameter, to sort by the common key
+			 array_multisort($points, SORT_DESC, $guild, SORT_ASC, $league_results);
+			  return $league_results;
 		}
 		
 		function getTotalLeagueTeams($league) {
@@ -450,20 +471,7 @@
 								  ON g2.id = t.challengee
 								  WHERE (t.league_id = '$league_id' AND t.completed = 1)
 								  ORDER BY t.created DESC
-								");
-				/* $match_results = array (
-									'cid' 			   => $data['0']['id'],
-									'league_id'		   => $data['0']['league_id'],
-									'challenger_id'    => $data['0']['challenger'],
-									'challenger'	   => $data['0']['g_challenger'],
-									'challenger_score' => $data['0']['challenger_score'],
-									'challengee_id'	   => $data['0']['challengee'],
-									'challengee'	   => $data['0']['g_challengee'],
-								 	'challengee_score' => $data['0']['challengee_score'],
-									'match_date'	   => $data['0']['match_date'],
-									'completed'		   => $data['0']['completed']
-								);
-				*/
+								");
 				return $data;
 		}
 		
@@ -479,6 +487,17 @@
 			    return $rules;
 		}
 		
+		function getLeaguePoints($league_id) {
+			$data = $this->fetch("SELECT id, win_points, loss_points, tie_points FROM `" . $this->prefix . "leagues` WHERE id = '$league_id'");
+			 $points = array(
+			 					'id'   => $data['0']['id'],
+			 				 	'win'  => $data['0']['win_points'],
+			 					'loss' => $data['0']['loss_points'],
+			 					'tie'  => $data['0']['tie_points']
+			 				);
+			 	return $points;
+		}
+		
 		
 /*
  * END LEAGUE FUNCTIONALITY
@@ -489,6 +508,7 @@
  */		
 		function getChallenge($id) {
 			$data = $this->fetch("SELECT * FROM `" . $this->prefix . "challenges` WHERE id = '$id'");
+			 $league_id		= $data['0']['league_id'];
 			 $challenger_id = $data['0']['challenger'];
 			 $challengee_id = $data['0']['challengee'];
 			 $challenger = ezLeaguePub::getTeamName($challenger_id);
@@ -534,19 +554,20 @@
 			   }
 				 
 				 $challenge = array(
-				 				    'match_created'	   => date('F d, Y', strtotime($data['0']['created'])),
-				 					'match_date' 	   => $match_date, 
-				 					'match_time'	   => $match_time,
-				 					'match_status'	   => $match_status,
-				 					'challengee'	   => $challengee,
-				 					'challengee_id'    => $challengee_id,
-				 					'challengee_admin' => $challengee_admin,
-				 					'challenger'	   => $challenger,
-				 					'challenger_id'    => $challenger_id,
-				 					'challenger_admin' => $challenger_admin,
+				 				    'match_created'	      => date('F d, Y', strtotime($data['0']['created'])),
+				 					'match_date' 	      => $match_date, 
+				 					'match_time'	      => $match_time,
+				 					'match_status'	      => $match_status,
+				 					'challengee'	      => $challengee,
+				 					'challengee_id'       => $challengee_id,
+				 					'challengee_admin'    => $challengee_admin,
+				 					'challenger'	  	  => $challenger,
+				 					'challenger_id'    	  => $challenger_id,
+				 					'challenger_admin' 	  => $challenger_admin,
 				 					'challenger_accepted' => $data['0']['challenger_accepted'],
 				 					'challengee_accepted' => $data['0']['challengee_accepted'],
-				 					'match_completed'     => $match_completed
+				 					'match_completed'     => $match_completed,
+				 					'league_id'			  => $league_id
 				 					);
 			 return $challenge;
 		}
@@ -659,7 +680,51 @@
 		
 		function submitChallengeScore($challenge_id, $challenger, $challengee) {
 			$this->link->query("UPDATE `" . $this->prefix . "challenges` SET completed = '1', challenger_score = '$challenger', challengee_score = '$challengee' WHERE id = '$challenge_id'");
-			 print "<strong>Success!</strong> Challenge score has been submitted";
+			 //get challenge details
+			  $challenge_data = ezLeaguePub::getChallenge($challenge_id);
+			   $challenger_id = $challenge_data['challenger_id'];
+			   $challengee_id = $challenge_data['challengee_id'];
+			   $league_id	  = $challenge_data['league_id']; 
+			 //get point values based on the league
+			  $points = ezLeaguePub::getLeaguePoints($league_id);
+			   $points_win  = $points['win'];
+			   $points_loss = $points['loss'];
+			   $points_tie  = $points['tie'];
+			 //insert score details to results table
+			  if($challenger > $challengee) { //if challenger won
+			  	$this->link->query("INSERT INTO `" . $this->prefix . "results` 
+			  					  	SET guild_id = '$challenger_id', league_id = '$league_id', result = 'w', date = 'NOW()',
+			  						challenge_id = '$challenge_id', points_given = '$points_win'
+			  					  ");
+			  	
+			  	$this->link->query("INSERT INTO `" . $this->prefix . "results`
+						  			SET guild_id = '$challengee_id', league_id = '$league_id', result = 'l', date = 'NOW()',
+						  			challenge_id = '$challenge_id', points_given = '$points_loss'
+						  		  ");
+			  } elseif($challengee > $challenger) { //if challengee won
+			  	$this->link->query("INSERT INTO `" . $this->prefix . "results`
+						  			SET guild_id = '$challengee_id', league_id = '$league_id', result = 'w', date = 'NOW()',
+						  			challenge_id = '$challenge_id', points_given = '$points_win'
+						  		  ");
+			  	
+			  	$this->link->query("INSERT INTO `" . $this->prefix . "results`
+						  			SET guild_id = '$challenger_id', league_id = '$league_id', result = 'l', date = 'NOW()',
+						  			challenge_id = '$challenge_id', points_given = '$points_loss'
+						  		  ");
+			  	
+			  } else { //must be a tie
+			  	$this->link->query("INSERT INTO `" . $this->prefix . "results`
+						  			SET guild_id = '$challenger_id', league_id = '$league_id', result = 't', date = 'NOW()',
+						  			challenge_id = '$challenge_id', points_given = '$points_tie'
+						  		  ");
+			  	
+			  	$this->link->query("INSERT INTO `" . $this->prefix . "results`
+						  			SET guild_id = '$challengee_id', league_id = '$league_id', result = 't', date = 'NOW()',
+						  			challenge_id = '$challenge_id', points_given = '$points_tie'
+						  		  ");
+			  }
+			  
+			print "<strong>Success!</strong> Challenge score has been submitted";
 			  return;
 		}
 		
@@ -800,7 +865,6 @@
 			  `website` varchar(100) DEFAULT NULL,
 			  `password` varchar(45) DEFAULT NULL,
 			  `admin` varchar(50) NOT NULL,
-			  `elo` int(10) NOT NULL DEFAULT '1200',
 			  `game` varchar(25) DEFAULT NULL,
 			  `leagues` varchar(50) DEFAULT NULL,
 			  PRIMARY KEY (`id`,`admin`)
@@ -820,6 +884,9 @@
 			  `end_date` date DEFAULT NULL,
 			  `total_games` int(10) DEFAULT '8',
 			  `rules` varchar(10000) DEFAULT NULL,
+			  `win_points` int(10) DEFAULT '3',
+			  `loss_points` int(10) DEFAULT '1',
+			  `tie_points` int(10) DEFAULT '2',
 			  PRIMARY KEY (`id`)
 			) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 			";
@@ -860,6 +927,7 @@
 			  `result` varchar(1) NOT NULL,
 			  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
 			  `challenge_id` int(10) DEFAULT NULL,
+			  `points_given` int(10) DEFAULT NULL,
 			  PRIMARY KEY (`id`)
 			) ENGINE=MyISAM AUTO_INCREMENT=329 DEFAULT CHARSET=latin1;
 			";

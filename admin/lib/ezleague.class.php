@@ -282,12 +282,51 @@
 				return $match_details;
 		}
 		
-		function editMatch($match_id, $challenger_score, $challenger_status, $challengee_score, $challengee_status) {
+		function editMatch($league_id, $match_id, $challenger, $challenger_score, $challenger_status, $challengee, $challengee_score, $challengee_status) {
 			$this->link->query("UPDATE `" . $this->prefix . "challenges` SET challenger_score = '$challenger_score', 
 										challenger_accepted = '$challenger_status', challengee_score = '$challengee_score',
 										challengee_accepted = '$challengee_status'
 								WHERE id = '$match_id'
 							  "); 
+			
+				//update the points in the results table
+				$points = ezLeague::getLeaguePoints($league_id);
+				$points_win  = $points['win'];
+				$points_loss = $points['loss'];
+				$points_tie  = $points['tie'];
+				
+				if($challenger_score > $challengee_score) { //if challenger won
+					$this->link->query("UPDATE `" . $this->prefix . "results`
+										SET result = 'w', points_given = '$points_win'
+										WHERE challenge_id = '$match_id' AND guild_id = '$challenger'
+									  ");
+				
+					$this->link->query("UPDATE `" . $this->prefix . "results`
+										SET result = 'l', points_given = '$points_loss'
+										WHERE challenge_id = '$match_id' AND guild_id = '$challengee'
+									   ");
+				} elseif($challengee_score > $challenger_score) { //if challengee won
+					$this->link->query("UPDATE `" . $this->prefix . "results`
+										SET result = 'w', points_given = '$points_win'
+										WHERE challenge_id = '$match_id' AND guild_id = '$challengee'
+									  ");
+					
+					$this->link->query("UPDATE `" . $this->prefix . "results`
+										SET result = 'l', points_given = '$points_loss'
+										WHERE challenge_id = '$match_id' AND guild_id = '$challenger'
+									  ");
+				
+				} else { //must be a tie
+					$this->link->query("UPDATE `" . $this->prefix . "results`
+							SET result = 'w', points_given = '$points_tie'
+							WHERE challenge_id = '$match_id' AND guild_id = '$challenger'
+							");
+					
+					$this->link->query("UPDATE `" . $this->prefix . "results`
+							SET result = 'l', points_given = '$points_tie'
+							WHERE challenge_id = '$match_id' AND guild_id = '$challengee'
+							");
+				}
 			  print "<strong>Success!</strong> Match Details have been updated...reloading";
 				return;
 		}
@@ -337,7 +376,7 @@
 			 	return $league;
 		}
 		
-		function addLeague($league, $game, $teams, $start, $end, $games) {
+		function addLeague($league, $game, $teams, $start, $end, $games, $win, $loss, $tie) {
 			$result = $this->link->query("SELECT league FROM `" . $this->prefix . "leagues` WHERE (league = '$league') AND (game = '$game')");
 			 $count = $this->numRows($result);
 			  if($count > 0) {
@@ -345,7 +384,9 @@
 			  } else {
 				  $league = $this->link->real_escape_string($league);
 				  $this->link->query("INSERT INTO `" . $this->prefix . "leagues` SET league = '$league', game = '$game', teams = '$teams',
-				  					  start_date = '$start', end_date = '$end', total_games = '$games'");
+				  					  start_date = '$start', end_date = '$end', total_games = '$games', win_points = '$win',
+				  					  loss_points = '$loss', tie_points = '$tie'
+				  					");
 				  print "<strong>Success!</strong> $league League added...reloading";
 			  }
 				return;
@@ -436,7 +477,29 @@
 			 return $data;
 		}
 		
-
+		function getLeaguePoints($league_id) {
+			$data = $this->fetch("SELECT id, league, win_points, loss_points, tie_points FROM `" . $this->prefix . "leagues` 
+								  WHERE id = '$league_id'
+								");
+			 $points = array(
+			 					'id'	 => $data['0']['id'],
+			 					'league' => $data['0']['league'],
+			 					'win'	 => $data['0']['win_points'],
+			 					'loss'   => $data['0']['loss_points'],
+			 					'tie'	 => $data['0']['tie_points']
+			 				);
+			 	return $points;
+		}
+		
+		function updateLeaguePoints($league_id, $win, $loss, $tie) {
+			$this->link->query("UPDATE `" . $this->prefix . "leagues` SET win_points = '$win', loss_points = '$loss',
+								tie_points = '$tie' WHERE id = '$league_id'
+							  ");
+			 print "<strong>Success!</strong> Point Values have been updated";
+			 	return;
+		}
+		
+		
 /*
  * END LEAGUE FUNCTIONALITY
  */		
