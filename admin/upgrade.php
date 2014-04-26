@@ -3,7 +3,7 @@ include('lib/db.class.php');
 include('lib/ezleague.class.php');
 
 $ez = new ezLeague();
-
-	$ez->upgrade();
+if(isset($_SESSION['ez_admin'])) {
+	$ez->upgrade();} else {	print "Admins Only.";}
 	
 ?>
