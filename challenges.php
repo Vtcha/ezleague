@@ -29,7 +29,7 @@ include('sidebar.php');
 				      <th>#</th>
 				      <th>Guild (Abr)</th>
 				      <th class="hidden-xs">GM</th>
-				      <th>ELO</th>
+				      <th>Points</th>
 				      <th></th>
 				    </tr>
 				   </thead>
@@ -42,13 +42,15 @@ include('sidebar.php');
 			if(in_array($team['id'], $current_challenges['0'], TRUE)) {
 				$previous_challenge = 1;
 			}
+			
+			 $team_points = $ez->getTeamPoints($team['id'], $id);
 			 
 	?>				 
 				    <tr>
 				      <td><?php print $team['id']; ?></td>
 				      <td><?php print $team['guild']; ?></td>
 				      <td class="hidden-xs"><?php print $team['gm']; ?></td>
-				      <td><?php print $team['elo']; ?></td>
+				      <td><?php print $team_points; ?></td>
 				      <td>
 				      	<a href="<?php echo $site_url; ?>/game/<?php echo $game_slug; ?>/teams/id/<?php echo $team['id']; ?>" class="btn btn-info btn-xs">View Team</a>
 				      <?php if($team['guild'] != $ez_guild_name && isset($_SESSION['ez_admin'])) { ?> 

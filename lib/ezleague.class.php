@@ -432,6 +432,16 @@
 			  return $league_results;
 		}
 		
+		function getTeamPoints($team_id, $league_id) {
+			$team_results = $this->fetch("SELECT * FROM `" . $this->prefix . "results` WHERE guild_id = '$team_id' AND league_id = '$league_id'");
+			 $team_points = 0;
+			  foreach($team_results as $result) {
+			  	$team_points = $team_points + $result['points_given'];
+			  }
+			  
+			   return $team_points;
+		}
+		
 		function getTotalLeagueTeams($league) {
 			$result = $this->link->query("SELECT id FROM `" . $this->prefix . "guilds` WHERE leagues LIKE '%$league%'");
 			 $count = $this->numRows($result);
