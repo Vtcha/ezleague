@@ -5,7 +5,7 @@
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Edit League Rules</h1>
+                    <h1 class="page-header">Edit League Points</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -15,25 +15,31 @@
                 	<?php 
                 		if(isset($_GET['id'])) { 
 	                        $id = $_GET['id'];
-	                         $league = $ez->getLeagueRules($id);
+	                         $league = $ez->getLeaguePoints($id);
                     ?>
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <i class="fa fa-sitemap"></i> League Rules
+                            <i class="fa fa-sitemap"></i> League Points
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
                         <?php if(!empty($id)) {  print "<h3>" . $league['league'] . "</h3>"; ?>
-							<form id="editLeagueRules" name="editLeagueRules" method="POST">
+                         <div class="col-lg-3">
+							<form id="editLeaguePoints" name="editLeaguePoints" method="POST">
 							 <input type="hidden" name="league_id" id="league_id" value="<?php print $id; ?>" />
-					       	  <textarea class="ckeditor form-control" id="body" name="body"><?php print $league['rules']; ?></textarea>
+					       	   <label>Wins</label>
+					       	   <input type="text" name="points_win" id="points_win" class="form-control text" value="<?php print $league['win']; ?>" />
+					       	   <label>Losses</label>
+					       	   <input type="text" name="points_loss" id="points_loss" class="form-control text" value="<?php print $league['loss']; ?>" />
+					       	   <label>Ties</label>
+					       	   <input type="text" name="points_tie" id="points_tie" class="form-control text" value="<?php print $league['tie']; ?>" />
 					      	   <hr/>	
-					      		<button type="submit" class="btn btn-primary">Edit</button>
-					        	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					      		<button type="submit" class="btn btn-primary">Update Points</button>
 					          <div class="success">
 					           <span class="success_text"></span>
 					          </div>
 					       </form>
+					     </div>
 					    <?php } else { ?>
 					    	<h3>No League was selected</h3>
 					    <?php } ?>
@@ -66,7 +72,6 @@
     <!-- SB Admin Scripts - Include with every page -->
     <script src="js/sb-admin.js"></script>
     <script src="js/ezleague.js"></script>
-    <script src="js/ckeditor/ckeditor.js"></script>
 
     <!-- Page-Level Demo Scripts - Dashboard - Use for reference -->
     <script src="js/demo/dashboard-demo.js"></script>

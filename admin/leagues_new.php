@@ -36,6 +36,18 @@
 										</select>
 									</div>
 									<div class="form-group">
+										<label>Points for Win</label>
+										<input type="text" class="form-control text" id="league-points-win" />
+									</div>
+									<div class="form-group">
+										<label>Points for Loss</label>
+										<input type="text" class="form-control text" id="league-points-loss" />
+									</div>
+									<div class="form-group">
+										<label>Points for Tie</label>
+										<input type="text" class="form-control text" id="league-points-tie" />
+									</div>
+									<div class="form-group">
 										<label>Start Date</label>
 										<input type="text" class="form-control text" id="league-start-date" />
 									</div>

@@ -120,13 +120,6 @@
                         <!-- /.panel-heading -->
                         <div class="panel-body">
                          <?php $news_categories = $ez->getNewsCategories(); ?>
-                         	  <div class="form-group">
-							    <div class="checkbox">
-							        <label>
-							            <input type="checkbox" name="category" id="category" value="general"></input> General
-							        </label>
-							    </div>
-							  </div>
                           <?php foreach($news_categories as $category) { ?>
                               <div class="form-group">
 							    <div class="checkbox">

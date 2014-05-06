@@ -732,9 +732,7 @@
 		}
 		
 		function upgrade() {
-			$this->link->query("ALTER TABLE `" . $this->prefix . "users` ADD COLUMN forget VARCHAR(250)");
-			$this->link->query("ALTER TABLE `" . $this->prefix . "guilds` DROP COLUMN elo");
-			$this->link->query("ALTER TABLE `" . $this->prefix . "results` ADD COLUMN points_given int(10) DEFAULT NULL");
+			$this->link->query("ALTER TABLE `users` ADD COLUMN forget VARCHAR(250)");
 			 print "Upgrade completed. Please delete <em>upgrade.php</em> from your server.";
 		}
 		

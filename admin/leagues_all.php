@@ -31,13 +31,16 @@
                                     </thead>
                         <?php $leagues = $ez->getLeaguesAll(); ?>
                                     <tbody>
-                          <?php foreach($leagues as $league) { ?>
+                          <?php foreach($leagues as $league) {
+                          		 $total_teams = $ez->getLeagueTotalTeams($league['id']); 
+                          ?>
                                         <tr>
-                                            <td><?php echo $league['league']; ?></td>
-                                            <td><?php echo $league['game']; ?></td>
-                                            <td></td>
-                                            <td><?php echo $league['teams']; ?></td>
+                                            <td><a href="leagues_view.php?id=<?php print $league['id']; ?>"><?php print $league['league']; ?></a></td>
+                                            <td><?php print $league['game']; ?></td>
+                                            <td><?php print $total_teams; ?></td>
+                                            <td><?php print ($league['teams'] == 5000 ? 'Unlimited' : $league['teams']); ?></td>
                                             <td>
+                                            	<a href="leagues_points.php?id=<?php print $league['id']; ?>" class="btn btn-success btn-xs">Points</a>
                                             	<a href="leagues_rules.php?id=<?php print $league['id']; ?>" class="btn btn-primary btn-xs">Rules</a>
 							            		<button type="button" onclick="deleteLeague('<?php echo $league['id']; ?>')" class="btn btn-danger btn-xs">Delete</button>
 							            	</td>

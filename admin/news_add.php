@@ -27,7 +27,7 @@
 									</div>
                                     <div class="form-group">
 									    <label>Body</label>
-									    <textarea class="ckeditor form-control" id="news_body" name="news_body"></textarea>
+									    <textarea class="ckeditor form-control" id="news_body"></textarea>
 									</div>
 									<div class="form-group">
 										<button class="btn btn-success" type="submit">Publish Post</button>
@@ -106,13 +106,6 @@
                         <!-- /.panel-heading -->
                         <div class="panel-body">
                          <?php $news_categories = $ez->getNewsCategories(); ?>
-                         	  <div class="form-group">
-							    <div class="checkbox">
-							        <label>
-							            <input type="checkbox" name="category" id="category" value="general"></input> General
-							        </label>
-							    </div>
-							  </div>
                           <?php foreach($news_categories as $category) { ?>
                               <div class="form-group">
 							    <div class="checkbox">
@@ -152,8 +145,6 @@
 
     <!-- SB Admin Scripts - Include with every page -->
     <script src="js/sb-admin.js"></script>
-    <link rel="stylesheet" href="css/summernote.css" />
-	<script type="text/javascript" src="js/summernote.min.js"></script>
     <script src="js/ezleague.js"></script>
     <script src="js/ckeditor/ckeditor.js"></script>
 
