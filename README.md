@@ -1,4 +1,4 @@
-ezLeague v1.3
+ezLeague v1.4
 ------------------------------------------------------------------------------------------------------------------------
 "a custom php online gaming script"
 
@@ -34,6 +34,14 @@ If you run into any issues, please post them on the Issues page (https://github.
 ------------------------------------------------------------------------------------------------------------------------
 BUG FIXES AND UPDATES
 ------------------------------------------------------------------------------------------------------------------------
+v1.4
+
+- ELO ranking system and corresponding columns have been removed (some functions still exist, as i plan to re-add this again later)
+- NEW Point Ranking System implemented across all games and leagues
+- standings page updated to reflect point ranking system implementation
+- admins can now change the point values given per win/loss/tie dependent on the league
+- match editing reflects the new point system update
+
 v1.3
 
  - View & Create Admins – currently on GitHub
