@@ -1,5 +1,6 @@
 <?php session_start();
 
+//ezLeague v1.5
 	class ezLeaguePub extends DB_Class {
 
 /*
@@ -407,9 +408,10 @@
 		}
 		
 		function getLeagueStandings($id) {
-			$data = $this->fetch("SELECT guild, id, leagues FROM `" . $this->prefix . "guilds` WHERE leagues LIKE '%,$id' OR leagues LIKE '$id,%' OR leagues LIKE '$id' ORDER BY elo DESC");
+			$data = $this->fetch("SELECT guild, id, leagues FROM `" . $this->prefix . "guilds` WHERE leagues LIKE '%,$id' OR leagues LIKE '$id,%' OR leagues LIKE '$id' ORDER BY id DESC");
 			 foreach($data as $team) {
 			 	$team_results = $this->fetch("SELECT * FROM `" . $this->prefix . "results` WHERE guild_id = '$team[id]' AND league_id = '$id'");
+			 	
 			 	 $team_points = 0;
 			 	  if($team_results) {	 //if the guild has any results submitted for this league
 				 	 foreach($team_results as $result) {
@@ -440,6 +442,18 @@
 			  }
 			  
 			   return $team_points;
+		}
+		
+		function getTeamGamePoints($team_id, $game) {
+			//first get the leagues for that game
+			$data = $this->fetch("SELECT * FROM `" . $this->prefix . "leagues` WHERE game = '$game'");
+			 $total_points = 0;
+			 foreach($data as $league) {
+				$points = $this->fetch("SELECT * FROM `" . $this->prefix . "results` WHERE league_id = '$league[id]' AND guild_id = '$team_id'");
+				 $total_points = $total_points + $points['0']['points_given'];
+			 }
+				 
+				return $total_points;	 
 		}
 		
 		function getTotalLeagueTeams($league) {
@@ -757,6 +771,13 @@
 			 }
 		}
 		
+		function getPredictions($challenge_id) {
+			$data = $this->fetch("SELECT * FROM `" . $this->prefix . "predictions`
+								  WHERE cid = '$challenge_id'
+								 ");
+				return $data;
+		}
+		
 /*
  * END CHALLENGES FUNCTIONALITY
  */		
@@ -988,6 +1009,19 @@
 			";
 			
 			$this->link->query($sql14);
+			
+			$sql15 = "
+			CREATE TABLE `" . $this->prefix . "predictions` (
+			`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+			`cid` int(10) DEFAULT NULL,
+			`team` int(10) DEFAULT NULL,
+			`comment` varchar(500) DEFAULT NULL,
+			`user` varchar(50) DEFAULT NULL,
+			PRIMARY KEY (`id`)
+			) ENGINE=MyISAM AUTO_INCREMENT=104 DEFAULT CHARSET=latin1;
+			";
+				
+			$this->link->query($sql15);
 			print "Installation Completed. Please <a href=\"admin\">Login</a>";
 		 } else {
 			print "<strong>Error</strong> Please check your connection details and try again";
