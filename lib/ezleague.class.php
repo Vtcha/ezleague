@@ -353,7 +353,7 @@
 		}
 		
 		function getTeamGame($team_id) {
-			$data = $this->fetch("SELECT game FROM `" . $this->prefix . "guilds` WHERE id = '$id'");
+			$data = $this->fetch("SELECT game FROM `" . $this->prefix . "guilds` WHERE id = '$team_id'");
 			 $game = $data['0']['game'];
 			  return $game;
 		}
@@ -401,7 +401,7 @@
 			$data = $this->fetch("SELECT leagues FROM `" . $this->prefix . "guilds` WHERE id = '$team_id'");
 			 $team_leagues = $data['0']['leagues'];
 			  $leagues = explode(",", $team_leagues);
-			   $new_leagues = ezLeague::removeArrayValue($league_id, $leagues);
+			   $new_leagues = ezLeaguePub::removeArrayValue($league_id, $leagues);
 			    $new_leagues = implode(",", $new_leagues);
 				 $this->link->query("UPDATE `" . $this->prefix . "guilds` SET leagues = '$new_leagues' WHERE id = '$team_id'");
 				 print "<strong>Success!</strong> Your Team has left the League";
@@ -1031,6 +1031,23 @@
 /*
  * END INSTALLATION FUNCTIONALITY
  */
+		
+/*
+ * START GENERAL FUNCTIONALITY
+ */		
+		
+		function removeArrayValue($string, $array) {
+			//$array = unserialize($array);
+			if(($key = array_search($string, $array)) !== false) {
+				unset($array[$key]);
+			}
+		
+			return $array;
+		}
+		
+/*
+ * END GENERAL FUNCTIONALITY
+ */		
 		
 		
 		
