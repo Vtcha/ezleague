@@ -1,4 +1,4 @@
-Welcome to ezLeague v1.3
+Welcome to ezLeague v1.6
 
 If you are upgrading your installation from a previous version, follow the steps below, otherwise these upgrades have already been included in the new version.
 
