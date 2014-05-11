@@ -2,6 +2,14 @@ Welcome to ezLeague v1.3
 
 If you are upgrading your installation from a previous version, follow the steps below, otherwise these upgrades have already been included in the new version.
 
+v1.6 Upgrade
+-----------------------------------------------------------------------
+HOW TO UPGRADE YOUR INSTALLATION TO 1.6 FROM PREVIOUS VERSIONS
+1) Upgrade your ezLeague repository from GitHub
+2) Upload and overwrite all new files
+3) Run the ./admin/upgrade.php file which will make all necessary database changes
+4) Enjoy! Please post any issues/bugs you may encounter
+
 v1.3 Upgrade
 -----------------------------------------------------------------------
 HOW TO UPGRADE YOUR INSTALLATION FROM V1.2 to V1.3
