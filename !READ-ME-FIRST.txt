@@ -1,4 +1,4 @@
-ezLeague Installation Guide v1.3 -- April 21, 2014
+ezLeague Installation Guide v1.6 -- May 10th, 2014
 ----------------------------------------------------
 
 1. Open '/lib/db.class.php' & '/admin/lib/db.class.php' and modify your site URL and database values
@@ -18,7 +18,6 @@ Michael Loring
 MDLoring@gmail.com
 http://www.mdloring.com
 
-Contributing Developers: Robert T (excusemyluck)
 
 ezLeague is licensed under the MIT License, Open Source Initiative & Creative Commons Attribution 3.0 License:
 
