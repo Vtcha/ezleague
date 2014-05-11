@@ -3,23 +3,26 @@
 	<div class="row">
 		  
           <?php include('sidebar.php'); ?>
-           <?php $users = $ez->getUsers(); ?>
-            <?php $total_users = count($users); ?>
           <div class="col-lg-10">
               <div class="panel panel-primary">
                 <div class="panel-heading">
-                  <h3 class="panel-title"><span class="bolder"><?php echo $site_name; ?></span> - <span class="italic">Members (<?php print $total_users; ?>)</span></h3>
+                  <h3 class="panel-title"><span class="bolder"><?php echo $site_name; ?></span> - <span class="italic">Member Search</span></h3>
                 </div>
                 <div class="panel-body">    
  	 		   <div class="col-lg-12"> 
  	 		     <div class="form-group input-group col-lg-3">
- 	 		      <form name="searchUsers" id="searchUsers" action="search/users" method="POST">
+ 	 		      <form name="searchUsers" id="searchUsers" method="POST">
 				    <input class="form-control" type="text" name="search" placeholder="Search Users"></input>
 				    <span class="input-group-btn">
 				     <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
 				    </span>
 				  </form>
-				</div>       
+				</div>
+				<?php 
+					$search = trim($_POST['search']);
+					 if(!empty($search)) {
+					  $results = $ez->searchUsers($search);
+				?>
                   <table class="table table-striped table-hover ">
 				   <thead>
 				    <tr>
@@ -32,7 +35,7 @@
 				   <tbody>			   
 	 <?php 
 	 	
-	 		foreach($users as $user) {
+	 		foreach($results as $user) {
 	 			$user_guild_id = $user['guild'];
 	 			 $user_guild_data = $ez->getUserGuild($user_guild_id);
 	 			  $user_guild = $user_guild_data['0']['guild'];
@@ -55,6 +58,9 @@
 	<?php } ?>				    
 				   </tbody>
 				  </table>
+			<?php } else { ?>
+				<strong>Error</strong> Nothing was searched for
+			<?php } ?>
 				 </div>		  
                 </div>
               </div>
@@ -63,10 +69,5 @@
         
 	</div>
 
-	<div id="dialog-confirm-team-invite" title="Team Invite Confirmation" style="display:none;">
-	 <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
-	 	Confirm sending team invite
-	 </p>
-	</div>
 
 <?php include('footer.php'); ?>

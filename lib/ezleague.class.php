@@ -199,6 +199,39 @@
 			  return $settings;
 		}
 		
+		function sendTeamInvite($user_id, $team_id) {
+			$current_invites = ezLeaguePub::getUserInvites($user_id);
+			 $new_invites = $current_invites . "," . $team_id;
+			 $this->link->query("UPDATE `" . $this->prefix . "users` SET invites = '$new_invites' WHERE id = '$user_id'");
+			print "Invite Sent";
+			return;
+		}
+		
+		function getUserInvites($user_id) {
+			$data = $this->fetch("SELECT invites FROM `" . $this->prefix . "users` WHERE id = '$user_id'");
+			 $invites = $data['0']['invites'];
+			  return $invites;	
+		}
+		
+		function getUsernameInvites($username) {
+			$data = $this->fetch("SELECT invites FROM `" . $this->prefix . "users` WHERE username = '$username'");
+			 $invites = $data['0']['invites'];
+			  return $invites;
+		}
+		
+		function joinTeam($team_id, $username) {
+			$this->link->query("UPDATE `" . $this->prefix . "users` SET guild = '$team_id', invites = ''
+								WHERE username = '$username'
+							   ");
+			 print "<strong>Success!</strong> You have joined the team";	
+		}
+		
+		function searchUsers($search) {
+			$data = $this->fetch("SELECT * FROM `" . $this->prefix . "users` WHERE username LIKE '%$search%'");
+			 return $data;
+		}
+		
+		
 /*
  * END USER FUNCTIONALITY
  */		
@@ -357,6 +390,7 @@
 			 $game = $data['0']['game'];
 			  return $game;
 		}
+		
 		
 /*
  * END TEAMS FUNCTIONALITY

@@ -28,12 +28,13 @@ $ez = new ezLeaguePub();
 <head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
-    <title><?php echo $site_name; ?> :: managed by ezLeague v1.0</title>
+    <title><?php echo $site_name; ?> :: managed by ezLeague v1.5</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="<?php echo $site_url; ?>/css/bootstrap.css" media="screen">
     <link rel="stylesheet" href="<?php echo $site_url; ?>/css/bootswatch.css">
     <!-- ezLeague Custom Styling -->
     <link rel="stylesheet" href="<?php echo $site_url; ?>/css/ezleague.css">
+    <link rel="stylesheet" href="<?php echo $site_url; ?>/css/jquery-ui-1.10.4.custom.min.css">
     
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
     
@@ -87,6 +88,14 @@ $ez = new ezLeaguePub();
             <li><a href="#" data-target="#loginModal" data-toggle="modal">Login</a></li>
             <li><a href="#" data-target="#registerModal" data-toggle="modal">Register</a></li>
            <?php } else { ?>
+            <?php /* check for team invites for the user */
+            		$invites = $ez->getUsernameInvites($ez_username); 
+            		 if($invites != '' && $ez_guild_id == '') {
+            		 	$team_invites = explode(",", $invites);
+            		 	 $total_invites = count($team_invites);
+            ?>
+            <li><a href="<?php echo $site_url; ?>/settings" style="color:#4F78A4;font-weight:700;">Team Invites (<?php print $total_invites; ?>)</a></li>
+            <?php 	 } ?>
             <li><a href="<?php echo $site_url; ?>/settings">My Settings (<?php echo $_SESSION['ez_username']; ?>)</a></li>
              <?php if(isset($_SESSION['ez_admin'])) { ?>
             <li><a href="<?php echo $site_url; ?>/admin">Admin</a></li>

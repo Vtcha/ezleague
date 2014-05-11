@@ -45,6 +45,29 @@
                             </fieldset>
                         </form>
 				 </div>		  
+				 <div class="col-lg-5"> 
+	             <?php if($ez_guild_id == '') { ?>
+ 	 		   	      <h3>Team Invites</h3>
+ 	 		   	   <?php $invites = $ez->getUsernameInvites($ez_username); ?>
+ 	 		   	    <?php if($invites != '') { ?>
+ 	 		     		<small>You have been invited to the following teams</small>
+ 	 		     		<table class="table">
+                        <?php 
+                        	 $team_invites = explode(",", $invites);
+                        	  foreach($team_invites as $invite) {
+                        	  	$team = $ez->getTeam($invite);
+                        	  ?>
+                        	  	<tr>
+                        	  	 <td><a href="game/<?php print $team['0']['game']; ?>/teams/id/<?php print $team['0']['id']; ?>"><?php print $team['0']['guild']; ?></a></td>
+                        	  	 <td><button onclick="joinTeam('<?php print $ez_username; ?>', '<?php print $team['0']['id']; ?>')" class="btn btn-info btn-sm">Join Team</button></td>
+                        	  	</tr>
+                        <?php } ?>
+                    <?php } else { ?>
+                    	<small>Sorry, you have not received any team invites yet</small>
+                    <?php } ?>
+                 <?php } ?>
+                        </table>
+				 </div>		  
                 </div>
               </div>
 

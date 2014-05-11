@@ -129,6 +129,18 @@ $ez_username = $_SESSION['ez_username'];
 		 		$admin		= $_POST['admin'];
 		 		 $ez->updateTeamSettings($id, $gm, $agm, $site, $admin);
 		 		break;
+		 		
+		 	case 'teamInvite':
+		 		$user_id	= $_POST['user_id'];
+		 		$team_id	= $_POST['team_id'];
+		 		 $ez->sendTeamInvite($user_id, $team_id);
+		 		break;
+		 		
+		 	case 'joinTeam':
+		 		$username	= $_POST['username'];
+		 		$team_id	= $_POST['team_id'];
+		 		 $ez->joinTeam($team_id, $username);
+		 		break;
 		 	
 		 	default:
 		 		break;
