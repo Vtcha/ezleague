@@ -28,7 +28,7 @@ $ez = new ezLeaguePub();
 <head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
-    <title><?php echo $site_name; ?> :: managed by ezLeague v1.5</title>
+    <title><?php echo $site_name; ?> :: managed by ezLeague v1.6</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="<?php echo $site_url; ?>/css/bootstrap.css" media="screen">
     <link rel="stylesheet" href="<?php echo $site_url; ?>/css/bootswatch.css">

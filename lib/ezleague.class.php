@@ -1,6 +1,6 @@
 <?php session_start();
 
-//ezLeague v1.5
+//ezLeague v1.6
 	class ezLeaguePub extends DB_Class {
 
 /*
@@ -1038,6 +1038,7 @@
 			  `hash` varchar(100) DEFAULT NULL,
 			  `status` int(1) DEFAULT '0',
 			  `forget` varchar(250) DEFAULT NULL,
+			  `invites` varchar(100) DEFAULT NULL,
 			  PRIMARY KEY (`id`)
 			) ENGINE=MyISAM AUTO_INCREMENT=104 DEFAULT CHARSET=latin1;
 			";

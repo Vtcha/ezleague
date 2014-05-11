@@ -1,7 +1,8 @@
 <?php session_start();
-
+//ezLeague v1.5
+	
 	class ezLeague extends DB_Class {
-		
+
 /*
  * START LOGIN & REGISTRATION FUNCTIONALITY
  */
@@ -732,7 +733,26 @@
 		}
 		
 		function upgrade() {
+			//upgrade to v1.4
 			$this->link->query("ALTER TABLE `users` ADD COLUMN forget VARCHAR(250)");
+			
+			//upgrade to v1.5
+			$oneFiveUpdate = "
+								CREATE TABLE `" . $this->prefix . "predictions` (
+								`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+								`cid` int(10) DEFAULT NULL,
+								`team` int(10) DEFAULT NULL,
+								`comment` varchar(500) DEFAULT NULL,
+								`user` varchar(50) DEFAULT NULL,
+								PRIMARY KEY (`id`)
+								) ENGINE=MyISAM AUTO_INCREMENT=104 DEFAULT CHARSET=latin1;
+							";
+				$this->link->query($oneFiveUpdate);
+
+			//upgrade to 1.6
+			$oneSixUpdate = "ALTER TABLE `users` ADD COLUMN invites VARCHAR(100)";
+				$this->link->query($oneSixUpdate);
+
 			 print "Upgrade completed. Please delete <em>upgrade.php</em> from your server.";
 		}
 		
