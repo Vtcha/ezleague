@@ -1,4 +1,4 @@
-ezLeague v1.4
+ezLeague v1.6
 ------------------------------------------------------------------------------------------------------------------------
 "a custom php online gaming script"
 
@@ -34,8 +34,17 @@ If you run into any issues, please post them on the Issues page (https://github.
 ------------------------------------------------------------------------------------------------------------------------
 BUG FIXES AND UPDATES
 ------------------------------------------------------------------------------------------------------------------------
-v1.4
+v1.6
+- Member Search added to Members page
+- Team Invite functionality added with a confirmation popup
+- Team Invites notification added to header
 
+v1.5
+- Various fixes to Leagues and corresponding functionality
+- removed any remaining mentions of ELO
+- Leave League and Join League functionality updated
+
+v1.4
 - ELO ranking system and corresponding columns have been removed (some functions still exist, as i plan to re-add this again later)
 - NEW Point Ranking System implemented across all games and leagues
 - standings page updated to reflect point ranking system implementation
@@ -43,7 +52,6 @@ v1.4
 - match editing reflects the new point system update
 
 v1.3
-
  - View & Create Admins – currently on GitHub
  - Create users
  - Update profile settings (password & email) – currently on GitHub
