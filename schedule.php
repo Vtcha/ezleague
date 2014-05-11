@@ -28,7 +28,9 @@
 					 <?php 
                   			  foreach($league_schedule as $schedule) { ?>
                   			   <tr>
-                  				<td><a class="text-primary bolder" href="http://mdloring.com/ezleague/game/<?php print $current_game; ?>/teams/id/<?php print $schedule['challenger']; ?>"><?php print $schedule['g_challenger'] . "</a> vs <a class=\"text-info bolder\" href=\"http://mdloring.com/ezleague/game/$current_game/teams/id/$schedule[challengee]\">" . $schedule['g_challengee']; ?></a></td>
+                  				<td>
+                  						<a class="text-primary bolder" href="http://mdloring.com/ezleague/game/<?php print $current_game; ?>/teams/id/<?php print $schedule['challenger']; ?>"><?php print $schedule['g_challenger'] . "</a> vs <a class=\"text-info bolder\" href=\"http://mdloring.com/ezleague/game/$current_game/teams/id/$schedule[challengee]\">" . $schedule['g_challengee']; ?></a>
+                  				</td>
                   				<td><?php print date('F d, Y', strtotime($schedule['created'])); ?></td>
                   				<td>
                   					<?php if($schedule['match_date'] == '') { ?>
@@ -36,7 +38,12 @@
                   					<?php } else { ?>
                   						<?php print date('F d, Y', strtotime($schedule['match_date'])); ?>
                   					<?php } ?>
-                  				</td>  	
+                  				</td> 
+                  				<td>
+                  				 <?php if(isset($ez_username)) { ?>
+                  					<!-- <a href="<?php print $site_url; ?>/game/<?php print strtolower($current_game); ?>/predictions/id/<?php print $schedule['id']; ?>" class="btn btn-primary btn-xs"><i class="fa fa-bar-chart-o"></i> Make Prediction</a> -->
+                  				 <?php } ?>		
+                  				</td>	
                   			   </tr>
                   	<?php  } ?>
                   	   </tbody>
