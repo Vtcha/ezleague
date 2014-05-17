@@ -1,4 +1,4 @@
-ezLeague v1.6
+ezLeague v2.0
 ------------------------------------------------------------------------------------------------------------------------
 "a custom php online gaming script"
 
@@ -34,6 +34,14 @@ If you run into any issues, please post them on the Issues page (https://github.
 ------------------------------------------------------------------------------------------------------------------------
 BUG FIXES AND UPDATES
 ------------------------------------------------------------------------------------------------------------------------
+v2.0
+- User Inbox/Message System
+- Prediction System for matches/challenges
+- About Us page -- modified through the Admin Panel Site Settings
+- Contact Us page -- modified through the Admin Panel Site Settings
+- .htaccess file changes made to handle new pages
+- re-wrote the installation and upgrade functions to utilize mysqli_multi_query()
+
 v1.6
 - Member Search added to Members page
 - Team Invite functionality added with a confirmation popup
