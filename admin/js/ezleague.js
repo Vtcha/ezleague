@@ -433,6 +433,46 @@
 	
 	});
 	
+//site contact email
+	$('#siteSettingsContact').submit(function(e) {
+		var email			= $("#email").val();
+		
+		e.preventDefault();
+		 $.ajax({
+		     type: "POST",
+		     async: false,
+		     url: "submit.php",
+		     data: "form=siteSettingsContact&email=" + email
+		   }).success(function( msg ) {
+			   	  $('.success').css("display", "");
+			      $(".success").fadeIn(1000, "linear");
+			      $('.success_text').fadeIn("slow");
+			      $('.success_text').html(msg);
+			      setTimeout(function(){location.reload()},3000);
+		  });
+	
+	});
+	
+//site about content
+	$('#siteSettingsAbout').submit(function(e) {
+		var about			= CKEDITOR.instances['content'].getData();
+		
+		e.preventDefault();
+		 $.ajax({
+		     type: "POST",
+		     async: false,
+		     url: "submit.php",
+		     data: "form=siteSettingsAbout&content=" + about
+		   }).success(function( msg ) {
+			   	  $('.success').css("display", "");
+			      $(".success").fadeIn(1000, "linear");
+			      $('.success_text').fadeIn("slow");
+			      $('.success_text').html(msg);
+			      setTimeout(function(){location.reload()},3000);
+		  });
+	
+	});
+	
 //edit match score & status
 	$('#editMatchDetails').submit(function(e) {
 		var match_id			= $("#matchId").val();

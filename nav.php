@@ -23,10 +23,6 @@
                     <li><a href="<?php echo $site_url; ?>/game/<?php echo $game_slug; ?>/standings">Standings</a></li>
                     <li><a href="<?php echo $site_url; ?>/game/<?php echo $game_slug; ?>/teams">Teams</a></li>
                   </ul>
-
-                  <ul class="nav navbar-nav navbar-right">
-                    <li><a href="<?php echo $site_url; ?>/contact">Contact</a></li>
-                  </ul>
                 <?php } ?>
                 </div>
               </div>

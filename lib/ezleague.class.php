@@ -141,7 +141,12 @@
 		function getSiteSettings() {
 			$settings = array();
 			 $data = $this->fetch("SELECT * FROM `" . $this->prefix . "settings` WHERE id = '1'");
-			  $settings = array('name' => $data['0']['site_name'], 'url' => $data['0']['site_url']);
+			  $settings = array(
+			  					'name'  => $data['0']['site_name'], 
+			  					'url'   => $data['0']['site_url'],
+			  					'about' => $data['0']['site_about'],
+			  					'email' => $data['0']['site_email']
+			  				   );
 			 return $settings;
 		}
 		
@@ -175,6 +180,12 @@
 		function getUser($id) {
 			$data = $this->fetch("SELECT * FROM `" . $this->prefix . "users` WHERE id = '$id'");
 			 return $data;
+		}
+		
+		function getUserId($username) {
+			$data = $this->fetch("SELECT id FROM `" . $this->prefix . "users` WHERE username = '$username'");
+			 $user_id = $data['0']['id'];
+			  return $user_id;
 		}
 		
 		function getUserGuild($guild_id) {
@@ -234,6 +245,95 @@
 		
 /*
  * END USER FUNCTIONALITY
+ */		
+		
+/*
+ * START INBOX FUNCTIONALITY
+ */		
+		
+		function getInbox($username) {
+			$data = $this->fetch("SELECT * FROM `" . $this->prefix . "inbox_messages` WHERE recipient = '$username'
+								 ");
+			 return $data;
+		}
+		
+		function countNewInbox($username) {
+			$result = $this->link->query("SELECT * FROM `" . $this->prefix . "inbox_messages` WHERE recipient  = '$username'
+										  AND status = 'unread'
+										 ");
+			 $total = $this->numRows($result);
+			  return $total;
+		}
+		
+		function getMessage($id) {
+			$data = $this->fetch("SELECT * FROM `" . $this->prefix . "inbox_original` WHERE id = '$id'");
+			 return $data;	
+		}
+		
+		function checkMessageAccess($id, $username) {
+			$result = $this->link->query("SELECT id FROM `" . $this->prefix . "inbox_messages`
+										  WHERE msg_id = '$id' AND recipient = '$username'
+										");
+			 $total = $this->numRows($result);
+			  if($total == 0) {
+			  	return false;
+			  } else {
+			  	return true;
+			  }	
+		}
+		
+		function getMessageReplies($id, $username) {
+			$data = $this->fetch("SELECT * FROM `" . $this->prefix . "inbox_replies` 
+								  WHERE msg_id = '$id'
+								  ORDER BY date ASC
+								 ");
+			 return $data;
+		}
+		
+		function sendMessage($subject, $message, $receiver, $sender) {
+			$message = $this->link->real_escape_string($message);
+			 //store the original message
+			 $this->link->query("INSERT INTO `" . $this->prefix . "inbox_original` SET subject = '$subject',
+								 sender = '$sender', message = '$message'
+								");
+			 //get the msg id
+			 $data = $this->fetch("SELECT id FROM `" . $this->prefix . "inbox_original`
+			 					   ORDER BY id DESC LIMIT 1
+			 					  ");
+			  $msg_id = $data['0']['id'];
+			$recipients = str_replace(" ", "", $receiver);
+			 $recipients_list = explode(",",$recipients);
+			   foreach($recipients_list as $recipient) {
+			   	 $this->link->query("INSERT INTO `" . $this->prefix . "inbox_messages` 
+						     		 SET recipient = '$recipient', msg_id = '$msg_id', subject = '$subject',
+			   	 					 sender = '$sender'
+			     					");
+			   }
+
+			  print "<strong>Success!</strong> Message has been sent";
+		}
+		
+		function sendResponse($message_id, $message, $sender) {
+			$message = $this->link->real_escape_string($message);
+			   	 $this->link->query("INSERT INTO `" . $this->prefix . "inbox_replies` 
+			   	 					 SET sender = '$sender', message = '$message', msg_id = '$message_id'
+			     					");
+			   	 $this->link->query("UPDATE `" . $this->prefix . "inbox_messages` 
+						     		 SET status = 'unread'
+			   	 					 WHERE msg_id = '$message_id'
+			   	 				   ");
+			   
+			 print "<strong>Success!</strong> Reply has been sent";
+		}
+		
+		function markRead($message_id, $recipient) {
+			$this->link->query("UPDATE `" . $this->prefix . "inbox_messages` SET status = 'read'
+								WHERE recipient = '$recipient' AND msg_id = '$message_id'
+							  ");	
+		}
+		
+/*
+ * END INBOX FUNCTIONALITY
  */		
 		
 /*  
@@ -807,9 +907,27 @@
 		
 		function getPredictions($challenge_id) {
 			$data = $this->fetch("SELECT * FROM `" . $this->prefix . "predictions`
-								  WHERE cid = '$challenge_id'
+								  WHERE cid = '$challenge_id' 
+								  ORDER BY id DESC
 								 ");
 				return $data;
+		}
+		
+		function countPredictions($challenge_id, $team_id) {
+			$result = $this->link->query("SELECT * FROM `" . $this->prefix . "predictions`
+								  WHERE cid = '$challenge_id' AND team = '$team_id'
+								");
+			 $total = $this->numRows($result);
+			  return $total;
+		}
+		
+		function makePrediction($username, $challenge_id, $winner, $comment) {
+			$comment = $this->link->real_escape_string($comment);
+			$this->link->query("INSERT INTO `" . $this->prefix . "predictions` SET cid = '$challenge_id', team = '$winner',
+								comment = '$comment', user = '$username'
+							  ");
+			  print "<strong>Success!</strong> Prediction has been saved";
+				return;
 		}
 		
 /*
@@ -824,7 +942,7 @@
 		
 		 $test_connection = mysqli_connect($this->host,$this->username,$this->password,$this->database) or die("Error " . mysqli_error($link));
 		  if($test_connection) {
-			$sql1 = "
+			$sql = "
 			CREATE TABLE `" . $this->prefix . "challenges` (
 			  `id` int(10) NOT NULL AUTO_INCREMENT,
 			  `challenger` int(10) DEFAULT NULL,
@@ -844,12 +962,8 @@
 			  `challenger_score` int(10) DEFAULT NULL,
 			  `challengee_score` int(10) DEFAULT NULL,
 			  PRIMARY KEY (`id`)
-			) ENGINE=MyISAM AUTO_INCREMENT=100 DEFAULT CHARSET=latin1;
-			";
+			);
 			
-			$this->link->query($sql1);
-			
-			$sql2= "
 			CREATE TABLE `" . $this->prefix . "disputes` (
 			  `id` int(10) NOT NULL AUTO_INCREMENT,
 			  `challenge_id` int(10) DEFAULT NULL,
@@ -858,12 +972,8 @@
 			  `status` int(1) DEFAULT '0',
 			  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
 			  PRIMARY KEY (`id`)
-			) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
-			";
+			);
 			
-			$this->link->query($sql2);
-			
-			$sql3 = "
 			CREATE TABLE `" . $this->prefix . "forum_answer` (
 			  `a_id` int(10) NOT NULL AUTO_INCREMENT,
 			  `question_id` int(10) NOT NULL,
@@ -873,12 +983,8 @@
 			  `a_username` varchar(55) NOT NULL,
 			  `a_user_id` int(10) NOT NULL,
 			  PRIMARY KEY (`a_id`)
-			) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
-			";
+			);
 			
-			$this->link->query($sql3);
-			
-			$sql4 = "
 			CREATE TABLE `" . $this->prefix . "forum_question` (
 			  `id` int(10) NOT NULL AUTO_INCREMENT,
 			  `topic` varchar(255) NOT NULL,
@@ -893,34 +999,22 @@
 			  `recent_user_id` int(10) NOT NULL,
 			  `recent_modified` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
 			  PRIMARY KEY (`id`)
-			) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
-			";
+			);
 			
-			$this->link->query($sql4);
-			
-			$sql5 = "
 			CREATE TABLE `" . $this->prefix . "forum_section` (
 			  `id` int(10) NOT NULL AUTO_INCREMENT,
 			  `section_name` varchar(50) NOT NULL,
 			  `type` varchar(25) NOT NULL DEFAULT 'public',
 			  PRIMARY KEY (`id`)
-			) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
-			";
+			);
 			
-			$this->link->query($sql5);
-			
-			$sql6 = "
 			CREATE TABLE `" . $this->prefix . "games` (
 			  `id` int(10) NOT NULL AUTO_INCREMENT,
 			  `game` varchar(100) DEFAULT NULL,
 			  `slug` varchar(50) NOT NULL,
 			  PRIMARY KEY (`id`)
-			) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
-			";
+			);
 			
-			$this->link->query($sql6);
-			
-			$sql7 = "
 			CREATE TABLE `" . $this->prefix . "guilds` (
 			  `id` int(10) NOT NULL AUTO_INCREMENT,
 			  `guild` varchar(50) DEFAULT NULL,
@@ -933,12 +1027,8 @@
 			  `game` varchar(25) DEFAULT NULL,
 			  `leagues` varchar(50) DEFAULT NULL,
 			  PRIMARY KEY (`id`,`admin`)
-			) ENGINE=MyISAM AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
-			";
+			);
 			
-			$this->link->query($sql7);
-			
-			$sql8 = "
 			CREATE TABLE `" . $this->prefix . "leagues` (
 			  `id` int(10) NOT NULL AUTO_INCREMENT,
 			  `league` varchar(50) DEFAULT NULL,
@@ -953,12 +1043,8 @@
 			  `loss_points` int(10) DEFAULT '1',
 			  `tie_points` int(10) DEFAULT '2',
 			  PRIMARY KEY (`id`)
-			) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
-			";
+			);
 			
-			$this->link->query($sql8);
-			
-			$sql9 ="
 			CREATE TABLE `" . $this->prefix . "news` (
 			  `id` int(10) NOT NULL AUTO_INCREMENT,
 			  `title` varchar(255) DEFAULT NULL,
@@ -969,22 +1055,14 @@
 			  `published` int(1) DEFAULT '0',
 			  `game` varchar(25) DEFAULT NULL,
 			  PRIMARY KEY (`id`)
-			) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
-			";
+			);
 			
-			$this->link->query($sql9);
-
-			$sql10 = "
 			CREATE TABLE `" . $this->prefix . "news_category` (
 			  `id` int(10) NOT NULL AUTO_INCREMENT,
 			  `category` varchar(50) DEFAULT NULL,
 			  PRIMARY KEY (`id`)
-			) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
-			";
+			);
 			
-			$this->link->query($sql10);
-	
-			$sql11 = "
 			CREATE TABLE `" . $this->prefix . "results` (
 			  `id` int(10) NOT NULL AUTO_INCREMENT,
 			  `guild_id` int(10) NOT NULL,
@@ -994,12 +1072,8 @@
 			  `challenge_id` int(10) DEFAULT NULL,
 			  `points_given` int(10) DEFAULT NULL,
 			  PRIMARY KEY (`id`)
-			) ENGINE=MyISAM AUTO_INCREMENT=329 DEFAULT CHARSET=latin1;
-			";
+			);
 			
-			$this->link->query($sql11);
-			
-			$sql12 = "
 			CREATE TABLE `" . $this->prefix . "screenshots` (
 			  `id` int(10) NOT NULL AUTO_INCREMENT,
 			  `filename` varchar(255) NOT NULL,
@@ -1007,26 +1081,20 @@
 			  `uploader` varchar(55) NOT NULL,
 			  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
 			  PRIMARY KEY (`id`)
-			) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
-			";
+			);
 			
-			$this->link->query($sql12);
-			
-			$sql13 = "
 			CREATE TABLE `" . $this->prefix . "settings` (
 			  `id` int(1) NOT NULL DEFAULT '1',
 			  `site_name` varchar(100) DEFAULT NULL,
 			  `site_url` varchar(255) DEFAULT NULL,
+			  `site_about` blob DEFAULT NULL,
+			  `site_email` varchar(500) DEFAULT NULL,
 			  PRIMARY KEY (`id`)
-			) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-			";
-				$set_settings = "INSERT INTO `" . $this->prefix . "settings` SET site_name = '$site_name', site_url = '$this->site_url'
-							    ";
-			$this->link->query($sql13);
-			 $this->link->query($set_settings);
+			);
 			
-			$sql14 = "
-			CREATE TABLE `" . $this->prefix . "users` (
+			INSERT INTO `" . $this->prefix . "settings` SET site_name = '$site_name', site_url = '$this->site_url';
+
+			CREATE TABLE `" . $this->prefix . "userss` (
 			  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
 			  `username` varchar(50) DEFAULT NULL,
 			  `email` varchar(150) DEFAULT NULL,
@@ -1040,28 +1108,56 @@
 			  `forget` varchar(250) DEFAULT NULL,
 			  `invites` varchar(100) DEFAULT NULL,
 			  PRIMARY KEY (`id`)
+			);
+			
+			CREATE TABLE `" . $this->prefix . "predictions` (
+			`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+			`cid` int(10) DEFAULT NULL,
+			`team` int(10) DEFAULT NULL,
+			`comment` varchar(500) DEFAULT NULL,
+			`user` varchar(50) DEFAULT NULL,
+			`date` timestamp DEFAULT CURRENT_TIMESTAMP,
+			PRIMARY KEY (`id`)
+			);
+			
+			CREATE TABLE `" . $this->prefix . "inbox_original` (
+			`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+			`sender` varchar(50) DEFAULT NULL,
+			`subject` varchar(250) DEFAULT NULL,
+			`message` blob DEFAULT NULL,
+			`date` timestamp DEFAULT CURRENT_TIMESTAMP,
+			PRIMARY KEY (`id`)
+			);
+			
+			CREATE TABLE `" . $this->prefix . "inbox_messages` (
+			`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+			`msg_id` int(10) DEFAULT NULL,
+			`sender` varchar(50) DEFAULT NULL,
+			`recipient` varchar(250) DEFAULT NULL,
+			`subject` varchar(250) DEFAULT NULL,
+			`status` varchar(250) DEFAULT 'unread',
+			`date` timestamp DEFAULT CURRENT_TIMESTAMP,
+			PRIMARY KEY (`id`)
+			);
+			
+			CREATE TABLE `" . $this->prefix . "inbox_replies` (
+			`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+			`msg_id` int(10) DEFAULT NULL,
+			`sender` varchar(50) DEFAULT NULL,
+			`message` blob DEFAULT NULL,
+			`date` timestamp DEFAULT CURRENT_TIMESTAMP,
+			PRIMARY KEY (`id`)
 			) ENGINE=MyISAM AUTO_INCREMENT=104 DEFAULT CHARSET=latin1;
 			";
 			
-			$this->link->query($sql14);
+			mysqli_multi_query($test_connection, $sql);
 			
-			$sql15 = "
-			CREATE TABLE `" . $this->prefix . "predictions` (
-			`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-			`cid` int(10) DEFAULT NULL,
-			`team` int(10) DEFAULT NULL,
-			`comment` varchar(500) DEFAULT NULL,
-			`user` varchar(50) DEFAULT NULL,
-			PRIMARY KEY (`id`)
-			) ENGINE=MyISAM AUTO_INCREMENT=104 DEFAULT CHARSET=latin1;
-			";
-				
-			$this->link->query($sql15);
 			print "Installation Completed. Please <a href=\"admin\">Login</a>";
 		 } else {
 			print "<strong>Error</strong> Please check your connection details and try again";
 		 }
 		}
+		
 		
 /*
  * END INSTALLATION FUNCTIONALITY
@@ -1078,6 +1174,29 @@
 			}
 		
 			return $array;
+		}
+		
+		function sendEmail($to, $from, $name, $msg) {
+			$subject = 'ezLeague - Web Site Message';
+				
+			$headers = "From: " . $from . "\r\n";
+			$headers .= "Reply-To: ". $from . "\r\n";
+			$headers .= "MIME-Version: 1.0\r\n";
+			$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
+				
+			$message = '<html><body>';
+			$message .= '<h1>ezLeague Message</h1>';
+			$message .= '<small>The following message was sent from your ezLeague web site</small>';
+			$message .= '<table>';
+			$message .= '<tr><td><strong>From</strong></td><td>' . $from . '</td></tr>';
+			$message .= '<tr><td><strong>Name</strong></td><td>' . $name . '</td></tr>';
+			$message .= '<tr><td><strong>Message</strong></td><td>' . $msg . '</td></tr>';
+			$message .= '</table>';
+			$message .= '</body></html>';
+				
+			mail($to, $subject, $message, $headers);
+			
+			print "<strong>Success!</strong> Your message has been sent";
 		}
 		
 /*

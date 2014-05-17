@@ -200,6 +200,16 @@
     	 	 	 $ez->siteSettingsURL($url);
     	 	  break;
     	 	  
+    	 	 case 'siteSettingsContact':
+    	 	 	$email		= $_POST['email'];
+    	 	 	 $ez->siteSettingsContact($email);
+    	 	  break;
+    	 	  
+    	 	 case 'siteSettingsAbout':
+    	 	 	$content	= $_POST['content'];
+    	 	 	 $ez->siteSettingsAbout($content);
+    	 	  break;
+    	 	  
     	 	 case 'createAdmin':
     	 	 	$username	= $_POST['username'];
     	 	 	$email		= $_POST['email'];

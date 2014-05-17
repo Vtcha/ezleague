@@ -49,6 +49,34 @@ $ez_username = $_SESSION['ez_username'];
 		 		 $ez->runInstaller($site_name);
 		 		break;
 		 		
+		 	case 'makePrediction':
+		 		$cid		= $_POST['challenge_id'];
+		 		$winner		= $_POST['winner'];
+		 		$comment	= $_POST['comment'];
+		 		 $ez->makePrediction($ez_username, $cid, $winner, $comment);
+		 		break;
+		 		
+		 	case 'sendMessage':
+		 		$recipients		= $_POST['recipients'];
+		 		$subject		= $_POST['subject'];
+		 		$message		= $_POST['message'];
+		 		 $ez->sendMessage($subject, $message, $recipients, $ez_username);
+		 		break;
+		 		
+	 		case 'sendReply':
+	 			$message		= $_POST['message'];
+	 			$message_id		= $_POST['message_id'];
+	 			 $ez->sendResponse($message_id, $message, $ez_username);
+	 		    break;
+	 		    
+	 		case 'contactEmail':
+	 			$name			= $_POST['name'];
+	 			$to 			= $_POST['to'];
+	 			$from 			= $_POST['from'];
+	 			$message		= $_POST['message'];
+	 			 $ez->sendEmail($to, $from, $name, $message);
+	 			break;
+		 		
 /*
  * LEAGUES & CHALLENGES
  */		 

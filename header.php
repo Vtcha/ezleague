@@ -9,6 +9,7 @@ $ez = new ezLeaguePub();
   
   if(isset($_SESSION['ez_username'])) {
   	$ez_username = $_SESSION['ez_username'];
+  	$ez_user_id  = $ez->getUserId($ez_username);
   	$ez_guild_id = $ez->getUserGuildId($ez_username);
   		$ez_guild_details = $ez->getTeam($ez_guild_id);
   		$ez_guild_admin = $ez_guild_details['0']['admin'];
@@ -28,7 +29,7 @@ $ez = new ezLeaguePub();
 <head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
-    <title><?php echo $site_name; ?> :: managed by ezLeague v1.6</title>
+    <title><?php echo $site_name; ?> :: managed by ezLeague v2.0</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="<?php echo $site_url; ?>/css/bootstrap.css" media="screen">
     <link rel="stylesheet" href="<?php echo $site_url; ?>/css/bootswatch.css">
@@ -78,6 +79,15 @@ $ez = new ezLeaguePub();
             <li>
               <a href="<?php echo $site_url; ?>/users">Members</a>
             </li>
+            <li>
+              <a>|</a>
+            </li>
+            <li>
+              <a href="<?php echo $site_url; ?>/about">About</a>
+            </li>
+            <li>
+              <a href="<?php echo $site_url; ?>/contact">Contact</a>
+            </li>
           <!--   <li>
               <a href="#">Forum</a>
             </li> -->
@@ -94,8 +104,9 @@ $ez = new ezLeaguePub();
             		 	$team_invites = explode(",", $invites);
             		 	 $total_invites = count($team_invites);
             ?>
-            <li><a href="<?php echo $site_url; ?>/settings" style="color:#4F78A4;font-weight:700;">Team Invites (<?php print $total_invites; ?>)</a></li>
+            <li><a href="<?php echo $site_url; ?>/settings" style="color:#4F78A4;font-weight:700;">Team Invites<span class="badge"><?php print $total_invites; ?></span></a></li>
             <?php 	 } ?>
+            <li><a href="<?php echo $site_url; ?>/inbox/view">Inbox <span class="badge"><?php print $ez->countNewInbox($ez_username);  ?></span></a></li>
             <li><a href="<?php echo $site_url; ?>/settings">My Settings (<?php echo $_SESSION['ez_username']; ?>)</a></li>
              <?php if(isset($_SESSION['ez_admin'])) { ?>
             <li><a href="<?php echo $site_url; ?>/admin">Admin</a></li>

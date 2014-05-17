@@ -140,7 +140,44 @@
 	});
 	
 	function teamInvite(user_id, team_id) {
-		alert('U: ' + user_id + ' T: ' + team_id);
+		$(function() {
+			  $( "#dialog-confirm-team-invite" ).dialog({
+				 resizable: false,
+				 height:140,
+				 modal: true,
+				 buttons: {
+					 "Sent Invite": function() {
+						$( this ).dialog( "close" );
+						
+						$.ajax({
+						     type: "POST",
+						     url: url,
+						     data: { form: 'teamInvite', user_id: '' + user_id + '', team_id: '' + team_id + '' }
+						   }).success(function( msg ) {
+							      $('#inv-' + user_id).text(msg);
+							      //setTimeout(function(){location.reload()},3000);
+						  });
+					 },
+					 Cancel: function() {
+					    $( this ).dialog( "close" );
+					 }
+				 }
+			  });
+		  });
+	}
+	
+	function joinTeam(username, team_id) {
+		$.ajax({
+		     type: "POST",
+		     url: url,
+		     data: { form: 'joinTeam', username: '' + username + '', team_id: '' + team_id + '' }
+		   }).success(function( msg ) {
+			   	  $('.success').css("display", "");
+			      $(".success").fadeIn(1000, "linear");
+			      $('.success_text').fadeIn("slow");
+			      $('.success_text').html(msg);
+			      setTimeout(function(){location.reload()},3000);
+		  });
 	}
 
 /*
@@ -159,7 +196,7 @@
 			      $(".success").fadeIn(1000, "linear");
 			      $('.success_text').fadeIn("slow");
 			      $('.success_text').html(msg);
-			      //setTimeout(function(){location.reload()},3000);
+			      setTimeout(function(){location.reload()},3000);
 		  });
 	}
 
@@ -491,4 +528,93 @@
 		      setTimeout(function(){location.reload()},3000);
 	  });
 	});
-	
+	
+//make prediction
+	$('#matchPrediction').submit(function(e) {
+		var	winner		= $('input[name=predictionWinner]:checked', '#matchPrediction').val()
+			challengee	= $("#predictionChallengee").val();
+			comment		= $("textarea#predictionComment").val();
+			cid			= $("#predictionChallenge").val();
+			
+		 e.preventDefault();
+	 $.ajax({
+	     type: "POST",
+	     url: url,
+	     data: { form: 'makePrediction', challenge_id: '' + cid + '', winner: '' + winner + '', comment: '' + comment + '' }
+	   }).success(function( msg ) {
+		   	  $('.success').css("display", "");
+		      $(".success").fadeIn(1000, "linear");
+		      $('.success_text').fadeIn("slow");
+		      $('.success_text').html(msg);
+		      setTimeout(function(){location.reload()},3000);
+	  });
+	});
+	
+	
+//send user message
+	$('#ezLeagueMessage').submit(function(e) {
+		var	message		= $("textarea#message-message").val();
+			recipients	= $("#message-recipients").val();
+			subject		= $("#message-subject").val();
+			
+		 e.preventDefault();
+	 $.ajax({
+	     type: "POST",
+	     url: url,
+	     data: { form: 'sendMessage', recipients: '' + recipients + '', subject: '' + subject + '', message: '' + message + '' }
+	   }).success(function( msg ) {
+		   	  $('.success').css("display", "");
+		      $(".success").fadeIn(1000, "linear");
+		      $('.success_text').fadeIn("slow");
+		      $('.success_text').html(msg);
+		      setTimeout(function(){window.location='inbox/view'},3000);
+	  });
+	});
+	
+//send message reply
+	$('#ezLeagueReply').submit(function(e) {
+		var	message		= $("textarea#message-message").val();
+			message_id	= $("#message-id").val();
+			
+		 e.preventDefault();
+	 $.ajax({
+	     type: "POST",
+	     url: url,
+	     data: { form: 'sendReply', message_id: '' + message_id + '', message: '' + message + '' }
+	   }).success(function( msg ) {
+		   	  $('.success').css("display", "");
+		      $(".success").fadeIn(1000, "linear");
+		      $('.success_text').fadeIn("slow");
+		      $('.success_text').html(msg);
+		      setTimeout(function(){window.location='inbox/view'},3000);
+	  });
+	});
+	
+//contact email
+	$('#contactEmail').submit(function(e) {
+		var name		= $("#contact-name").val();
+			from		= $("#contact-email").val();
+			to			= $("#contact-to").val();
+			message		= $("#contact-message").val();
+			captcha		= $("#contact-captcha").val();
+			
+		 e.preventDefault();
+	  if(captcha == 4) {
+		 $.ajax({
+		     type: "POST",
+		     url: url,
+		     data: { form: 'contactEmail', name: '' + name + '', to: '' + to + '', from: '' + from + '', message: '' + message + ''}
+		   }).success(function( msg ) {
+			      $('.success').css("display", "");
+			      $(".success").fadeIn(1000, "linear");
+			      $('.success_text').fadeIn("slow");
+			      $('.success_text').html(msg);
+			      setTimeout(function(){location.reload()},3000);
+		  });
+	  } else {
+				  $('.success').css("display", "");
+			      $(".success").fadeIn(1000, "linear");
+			      $('.success_text').fadeIn("slow");
+			      $('.success_text').html('<strong>Error</strong> CAPTCHA code was incorrect');
+	  }
+	});

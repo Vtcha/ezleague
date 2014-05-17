@@ -685,10 +685,39 @@
 			 	return;
 		}
 		
+		function siteSettingsContact($email) {
+			$email = $this->link->real_escape_string($email);
+			 $current_settings = ezLeague::getSiteSettings();
+			 if($current_settings['name'] == '' && $current_settings['email'] == '') {
+				$this->link->query("INSERT INTO `" . $this->prefix . "settings` SET site_email = '$email'");
+			 } else {
+				$this->link->query("UPDATE `" . $this->prefix . "settings` SET site_email = '$email' WHERE id = '1'");
+			 }
+			 print "<strong>Success!</strong> Site Contact E-Mail updated...reloading";
+				return;
+		}
+		
+		function siteSettingsAbout($content) {
+			$content = $this->link->real_escape_string($content);
+			 $current_settings = ezLeague::getSiteSettings();
+			  if($current_settings['name'] == '' && $current_settings['about'] == '') {
+				$this->link->query("INSERT INTO `" . $this->prefix . "settings` SET site_about = '$content'");
+			  } else {
+				$this->link->query("UPDATE `" . $this->prefix . "settings` SET site_about = '$content' WHERE id = '1'");
+			  }
+			  print "<strong>Success!</strong> Site About content updated...reloading";
+				return;
+		}
+		
 		function getSiteSettings() {
 			$settings = array();
 			$data = $this->fetch("SELECT * FROM `" . $this->prefix . "settings` WHERE id = '1'");
-			 $settings = array('name' => $data['0']['site_name'], 'url' => $data['0']['site_url']);
+			 $settings = array(
+			 					'name'  => $data['0']['site_name'], 
+			 					'url' 	=> $data['0']['site_url'],
+			 					'email' => $data['0']['site_email'],
+			 					'about' => $data['0']['site_about']
+			 				  );
 			 	return $settings;
 		}
 		
@@ -733,25 +762,58 @@
 		}
 		
 		function upgrade() {
-			//upgrade to v1.4
-			$this->link->query("ALTER TABLE `users` ADD COLUMN forget VARCHAR(250)");
 			
-			//upgrade to v1.5
-			$oneFiveUpdate = "
-								CREATE TABLE `" . $this->prefix . "predictions` (
-								`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-								`cid` int(10) DEFAULT NULL,
-								`team` int(10) DEFAULT NULL,
-								`comment` varchar(500) DEFAULT NULL,
-								`user` varchar(50) DEFAULT NULL,
-								PRIMARY KEY (`id`)
-								) ENGINE=MyISAM AUTO_INCREMENT=104 DEFAULT CHARSET=latin1;
-							";
-				$this->link->query($oneFiveUpdate);
-
-			//upgrade to 1.6
-			$oneSixUpdate = "ALTER TABLE `users` ADD COLUMN invites VARCHAR(100)";
-				$this->link->query($oneSixUpdate);
+			$test_connection = mysqli_connect($this->host,$this->username,$this->password,$this->database) or die("Error " . mysqli_error($link));
+			if($test_connection) {
+				$sql = "
+					ALTER TABLE `users` ADD COLUMN forget VARCHAR(250);
+						
+					CREATE TABLE IF NOT EXISTS `" . $this->prefix . "predictions` (
+					`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+					`cid` int(10) DEFAULT NULL,
+					`team` int(10) DEFAULT NULL,
+					`comment` varchar(500) DEFAULT NULL,
+					`user` varchar(50) DEFAULT NULL,
+					`date` timestamp DEFAULT CURRENT_TIMESTAMP,
+					PRIMARY KEY (`id`)
+					);
+									
+					ALTER TABLE `users` ADD COLUMN invites VARCHAR(100);
+				
+					CREATE TABLE IF NOT EXISTS `" . $this->prefix . "inbox_original` (
+					`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+					`sender` varchar(50) DEFAULT NULL,
+					`subject` varchar(250) DEFAULT NULL,
+					`message` blob DEFAULT NULL,
+					`date` timestamp DEFAULT CURRENT_TIMESTAMP,
+					PRIMARY KEY (`id`)
+					);
+					
+					CREATE TABLE IF NOT EXISTS `" . $this->prefix . "inbox_messages` (
+					`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+					`msg_id` int(10) DEFAULT NULL,
+					`sender` varchar(50) DEFAULT NULL,
+					`recipient` varchar(250) DEFAULT NULL,
+					`subject` varchar(250) DEFAULT NULL,
+					`status` varchar(250) DEFAULT 'unread',
+					`date` timestamp DEFAULT CURRENT_TIMESTAMP,
+					PRIMARY KEY (`id`)
+					);
+					
+					CREATE TABLE IF NOT EXISTS `" . $this->prefix . "inbox_replies` (
+					`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+					`msg_id` int(10) DEFAULT NULL,
+					`sender` varchar(50) DEFAULT NULL,
+					`message` blob DEFAULT NULL,
+					`date` timestamp DEFAULT CURRENT_TIMESTAMP,
+					PRIMARY KEY (`id`)
+					);
+					
+					";
+					
+					mysqli_multi_query($test_connection, $sql);
+					
+			}
 
 			 print "Upgrade completed. Please delete <em>upgrade.php</em> from your server.";
 		}
