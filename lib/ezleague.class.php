@@ -379,7 +379,7 @@
 			 $check = ezLeaguePub::teamCheck($team, $game);
 			  if($check == 0) {
 				$this->link->query("INSERT INTO `" . $this->prefix . "guilds` SET guild = '$team', abbreviation = '$abbr', admin = '$admin',
-									game = '$game'
+									game = '$game', gm = '$admin'
 								   ");
 				 //now set the admins guild to the new guilds id
 				  $latest = $this->fetch("SELECT id FROM `" . $this->prefix . "guilds` ORDER BY id DESC LIMIT 1");

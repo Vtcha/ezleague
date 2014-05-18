@@ -54,10 +54,22 @@
                  	  <div class="form-group">
                  	   <button type="submit" class="btn btn-primary">Update Management</button>
                  	  </div>
-                 	  <div class="success">
-                 	  	<span class="success_text"></span>
-                 	  </div>
                  	</form>
+                 	<h4 class="left">Team Logo</h4>
+                 	 <form role="form" id="updateTeamLogo" name="updateTeamLogo">
+                 	  <input type="hidden" name="team-id" id="team-id" value="<?php print $id; ?>" />
+                 	   <div class="form-group">
+                        <label>Choose image</label>
+                        <small>extensions: jpg, jpeg, gif, png accepted</small>
+                        <input type="file">
+                       </div>                 
+                       <div class="form-group">
+                 	    <button type="submit" class="btn btn-primary">Update Logo</button>
+                 	   </div> 
+                 	 </form>
+                 	 <div class="success">
+                 	  	<span class="success_text"></span>
+                 	  </div> 
                   </div>
                   
                   <h3 class="center">Leagues</h3>
