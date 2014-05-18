@@ -20,19 +20,15 @@ include('sidebar.php');
 				      <th>#</th>
 				      <th>Guild (Abr)</th>
 				      <th class="hidden-xs">GM</th>
-				      <th>Points</th>
 				      <th></th>
 				    </tr>
 				   </thead>
 				   <tbody>
-<?php foreach($game_teams as $team) { 
-		$team_points = $ez->getTeamGamePoints($team['id'], $game_slug);
-?>				 
+<?php foreach($game_teams as $team) { ?> 
 				    <tr>
 				      <td><?php print $team['id']; ?></td>
 				      <td><?php print $team['guild']; ?></td>
 				      <td class="hidden-xs"><?php print $team['gm']; ?></td>
-				      <td><?php print $team_points; ?></td>
 				      <td><a href="<?php echo $site_url; ?>/game/<?php echo $game_slug; ?>/teams/id/<?php echo $team['id']; ?>" class="btn btn-info btn-xs"><i class="fa fa-search"></i> View Team</a></td>
 				    </tr>
 <?php } ?>				    

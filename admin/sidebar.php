@@ -46,9 +46,6 @@
                         <a href="#"><i class="fa fa-calendar"></i> Matches<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="matches_add.php">Add</a>
-                            </li>
-                            <li>
                                 <a href="matches_view.php">View</a>
                             </li>
                             <li>
