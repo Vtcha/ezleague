@@ -49,7 +49,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.php">ezLeague <sup>v1.6</sup></a>
+                <a class="navbar-brand" href="index.php">ezLeague <sup>v2.0</sup></a>
             </div>
             <!-- /.navbar-header -->
 
