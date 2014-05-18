@@ -456,13 +456,14 @@
 //site about content
 	$('#siteSettingsAbout').submit(function(e) {
 		var about			= CKEDITOR.instances['content'].getData();
-		
+		about = str_replace("&#39;", "\'", about);
+
 		e.preventDefault();
 		 $.ajax({
 		     type: "POST",
 		     async: false,
 		     url: "submit.php",
-		     data: "form=siteSettingsAbout&content=" + about
+		 	 data: "form=siteSettingsAbout&content=" + about
 		   }).success(function( msg ) {
 			   	  $('.success').css("display", "");
 			      $(".success").fadeIn(1000, "linear");
@@ -740,9 +741,38 @@
 	  $( "#league-end-date" ).datepicker();
 		 $( "#league-end-date" ).datepicker( "option", "dateFormat", "yy-mm-dd" );
 	 });
-	 /*
-	 $(function() {
-		  $( "#match-date" ).datepicker();
-			 $( "#match-date" ).datepicker( "option", "dateFormat", "yy-mm-dd" );
-		 });
-	*/
+	
+	 function str_replace(search, replace, subject, count) {
+		  var i = 0,
+		    j = 0,
+		    temp = '',
+		    repl = '',
+		    sl = 0,
+		    fl = 0,
+		    f = [].concat(search),
+		    r = [].concat(replace),
+		    s = subject,
+		    ra = Object.prototype.toString.call(r) === '[object Array]',
+		    sa = Object.prototype.toString.call(s) === '[object Array]';
+		  s = [].concat(s);
+		  if (count) {
+		    this.window[count] = 0;
+		  }
+
+		  for (i = 0, sl = s.length; i < sl; i++) {
+		    if (s[i] === '') {
+		      continue;
+		    }
+		    for (j = 0, fl = f.length; j < fl; j++) {
+		      temp = s[i] + '';
+		      repl = ra ? (r[j] !== undefined ? r[j] : '') : r[0];
+		      s[i] = (temp)
+		        .split(f[j])
+		        .join(repl);
+		      if (count && s[i] !== temp) {
+		        this.window[count] += (temp.length - s[i].length) / f[j].length;
+		      }
+		    }
+		  }
+		  return sa ? s : s[0];
+		}
