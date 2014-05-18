@@ -943,7 +943,7 @@
 		 $test_connection = mysqli_connect($this->host,$this->username,$this->password,$this->database) or die("Error " . mysqli_error($link));
 		  if($test_connection) {
 			$sql = "
-			CREATE TABLE `" . $this->prefix . "challenges` (
+			CREATE TABLE IF NOT EXISTS `" . $this->prefix . "challenges` (
 			  `id` int(10) NOT NULL AUTO_INCREMENT,
 			  `challenger` int(10) DEFAULT NULL,
 			  `challengee` int(10) DEFAULT NULL,
@@ -964,7 +964,7 @@
 			  PRIMARY KEY (`id`)
 			);
 			
-			CREATE TABLE `" . $this->prefix . "disputes` (
+			CREATE TABLE IF NOT EXISTS `" . $this->prefix . "disputes` (
 			  `id` int(10) NOT NULL AUTO_INCREMENT,
 			  `challenge_id` int(10) DEFAULT NULL,
 			  `description` varchar(2000) DEFAULT NULL,
@@ -974,7 +974,7 @@
 			  PRIMARY KEY (`id`)
 			);
 			
-			CREATE TABLE `" . $this->prefix . "forum_answer` (
+			CREATE TABLE IF NOT EXISTS `" . $this->prefix . "forum_answer` (
 			  `a_id` int(10) NOT NULL AUTO_INCREMENT,
 			  `question_id` int(10) NOT NULL,
 			  `a_answer` longtext NOT NULL,
@@ -985,7 +985,7 @@
 			  PRIMARY KEY (`a_id`)
 			);
 			
-			CREATE TABLE `" . $this->prefix . "forum_question` (
+			CREATE TABLE IF NOT EXISTS `" . $this->prefix . "forum_question` (
 			  `id` int(10) NOT NULL AUTO_INCREMENT,
 			  `topic` varchar(255) NOT NULL,
 			  `detail` longtext NOT NULL,
@@ -1001,21 +1001,21 @@
 			  PRIMARY KEY (`id`)
 			);
 			
-			CREATE TABLE `" . $this->prefix . "forum_section` (
+			CREATE TABLE IF NOT EXISTS `" . $this->prefix . "forum_section` (
 			  `id` int(10) NOT NULL AUTO_INCREMENT,
 			  `section_name` varchar(50) NOT NULL,
 			  `type` varchar(25) NOT NULL DEFAULT 'public',
 			  PRIMARY KEY (`id`)
 			);
 			
-			CREATE TABLE `" . $this->prefix . "games` (
+			CREATE TABLE IF NOT EXISTS `" . $this->prefix . "games` (
 			  `id` int(10) NOT NULL AUTO_INCREMENT,
 			  `game` varchar(100) DEFAULT NULL,
 			  `slug` varchar(50) NOT NULL,
 			  PRIMARY KEY (`id`)
 			);
 			
-			CREATE TABLE `" . $this->prefix . "guilds` (
+			CREATE TABLE IF NOT EXISTS `" . $this->prefix . "guilds` (
 			  `id` int(10) NOT NULL AUTO_INCREMENT,
 			  `guild` varchar(50) DEFAULT NULL,
 			  `abbreviation` varchar(5) DEFAULT NULL,
@@ -1029,7 +1029,7 @@
 			  PRIMARY KEY (`id`,`admin`)
 			);
 			
-			CREATE TABLE `" . $this->prefix . "leagues` (
+			CREATE TABLE IF NOT EXISTS `" . $this->prefix . "leagues` (
 			  `id` int(10) NOT NULL AUTO_INCREMENT,
 			  `league` varchar(50) DEFAULT NULL,
 			  `teams` int(19) DEFAULT '6',
@@ -1045,7 +1045,7 @@
 			  PRIMARY KEY (`id`)
 			);
 			
-			CREATE TABLE `" . $this->prefix . "news` (
+			CREATE TABLE IF NOT EXISTS `" . $this->prefix . "news` (
 			  `id` int(10) NOT NULL AUTO_INCREMENT,
 			  `title` varchar(255) DEFAULT NULL,
 			  `body` varchar(5000) DEFAULT NULL,
@@ -1057,13 +1057,13 @@
 			  PRIMARY KEY (`id`)
 			);
 			
-			CREATE TABLE `" . $this->prefix . "news_category` (
+			CREATE TABLE IF NOT EXISTS `" . $this->prefix . "news_category` (
 			  `id` int(10) NOT NULL AUTO_INCREMENT,
 			  `category` varchar(50) DEFAULT NULL,
 			  PRIMARY KEY (`id`)
 			);
 			
-			CREATE TABLE `" . $this->prefix . "results` (
+			CREATE TABLE IF NOT EXISTS `" . $this->prefix . "results` (
 			  `id` int(10) NOT NULL AUTO_INCREMENT,
 			  `guild_id` int(10) NOT NULL,
 			  `league_id` int(10) NOT NULL,
@@ -1074,7 +1074,7 @@
 			  PRIMARY KEY (`id`)
 			);
 			
-			CREATE TABLE `" . $this->prefix . "screenshots` (
+			CREATE TABLE IF NOT EXISTS `" . $this->prefix . "screenshots` (
 			  `id` int(10) NOT NULL AUTO_INCREMENT,
 			  `filename` varchar(255) NOT NULL,
 			  `challenge_id` int(10) NOT NULL,
@@ -1083,7 +1083,7 @@
 			  PRIMARY KEY (`id`)
 			);
 			
-			CREATE TABLE `" . $this->prefix . "settings` (
+			CREATE TABLE IF NOT EXISTS `" . $this->prefix . "settings` (
 			  `id` int(1) NOT NULL DEFAULT '1',
 			  `site_name` varchar(100) DEFAULT NULL,
 			  `site_url` varchar(255) DEFAULT NULL,
@@ -1094,7 +1094,7 @@
 			
 			INSERT INTO `" . $this->prefix . "settings` SET site_name = '$site_name', site_url = '$this->site_url';
 
-			CREATE TABLE `" . $this->prefix . "userss` (
+			CREATE TABLE IF NOT EXISTS IF NOT EXISTS `" . $this->prefix . "users` (
 			  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
 			  `username` varchar(50) DEFAULT NULL,
 			  `email` varchar(150) DEFAULT NULL,
@@ -1110,7 +1110,7 @@
 			  PRIMARY KEY (`id`)
 			);
 			
-			CREATE TABLE `" . $this->prefix . "predictions` (
+			CREATE TABLE IF NOT EXISTS `" . $this->prefix . "predictions` (
 			`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
 			`cid` int(10) DEFAULT NULL,
 			`team` int(10) DEFAULT NULL,
@@ -1120,7 +1120,7 @@
 			PRIMARY KEY (`id`)
 			);
 			
-			CREATE TABLE `" . $this->prefix . "inbox_original` (
+			CREATE TABLE IF NOT EXISTS `" . $this->prefix . "inbox_original` (
 			`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
 			`sender` varchar(50) DEFAULT NULL,
 			`subject` varchar(250) DEFAULT NULL,
@@ -1129,7 +1129,7 @@
 			PRIMARY KEY (`id`)
 			);
 			
-			CREATE TABLE `" . $this->prefix . "inbox_messages` (
+			CREATE TABLE IF NOT EXISTS `" . $this->prefix . "inbox_messages` (
 			`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
 			`msg_id` int(10) DEFAULT NULL,
 			`sender` varchar(50) DEFAULT NULL,
@@ -1140,7 +1140,7 @@
 			PRIMARY KEY (`id`)
 			);
 			
-			CREATE TABLE `" . $this->prefix . "inbox_replies` (
+			CREATE TABLE IF NOT EXISTS `" . $this->prefix . "inbox_replies` (
 			`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
 			`msg_id` int(10) DEFAULT NULL,
 			`sender` varchar(50) DEFAULT NULL,
