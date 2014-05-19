@@ -138,6 +138,22 @@
 		      setTimeout(function(){location.reload()},3000);
 	  });
 	});
+
+//update team logo
+	function onsuccess(response,status){
+		  $('.success').css("display", "");
+	      $(".success").fadeIn(1000, "linear");
+	      $('.success_text').fadeIn("slow");
+		  $(".success_text").html("Upload Status: <strong>"+status+'</strong> '+response+'');
+		 }
+		 $("#updateTeamLogo").on('submit',function(){
+		  var options={
+		   url     : $(this).attr("action"),
+		   success : onsuccess
+		  };
+		  $(this).ajaxSubmit(options);
+		     return false;
+		 });
 	
 	function teamInvite(user_id, team_id) {
 		$(function() {

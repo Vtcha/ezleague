@@ -444,6 +444,10 @@
 			  print "<strong>Success!</strong> Team Settings have been updated.";
 		}
 		
+		function updateTeamLogo($id, $img) {
+			$this->link->query("UPDATE `" . $this->prefix . "guilds` SET logo = '$img' WHERE id = '$id'");
+		}
+		
 		function getTeamChallenges($team_id) {
 			//$data = $this->fetch("SELECT * FROM `" . $this->prefix . "challenges` WHERE (challenger = '$team_id') OR (challengee = '$team_id') ORDER BY created DESC");
 			$data = $this->fetch("SELECT t.id, t.challenger, t.created, t.completed, t. t.g_challenger, t.challengee, g2.guild AS g_challengee
@@ -1026,6 +1030,7 @@
 			  `admin` varchar(50) NOT NULL,
 			  `game` varchar(25) DEFAULT NULL,
 			  `leagues` varchar(50) DEFAULT NULL,
+			  `logo` varchar(250) DEFAULT NULL,
 			  PRIMARY KEY (`id`,`admin`)
 			);
 			
@@ -1094,7 +1099,7 @@
 			
 			INSERT INTO `" . $this->prefix . "settings` SET site_name = '$site_name', site_url = '$this->site_url';
 
-			CREATE TABLE IF NOT EXISTS IF NOT EXISTS `" . $this->prefix . "users` (
+			CREATE TABLE IF NOT EXISTS `" . $this->prefix . "users` (
 			  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
 			  `username` varchar(50) DEFAULT NULL,
 			  `email` varchar(150) DEFAULT NULL,

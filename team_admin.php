@@ -56,12 +56,12 @@
                  	  </div>
                  	</form>
                  	<h4 class="left">Team Logo</h4>
-                 	 <form role="form" id="updateTeamLogo" name="updateTeamLogo">
+                 	 <form role="form" id="updateTeamLogo" name="updateTeamLogo" action="<?php print $site_url; ?>/lib/uploadLogo.php" method="POST">
                  	  <input type="hidden" name="team-id" id="team-id" value="<?php print $id; ?>" />
                  	   <div class="form-group">
                         <label>Choose image</label>
                         <small>extensions: jpg, jpeg, gif, png accepted</small>
-                        <input type="file">
+                        <input type="file" name="file">
                        </div>                 
                        <div class="form-group">
                  	    <button type="submit" class="btn btn-primary">Update Logo</button>

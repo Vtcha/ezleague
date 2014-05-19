@@ -14,6 +14,17 @@
                   <h3 class="panel-title"><span class="bolder"><?php echo $current_game; ?></span> - <span class="italic"><?php echo $team_details['0']['guild']; ?></span></h3>
                 </div>
                 <div class="panel-body">
+                 <div class="col-sm-3">
+                  <h3 class="center">Details</h3>
+                  <div class="well">
+                   <img src="<?php print $site_url; ?>/img/team_logos/<?php print $team_details['0']['logo']; ?>" class="img-responsive" />
+                 	<h4 class="left">GM <span class="gm"><?php print $team_details['0']['gm']; ?></span></h4>
+                 	<h4 class="left">AGM <span class="agm"><?php print $team_details['0']['agm']; ?></span></h4>
+                 	<h4 class="left">URL <span class="website"><a href="<?php print $team_details['0']['website']; ?>">team site</a></span></h4>
+                 	<hr/>
+                 	<h4 class="left">Record <span class="website"><?php print $wins . "-" . $losses; ?></span></h4>
+                  </div>
+                 </div>
                  <div class="col-sm-4">
                   <h3 class="center">Recent Matches</h3>
                   <div class="well">
@@ -56,16 +67,6 @@
 						 <?php } ?>
 					   </tbody>
 					  </table>
-                  </div>
-                 </div>
-                 <div class="col-sm-3">
-                  <h3 class="center">Details</h3>
-                  <div class="well">
-                 	<h4 class="left">GM <span class="gm"><?php print $team_details['0']['gm']; ?></span></h4>
-                 	<h4 class="left">AGM <span class="agm"><?php print $team_details['0']['agm']; ?></span></h4>
-                 	<h4 class="left">URL <span class="website"><a href="<?php print $team_details['0']['website']; ?>">team site</a></span></h4>
-                 	<hr/>
-                 	<h4 class="left">Record <span class="website"><?php print $wins . "-" . $losses; ?></span></h4>
                   </div>
                  </div>
                  <div class="col-sm-5">

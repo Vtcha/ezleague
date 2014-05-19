@@ -766,7 +766,9 @@
 			$test_connection = mysqli_connect($this->host,$this->username,$this->password,$this->database) or die("Error " . mysqli_error($link));
 			if($test_connection) {
 				$sql = "
-					ALTER TABLE `users` ADD COLUMN forget VARCHAR(250);
+					ALTER TABLE `" . $this->prefix . "users` ADD COLUMN forget VARCHAR(250);
+					
+					ALTER TABLE `" . $this->prefix . "users` ADD COLUMN logo VARCHAR(250);
 						
 					CREATE TABLE IF NOT EXISTS `" . $this->prefix . "predictions` (
 					`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -778,7 +780,7 @@
 					PRIMARY KEY (`id`)
 					);
 									
-					ALTER TABLE `users` ADD COLUMN invites VARCHAR(100);
+					ALTER TABLE `" . $this->prefix . "users` ADD COLUMN invites VARCHAR(100);
 				
 					CREATE TABLE IF NOT EXISTS `" . $this->prefix . "inbox_original` (
 					`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
