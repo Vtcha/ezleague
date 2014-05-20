@@ -145,7 +145,8 @@
 			  					'name'  => $data['0']['site_name'], 
 			  					'url'   => $data['0']['site_url'],
 			  					'about' => $data['0']['site_about'],
-			  					'email' => $data['0']['site_email']
+			  					'email' => $data['0']['site_email'],
+			  					'logo'  => $data['0']['site_logo']
 			  				   );
 			 return $settings;
 		}
@@ -341,7 +342,7 @@
  */
 		
 		function getNewsAll() {
-			$data = $this->fetch("SELECT * FROM `" . $this->prefix . "news` WHERE published = '1'");
+			$data = $this->fetch("SELECT * FROM `" . $this->prefix . "news` WHERE published = '1' ORDER BY id DESC");
 			 if(empty($data)) { 
 			 	return false;
 			 } else {
@@ -660,6 +661,18 @@
 			 	return $points;
 		}
 		
+		function checkForTeam($team_id, $league) {
+			$result = $this->link->query("SELECT leagues FROM `" . $this->prefix . "guilds` 
+										  WHERE id = '$team_id' AND leagues LIKE '%$league%'
+										 ");
+			 $total = $this->numRows($result);
+			  if($total > 0) {
+			  	return true;
+			  } else {
+			  	return false;
+			  }
+		}
+		
 		
 /*
  * END LEAGUE FUNCTIONALITY
@@ -790,9 +803,17 @@
 		
 		function getTeamMadeLeagueChallenges($team_id, $league_id) {
 			$data = $this->fetch("SELECT challengee, league_id, id FROM `" . $this->prefix . "challenges` 
-								  WHERE (challenger = '$team_id') AND (league_id = '$league_id') AND (accepted = '0')
+								  WHERE (challenger = '$team_id') AND (league_id = '$league_id') AND (challenger_accepted = '0')
 								");
-				return $data;	
+			 $total = 0;
+			 $total = count($data);
+			 if($total > 0) {
+				return $data;
+				
+			 } else {
+			 	return false;
+			 	
+			 }	
 		}
 		
 		function updateChallengeStatus($id, $team, $status) {
@@ -936,6 +957,15 @@
 		
 /*
  * END CHALLENGES FUNCTIONALITY
+ */		
+		
+/*
+ * START FORUM FUNCTIONALITY
+ */
+		
+
+/*
+ * END FORUM FUNCTIONALITY
  */		
 		
 /*
@@ -1094,6 +1124,7 @@
 			  `site_url` varchar(255) DEFAULT NULL,
 			  `site_about` blob DEFAULT NULL,
 			  `site_email` varchar(500) DEFAULT NULL,
+			  `site_logo` varchar(250) DEFAULT 'logo.png',
 			  PRIMARY KEY (`id`)
 			);
 			

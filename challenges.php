@@ -36,12 +36,12 @@ include('sidebar.php');
 				   <tbody>
 <?php $league_guilds = $ez->getLeagueGuilds($id); 
 		$current_challenges = $ez->getTeamMadeLeagueChallenges($ez_guild_id, $id);
-		 print $current_challenges;
+		 $in_league = $ez->checkForTeam($ez_guild_id, $id);
 ?>
 	<?php foreach($league_guilds as $team) {
 		 if($current_challenges != false) { 
 		   $previous_challenge = 1;
-			if(in_array($team['id'], $current_challenges['0'])) {
+			if(in_array($team['id'], $current_challenges['0'], TRUE)) {
 				$previous_challenge = 1;
 			} else {
 				$previous_challenge = 0;
@@ -59,11 +59,13 @@ include('sidebar.php');
 				      <td><?php print $team_points; ?></td>
 				      <td>
 				      	<a href="<?php echo $site_url; ?>/game/<?php echo $game_slug; ?>/teams/id/<?php echo $team['id']; ?>" class="btn btn-info btn-xs">View Team</a>
+				      <?php if($in_league == true) { ?>
 				      <?php if($team['guild'] != $ez_guild_name && isset($_SESSION['ez_guild_admin'])) { ?> 
 				      	<?php if($previous_challenge == 1) { ?>
 				      		<button class="btn btn-warning btn-xs" disabled>Acceptance Pending</button>
 				      	<?php } else { ?> 
 				        	<button onclick="makeChallenge('<?php print $team['id']; ?>', '<?php print $ez_guild_id; ?>', '<?php print $id; ?>');" class="btn btn-success btn-xs">Make Challenge</button>
+				        <?php } ?>
 				        <?php } ?>
 				      <?php } ?>
 				      </td>
