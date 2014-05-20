@@ -121,9 +121,16 @@
 		
 		function updateEmail($id, $email) {
 			$this->link->query("UPDATE `" . $this->prefix . "users` SET email = '$email'
-									WHERE id = '$id'
+								WHERE id = '$id'
 							  ");
 				print "<strong>Success!</strong> Account has been created. You may now login.";
+		}
+		
+		function updateSignature($id, $signature) {
+			$this->link->query("UPDATE `" . $this->prefix . "users` SET signature = '$signature'
+								WHERE id = '$id'
+							  ");
+				print "<strong>Success!</strong> Your signature has been updated.";
 		}
 			
 /*
@@ -201,12 +208,14 @@
 		}
 		
 		function getUserSettings($username) {
-			$data = $this->fetch("SELECT id, email FROM `" . $this->prefix . "users` WHERE username = '$username'");
-			 $user_id 	 = $data['0']['id'];
-			 $user_email = $data['0']['email'];
+			$data = $this->fetch("SELECT id, email, signature FROM `" . $this->prefix . "users` WHERE username = '$username'");
+			 $user_id 	 	 = $data['0']['id'];
+			 $user_email 	 = $data['0']['email'];
+			 $user_signature = $data['0']['signature'];
 			  $settings = array(
-			  					 'id' 	 => $user_id,
-			  				     'email' => $user_email
+			  					 'id' 	 	 => $user_id,
+			  				     'email' 	 => $user_email,
+			  					 'signature' => $user_signature
 			  				   );
 			  return $settings;
 		}

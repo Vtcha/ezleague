@@ -45,7 +45,19 @@
                             </fieldset>
                         </form>
 				 </div>		  
-				 <div class="col-lg-5"> 
+				 <div class="col-lg-7"> 
+				 	  <h3>Forum Signature</h3>
+				 	   <form role="form" id="updateUserSignature" name="updateUserSignature" method="POST">
+                         <input type="hidden" name="user-id" id="user-id" value="<?php print $settings['id']; ?>" />
+                            <fieldset>
+                                <div class="form-group">
+					              <textarea name="user-signature" id="user-signature" class="form-control ckeditor"><?php print $settings['signature']; ?></textarea>
+					            </div>
+                                <!-- Change this to a button or input when using this as a form -->
+                                <button type="submit" class="btn btn-lg btn-primary btn-sm">Update Signature</button>
+                            </fieldset>
+                        </form>
+                        
 	             <?php if($ez_guild_id == '') { ?>
  	 		   	      <h3>Team Invites</h3>
  	 		   	   <?php $invites = $ez->getUsernameInvites($ez_username); ?>
@@ -75,5 +87,5 @@
         
 	</div>
 
-
+<script src="<?php print $site_url; ?>/js/ckeditor/ckeditor.js"></script>
 <?php include('footer.php'); ?>
