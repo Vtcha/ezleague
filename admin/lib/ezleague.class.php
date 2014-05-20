@@ -731,6 +731,39 @@
  * END SETTINGS FUNCTIONALITY
  */		
 		
+/*
+ * START FORUM FUNCTIONALITY
+ */
+
+		function getForumSections() {
+			$data = $this->fetch("SELECT * FROM `" . $this->prefix . "forum_section` ORDER BY type DESC");
+			 return $data;
+		}
+		
+		function addForum($forum, $type) {
+			$result = $this->link->query("SELECT section_name FROM `" . $this->prefix . "forum_section`
+										  WHERE section_name = '$forum' AND type = '$type'
+										 ");
+			 $count = $this->numRows($result);
+			  if($count > 0) {
+			  	print "<strong>Error</strong> Section Name and Type already exists";
+			  } else {
+			  	$this->link->query("INSERT INTO `" . $this->prefix . "forum_section` SET section_name = '$forum',
+			  						type = '$type'
+			  					   ");
+			  	 print "<strong>Success!</strong> New Forum Section created";
+			  }
+		}
+		
+		function updateForumStatus($section_id, $status) {
+			$this->link->query("UPDATE `" . $this->prefix . "forum_section` SET status = '$status' WHERE id = '$section_id'");
+			 print "<strong>Success!</strong> Forum status updated";
+		}
+		
+/*
+ * END FORUM FUNCTIONALITY
+ */		
+		
 		
 /*
  * START SPECIAL FUNCTIONS
@@ -775,6 +808,12 @@
 					ALTER TABLE `" . $this->prefix . "users` ADD COLUMN forget VARCHAR(250);
 					
 					ALTER TABLE `" . $this->prefix . "users` ADD COLUMN logo VARCHAR(250);
+					
+					ALTER TABLE `" . $this->prefix . "users` ADD COLUMN post_count INT(10) NOT NULL DEFAULT '0';
+					
+					ALTER TABLE `" . $this->prefix . "users` ADD COLUMN signature VARCHAR(1000);
+					
+					ALTER TABLE `" . $this->prefix . "forum_section` ADD COLUMN status VARCHAR(250) NOT NULL DEFAULT 'enabled';
 						
 					CREATE TABLE IF NOT EXISTS `" . $this->prefix . "predictions` (
 					`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -817,7 +856,7 @@
 					PRIMARY KEY (`id`)
 					);
 					
-					ALTER TABLE `" . $this->prefix . "settings` ADD COLUMN site_logo VARCHAR(250);
+					ALTER TABLE `" . $this->prefix . "settings` ADD COLUMN site_logo VARCHAR(250) NOT NULL DEFAULT 'logo.png';
 					
 					";
 					
@@ -825,7 +864,7 @@
 					
 			}
 
-			 print "Upgrade completed. Please delete <em>upgrade.php</em> from your server.";
+			 print "Upgrade to <em>ezLeague <sup>v2.1</sup></em> completed. Please delete <em>upgrade.php</em> from your server.";
 		}
 		
 /*

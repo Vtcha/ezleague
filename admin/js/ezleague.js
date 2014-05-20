@@ -473,6 +473,23 @@
 		  });
 	
 	});
+
+//site logo	
+	function onsuccess(response,status){
+		  $('.success').css("display", "");
+	      $(".success").fadeIn(1000, "linear");
+	      $('.success_text').fadeIn("slow");
+		  $(".success_text").html("Upload Status: <strong>"+status+'</strong> '+response+'');
+		  setTimeout(function(){location.reload()},3000);
+		 }
+		 $("#siteSettingsLogo").on('submit',function(){
+		  var options={
+		   url     : $(this).attr("action"),
+		   success : onsuccess
+		  };
+		  $(this).ajaxSubmit(options);
+		     return false;
+		 });
 	
 //edit match score & status
 	$('#editMatchDetails').submit(function(e) {
@@ -701,6 +718,16 @@
 /*
  * END SETTINGS FUNCTIONALITY
  */	
+	
+/*
+ * START FORUM FUNCTIONALITY
+ */
+	
+	
+	
+/*
+ * END FORUM FUNCTIONALITY
+ */	
 	function checkboxToggle(checkbox, amount) {
 	  if(document.getElementById(checkbox).checked) {
 	     document.getElementById('' + amount + '').disabled=false;
@@ -741,6 +768,39 @@
 	  $( "#league-end-date" ).datepicker();
 		 $( "#league-end-date" ).datepicker( "option", "dateFormat", "yy-mm-dd" );
 	 });
+	 
+	 function updateForum(section_id, status) {
+		 $.ajax({
+		     type: "POST",
+		     url: "submit.php",
+		     data: { form: 'updateForum', section_id: '' + section_id + '', status: '' + status + '' }
+		   }).success(function( msg ) {
+			      $('.success').css("display", "");
+			      $(".success").fadeIn(1000, "linear");
+			      $('.success_text').fadeIn("slow");
+			      $('.success_text').html(msg);
+			      setTimeout(function(){location.reload()},3000);
+		  });
+	    }
+	 
+	 $('#addNewForum').submit(function(e) {
+			var forum	    = $("#forumName").val();
+				type	    = $("#forumType").val();
+
+			 e.preventDefault();
+
+		 $.ajax({
+		     type: "POST",
+		     url: "submit.php",
+		     data: { form: 'addForum', forum: '' + forum + '', type: '' + type + '' }
+		   }).success(function( msg ) {
+			      $('.success').css("display", "");
+			      $(".success").fadeIn(1000, "linear");
+			      $('.success_text').fadeIn("slow");
+			      $('.success_text').html(msg);
+			      setTimeout(function(){location.reload()},3000);
+		  });
+		});
 	
 	 function str_replace(search, replace, subject, count) {
 		  var i = 0,

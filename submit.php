@@ -1,9 +1,13 @@
 <?php session_start();
 include('lib/db.class.php');
 include('lib/ezleague.class.php');
+include('lib/forum.class.php');
 
 $ez = new ezLeaguePub();
+$forum = new ezForum();
+
 $ez_username = $_SESSION['ez_username'];
+$ez_user_id = $ez->getUserId($ez_username);
 
 	if(isset($_POST['form'])) {
 		$form = $_POST['form'];
@@ -172,6 +176,25 @@ $ez_username = $_SESSION['ez_username'];
 		 	
 		 	default:
 		 		break;
+		 		
+/*
+ * FORUM
+ */
+
+		 	case 'createTopic':
+		 		$section_id		= $_POST['section'];
+		 		$title			= $_POST['title'];
+		 		$body			= $_POST['body'];
+		 		 $forum->createTopic($section_id, $ez_username, $ez_user_id, $title, $body);
+		 		break;
+		 		
+		 	case 'forumReply':
+		 		$section_id		= $_POST['section'];
+		 		$topic_id		= $_POST['topic'];
+		 		$body			= $_POST['body'];
+		 		 $forum->addResponse($topic_id, $body, $section_id, $ez_username, $ez_user_id);
+		 		break;
+				
 		 }
 		 
 	} else {

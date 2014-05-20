@@ -17,7 +17,7 @@
                  <div class="col-sm-3">
                   <h3 class="center">Details</h3>
                   <div class="well">
-                   <img src="<?php print $site_url; ?>/img/team_logos/<?php print $team_details['0']['logo']; ?>" class="img-responsive" />
+                   <img src="<?php print $site_url; ?>/img/team_logos/<?php print $team_details['0']['logo']; ?>" class="img-responsive team-logo" />
                  	<h4 class="left">GM <span class="gm"><?php print $team_details['0']['gm']; ?></span></h4>
                  	<h4 class="left">AGM <span class="agm"><?php print $team_details['0']['agm']; ?></span></h4>
                  	<h4 class="left">URL <span class="website"><a href="<?php print $team_details['0']['website']; ?>">team site</a></span></h4>

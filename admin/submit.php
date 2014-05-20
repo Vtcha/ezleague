@@ -179,7 +179,26 @@
     	 		
 /*
  * END USERS
- */    	 	
+ */    	
+
+/*
+ * START FORUM
+ */    	 		
+
+    	 	case 'addForum':
+    	 		$forum			= $_POST['forum'];
+    	 		$type			= $_POST['type'];
+    	 		 $ez->addForum($forum, $type);
+    	 		break;
+    	 		
+    	 	case 'updateForum':
+    	 		$section_id		= $_POST['section_id'];
+    	 		$status			= $_POST['status'];
+    	 		 $ez->updateForumStatus($section_id, $status);
+    	 		break;
+/*
+ * END FORUM
+ */    	 		
     	 			
 /*
  * START SETTINGS

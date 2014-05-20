@@ -93,6 +93,15 @@
                         </ul>
                         <!-- /.nav-second-level -->
                     </li>
+                    <li>
+                        <a href="#"><i class="fa fa-comments"></i> Forum<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="manage_forum.php">Manage Sections</a>
+                            </li>
+                        </ul>
+                        <!-- /.nav-second-level -->
+                    </li>
                     <hr/>
                     <li>
                         <a href="../index.php"><i class="fa fa-globe fa-fw"></i> View Site</a>

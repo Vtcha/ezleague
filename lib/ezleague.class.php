@@ -1039,6 +1039,7 @@
 			  `id` int(10) NOT NULL AUTO_INCREMENT,
 			  `section_name` varchar(50) NOT NULL,
 			  `type` varchar(25) NOT NULL DEFAULT 'public',
+			  `status` varchar(20) NOT NULL DEFAULT 'enabled',
 			  PRIMARY KEY (`id`)
 			);
 			
@@ -1143,6 +1144,8 @@
 			  `status` int(1) DEFAULT '0',
 			  `forget` varchar(250) DEFAULT NULL,
 			  `invites` varchar(100) DEFAULT NULL,
+			  `post_count` int(10) DEFAULT NOT NULL '0',
+			  `signature` varchar(1000) DEFAULT NULL,
 			  PRIMARY KEY (`id`)
 			);
 			

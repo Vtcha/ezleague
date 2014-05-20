@@ -31,6 +31,9 @@
 							    <li class="">
 							    	<a data-toggle="tab" href="#site-about">About Content</a>
 							    </li>
+							    <li class="">
+							    	<a data-toggle="tab" href="#site-logo">Logo</a>
+							    </li>
 							</ul>
 							
 							<div class="tab-content">
@@ -97,6 +100,27 @@
 					                    </div>
 									  </form>
                                 </div>
+                                <div class="tab-pane fade" id="site-logo">
+                                    <h4>Web Site Logo</h4>
+                                    <div class="col-lg-8">
+                                     <form role="form" id="siteSettingsLogo" name="siteSettingsLogo" action="lib/uploadLogo.php" method="POST">
+				                 	   <div class="form-group">
+				                        <label>Choose image</label>
+				                        <small>extensions: jpg, jpeg, gif, png accepted</small>
+				                        <input type="file" name="file">
+				                       </div>                 
+				                       <div class="form-group">
+				                 	    <button type="submit" class="btn btn-primary">Update Logo</button>
+				                 	   </div> 
+				                 	 </form>
+				                 	 <div class="success">
+					                   <span class="success_text"></span>
+					                 </div>
+				                 	</div>
+				                 	<div class="col-lg-4">
+				                 	 <img src="../img/<?php print $site_settings['logo']; ?>" class="img-responsive" />
+				                 	</div>
+                                </div>
                             
 							</div>
                         </div>
@@ -118,6 +142,7 @@
 
     <!-- Core Scripts - Include with every page -->
     <script src="js/jquery-1.10.2.js"></script>
+    <script src="js/jquery.form.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
 

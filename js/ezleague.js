@@ -633,4 +633,90 @@
 			      $('.success_text').fadeIn("slow");
 			      $('.success_text').html('<strong>Error</strong> CAPTCHA code was incorrect');
 	  }
-	});
+	});
+	
+/*
+ * FORUM FUNCTIONALITY
+ */	
+
+//create new forum topic
+	$('#forumCreateTopic').submit(function(e) {
+		var body			= CKEDITOR.instances['topic-body'].getData();
+			title			= $("#topic-title").val();
+			section_id		= $("#topic-section").val();
+
+		body = str_replace("&#39;", "\'", body);
+
+		e.preventDefault();
+		 $.ajax({
+		     type: "POST",
+		     async: false,
+		     url: url,
+		 	 data: "form=createTopic&section=" + section_id + "&title=" + title + "&body=" + body
+		   }).success(function( msg ) {
+			   	  $('.success').css("display", "");
+			      $(".success").fadeIn(1000, "linear");
+			      $('.success_text').fadeIn("slow");
+			      $('.success_text').html(msg);
+			      setTimeout(function(){location.reload()},3000);
+		  });
+	
+	});
+
+//add forum reply
+	$('#forumReply').submit(function(e) {
+		var body			= CKEDITOR.instances['topic-body'].getData();
+			topic_id		= $("#topic-id").val();
+			section_id		= $("#section-id").val();
+
+		body = str_replace("&#39;", "\'", body);
+
+		e.preventDefault();
+		 $.ajax({
+		     type: "POST",
+		     url: url,
+		 	 data: "form=forumReply&section=" + section_id + "&topic=" + topic_id + "&body=" + body
+		   }).success(function( msg ) {
+			   	  $('.success').css("display", "");
+			      $(".success").fadeIn(1000, "linear");
+			      $('.success_text').fadeIn("slow");
+			      $('.success_text').html(msg);
+			      setTimeout(function(){location.reload()},3000);
+		  });
+	
+	});
+	
+	function str_replace(search, replace, subject, count) {
+		  var i = 0,
+		    j = 0,
+		    temp = '',
+		    repl = '',
+		    sl = 0,
+		    fl = 0,
+		    f = [].concat(search),
+		    r = [].concat(replace),
+		    s = subject,
+		    ra = Object.prototype.toString.call(r) === '[object Array]',
+		    sa = Object.prototype.toString.call(s) === '[object Array]';
+		  s = [].concat(s);
+		  if (count) {
+		    this.window[count] = 0;
+		  }
+
+		  for (i = 0, sl = s.length; i < sl; i++) {
+		    if (s[i] === '') {
+		      continue;
+		    }
+		    for (j = 0, fl = f.length; j < fl; j++) {
+		      temp = s[i] + '';
+		      repl = ra ? (r[j] !== undefined ? r[j] : '') : r[0];
+		      s[i] = (temp)
+		        .split(f[j])
+		        .join(repl);
+		      if (count && s[i] !== temp) {
+		        this.window[count] += (temp.length - s[i].length) / f[j].length;
+		      }
+		    }
+		  }
+		  return sa ? s : s[0];
+		}

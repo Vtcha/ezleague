@@ -6,6 +6,7 @@ $ez = new ezLeaguePub();
  $site_settings = $ez->getSiteSettings();
   $site_url = $site_settings['url'];
   $site_name = $site_settings['name'];
+  $site_logo = $site_settings['logo'];
   
   if(isset($_SESSION['ez_username'])) {
   	$ez_username = $_SESSION['ez_username'];
@@ -54,7 +55,10 @@ $ez = new ezLeaguePub();
     <div class="navbar navbar-default navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
-          <a href="<?php echo $site_url; ?>" class="navbar-brand"><?php echo $site_name; ?></a>
+          <!--  <a href="<?php echo $site_url; ?>" class="navbar-brand"><?php echo $site_name; ?></a>  -->
+          <a href="<?php echo $site_url; ?>" class="navbar-brand">
+          	<img src="<?php print $site_url; ?>/img/<?php print $site_logo; ?>" class="img-responsive site-logo" />
+          </a>
           <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -80,17 +84,14 @@ $ez = new ezLeaguePub();
               <a href="<?php echo $site_url; ?>/users">Members</a>
             </li>
             <li>
-              <a>|</a>
-            </li>
-            <li>
               <a href="<?php echo $site_url; ?>/about">About</a>
             </li>
             <li>
               <a href="<?php echo $site_url; ?>/contact">Contact</a>
             </li>
-          <!--   <li>
-              <a href="#">Forum</a>
-            </li> -->
+          	<li>
+              <a href="<?php echo $site_url; ?>/forum/home">Forum</a>
+            </li> 
           </ul>
 
           <ul class="nav navbar-nav navbar-right">
