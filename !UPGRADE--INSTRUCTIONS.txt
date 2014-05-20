@@ -1,10 +1,10 @@
-Welcome to ezLeague v2.0
+Welcome to ezLeague v2.1
 
 If you are upgrading your installation from a previous version, follow the steps below, otherwise these upgrades have already been included in the new version.
 
-v2.0 Upgrade
+v2.1 & 2.0 Upgrade
 -----------------------------------------------------------------------
-HOW TO UPGRADE YOUR INSTALLATION TO 2.0 FROM PREVIOUS VERSIONS
+HOW TO UPGRADE YOUR INSTALLATION TO 2.1 FROM PREVIOUS VERSIONS
 1) Upgrade your ezLeague repository from GitHub
 2) Upload all new files, and overwrite updated ones
 3) Run the ./admin/upgrade.php file which will make all necessary database changes
