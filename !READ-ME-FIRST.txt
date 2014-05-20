@@ -1,4 +1,4 @@
-ezLeague Installation Guide v2.0 -- May 17th, 2014
+ezLeague Installation Guide v2.1 -- May 20th, 2014
 ----------------------------------------------------
 
 1. Open '/lib/db.class.php' & '/admin/lib/db.class.php' and modify your site URL and database values
