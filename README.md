@@ -1,4 +1,4 @@
-ezLeague v2.0
+ezLeague v2.1
 ------------------------------------------------------------------------------------------------------------------------
 "a custom php online gaming script"
 
@@ -34,6 +34,14 @@ If you run into any issues, please post them on the Issues page (https://github.
 ------------------------------------------------------------------------------------------------------------------------
 BUG FIXES AND UPDATES
 ------------------------------------------------------------------------------------------------------------------------
+v2.1
+- Basic Forum
+- Admin Forum -- Add Sections, Disable/Enable Sections
+- Site Logo
+- Team Logo
+- .htaccess file changes made to handle forum
+- Make Challenge bug fixed where button would not display
+
 v2.0
 - User Inbox/Message System
 - Prediction System for matches/challenges
