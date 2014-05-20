@@ -213,7 +213,7 @@
 		}
 		
 		function getAllNews() {
-			$data = $this->fetch("SELECT * FROM `" . $this->prefix . "news`");
+			$data = $this->fetch("SELECT * FROM `" . $this->prefix . "news` ORDER BY id");
 			 return $data;
 		}
 		
@@ -709,6 +709,11 @@
 				return;
 		}
 		
+		function siteSettingsLogo($image) {
+			$this->link->query("UPDATE `" . $this->prefix . "settings` SET site_logo = '$image'");
+			 return;
+		}
+		
 		function getSiteSettings() {
 			$settings = array();
 			$data = $this->fetch("SELECT * FROM `" . $this->prefix . "settings` WHERE id = '1'");
@@ -716,7 +721,8 @@
 			 					'name'  => $data['0']['site_name'], 
 			 					'url' 	=> $data['0']['site_url'],
 			 					'email' => $data['0']['site_email'],
-			 					'about' => $data['0']['site_about']
+			 					'about' => $data['0']['site_about'],
+			 					'logo'  => $data['0']['site_logo']
 			 				  );
 			 	return $settings;
 		}
@@ -810,6 +816,8 @@
 					`date` timestamp DEFAULT CURRENT_TIMESTAMP,
 					PRIMARY KEY (`id`)
 					);
+					
+					ALTER TABLE `" . $this->prefix . "settings` ADD COLUMN site_logo VARCHAR(250);
 					
 					";
 					
