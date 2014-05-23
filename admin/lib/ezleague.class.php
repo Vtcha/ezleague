@@ -387,7 +387,8 @@
 				  $this->link->query("INSERT INTO `" . $this->prefix . "leagues` SET league = '$league', game = '$game', teams = '$teams',
 				  					  start_date = '$start', end_date = '$end', total_games = '$games', win_points = '$win',
 				  					  loss_points = '$loss', tie_points = '$tie'
-				  					");
+				  					");
+
 				  print "<strong>Success!</strong> $league League added...reloading";
 			  }
 				return;

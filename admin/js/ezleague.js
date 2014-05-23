@@ -313,9 +313,9 @@
 			start		= $("#league-start-date").val();
 			end			= $("#league-end-date").val();
 			games		= $("#total-games").val();
-			win			= $("league-points-win").val();
-			loss		= $("league-points-loss").val();
-			tie			= $("league-points-tie").val();
+			win			= $("#league-points-win").val();
+			loss		= $("#league-points-loss").val();
+			tie			= $("#league-points-tie").val();
 		
 		e.preventDefault();
 		 $.ajax({

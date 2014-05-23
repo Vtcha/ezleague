@@ -795,9 +795,6 @@
 										  WHERE (challenger = '$challenger') AND (challengee = '$challengee')
 										  AND (accepted = '0') AND (league_id = '$league_id')
 										 ");
-			 print "SELECT * FROM `" . $this->prefix . "challenges` 
-										  WHERE (challenger = '$challenger') AND (challengee = '$challengee')
-										  AND (accepted = '0') AND (league_id = '$league_id')";
 			 $count = $this->numRows($result);
 			  if($count > 0) { 
 			  	print "<strong>Error</strong> A previous challenge to this Guild has not been accepted";
