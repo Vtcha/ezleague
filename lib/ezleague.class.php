@@ -1150,7 +1150,7 @@
 			  `status` int(1) DEFAULT '0',
 			  `forget` varchar(250) DEFAULT NULL,
 			  `invites` varchar(100) DEFAULT NULL,
-			  `post_count` int(10) DEFAULT NOT NULL '0',
+			  `post_count` int(10) DEFAULT '0',
 			  `signature` varchar(1000) DEFAULT NULL,
 			  PRIMARY KEY (`id`)
 			);
