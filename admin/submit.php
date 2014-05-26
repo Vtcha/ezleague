@@ -209,6 +209,11 @@
     	 	 	 $ez->addSettingsGame($game, $slug);
     	 	  break;
     	 	  
+    	 	 case 'deleteGame':
+    	 	 	$id			= $_POST['id'];
+    	 	 	 $ez->deleteSettingsGame($id);
+    	 	  break;
+    	 	  
     	 	 case 'siteSettingsName':
     	 	 	$name		= $_POST['name'];
     	 	 	 $ez->siteSettingsName($name);
