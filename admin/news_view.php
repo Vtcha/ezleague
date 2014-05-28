@@ -47,6 +47,7 @@
                                             <td><?php print date('M d, Y h:ia', strtotime($news['created'])); ?></td>
                                             <td>
                                             	<a href="news_edit.php?id=<?php print $news['id']; ?>" class="btn btn-info btn-xs">Edit</a>
+                                            	<button onclick="deleteNewsPost('<?php print $news['id']; ?>')" class="btn btn-danger btn-xs">Delete</button>
                                             </td>
                                         </tr>
                           <?php } ?>

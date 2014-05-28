@@ -245,6 +245,22 @@
 	
 	} 
 	
+//delete news post
+	function deleteNewsPost(news_id) {
+		$.ajax({
+		     type: "POST",
+		     async: false,
+		     url: "submit.php",
+		     data: { form: 'deleteNewsPost', id: '' + news_id + '' }
+		   }).success(function( msg ) {
+			   	  $('.success').css("display", "");
+			      $(".success").fadeIn(1000, "linear");
+			      $('.success_text').fadeIn("slow");
+			      $('.success_text').html(msg);
+			      setTimeout(function(){location.reload()},3000);
+		  });
+	}
+	
 //unpublish news post
 	function unpublishPost(news_id) {
 		$.ajax({

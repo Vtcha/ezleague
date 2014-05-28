@@ -162,6 +162,11 @@
 			 	return;
 		}
 		
+		function deleteNews($id) {
+			$this->link->query("DELETE FROM `" . $this->prefix . "news` WHERE id = '$id'");
+			 print "<strong>Success!</strong> News Post has been deleted";
+		}
+		
 		function editNews($id, $title, $body, $author, $category, $game, $published) {
 			$body = $this->link->real_escape_string($body);
 			$title = $this->link->real_escape_string($title);

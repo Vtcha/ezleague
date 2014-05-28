@@ -57,6 +57,11 @@
 	    	 	 $ez->editNews($id, $title, $body, $author, $category, $game, $published);
 	    	 break;
 	    	 
+	    	case 'deleteNewsPost':
+	    		$id			= $_POST['id'];
+	    		 $ez->deleteNews($id);
+	    	 break;
+	    	 
 	    	case 'unpublishPost':
 	    		$id		   = $_POST['id'];
 	    		 $ez->unpublishPost($id);
