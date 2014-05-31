@@ -24,7 +24,7 @@
                   		 	$total_teams = $ez->getTotalLeagueTeams($league['id']);
                   		 	$max_teams = $league['teams'];
                   		 	print "<h4>" . $league['league'] . " &#8211; (" . $total_teams . " of " . $max_teams . " max teams) </h4>";
-                  		   if(!strpos("x" . $team_leagues, $league['id']) && isset($_SESSION['ez_guild_admin']) && strtolower($league['game']) == $team_game && $total_teams != $max_teams) { ?>
+                  		   if(!strpos("x" . $team_leagues, $league['id']) && isset($_SESSION['ez_guild_admin']) && strtolower($league['game']) == strtolower($team_game) && $total_teams != $max_teams) { ?>
                   		 		<button onclick="joinLeague('<?php print $league['id']; ?>', '<?php print $ez_guild_id; ?>');" class="btn btn-info btn-xs">Join League</button>
                   <?php    } elseif(isset($_SESSION['ez_guild_admin']) && strpos("x" . $team_leagues, $league['id'])) { ?>
                   				<button onclick="leaveLeague('<?php print $league['id']; ?>', '<?php print $ez_guild_id; ?>');" class="btn btn-danger btn-xs">Leave League</button>
