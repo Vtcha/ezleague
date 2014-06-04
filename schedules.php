@@ -13,7 +13,7 @@
                   	<?php $leagues = $ez->getLeaguesByGame($current_game); ?>
                   	 <?php foreach($leagues as $league) { ?>
                   	 		<h3><?php print $league['league']; ?></h3>
-                  	 		 <a href="<?php print $site_url; ?>/game/<?php print strtolower($current_game); ?>/schedule/id/<?php print $league['id']; ?>" class="btn btn-info btn-xs"><i class="fa fa-calendar"></i> View Schedule</a>
+                  	 		 <a href="<?php print $site_url; ?>/game/<?php print strtolower($game_slug); ?>/schedule/id/<?php print $league['id']; ?>" class="btn btn-info btn-xs"><i class="fa fa-calendar"></i> View Schedule</a>
                   	 <?php } ?>
                   </div>
                 </div>

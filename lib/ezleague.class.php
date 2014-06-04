@@ -458,6 +458,22 @@
 			$this->link->query("UPDATE `" . $this->prefix . "guilds` SET logo = '$img' WHERE id = '$id'");
 		}
 		
+		function uploadScreenShot($cid, $img, $author) {
+			$this->link->query("INSERT INTO `" . $this->prefix . "screenshots` SET filename = '$img', challenge_id = '$cid',
+								uploader = '$author'
+							   ");
+		}
+		
+		function getChallengeScreenShots($cid) {
+			$data = $this->fetch("SELECT * FROM `" . $this->prefix . "screenshots` WHERE challenge_id = '$cid'");
+			 return $data;
+		}
+		
+		function deleteScreenShot($id) {
+			$this->link->query("DELETE FROM `" . $this->prefix . "screenshots` WHERE id = '$id'");
+			 print "<strong>Success!</strong> Screen Shot deleted";	
+		}
+		
 		function getTeamChallenges($team_id) {
 			//$data = $this->fetch("SELECT * FROM `" . $this->prefix . "challenges` WHERE (challenger = '$team_id') OR (challengee = '$team_id') ORDER BY created DESC");
 			$data = $this->fetch("SELECT t.id, t.challenger, t.created, t.completed, t. t.g_challenger, t.challengee, g2.guild AS g_challengee

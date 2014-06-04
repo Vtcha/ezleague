@@ -154,6 +154,14 @@
 		  $(this).ajaxSubmit(options);
 		     return false;
 		 });
+		 $("#uploadScreenShot").on('submit',function(){
+			  var options={
+			   url     : $(this).attr("action"),
+			   success : onsuccess
+			  };
+			  $(this).ajaxSubmit(options);
+			     return false;
+			 });
 	
 	function teamInvite(user_id, team_id) {
 		$(function() {
@@ -330,6 +338,20 @@
 		      setTimeout(function(){location.reload()},3000);
 	  });
 	});
+	
+	function deleteScreenShot(id) {
+		$.ajax({
+		     type: "POST",
+		     url: url,
+		     data: { form: 'deleteScreenShot', id: '' + id + '' }
+		   }).success(function( msg ) {
+			   	  $('.success').css("display", "");
+			      $(".success").fadeIn(1000, "linear");
+			      $('.success_text').fadeIn("slow");
+			      $('.success_text').html(msg);
+			      setTimeout(function(){location.reload()},3000);
+		  });
+	}
 	
 /*
  * GENERAL
@@ -603,6 +625,27 @@
 		      $('.success_text').fadeIn("slow");
 		      $('.success_text').html(msg);
 		      setTimeout(function(){window.location='inbox/view'},3000);
+	  });
+	});
+	
+//update user signature
+	$('#updateUserSignature').submit(function(e) {
+		var signature		= CKEDITOR.instances['user-signature'].getData();
+			user_id			= $("#user-id").val();
+
+				signature = str_replace("&#39;", "\'", signature);
+			
+		 e.preventDefault();
+	 $.ajax({
+	     type: "POST",
+	     url: url,
+	     data: { form: 'updateUserSignature', user_id: '' + user_id + '', signature: '' + signature + '' }
+	   }).success(function( msg ) {
+		   	  $('.success').css("display", "");
+		      $(".success").fadeIn(1000, "linear");
+		      $('.success_text').fadeIn("slow");
+		      $('.success_text').html(msg);
+		      setTimeout(function(){location.reload()},3000);
 	  });
 	});
 	

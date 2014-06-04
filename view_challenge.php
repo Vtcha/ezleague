@@ -76,7 +76,7 @@ include('sidebar.php');
                	   	 <div class="success">
                	   	 	<span class="success_text"></span>
                	   	 </div>
-               	   	<div class="col-lg-6">
+               	   	<div class="col-lg-3">
                	   	  <div class="row">
 	               	  	 <div class="form-group col-sm-12">
 	               	  	  <h3>Match Status</h3>
@@ -186,7 +186,61 @@ include('sidebar.php');
 	               	  	  	Both Teams must Accept the challenge before a score can be posted.
 	               	  	  <?php } ?>
 		            </div>
-
+		            
+		            <div class="col-lg-3">
+	                 <div class="row"> 	 
+		               	 <div class="form-group col-sm-12">
+	               	  	  <h3>Screen Shot</h3>
+	               	  	 </div>
+               	  	 </div>
+               	  	 
+		               	  <?php if($match_status == 1) { ?>
+		             <div class="row">
+		               	 <div class="form-group col-sm-12" id="add-match-score">
+	               	  	   <form role="form" id="uploadScreenShot" name="uploadScreenShot" action="<?php print $site_url; ?>/lib/uploadSS.php" method="POST">
+		                 	  <input type="hidden" name="challenge-id" id="challenge-id" value="<?php print $cid; ?>" />
+		                 	  <input type="hidden" name="author" id="author" value="<?php print $ez_username; ?>" />
+		                 	   <div class="form-group">
+		                        <label>Choose image</label>
+		                        <small>extensions: jpg, jpeg, gif, png accepted</small>
+		                        <input type="file" name="file">
+		                       </div>                 
+		                       <div class="form-group">
+		                 	    <button type="submit" class="btn btn-primary">Upload Screen Shot</button>
+		                 	   </div> 
+		                 	 </form>
+		                 	 
+		                 	 <table class="table table-striped table-hover ">
+							    <thead>
+							        <tr>
+							            <th></th>
+							            <th>author</th>
+							        </tr>
+							    </thead>
+							    <tbody>
+							    <?php $screens = $ez->getChallengeScreenShots($cid); ?>
+							     <?php foreach($screens as $screen) { ?>
+									     <tr>
+									      <td>
+									       <a href="<?php print $site_url . "/img/screens/" . $screen['filename']; ?>">
+									        <img style="width:100%;" src="<?php print $site_url . "/img/screens/" . $screen['filename']; ?>" />
+									       </a>
+									       <?php if($screen['uploader'] == $ez_username) { ?>
+									       	<br/><button onclick="deleteScreenShot('<?php print $screen['id']; ?>')" class="btn btn-danger btn-xs"><i class="fa fa-times"></i> delete image</button>
+									       <?php }?>
+									      </td>
+									      <td><?php print $screen['uploader']; ?></td>
+									     </tr>
+							     <?php } ?>
+							    </tbody>
+							   </table>
+	               	 	 </div>
+					 </div>
+	               	  	  <?php } else { ?>
+	               	  	  	Both Teams must Accept the challenge before a score can be posted.
+	               	  	  <?php } ?>
+		            </div>
+		
 				   </div>
 				   
                	   <form role="form" name="match-settings" id="match-settings" method="POST">
