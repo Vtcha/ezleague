@@ -1,3 +1,5 @@
+ezLeague 3.0 is currently in development and is slated to have a stable beta release by the end of August. progress updates will be posted on http://www.mdloring.com. this new version is being 100% re-written, and should be a massive improvement to the past version. thank you for all of the feedback and suggestions i have received since starting this project.
+
 ezLeague v2.1
 ------------------------------------------------------------------------------------------------------------------------
 "a custom php online gaming script"
