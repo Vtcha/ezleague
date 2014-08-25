@@ -1,3 +1,4 @@
+#ezLeague 3.0
 ezLeague 3.0 is on track to be released the weekend of August 29th - 31st. Stay up to date with release notes and posts at http://www.mdloring.com.
 
 ezLeague 3.0 is currently in development and is slated to have a stable beta release by the end of August. progress updates will be posted on http://www.mdloring.com. this new version is being 100% re-written, and should be a massive improvement to the past version. thank you for all of the feedback and suggestions i have received since starting this project.
