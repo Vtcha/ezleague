@@ -1,40 +1,7 @@
-Welcome to ezLeague v2.1
+Welcome to ezLeague v3.0 beta
 
-If you are upgrading your installation from a previous version, follow the steps below, otherwise these upgrades have already been included in the new version.
+Upgrade instructions will be listed once the first batch of updates has been released.
 
-v2.1 & 2.0 Upgrade
------------------------------------------------------------------------
-HOW TO UPGRADE YOUR INSTALLATION TO 2.1 FROM PREVIOUS VERSIONS
-1) Upgrade your ezLeague repository from GitHub
-2) Upload all new files, and overwrite updated ones
-3) Run the ./admin/upgrade.php file which will make all necessary database changes
-4) Enjoy! Please post any issues/bugs you may encounter
-* NOTE: The new upgrade functionality will run all previous updates if they were ever missed. *
-
-v1.6 Upgrade
------------------------------------------------------------------------
-HOW TO UPGRADE YOUR INSTALLATION TO 1.6 FROM PREVIOUS VERSIONS
-1) Upgrade your ezLeague repository from GitHub
-2) Upload and overwrite all new files
-3) Run the ./admin/upgrade.php file which will make all necessary database changes
-4) Enjoy! Please post any issues/bugs you may encounter
-
-v1.3 Upgrade
------------------------------------------------------------------------
-HOW TO UPGRADE YOUR INSTALLATION FROM V1.2 to V1.3
-1) Download the most updated release of ezLeague (1.3) from GitHub (https://github.com/stoopkid1/ezleague/)
-2) Overwrite all files/folders EXCEPT for /lib/db.class.php & /admin/lib/db.class.php -- if these files are overwritten, you will have to re-add your database configuration.
-3) Delete the /admin/upgrade.php file from your server (this file is still included in the 1.3 release)
-4) Enjoy!
-
-v1.2 Upgrade
------------------------------------------------------------------------
-HOW TO UPGRADE YOUR INSTALLATION AND WHAT IS BEING DONE
-1) Login to your Admin Panel, and navigate to: your-site.com/admin/upgrade.php
-2) If successful, a message will appear. If not, please check your DB settings in db.class.php
-3) Delete the upgrade.php file from your server
-
-The only operation this upgrade does is adding a new COLUMN (forget) to the USERS table.
 
 Any issues, please post them on GitHub or my blog.
 
