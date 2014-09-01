@@ -1,9 +1,5 @@
 #ezLeague 3.0
-ezLeague 3.0 is on track to be released the weekend of August 29th - 31st. Stay up to date with release notes and posts at http://www.mdloring.com.
-
-ezLeague 3.0 is currently in development and is slated to have a stable beta release by the end of August. progress updates will be posted on http://www.mdloring.com. this new version is being 100% re-written, and should be a massive improvement to the past version. thank you for all of the feedback and suggestions i have received since starting this project.
-
-ezLeague v2.1
+August 31st - ezLeague v3.0 beta has been released, and is now available for download from this page.
 ------------------------------------------------------------------------------------------------------------------------
 "a custom php online gaming script"
 
@@ -27,6 +23,20 @@ Team/Guild Challenge System for Matches
 Rankings will be built on an ELO algorithm, the same ranking system used for Chess Players ...more to be listed later
 
 Admin Panel to control and modify all Leagues, Matches, Users and Data
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+BUG FIXES AND UPDATES
+------------------------------------------------------------------------------------------------------------------------
+v3.0 (August 31st, 2014)
+- League based system replaces Challenge system
+- a full list of feature upgrades will be posted at a later date
+
+ezLeague 3.0 is on track to be released the weekend of August 29th - 31st. Stay up to date with release notes and posts at http://www.mdloring.com.
+
+ezLeague 3.0 is currently in development and is slated to have a stable beta release by the end of August. progress updates will be posted on http://www.mdloring.com. this new version is being 100% re-written, and should be a massive improvement to the past version. thank you for all of the feedback and suggestions i have received since starting this project.
+
+#ezLeague v2.x
+The previous ezLeague v2.x can still be downloaded from here: http://www.mdloring.com/ezleague-v2.zip , but no future updates will be released for it (except for maybe some sort of v2.0 to 3.0 upgrade)
 
 How to Upgrade
 ------------------------------------------------------------------------------------------------------------------------
@@ -37,8 +47,12 @@ If you overwrite the db.class.php files, you'll have to re-add your database con
 If you run into any issues, please post them on the Issues page (https://github.com/stoopkid1/ezleague/issues) and I'll look into it.
 
 ------------------------------------------------------------------------------------------------------------------------
-BUG FIXES AND UPDATES
+BACKLOG BUG FIXES
 ------------------------------------------------------------------------------------------------------------------------
+v3.0 (August 31st, 2014)
+- League based system replaces Challenge system
+- a full list of feature upgrades will be posted at a later date
+
 v2.1
 - Basic Forum
 - Admin Forum -- Add Sections, Disable/Enable Sections
