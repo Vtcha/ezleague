@@ -61,6 +61,16 @@ $ez_settings = new ezAdmin_Settings();
     	 		$user_id	= $_POST['user_id'];
     	 		 $ez_settings->delete_admin( $user_id );
     	 		break;
+
+            case 'update-twitter-app':
+                $count        = $_POST['count'];
+                $handle       = $_POST['handle'];
+                $api          = $_POST['api'];
+                $secret       = $_POST['secret'];
+                $token        = $_POST['token'];
+                $token_secret = $_POST['token_secret'];
+                 $ez_settings->update_twitter_app_settings( $count, $handle, $api, $secret, $token, $token_secret );
+                break;
     	 	
     	 	default:
     	 		break;
