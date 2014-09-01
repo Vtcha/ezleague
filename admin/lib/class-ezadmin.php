@@ -1,4 +1,4 @@
-<?php session_start();
+<?php
 	
 class ezAdmin extends DB_Class {
 		
@@ -99,7 +99,8 @@ class ezAdmin extends DB_Class {
 		
 		$test_connection = mysqli_connect($this->host, $this->username, $this->password, $this->database) or die("Error " . mysqli_error( $test_connection ) );
 		if( $test_connection ) {
-			$salt = '$2a$05$Bs3HEiQG6G9PZHkY.Ay3Cg==';
+			$salt = '$2a$05$Bs3HEiQG6G9PZHkY.Ay3Cg==';
+
 			$hash = '$2a$05$Bs3HEiQG6G9PZHkY.Ay3CeE1lBUiLRSiRSl57pmRs61C8GWsKAt6G';
 			$sql = "
 			DROP TABLE IF EXISTS `" . $this->prefix . "comments`;
