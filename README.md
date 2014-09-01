@@ -6,7 +6,9 @@ August 31st - ezLeague v3.0 beta has been released, and is now available for dow
 (bug fixes listed at the bottom)
 
 http://www.mdloring.com
-demo: http://ezleague.mdloring.com
+demo: http://www.mdloring.com/ezl
+username: admin
+password: ezadmin
 
 About ezLeague
 ------------------------------------------------------------------------------------------------------------------------
