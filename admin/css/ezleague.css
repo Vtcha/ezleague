@@ -1,0 +1,103 @@
+ div.login_success, div.success {
+ 	text-align:center;
+ 	background:#66AFE9;
+ 	margin-top:10px;
+ 	padding:5px;
+ 	border-radius:5px;
+ 	display:none;
+ }
+ 
+ span.login_success_text, span.success_text {
+ 	font-size:1.1em;
+ 	color:#E7E7E7;
+ 	font-weight:300;
+ }
+ 
+ .bolder {
+	font-weight:700;
+ }
+ 
+ .italic {
+	font-style:italic;
+ }
+ 
+ .center {
+	text-align:center;
+ }
+ 
+ .recent_users, .recent_teams, .current_leagues td {
+	font-size: .8em;
+ }
+ 
+ .dispute {
+	background:#EB6160;
+ }
+ 
+ .dispute_open {
+	background:#C0D1C0;
+ }
+ 
+ .dispute_closed {
+	background:#EB6160;
+ }
+ 
+ .user_suspended {
+	background:#EB6160;
+ 	font-weight:700;
+ }
+ 
+ .suspended {
+	padding:5px;
+ 	border-radius:2px;
+ }
+ 
+ span.search {
+ 	font-weight:700;		
+ 	color:#47A447;
+ }
+ 
+ div.search {
+	margin-top:10px;
+ }
+ 
+ .search-user {
+	margin-top:-25px;
+ }
+ 
+ body .modal-team {
+	width:900px;
+ 	background: white;
+ 	margin-left: -175px;
+ }
+ 
+ .news-media, .select-media {
+	border:2px solid #E7E7E7;
+ 	padding:5px;
+ 	margin-bottom:5px;
+ 	border-radius:2px;
+ 	height:100px;
+ }
+ 
+ .news-media:hover, .select-media:hover {
+	background:	#e5e5e5;
+ }
+ 
+ .select-media {
+	width:100%;
+ }
+ 
+ .media-select {
+	width:100%;
+ }
+ 
+ .media-select img {
+	width:100%;
+ }
+ 
+ .delete-media {
+	margin-bottom:5px;
+ }
+ 
+ .media-modal {
+	width:90%;
+ }
