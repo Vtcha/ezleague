@@ -1,4 +1,4 @@
-<?php session_start();
+<?php
 
 class ezLeague extends DB_Class {
 	

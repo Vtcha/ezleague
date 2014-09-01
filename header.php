@@ -18,19 +18,21 @@ if( isset( $_SESSION['ez_username'] ) ) {
 	$profile = $ez_users->get_user( $_SESSION['ez_username'] );
 }
 
-require_once dirname( __FILE__ ) . '/lib/codebird.php';
-\Codebird\Codebird::setConsumerKey('wn7WDlHEeOrqovnzP5s4A72IJ', 'gPW4qCBIJKDZv5C71TTDn23q8LjZRDHVL0R7mePAVC7093jPve');
+$twitter_settings = $ez_frontend->get_twitter_app_settings();
+if( $twitter_settings['handle'] != '' ) { 
+	require_once dirname( __FILE__ ) . '/lib/codebird.php';
+	\Codebird\Codebird::setConsumerKey('' . $twitter_settings['api'] . '', '' . $twitter_settings['secret'] . '');
 
-$cb = \Codebird\Codebird::getInstance();
-$cb->setToken('2467161684-BCMOGgfU4NrOrLe8or6pxxoYH75syOesNV9Fl27', 'lcddVHxgT2LjNcYc94JNAZURI91rUFcwRoEWQLmT9z9WV');
+	$cb = \Codebird\Codebird::getInstance();
+	$cb->setToken('' . $twitter_settings['token'] . '', '' . $twitter_settings['token_secret'] . '');
 
-$params = array(
-            'screen_name' => 'ezLeagueGaming',
-            'count' => 3,
-        );
+	$params = array(
+	            'screen_name' => '' . $twitter_settings['handle'] . '',
+	            'count' => $twitter_settings['count'],
+	        );
 
-$tweets = (array) $cb->statuses_userTimeline($params);
-
+	$tweets = (array) $cb->statuses_userTimeline($params);
+}
 
 ?>
 <!DOCTYPE html>

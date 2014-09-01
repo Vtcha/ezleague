@@ -35,19 +35,19 @@
 	<h3>Recent Tweets</h3>
 	<div class="blog-twitter">
 	<?php $now = date('Y-m-d H:i:s', time()); ?>
-	<?php foreach( $tweets as $tweet ) { $tweet_time = date( 'Y-m-d H:i:s', strtotime( $tweet->created_at ) ); ?>
-	<?php if( $tweet->text != '' ) { ?>
-		<div class="blog-twitter-block">
-			<a href="http://www.twitter.com/ezLeagueGaming" target="_blank">
-			@ezLeagueGaming </a>
-			<p>
-				 <?php echo $tweet->text; ?>
-			</p>
-			<span>
-			<?php echo $ez->dateDiff($tweet_time, $now) . "\n"; ?> </span>
-			<i class="fa fa-twitter blog-twiiter-icon"></i>
-		</div>
-	<?php } ?>
+	<?php for ($i = 0; $i <= $params['count'] - 1; $i++) { 
+			$tweet_time = date( 'Y-m-d H:i:s', strtotime( $tweets[$i]->created_at ) ); 
+	?>
+			<div class="blog-twitter-block">
+				<a href="http://www.twitter.com/<?php echo $twitter_settings['handle']; ?>" target="_blank">
+				@<?php echo $twitter_settings['handle']; ?> </a>
+				<p>
+					 <?php echo $tweets[$i]->text; ?>
+				</p>
+				<span>
+				<?php echo $ez->dateDiff($tweet_time, $now) . "\n"; ?> </span>
+				<i class="fa fa-twitter blog-twiiter-icon"></i>
+			</div>
 	<?php } ?>
 	</div>
 </div>
