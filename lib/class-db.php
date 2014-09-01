@@ -13,11 +13,11 @@ class DB_Class {
 		var $link;
 	
 		var $host 	  = "localhost"; //database host (check with your hosting provider, but localhost is usually correct)
-		var $username = ""; //database username
+		var $username = "root"; //database username
 		var $password = ""; //database password
-		var $database = ""; //mysql database
-		var $prefix	  = ""; //table prefix
-		var $site_url = "http://www.yoursite.com/directory"; //do not leave a trailing slash (ex: http://www.mdloring.com/ezleague/)
+		var $database = "ezleague"; //mysql database
+		var $prefix	  = "ezl"; //table prefix
+		var $site_url = "http://localhost/ezleague"; //do not leave a trailing slash (ex: http://www.mdloring.com/ezleague/)
 		
 		public function __construct() {
 			global $connection;
