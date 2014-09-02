@@ -73,9 +73,7 @@
 					   		$(".register_success").fadeIn(1000, "linear");
 					   		$(".register_success_text").fadeIn("slow");
 					   		$(".register_success_text").html(msg);
-				 	   if(msg == "<strong>Success!</strong> Account has been created. You may now login.") {
 				 		  setTimeout(function(){location.reload()},3000);
-				 	   }
 				  });
 				} else {
 						this.register_success.css("display", "");
