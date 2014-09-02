@@ -409,6 +409,40 @@ class ezAdmin extends DB_Class {
 	}
 
 	/*
+	 * Run the upgrade
+	 *
+	 * @return string
+	 */
+	public function run_upgrade() {
+
+		$test_connection = mysqli_connect($this->host, $this->username, $this->password, $this->database) or die("Error " . mysqli_error( $test_connection ) );
+		if( $test_connection ) {
+			$sql = "
+					ALTER TABLE `" . $this->prefix . "settings`
+					ADD COLUMN twitter_handle VARCHAR(250);
+					ALTER TABLE `" . $this->prefix . "settings`
+					ADD COLUMN twitter_count INT(10);
+					UPDATE `" . $this->prefix . "settings`
+					SET twitter_count = '0' WHERE id = '1';
+					ALTER TABLE `" . $this->prefix . "settings`
+					ADD COLUMN twitter_api VARCHAR(250);
+					ALTER TABLE `" . $this->prefix . "settings`
+					ADD COLUMN twitter_secret VARCHAR(250);
+					ALTER TABLE `" . $this->prefix . "settings`
+					ADD COLUMN twitter_token VARCHAR(250);
+					ALTER TABLE `" . $this->prefix . "settings`
+					ADD COLUMN twitter_token_secret VARCHAR(250);
+					";
+
+			mysqli_multi_query($test_connection, $sql);
+			$this->success('Upgrade completed. Please <a href="admin">Login</a>');
+		} else {
+			$this->error('Please check your connection details and try again');
+		}
+		return;
+	}
+
+	/*
 	 * ABOUT: Check if a specific key and value exist in an array
 	 * USED IN: 
 	 * Matches View -> Check if match has an open dispute [status = 0]
