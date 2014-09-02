@@ -1,11 +1,11 @@
-#ezLeague 3.0
-August 31st - ezLeague v3.0 beta has been released, and is now available for download from this page.
+#ezLeague 3.0#
 ------------------------------------------------------------------------------------------------------------------------
 "a custom php online gaming script"
 
 (bug fixes listed at the bottom)
 
-http://www.mdloring.com
+http://www.mdloring.com/ezleague-free-php-online-gaming-league-script/
+
 demo: http://www.mdloring.com/ezl
 username: admin
 password: ezadmin
@@ -34,7 +34,6 @@ If you overwrite the db.class.php files, you'll have to re-add your database con
 
 If you run into any issues, please post them on the Issues page (https://github.com/stoopkid1/ezleague/issues) and I'll look into it.
 
-------------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------------
 v3.0 BUG FIXES AND UPDATES
 ------------------------------------------------------------------------------------------------------------------------
