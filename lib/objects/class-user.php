@@ -52,7 +52,7 @@ class ezLeague_User extends DB_Class {
 			$this->success('Account has been created. You may now login.');
 		}
 	
-		}
+	}
 		
 	/*
 	 * Change user password
