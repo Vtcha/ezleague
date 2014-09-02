@@ -29,7 +29,8 @@
 		}
 	}
 ?>
-	
+
+<?php if( $twitter_settings['handle'] != '' ) { ?>
 	<div class="space20">
 	</div>
 	<h3>Recent Tweets</h3>
@@ -50,5 +51,6 @@
 			</div>
 	<?php } ?>
 	</div>
+<?php } ?>	
 </div>
 <!--end col-md-3-->
