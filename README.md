@@ -1,5 +1,5 @@
 #ezLeague 3.0#
-------------------------------------------------------------------------------------------------------------------------
+
 "a custom php online gaming script"
 
 (bug fixes listed at the bottom)
@@ -34,11 +34,9 @@ If you overwrite the db.class.php files, you'll have to re-add your database con
 
 If you run into any issues, please post them on the Issues page (https://github.com/stoopkid1/ezleague/issues) and I'll look into it.
 
-------------------------------------------------------------------------------------------------------------------------
 v3.0 BUG FIXES AND UPDATES
 ------------------------------------------------------------------------------------------------------------------------
 ###September 1st, 2014
-------------------------------------------------------------------------------------------------------------------------
 - Delete installer after successful installation
 - Upgrade file
 - Sidebar recent twitter tweets
