@@ -4,4 +4,4 @@ php:
   - 5.4
 env:
 - DB=mysql
-script: phpunit
+script: phpunit --configuration phpunit_$DB.xml --coverage-text
