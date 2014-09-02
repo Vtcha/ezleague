@@ -1,4 +1,5 @@
 <div class="col-md-3 col-sm-4 blog-sidebar">
+<!-- Feature Match coming in future update 
 	<h3>Featured Match</h3>
 	<div class="top-news">
 		<a href="#" class="btn green">
@@ -7,7 +8,7 @@
 		<em>August 1st, 2014</em>
 		</a>
 	</div>
-
+-->
 	<h3>Recent Matches</h3>
 <?php 
 	$recent_matches = $ez_frontend->get_recent_matches();
