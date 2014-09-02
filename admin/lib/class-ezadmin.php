@@ -400,6 +400,7 @@ class ezAdmin extends DB_Class {
 			";
 				
 			mysqli_multi_query($test_connection, $sql);
+			unlink('install.php');
 			$this->success('Installation Completed. Please <a href="admin">Login</a>');
 		} else {
 			$this->error('Please check your connection details and try again');
