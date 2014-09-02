@@ -10,15 +10,31 @@ ezLeague Installation Guide v3.0 -- August 31st, 2014
 7. If you encounter no issues, please delete the 'install.php' file from your server as a security risk
 -----------------------------------------------------
 
-NOTES: A lot of work has gone into the base of this project, regardless of how limited the functionality is at this moment. More functionality will be added over time, but I thought it was important to get a stable release out as quickly as possible after the numerous emails I've received over the months. Also, this project and code is not meant to be perfect -- there will be bugs, and of course, there are and always will be better ways to write certain aspects and functions of this project. Instead of trying to over-complicate functionality, I wanted even the most beginner programmer to be able to go through this code and understand how it works, which I feel has been achieved. 
+LICENSING
+In the near future licenses can be purchased which will grant users application support & premium application upgrades.
 
-If you're interested in helping with the future of this project, by all means, please contact me. It'd be great to work with other developers, and maybe, just maybe, even have a small community built out of this project, which seems to be happening already.
+NOTES
+ezLeague v3.0 had 95% of previous code re-written, and because of that, v2.x will no longer be supported. I will try to release a v2.x to 3.0 upgrade utility, but no promises. 
 
-All the best,
+HOW TO UPDATE
+Be sure to register a GitHub account, and download ezLeague by "cloning" it using the GitHub GUI Application (this can be downloaded at http://windows.github.com). When ezLeague updates are released, simply "sync" the repository, and upload the modified files. In some cases, when a database update has been made, users will need to run the upgrade script
 
+HOW TO UPGRADE
+When database updates have been made...
+1. Login to your admin panel
+2. Navigate to http://your-web-site.com/admin/upgrade.php [ex: http://www.mdloring.com/ezl/admin/upgrade.php]
+3. A success message will be shown if the upgrade went through
+
+HOW TO HELP
+If you're interested in helping with the future of this project, by all means, please contact me. It'd be great to work 
+with other developers, and maybe, just maybe, even have a small community built out of this project, which seems to be 
+happening already.
+
+CONTACT
 Michael Loring
-MDLoring@gmail.com
-http://www.mdloring.com
+email: mdloring@gmail.com
+skype: redcrestloring
+website: http://www.mdloring.com
 
 
 ezLeague is licensed under the MIT License, Open Source Initiative & Creative Commons Attribution 3.0 License:
