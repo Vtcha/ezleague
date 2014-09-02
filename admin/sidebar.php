@@ -80,6 +80,9 @@
                             	<a href="settings.php?page=social_networks">Social Networks</a>
                             </li>
                             <li>
+                                <a href="settings.php?page=twitter">Recent Tweets</a>
+                            </li>
+                            <li>
                                 <a href="settings.php?page=site">Site</a>
                             </li>
                         </ul>

@@ -246,6 +246,26 @@ class ezLeague_Frontend extends DB_Class {
 		}
 		
 	}
+
+	public function get_twitter_app_settings() {
+
+		$twitter = array();
+		$data = $this->fetch("SELECT twitter_count, twitter_handle, twitter_api, twitter_secret, twitter_token, twitter_token_secret
+							  FROM `" . $this->prefix . "settings` WHERE id = '1'
+							");
+		if( $data ) {
+			$twitter['count'] 			= $data['0']['twitter_count'];
+			$twitter['handle'] 			= $data['0']['twitter_handle'];
+			$twitter['api']				= $data['0']['twitter_api'];
+			$twitter['secret']  		= $data['0']['twitter_secret'];
+			$twitter['token']   		= $data['0']['twitter_token'];
+			$twitter['token_secret']	= $data['0']['twitter_token_secret'];
+			return $twitter;
+		} else {
+			return;
+		}
+
+	}
 	
 	/*
 	 * Count total news posts

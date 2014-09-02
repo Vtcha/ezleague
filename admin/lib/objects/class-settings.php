@@ -279,6 +279,11 @@ class ezAdmin_Settings extends DB_Class {
 		
 	}
 
+	/*
+	 * Get social network information
+	 *
+	 * @return array
+	 */
 	public function get_social_networks() {
 		
 		$settings = array();
@@ -292,6 +297,52 @@ class ezAdmin_Settings extends DB_Class {
 		);
 		return $settings;
 		
+	}
+
+	/*
+	 * Get twitter app settings
+	 *
+	 * @return array
+	 */
+	public function get_twitter_app_settings() {
+
+		$twitter = array();
+		$data = $this->fetch("SELECT twitter_count, twitter_handle, twitter_api, twitter_secret, twitter_token, twitter_token_secret
+							  FROM `" . $this->prefix . "settings` WHERE id = '1'
+							");
+		if( $data ) {
+			$twitter['count'] 			= $data['0']['twitter_count'];
+			$twitter['handle'] 			= $data['0']['twitter_handle'];
+			$twitter['api']				= $data['0']['twitter_api'];
+			$twitter['secret']  		= $data['0']['twitter_secret'];
+			$twitter['token']   		= $data['0']['twitter_token'];
+			$twitter['token_secret']	= $data['0']['twitter_token_secret'];
+			return $twitter;
+		} else {
+			return;
+		}
+
+	}
+
+	/*
+	 * Update twitter app settings
+	 *
+	 * @return string
+	 */
+	public function update_twitter_app_settings($count, $handle, $api, $secret, $token, $token_secret) {
+
+		$handle 	  = $this->sanitize( $handle );
+		$api 		  = $this->sanitize( $api );
+		$secret 	  = $this->sanitize( $secret );
+		$token 		  = $this->sanitize( $token );
+		$token_secret = $this->sanitize( $token_secret );
+		$this->link->query("UPDATE `" . $this->prefix . "settings`
+							SET twitter_count = '$count', twitter_handle = '$handle', twitter_api = '$api', twitter_secret = '$secret', twitter_token = '$token', twitter_token_secret = '$token_secret'
+							WHERE id = '1'
+						");
+		$this->success('Twitter app settings have been updated');
+		return;
+
 	}
 	
 	public function getFooterLinks() {

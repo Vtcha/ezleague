@@ -27,6 +27,10 @@
         			case 'social_networks':
         				include('tpls/settings/social-networks.php');
         				break;
+
+                    case 'twitter':
+                        include('tpls/settings/twitter.php');
+                        break;
         			
         			default:
         				break;

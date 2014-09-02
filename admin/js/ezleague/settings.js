@@ -412,6 +412,34 @@ $('#updatePassword').submit(function(e) {
 });
 
 /**
+ * Update twitter app settings
+ */
+ $('#updateTwitterApp').submit(function(e) {
+	var api			 = $("#twitter-api").val();
+		secret		 = $("#twitter-secret").val();
+		token		 = $("#twitter-token").val();
+		token_secret = $("#twitter-token-secret").val();
+		handle 		 = $("#twitter-handle").val();
+		count 		 = $("#twitter-count").val();
+		
+	 e.preventDefault();
+
+ $.ajax({
+     type: "POST",
+     url: "lib/submit/submit-settings.php",
+     async:true,
+     crossbrowser:true,
+     data: { form: 'update-twitter-app', count: '' + count + '', handle: '' + handle + '', api: '' + api + '', secret: '' + secret + '', token: '' + token + '', token_secret: '' + token_secret + '' }
+   }).success(function( msg ) {
+	   		$('.success').css("display", "");
+	   		$(".success").fadeIn(1000, "linear");
+	   		$('.success_text').fadeIn("slow");
+	   		$('.success_text').html(msg);
+	   		setTimeout(function(){location.reload()},3000);
+  });
+});
+
+/**
  * Search and replace specifically used for CKEDITOR values to handle single quotes
  * 
  * @param search
