@@ -8,7 +8,18 @@ http://www.mdloring.com/ezleague-free-php-online-gaming-league-script/
 
 demo: http://www.mdloring.com/ezl
 username: admin
+
 password: ezadmin
+
+Installation
+------------------------------------------------------------------------------------------------------------------------
+1. Open '/lib/db.class.php' & '/admin/lib/db.class.php' and modify your site URL and database values
+2. Navigate to the web address / directory where you uploaded the script
+3. Enter your Site Name, and check over the database information to make sure it is correct
+4. Run the installation, and if successful, you should be redirected to login to the admin page
+5. Default admin login -- username: admin password: ezadmin
+6. After logging in successfully, navigate back to the main index page (the user-frontend side)
+7. If you encounter no issues, please delete the 'install.php' file from your server as a security risk
 
 About ezLeague
 ------------------------------------------------------------------------------------------------------------------------
