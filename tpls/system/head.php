@@ -1,7 +1,7 @@
 <!-- BEGIN HEAD -->
 <head>
 <meta charset="utf-8"/>
-<title>ezLeague - Create, Manage, Game</title>
+<title><?php echo $site_settings['name']; ?> - Create, Manage, Game</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <meta content="" name="description"/>

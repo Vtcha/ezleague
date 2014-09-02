@@ -18,17 +18,18 @@ if( isset( $_SESSION['ez_username'] ) ) {
 	$profile = $ez_users->get_user( $_SESSION['ez_username'] );
 }
 
-$twitter_settings = $ez_frontend->get_twitter_app_settings();
-if( $twitter_settings['handle'] != '' ) { 
+$site_settings = $ez_frontend->get_site_settings();
+
+if( $site_settings['handle'] != '' ) { 
 	require_once dirname( __FILE__ ) . '/lib/codebird.php';
-	\Codebird\Codebird::setConsumerKey('' . $twitter_settings['api'] . '', '' . $twitter_settings['secret'] . '');
+	\Codebird\Codebird::setConsumerKey('' . $site_settings['api'] . '', '' . $site_settings['secret'] . '');
 
 	$cb = \Codebird\Codebird::getInstance();
-	$cb->setToken('' . $twitter_settings['token'] . '', '' . $twitter_settings['token_secret'] . '');
+	$cb->setToken('' . $site_settings['token'] . '', '' . $site_settings['token_secret'] . '');
 
 	$params = array(
-	            'screen_name' => '' . $twitter_settings['handle'] . '',
-	            'count' => $twitter_settings['count'],
+	            'screen_name' => '' . $site_settings['handle'] . '',
+	            'count' => $site_settings['count'],
 	        );
 
 	$tweets = (array) $cb->statuses_userTimeline($params);
@@ -51,7 +52,7 @@ if( $twitter_settings['handle'] != '' ) {
 		<!-- BEGIN LOGO -->
 		<div class="page-logo">
 			<a href="index.php">
-			<img src="assets/admin/layout/img/logos/waf3r/ezl-logo_1.png" alt="logo" class="logo-default"/>
+			<img src="logos/<?php echo $site_settings['logo']; ?>" alt="logo" class="logo-default"/>
 			</a>
 			<div class="menu-toggler sidebar-toggler hide">
 				<!-- DOC: Remove the above "hide" to enable the sidebar toggler button on header -->
