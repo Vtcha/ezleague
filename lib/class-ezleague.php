@@ -1,4 +1,4 @@
-<?php session_start();
+<?php
 
 class ezLeague extends DB_Class {
 	
@@ -23,13 +23,13 @@ class ezLeague extends DB_Class {
 	 */
 	public function require_files() {
 	
-		require_once dirname( __FILE__ ) . '/class-frontend.php';
-		require_once dirname( __FILE__ ) . '/class-schedule.php';
-		require_once dirname( __FILE__ ) . '/objects/class-news.php';
-		require_once dirname( __FILE__ ) . '/objects/class-user.php';
-		require_once dirname( __FILE__ ) . '/objects/class-team.php';
-		require_once dirname( __FILE__ ) . '/objects/class-league.php';
-		require_once dirname( __FILE__ ) . '/objects/class-inbox.php';
+		require_once 'class-frontend.php';
+		require_once 'class-schedule.php';
+		require_once(dirname(__FILE__) . "/objects/class-news.php");
+		require_once(dirname(__FILE__) . "/objects/class-user.php");
+		require_once(dirname(__FILE__) . "/objects/class-team.php");
+		require_once(dirname(__FILE__) . "/objects/class-inbox.php");
+		require_once(dirname(__FILE__) . "/objects/class-league.php");
 		
 	}
 	
