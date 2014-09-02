@@ -279,5 +279,33 @@ class ezLeague_Frontend extends DB_Class {
 		return $count;
 		
 	}
+
+	/*
+	 * Get basic site settings
+	 *
+	 * @return array
+	 */
+	public function get_site_settings() {
+
+		$settings = array();
+		$data = $this->fetch("SELECT * FROM `" . $this->prefix . "settings` WHERE id = '1'
+							");
+		if( $data ) {
+			$settings['logo'] 			= $data['0']['site_logo'];
+			$settings['email']			= $data['0']['site_email'];
+			$settings['about'] 			= $data['0']['site_about'];
+			$settings['name']			= $data['0']['site_name'];
+			$settings['count'] 			= $data['0']['twitter_count'];
+			$settings['handle'] 		= $data['0']['twitter_handle'];
+			$settings['api']			= $data['0']['twitter_api'];
+			$settings['secret']  		= $data['0']['twitter_secret'];
+			$settings['token']   		= $data['0']['twitter_token'];
+			$settings['token_secret']	= $data['0']['twitter_token_secret'];
+			return $settings;
+		} else {
+			return;
+		}
+
+	}
 	
 }
