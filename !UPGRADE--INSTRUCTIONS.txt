@@ -1,6 +1,10 @@
 Welcome to ezLeague v3.0 beta
 
-Upgrade instructions will be listed once the first batch of updates has been released.
+To upgrade follow these instructions:
+1) Login to your admin panel
+2) Run /admin/upgrade.php
+3) A success message will be shown
+4) You're good to go!
 
 
 Any issues, please post them on GitHub or my blog.
