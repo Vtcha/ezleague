@@ -27,11 +27,22 @@ Rankings will be built on an ELO algorithm, the same ranking system used for Che
 Admin Panel to control and modify all Leagues, Matches, Users and Data
 ------------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------------
-BUG FIXES AND UPDATES
+v3.0 BUG FIXES AND UPDATES
 ------------------------------------------------------------------------------------------------------------------------
-v3.0 (August 31st, 2014)
-- League based system replaces Challenge system
-- a full list of feature upgrades will be posted at a later date
+Delete installer after successful installation
+- After a successful installation, the installer file will automatically be deleted
+
+Upgrade file
+- Admins must run the admin/upgrade.php file to implement MySQL updates
+- After successful upgrade, the upgrade file will automatically be deleted
+
+Sidebar recent twitter tweets
+- Support added to display recent tweets in the homepage sidebar
+- Admins must setup a Twitter App and configure their settings in the admin panel
+
+Fix setup files function
+- Removed the session_start() call at the top of class-ezleague.php since it does not need to be there
+- Re-wrote the require_files() function that properly loads all required class files
 
 ezLeague 3.0 is on track to be released the weekend of August 29th - 31st. Stay up to date with release notes and posts at http://www.mdloring.com.
 
@@ -47,71 +58,3 @@ When a new version is released, unless you have made your own changes to specifi
 If you overwrite the db.class.php files, you'll have to re-add your database configuration information.
 
 If you run into any issues, please post them on the Issues page (https://github.com/stoopkid1/ezleague/issues) and I'll look into it.
-
-------------------------------------------------------------------------------------------------------------------------
-BACKLOG BUG FIXES
-------------------------------------------------------------------------------------------------------------------------
-v3.0 (August 31st, 2014)
-- League based system replaces Challenge system
-- a full list of feature upgrades will be posted at a later date
-
-v2.1
-- Basic Forum
-- Admin Forum -- Add Sections, Disable/Enable Sections
-- Site Logo
-- Team Logo
-- .htaccess file changes made to handle forum
-- Make Challenge bug fixed where button would not display
-
-v2.0
-- User Inbox/Message System
-- Prediction System for matches/challenges
-- About Us page -- modified through the Admin Panel Site Settings
-- Contact Us page -- modified through the Admin Panel Site Settings
-- .htaccess file changes made to handle new pages
-- re-wrote the installation and upgrade functions to utilize mysqli_multi_query()
-
-v1.6
-- Member Search added to Members page
-- Team Invite functionality added with a confirmation popup
-- Team Invites notification added to header
-
-v1.5
-- Various fixes to Leagues and corresponding functionality
-- removed any remaining mentions of ELO
-- Leave League and Join League functionality updated
-
-v1.4
-- ELO ranking system and corresponding columns have been removed (some functions still exist, as i plan to re-add this again later)
-- NEW Point Ranking System implemented across all games and leagues
-- standings page updated to reflect point ranking system implementation
-- admins can now change the point values given per win/loss/tie dependent on the league
-- match editing reflects the new point system update
-
-v1.3
- - View & Create Admins – currently on GitHub
- - Create users
- - Update profile settings (password & email) – currently on GitHub
- - Site Settings link structure (all site settings file names have been changed) – currently on GitHub
- - List the total amount of teams per league
- - Kick team from league
- - Add “view matches” to the individual team profiles
- - Add team records to the individual team profiles
- - View League Profile
- - Edit League Rules
-
-v1.2
- - forget/reset password option available for users -- ./reset.php, ./forget.php, ./lib/ezleague.class.php, ./js/ezleague.js, ./submit.php
- - update user settings (email & password) -- ./settings.php, ./js/ezleague.js, ./submit.php, ./lib/ezleague.js
- - user search/lookup for admins -- ./admin/users_all.php, ./admin/lib/ezleague.class.php
- - captcha code for registration -- ./footer.php, ./lib/ezleague.class.php, ./js/ezleague.js
- - settings page added to .htaccess -- .htaccess
- - registration/install functionality cleanup -- final fix applied to the registration and installation bugs.
-
-v1.1
- - removed installation step #2 -- ./header.php, ./js/ezleague.js
- - fixed add news body text issue -- ./admin/js/ezleague.js, ./admin/submit.php, ./index.php, ./js/ezleague.js, ./news.php
- - login function double-prefix bug -- ./lib/ezleague.class.php
- - added dispute functionality -- ./index.php, ./view_challenge.php
- - display message if no news items found -- ./index.php, ./lib/ezleague.class.php
- - added a View Site link in the sidebar on the admin side -- /admin/sidebar.php
