@@ -435,7 +435,7 @@ class ezAdmin extends DB_Class {
 					";
 
 			mysqli_multi_query($test_connection, $sql);
-			$this->success('Upgrade completed. Please <a href="admin">Login</a>');
+			$this->success('Upgrade completed. Head <a href="index.php">home</a>');
 		} else {
 			$this->error('Please check your connection details and try again');
 		}

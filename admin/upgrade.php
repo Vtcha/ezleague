@@ -6,6 +6,7 @@ $ez = new ezAdmin();
     
      if( isset($_SESSION['ez_admin'] ) ) {
      	$ez->run_upgrade();
+     	unlink('upgrade.php');
      } else {
      	echo 'You are not an admin';
      }
