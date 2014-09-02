@@ -27,6 +27,8 @@
 	</div>
 <?php $matches++;
 		}
+	} else { 
+		echo '<p>No match results to display</p>';
 	}
 ?>
 
