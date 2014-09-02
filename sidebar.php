@@ -33,7 +33,7 @@
 	}
 ?>
 
-<?php if( $twitter_settings['handle'] != '' ) { ?>
+<?php if( $site_settings['handle'] != '' ) { ?>
 	<div class="space20">
 	</div>
 	<h3>Recent Tweets</h3>
@@ -43,8 +43,8 @@
 			$tweet_time = date( 'Y-m-d H:i:s', strtotime( $tweets[$i]->created_at ) ); 
 	?>
 			<div class="blog-twitter-block">
-				<a href="http://www.twitter.com/<?php echo $twitter_settings['handle']; ?>" target="_blank">
-				@<?php echo $twitter_settings['handle']; ?> </a>
+				<a href="http://www.twitter.com/<?php echo $site_settings['handle']; ?>" target="_blank">
+				@<?php echo $site_settings['handle']; ?> </a>
 				<p>
 					 <?php echo $tweets[$i]->text; ?>
 				</p>
