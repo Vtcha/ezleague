@@ -45,6 +45,7 @@ $position = $page * 3;
 							<h1>Latest News</h1>
 							<div class="row">
 							<?php $news = $ez_news->get_news( $position ); ?>
+							<?php if( $news ) { ?>
 							<?php foreach( $news as $item ) { ?>
 								<div class="col-md-4 blog-img blog-tag-data">
 									<?php if( $item['media'] ) { ?>	
@@ -90,6 +91,9 @@ $position = $page * 3;
 								<div style="clear:both;"></div>
 								<hr>
 							<?php } ?>
+							<?php } else { ?>
+									<p>No news items to display</p>
+								<?php } ?>
 							<?php 
 									$pagination = '';
 									if($pages > 1)
