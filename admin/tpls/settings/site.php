@@ -89,7 +89,7 @@
                     <div class="tab-pane fade" id="site-logo">
                         <h4>Web Site Logo</h4>
                         <div class="col-lg-8">
-                         <form role="form" id="siteSettingsLogo" name="siteSettingsLogo" action="lib/uploadLogo.php" method="POST">
+                         <form role="form" id="siteLogo" action="./lib/submit/logo-upload.php" method="POST" enctype="multipart/form-data">
                            <div class="form-group">
                             <label>Choose image</label>
                             <small>extensions: jpg, jpeg, gif, png accepted</small>
@@ -104,7 +104,9 @@
                          </div>
                         </div>
                         <div class="col-lg-4">
-                         <!-- <img src="../img/<?php //echo $site_settings['logo']; ?>" class="img-responsive" /> -->
+                          <a href="../logos/<?php echo $site_settings['logo']; ?>">
+                            <img src="../logos/<?php echo $site_settings['logo']; ?>" class="img-responsive" />
+                          </a>
                         </div>
                     </div>
                 </div>

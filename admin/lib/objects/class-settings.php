@@ -239,6 +239,9 @@ class ezAdmin_Settings extends DB_Class {
 			case 'about':
 				$setting = 'site_about';
 				break;
+			case 'logo':
+				$setting = 'site_logo';
+				break;
 			default:
 				break;
 		}
