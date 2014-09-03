@@ -224,7 +224,7 @@ class ezAdmin_Settings extends DB_Class {
 	 */
 	public function update_site_settings($setting, $value) {
 		
-		$column = $this->sanitize( $column );
+		$setting = $this->sanitize( $setting );
 		$value  = $this->sanitize( $value );
 		switch( $setting ) {
 			case 'name':
@@ -241,6 +241,9 @@ class ezAdmin_Settings extends DB_Class {
 				break;
 			case 'logo':
 				$setting = 'site_logo';
+				break;
+			case 'fav_icon':
+				$setting = 'site_fav_icon';
 				break;
 			default:
 				break;
@@ -269,11 +272,12 @@ class ezAdmin_Settings extends DB_Class {
 		$data = $this->fetch("SELECT * FROM `" . $this->prefix . "settings` WHERE id = '1'");
 		if( $data ) {
 			$settings = array(
-								'name'  => $data['0']['site_name'],
-								'url' 	=> $data['0']['site_url'],
-								'email' => $data['0']['site_email'],
-								'about' => $data['0']['site_about'],
-								'logo'  => $data['0']['site_logo']
+								'name'  	=> $data['0']['site_name'],
+								'url' 		=> $data['0']['site_url'],
+								'email' 	=> $data['0']['site_email'],
+								'about' 	=> $data['0']['site_about'],
+								'logo'  	=> $data['0']['site_logo'],
+								'fav_icon'	=> $data['0']['site_fav_icon']
 							);
 			return $settings;
 		} else {

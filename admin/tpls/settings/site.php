@@ -26,6 +26,9 @@
                     <li class="">
                         <a data-toggle="tab" href="#site-logo">Logo</a>
                     </li>
+                    <li class="">
+                        <a data-toggle="tab" href="#site-fav-icon">Fav Icon</a>
+                    </li>
                 </ul>
                 
                 <div class="tab-content">
@@ -106,6 +109,29 @@
                         <div class="col-lg-4">
                           <a href="../logos/<?php echo $site_settings['logo']; ?>">
                             <img src="../logos/<?php echo $site_settings['logo']; ?>" class="img-responsive" />
+                          </a>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="site-fav-icon">
+                        <h4>Web Site Fav Icon</h4>
+                        <div class="col-lg-8">
+                         <form role="form" id="siteFavIcon" action="./lib/submit/fav-icon-upload.php" method="POST" enctype="multipart/form-data">
+                           <div class="form-group">
+                            <label>Choose image</label>
+                            <small>extensions: jpg, jpeg, gif, png accepted</small>
+                            <input type="file" name="file">
+                           </div>                 
+                           <div class="form-group">
+                            <button type="submit" class="btn btn-primary">Update Fav Icon</button>
+                           </div> 
+                         </form>
+                         <div class="success">
+                           <span class="success_text"></span>
+                         </div>
+                        </div>
+                        <div class="col-lg-4">
+                          <a href="../logos/<?php echo $site_settings['fav_icon']; ?>">
+                            <img src="../logos/<?php echo $site_settings['fav_icon']; ?>" class="img-responsive" />
                           </a>
                         </div>
                     </div>
