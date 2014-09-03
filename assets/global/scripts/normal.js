@@ -309,3 +309,40 @@ function removeLogo(team_id) {
 	});
 	
 }
+
+/**
+ * Register team for league
+ * @param team_id
+ * @param league_id
+ */
+function registerTeam(team_id, league_id) {
+
+	 $(function() {
+		 $( "#register-team-confirm" ).dialog({
+			 resizable: false,
+			 height:200,
+			 modal: true,
+			 buttons: {
+				 "Join League": function() {
+					 $.ajax({
+					     type: "POST",
+					     url: "lib/submit/submit-team.php",
+					     data: { form: 'register-league', tid: '' + team_id + '', lid: '' + league_id + ''}
+					   }).success(function( msg ) {
+								    $(".success").css("display", "");
+							   		$(".success").fadeIn(1000, "linear");
+							   		$(".success_text").fadeIn("slow");
+							   		$(".success").html(msg);
+							   		setTimeout(function(){location.reload()},3000);
+					  });
+					 
+					 $( this ).dialog( "close" );
+				 },
+				 Cancel: function() {
+					 $( this ).dialog( "close" );
+				 }
+			 }
+		 });
+	});
+	
+}
