@@ -99,11 +99,11 @@ tr.strikeout td:before {
 	padding:0 30px 0 30px;
 }
 .recent_matches_teams {
-	font-size:18px;
+	font-size:100%;
 	text-align:center;
 }
 .recent_matches_date {
-	margin-left:25%;
+	margin-left:40%;
 }
 .post-image {
 	text-align:center;
