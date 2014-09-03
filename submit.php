@@ -1,8 +1,10 @@
 <?php session_start();
 include('lib/class-db.php');
 include('lib/objects/class-user.php');
+include('lib/class-frontend.php');
 
 $ez_user = new ezLeague_User();
+$ez_frontend = new ezLeague_Frontend();
 
 	if(isset($_POST['form'])) {
 		$form = $_POST['form'];
@@ -36,6 +38,14 @@ $ez_user = new ezLeague_User();
 		 		$email		= $_POST['email'];
 		 		 $ez->updateEmail($id, $email);
 		 	break;
+		 	case 'send-message':
+		 		$to 		= $_POST['to'];
+		 		$from 		= $_POST['from'];
+		 		$subject 	= $_POST['subject'];
+		 		$name 		= $_POST['name'];
+		 		$message 	= $_POST['message'];
+		 		 $ez_frontend->send_message( $to, $from, $subject, $name, $message );
+		 		break;
 		 	
 		 }
 		 

@@ -112,3 +112,27 @@ tr.strikeout td:before {
 .view-team-logo {
 	margin:0 auto;
 }
+.well-social-networks {
+	background:#EEEEEE;
+	padding:15px;
+}
+.contact-social-networks ul, li {
+	display:inline;
+}
+.contact-social-networks .fa {
+	margin-top:20px;
+	font-size:40px;
+	width:50px;
+}
+.contact-social-networks .fa-youtube:hover {
+	color: #FF2A24;
+}
+.contact-social-networks .fa-twitter:hover {
+	color: #74C2E9;
+}
+.contact-social-networks .fa-facebook:hover {
+	color: #3C599B;
+}
+.contact-social-networks .fa-google-plus:hover {
+	color: #DC4937;
+}

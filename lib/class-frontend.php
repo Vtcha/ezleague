@@ -309,5 +309,62 @@ class ezLeague_Frontend extends DB_Class {
 		}
 
 	}
+
+	/*
+	 * Get social networks
+	 *
+	 * @return array
+	 */
+	public function get_social_networks() {
+
+		$social_networks = array();
+		$data = $this->fetch("SELECT site_twitter_handle, site_facebook, site_youtube, site_google_plus
+								FROM `" . $this->prefix . "settings` WHERE id = '1'
+							");
+		if( $data ) {
+			$social_networks['twitter'] 	= $data['0']['site_twitter_handle'];
+			$social_networks['facebook']	= $data['0']['site_facebook'];
+			$social_networks['youtube']		= $data['0']['site_youtube'];
+			$social_networks['google']		= $data['0']['site_google_plus'];
+			return $social_networks;
+		} else {
+			return;
+		}
+
+	}
+
+	/*
+	 * Send message from contact form
+	 *
+	 * @return string
+	 */
+	public function send_message( $to, $from, $subject, $name, $message ) {
+
+		$to 	 = $this->sanitize( $to );
+		$from    = $this->sanitize( $from );
+		$subject = $this->sanitize( $subject );
+		$name 	 = $this->sanitize( $name );
+		$message = $this->sanitize( $message );
+
+		$headers = "From: " . strip_tags($from) . "\r\n";
+		$headers .= "Reply-To: ". strip_tags($from) . "\r\n";
+		$headers .= "MIME-Version: 1.0\r\n";
+		$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
+
+		$message = '<html><body>';
+		$message .= '<table rules="all" style="border-color: #666;" cellpadding="10">';
+		$message .= "<tr><td><strong>From</strong> </td><td>" . strip_tags($name) . " (" . strip_tags($from) . ")</td></tr>";
+		$message .= "<tr><td><strong>Message:</strong> </td><td>" . strip_tags($message) . "</td></tr>";
+		$message .= "</table>";
+		$message .= "</body></html>";
+
+		if( mail($to, $subject, $message, $headers) ) {
+			$this->success('Thank you, your message has been sent');
+		} else {
+			$this->error('There was a problem sending your message, please try again');
+		}
+		return;
+
+	}
 	
 }
