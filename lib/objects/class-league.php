@@ -51,13 +51,19 @@ class ezLeague_League extends DB_Class {
 	 */
 	public function check_for_team($team_id, $league_id) {
 		
+		$team_id 	= $this->sanitize( $team_id );
+		$league_id  = $this->sanitize( $league_id );
 		$exist = false;
-		$data = $this->fetch("SELECT id FROM `" . $this->prefix . "guilds` WHERE (LEAGUES LIKE '%,$league_id,%' OR LEAGUES LIKE '$league_id' OR LEAGUES LIKE '$league_id,' OR LEAGUES LIKE '%,$league_id') AND id = '$team_id'");
-		if( count( $data ) > 0 ) {
-			return true;
-		} else {
-			return false;
+		$data = $this->fetch("SELECT leagues FROM `" . $this->prefix . "guilds` WHERE id = '$team_id'");
+		if( $data ) {
+			$leagues = explode( ',', $data['0']['leagues'] );
+			if( in_array( $league_id, $leagues ) ) {
+				return true;
+			} else {
+				return false;
+			}
 		}
+		return;
 		
 	}
 	
