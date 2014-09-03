@@ -18,7 +18,8 @@ if( isset( $_SESSION['ez_username'] ) ) {
 	$profile = $ez_users->get_user( $_SESSION['ez_username'] );
 }
 
-$site_settings = $ez_frontend->get_site_settings();
+$site_settings 		= $ez_frontend->get_site_settings();
+$social_networks 	= $ez_frontend->get_social_networks();
 
 if( $site_settings['handle'] != '' ) { 
 	require_once dirname( __FILE__ ) . '/lib/codebird.php';
@@ -75,7 +76,7 @@ if( $site_settings['handle'] != '' ) {
 					<a href="about.php" class="btn blue-steel">About</a>
 				</li>
 				<li class="main-nav">
-					<a href="#" class="btn blue-madison">Contact</a>
+					<a href="contact-us.php" class="btn blue-madison">Contact</a>
 				</li>
 			</ul>
 		<div class="top-menu">

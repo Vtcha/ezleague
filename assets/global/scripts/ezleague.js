@@ -10,6 +10,7 @@
 			this.cacheElements();
 			this.userLogin();
 			this.userRegister();
+			this.sendMessage();
 
 		},
 
@@ -21,6 +22,7 @@
 			this.login_form = $('#ezLeagueLogin');
 			this.register_form = $('#ezLeagueRegister');
 			this.create_team_form = $('#createTeam');
+			this.send_message_form = $('#sendMessage');
 
 		},
 
@@ -76,10 +78,46 @@
 				 		  setTimeout(function(){location.reload()},3000);
 				  });
 				} else {
-						this.register_success.css("display", "");
-						this.register_success.fadeIn(1000, "linear");
-				        this.register_text.fadeIn("slow");
-				        this.register_text.html('<strong>Error</strong> Passwords do not match, or is less than 6 characters');
+						$(".register_success").css("display", "");
+				   		$(".register_success").fadeIn(1000, "linear");
+				   		$(".register_success_text").fadeIn("slow");
+				   		$(".register_success_text").html('<strong>Error</strong> Passwords do not match, or is less than 6 characters');
+				}
+				});
+			
+		},
+
+		sendMessage: function() {
+			
+			this.send_message_form.submit(function(e) {
+
+				var to 		    = $("#to").val();
+					from	    = $("#from").val();
+					name 		= $("#name").val();
+					subject     = $("#subject").val();
+					message     = $("textarea#message").val();
+					captcha     = $("#captcha").val();
+					captchaa    = $("#captcha-answer").val();
+
+				 e.preventDefault();
+
+				if(captcha == captchaa) {
+				 $.ajax({
+				     type: "POST",
+				     url: "submit.php",
+				     data: { form: 'send-message', to: '' + to + '', from: '' + from + '', name: '' + name + '', subject: '' + subject + '', message: '' + message + '' }
+				   }).success(function( msg ) {
+					   		$(".success").css("display", "");
+					   		$(".success").fadeIn(1000, "linear");
+					   		$(".success_text").fadeIn("slow");
+					   		$(".success_text").html(msg);
+				 		  	setTimeout(function(){location.reload()},3000);
+				  });
+				} else {
+						$(".success").css("display", "");
+				   		$(".success").fadeIn(1000, "linear");
+				   		$(".success_text").fadeIn("slow");
+				   		$(".success_text").html('<strong>Error</strong> CAPTCHA was incorrect');
 				}
 				});
 			
