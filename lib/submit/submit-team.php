@@ -49,6 +49,12 @@ $ez_team = new ezLeague_Team();
 		 		$team_id	= $_POST['id'];
 		 			$ez_team->update_logo($team_id, '');
 		 		break;
+
+		 	case 'register-league':
+		 		$team_id 	= $_POST['tid'];
+		 		$league_id  = $_POST['lid'];
+		 		 $ez_team->register_league($team_id, $league_id);
+		 		break;
 		 	
 		 	default:
 		 		break;
