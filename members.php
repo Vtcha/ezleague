@@ -35,7 +35,7 @@
 								<form class="form-inline" action="members.php">
 									<div class="input-group">
 										<div class="input-cont">
-											<input placeholder="Member..." name="search" value="<?php echo trim( $_GET['search'] ); ?>" class="form-control" type="text">
+											<input placeholder="Member..." name="search" value="<?php if( isset( $_GET['search'] ) ) { echo trim( $_GET['search'] ); } ?>" class="form-control" type="text">
 										</div>
 										<span class="input-group-btn">
 										<button type="submit" class="btn green">

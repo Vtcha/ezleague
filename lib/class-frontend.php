@@ -170,6 +170,8 @@ class ezLeague_Frontend extends DB_Class {
 		foreach( $data as $member ) {
 			if( $member['guild'] != '' ) {
 				$member['guild_name'] = $this->get_guild_name( $member['guild'] );
+			} else {
+				$member['guild_name'] = '';
 			}
 			
 			array_push($members, $member);

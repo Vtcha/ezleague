@@ -68,7 +68,7 @@ $members = $ez_frontend->get_members($position, $order_by, $order_text); ?>
 			<td><?php echo $member['id']; ?></td>
 			<td><?php echo $member['username']; ?></td>
 			<td><?php echo str_replace('@', '[at]', $member['email']); ?>
-			<td><?php echo $member['guild_name']; ?></td>
+			<td><?php echo ( $member['guild_name'] == '' ? 'No Team' : $member['guild_name'] ); ?></td>
 			<td><?php echo $member['role']; ?></td>
 			<td>
 				<a class="label label-sm label-success" href="view-member.php?id=<?php echo $member['id']; ?>">View </a>
