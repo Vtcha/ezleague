@@ -433,6 +433,8 @@ class ezAdmin extends DB_Class {
 					ADD COLUMN twitter_token VARCHAR(250);
 					ALTER TABLE `" . $this->prefix . "settings`
 					ADD COLUMN twitter_token_secret VARCHAR(250);
+					ALTER TABLE `" . $this->prefix . "settings`
+					ADD COLUMN site_fav_icon VARCHAR(250);
 					";
 
 			mysqli_multi_query($test_connection, $sql);
