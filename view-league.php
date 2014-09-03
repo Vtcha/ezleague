@@ -78,6 +78,7 @@
 							<div class="row">
 							<!-- EVENT INFO -->
 								<div class="col-md-6">
+									<div class="success"><span class="success_text"></span></div>
 									<div class="news-blocks">
 										<h3 class="title"><a href="#">League Information </a></h3>
 										<table class="table league-information">
@@ -89,7 +90,7 @@
 														<?php if( $profile['team_admin'] == true ) { ?>
 															<?php $exist = $ez_league->check_for_team( $profile['guild_id'], $league_id ); ?>
 															<?php if( $exist == false ) { ?>
-																	<button class="btn green btn-sm">Register Team</button>
+																	<button type="button" class="btn green btn-sm" onclick="registerTeam('<?php echo $profile['guild_id']; ?>', '<?php echo $league_id; ?>')">Register Team</button>
 															<?php } else { ?>
 																	<button disabled class="btn danger btn-sm">Already Registered</button>
 															<?php } ?>
@@ -176,3 +177,7 @@
 </div>
 <!-- END CONTAINER -->
 <?php include('footer.php'); ?>
+<script src="assets/global/scripts/normal.js" type="text/javascript"></script>
+<div id="register-team-confirm" title="Join this team?" style="display:none;">
+	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Confirm league registration.</p>
+</div>
