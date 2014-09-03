@@ -224,7 +224,7 @@ class ezAdmin_Settings extends DB_Class {
 	 */
 	public function update_site_settings($setting, $value) {
 		
-		$column = $this->sanitize( $column );
+		$setting = $this->sanitize( $setting );
 		$value  = $this->sanitize( $value );
 		switch( $setting ) {
 			case 'name':
