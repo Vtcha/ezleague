@@ -72,7 +72,7 @@ if( $site_settings['handle'] != '' ) {
 					<a href="#" class="btn blue-hoki">Forums</a>
 				</li>
 				<li class="main-nav">
-					<a href="#" class="btn blue-steel">About</a>
+					<a href="about.php" class="btn blue-steel">About</a>
 				</li>
 				<li class="main-nav">
 					<a href="#" class="btn blue-madison">Contact</a>
