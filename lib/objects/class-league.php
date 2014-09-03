@@ -195,7 +195,6 @@ class ezLeague_League extends DB_Class {
 			$updated_chat = $this->sanitize( $updated_chat );
 		}
 		$this->link->query("UPDATE `" . $this->prefix . "matches` SET chat_log = '$updated_chat' WHERE id = '$match_id'");
-		echo "UPDATE `" . $this->prefix . "matches` SET chat_log = '$updated_chat' WHERE id = '$match_id'";
 		$this->success('Message added to chat log');
 		return;
 		
