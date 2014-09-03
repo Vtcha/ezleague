@@ -27,6 +27,10 @@
 <link href="assets/admin/layout/css/custom.css?v4" rel="stylesheet" type="text/css"/>
 <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/themes/smoothness/jquery-ui.css" />
 <!-- END THEME STYLES -->
+<?php if( $site_settings['fav_icon'] != '' ) { ?>
+<link rel="shortcut icon" href="logos/<?php echo $site_settings['fav_icon']; ?> "/>
+<?php } else { ?>
 <link rel="shortcut icon" href="assets/admin/layout/img/logos/waf3r/ezl_icon.png?v2"/>
+<?php } ?>
 </head>
 <!-- END HEAD -->
