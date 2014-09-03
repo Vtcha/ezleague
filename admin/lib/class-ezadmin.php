@@ -359,12 +359,19 @@ class ezAdmin extends DB_Class {
 			  `site_about` blob,
 			  `site_email` varchar(500) DEFAULT NULL,
 			  `site_logo` varchar(250) DEFAULT 'logo.png',
+			  `site_fav_icon` varchar(250) DEFAULT NULL,
 			  `site_games` varchar(10000) DEFAULT NULL,
 			  `site_twitter_handle` varchar(100) DEFAULT NULL,
 			  `site_twitter_app` varchar(3000) DEFAULT NULL,
 			  `site_facebook` varchar(100) DEFAULT NULL,
 			  `site_google_plus` varchar(100) DEFAULT NULL,
 			  `site_youtube` varchar(200) DEFAULT NULL,
+			  `twitter_count` int(10) DEFAULT NULL,
+			  `twitter_api` varchar(250) DEFAULT NULL,
+			  `twitter_secret` varchar(250) DEFAULT NULL,
+			  `twitter_token` varchar(250) DEFAULT NULL,
+			  `twitter_token_secret` varchar(250) DEFAULT NULL,
+			  `site_fav_icon` varchar(250) DEFAULT NULL,
 			  PRIMARY KEY (`id`)
 			);
 			INSERT INTO `" . $this->prefix . "settings` SET site_name = '$site_name', site_url = '$this->site_url';
@@ -420,6 +427,8 @@ class ezAdmin extends DB_Class {
 		if( $test_connection ) {
 			$sql = "
 					ALTER TABLE `" . $this->prefix . "settings`
+					ADD COLUMN site_fav_icon VARCHAR(250);
+					ALTER TABLE `" . $this->prefix . "settings`
 					ADD COLUMN twitter_handle VARCHAR(250);
 					ALTER TABLE `" . $this->prefix . "settings`
 					ADD COLUMN twitter_count INT(10);
@@ -433,8 +442,6 @@ class ezAdmin extends DB_Class {
 					ADD COLUMN twitter_token VARCHAR(250);
 					ALTER TABLE `" . $this->prefix . "settings`
 					ADD COLUMN twitter_token_secret VARCHAR(250);
-					ALTER TABLE `" . $this->prefix . "settings`
-					ADD COLUMN site_fav_icon VARCHAR(250);
 					";
 
 			mysqli_multi_query($test_connection, $sql);
