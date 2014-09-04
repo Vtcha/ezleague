@@ -85,9 +85,9 @@ $members = $ez_frontend->get_members($position, $order_by, $order_text); ?>
 		for($i = 1; $i<=$pages; $i++)
 		{
 			if( $i == $page + 1 ) {
-				$pagination .= '<li><a href="members.php?page=' . $i . '&by=' . $order_by . '&order=' . $order . '"><strong>'.$i.'</strong></a></li>';
+				$pagination .= '<li><a href="members.php?page=' . $i . '&by=' . $order_by . '&order=' . $order_text . '"><strong>'.$i.'</strong></a></li>';
 			} else {
-				$pagination .= '<li><a href="members.php?page=' . $i . '&by=' . $order_by . '&order=' . $order . '">'.$i.'</a></li>';	
+				$pagination .= '<li><a href="members.php?page=' . $i . '&by=' . $order_by . '&order=' . $order_text . '">'.$i.'</a></li>';	
 			}
 		
 		}
