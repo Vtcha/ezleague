@@ -42,7 +42,7 @@
                           </form>
                     </div>
                     <div class="tab-pane fade" id="site-twitter-handle">
-                        <h4>Twitter URL</h4>
+                        <h4>Twitter Handle</h4>
                          <form method="POST" id="updateTwitter">
                             <div class="form-group">
                                 <input class="form-control" id="twitter" placeholder="Twitter URL" value="<?php echo $site_settings['twitter-handle']; ?>" />
