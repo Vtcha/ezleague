@@ -15,6 +15,7 @@
                     <div class="col-lg-12">
                      <form method="POST" id="updateTwitterApp">
                         <div class="form-group">
+                            <label># of Tweets to Display</label>
                             <select id="twitter-count" class="form-control">
                                 <?php for( $i=0 ; $i <= 5; $i++ ) { ?>
                                 <option <?php echo ( $twitter_app['count'] == $i ? 'selected' : '' ); ?> value="<?php echo $i; ?>"><?php echo $i; ?></option>
