@@ -57,7 +57,7 @@ class ezAdmin_Match extends DB_Class {
 	public function get_match($match_id) {
 		
 		$match_id	= $this->sanitize( $match_id );
-		$data = $this->fetch("SELECT matches.*, leagues.`league` AS league_name FROM `" . $this->prefix . "matches`, `" . $this->prefix . "leagues` WHERE matches.`id` = '$match_id' LIMIT 1");
+		$data = $this->fetch("SELECT " . $this->prefix . "matches.*, " . $this->prefix . "leagues.`league` AS league_name FROM `" . $this->prefix . "matches`, `" . $this->prefix . "leagues` WHERE " . $this->prefix . "matches.`id` = '$match_id' LIMIT 1");
 		if( $data ) {
 			$match['id']		  = $data['0']['id'];
 			$match['league_id']	  = $data['0']['league'];
