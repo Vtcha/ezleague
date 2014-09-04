@@ -57,7 +57,7 @@ $members = $ez_frontend->get_members($position, $order_by, $order_text); ?>
 			<th><a href="members.php?page=<?php echo $page; ?>&by=id&order=<?php echo $order_text; ?>">ID</a></th>
 			<th><a href="members.php?page=<?php echo $page; ?>&by=username&order=<?php echo $order_text; ?>">Username</a></th>
 			<th>Contact</th>
-			<th><a href="members.php?page=<?php echo $page; ?>&by=guild&order=<?php echo $order_text; ?>">Guild</a></th>
+			<th><a href="members.php?page=<?php echo $page; ?>&by=guild&order=<?php echo $order_text; ?>">Team</a></th>
 			<th><a href="members.php?page=<?php echo $page; ?>&by=role&order=<?php echo $order_text; ?>">Role</a></th>
 			<th></th>
 		</tr>
