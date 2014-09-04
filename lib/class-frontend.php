@@ -294,7 +294,7 @@ class ezLeague_Frontend extends DB_Class {
 							");
 		if( $data ) {
 			$settings['logo'] 			= $data['0']['site_logo'];
-			$settings['fav_icon']		= $data['0']['site_fav_icon'];
+			$settings['fav_icon']		= $data['0']['site_icon'];
 			$settings['email']			= $data['0']['site_email'];
 			$settings['about'] 			= $data['0']['site_about'];
 			$settings['name']			= $data['0']['site_name'];
