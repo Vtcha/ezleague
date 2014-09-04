@@ -13,7 +13,7 @@
 	</h4>
 <?php } ?>
 </div>
-<div class="col-md-4">
+<div class="col-md-5">
 <?php 
 
 	if( $match_details['home_accept'] == 1 && $match_details['away_accept'] == 1) {
@@ -33,7 +33,7 @@
 	} 
 ?>
 </div>	
-	<div class="col-md-8">
+	<div class="col-md-7">
 		<form id="matchChat" method="POST" role="form" disabled>
 		<h4>Chat Log</h4>
 		 <input type="hidden" id="log-id" value="<?php echo $match_details['id']; ?>" />

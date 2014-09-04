@@ -137,7 +137,7 @@ class ezLeague_League extends DB_Class {
 			$date = date('Y-m-d', strtotime( $date ) );
 		$time			= $this->sanitize( $time );
 		$zone			= $this->sanitize( $zone );
-		$this->link->query("UPDATE `" . $this->prefix_matches . "matches`
+		$this->link->query("UPDATE `" . $this->prefix . "matches`
 							SET matchDate = '$date', matchTime = '$time', matchZone = '$zone'
 							WHERE id = '$match_id'
 						");
