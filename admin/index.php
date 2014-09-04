@@ -20,6 +20,8 @@
         </div>
         
      </div> <!-- /end header id=wrapper -->
+<div id="editUserModal" class="modal"></div>
+<div id="editTeamModal" class="modal"></div>
     <!-- Core Scripts - Include with every page -->
     <script src="js/jquery-1.10.2.js"></script>
     <script src="js/bootstrap.min.js"></script>
@@ -27,7 +29,8 @@
 
     <!-- SB Admin Scripts - Include with every page -->
     <script src="js/sb-admin.js"></script>
-
+    <script src="js/ezleague/users.js"></script>
+    <script src="js/ezleague/teams.js"></script>
 </body>
 
 </html>
