@@ -57,7 +57,7 @@ $members = $ez_frontend->get_members($position, $order_by, $order_text); ?>
 			<th><a href="members.php?page=<?php echo $page; ?>&by=id&order=<?php echo $order_text; ?>">ID</a></th>
 			<th><a href="members.php?page=<?php echo $page; ?>&by=username&order=<?php echo $order_text; ?>">Username</a></th>
 			<th>Contact</th>
-			<th><a href="members.php?page=<?php echo $page; ?>&by=guild&order=<?php echo $order_text; ?>">Guild</a></th>
+			<th><a href="members.php?page=<?php echo $page; ?>&by=guild&order=<?php echo $order_text; ?>">Team</a></th>
 			<th><a href="members.php?page=<?php echo $page; ?>&by=role&order=<?php echo $order_text; ?>">Role</a></th>
 			<th></th>
 		</tr>
@@ -85,9 +85,9 @@ $members = $ez_frontend->get_members($position, $order_by, $order_text); ?>
 		for($i = 1; $i<=$pages; $i++)
 		{
 			if( $i == $page + 1 ) {
-				$pagination .= '<li><a href="members.php?page=' . $i . '&by=' . $order_by . '&order=' . $order . '"><strong>'.$i.'</strong></a></li>';
+				$pagination .= '<li><a href="members.php?page=' . $i . '&by=' . $order_by . '&order=' . $order_text . '"><strong>'.$i.'</strong></a></li>';
 			} else {
-				$pagination .= '<li><a href="members.php?page=' . $i . '&by=' . $order_by . '&order=' . $order . '">'.$i.'</a></li>';	
+				$pagination .= '<li><a href="members.php?page=' . $i . '&by=' . $order_by . '&order=' . $order_text . '">'.$i.'</a></li>';	
 			}
 		
 		}

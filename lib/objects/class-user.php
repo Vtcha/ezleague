@@ -84,35 +84,39 @@ class ezLeague_User extends DB_Class {
 		$profile = array();
 		$team_admin = false;
 		$data = $this->fetch("SELECT * FROM `" . $this->prefix . "users` WHERE username = '$username'");
-		if( $data['0']['guild'] != '' ) {
-			$admin = $this->get_team_admin( $data['0']['guild'] );
-			if( $admin == $username ) {
-				$team_admin = true;
-			} else {
-				$team_admin = false;
+		if( $data ) { 
+			if( $data['0']['guild'] != '' ) {
+				$admin = $this->get_team_admin( $data['0']['guild'] );
+				if( $admin == $username ) {
+					$team_admin = true;
+				} else {
+					$team_admin = false;
+				}
 			}
+			$profile = array(
+							'id'		=> $data['0']['id'],
+							'username'  => $data['0']['username'],
+							'email'		=> $data['0']['email'],
+							'guild_id'  => $data['0']['guild'],
+							'team_admin'=> $team_admin,
+							'role'		=> $data['0']['role'],
+							'created'	=> $data['0']['created'],
+							'post_count'=> $data['0']['post_count'],
+							'signature' => $data['0']['signature'],
+							'first'		=> $data['0']['first_name'],
+							'last'		=> $data['0']['last_name'],
+							'website'	=> $data['0']['website'],
+							'bio'		=> $data['0']['bio'],
+							'occupation'=> $data['0']['occupation'],
+							'hobbies'	=> $data['0']['hobbies'],
+							'location'	=> $data['0']['location'],
+							'avatar'	=> $data['0']['avatar']
+							);
+			
+			return $profile;
+		} else {
+			return;
 		}
-		$profile = array(
-						'id'		=> $data['0']['id'],
-						'username'  => $data['0']['username'],
-						'email'		=> $data['0']['email'],
-						'guild_id'  => $data['0']['guild'],
-						'team_admin'=> $team_admin,
-						'role'		=> $data['0']['role'],
-						'created'	=> $data['0']['created'],
-						'post_count'=> $data['0']['post_count'],
-						'signature' => $data['0']['signature'],
-						'first'		=> $data['0']['first_name'],
-						'last'		=> $data['0']['last_name'],
-						'website'	=> $data['0']['website'],
-						'bio'		=> $data['0']['bio'],
-						'occupation'=> $data['0']['occupation'],
-						'hobbies'	=> $data['0']['hobbies'],
-						'location'	=> $data['0']['location'],
-						'avatar'	=> $data['0']['avatar']
-						);
-		
-		return $profile;
 		
 	}
 	

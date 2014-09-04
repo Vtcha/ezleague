@@ -40,7 +40,6 @@
 						<li class="inbox active">
 							<a href="view-inbox.php" class="btn" data-title="Inbox">
 							Inbox (<?php echo $total_inbox; ?>) </a>
-							<b></b>
 						</li>
 					</ul>
 				</div>

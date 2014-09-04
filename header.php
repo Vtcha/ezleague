@@ -96,12 +96,12 @@ if( $site_settings['handle'] != '' ) {
 					<?php if( $profile['guild_id'] != '' ) { ?>
 						<li>
 							<a href="settings-guild.php">
-							<i class="icon-user"></i> My Guild </a>
+							<i class="icon-user"></i> My Team </a>
 						</li>
 					<?php } else { ?>
 						<li>
 							<a href="create-team.php">
-							<i class="icon-user"></i> Create Guild </a>
+							<i class="icon-user"></i> Create Team </a>
 						</li>
 					<?php } ?>
 						<li class="divider">

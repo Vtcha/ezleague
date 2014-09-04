@@ -566,7 +566,7 @@ Custom vertical inline menu
 }
 .ver-inline-menu li.active:after {
   content: '';
-  display: inline-block;
+  display: none;
   border-bottom: 6px solid transparent;
   border-top: 6px solid transparent;
   border-left: 6px solid #169ef4;
