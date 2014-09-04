@@ -64,6 +64,17 @@ class ezAdmin_Frontend extends DB_Class {
 		$this->success('' . $page . ' content has been updated.');
 		
 	}
+
+	public function test_connection() {
+			
+		$test = $this->fetch("SELECT username FROM `" . $this->prefix . "users` WHERE username = 'admin'");
+		if( ! $test ) {
+		    header("Location: admin/install.php");
+		} else {
+			return true;
+		}
+		
+	}
 	
 }
 

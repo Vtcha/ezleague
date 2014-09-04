@@ -15,8 +15,13 @@ $ez_settings = new ezAdmin_Settings();
 $ez_forum	 = new ezAdmin_Forum();
 $ez_schedule = new ezAdmin_Schedule();
     
-     if(!isset($_SESSION['ez_admin'])) {
-     	header("Location: login.php");
+     if( ! isset($_SESSION['ez_admin'] ) ) {
+        if( $ez_frontend->test_connection() ) {
+            header("Location: login.php");
+        } else {
+            header("Location: install.php");
+        }
+     	
      } else {
      	$username = $_SESSION['ez_admin'];
      	$user_settings = $ez_user->get_user_settings( $username );

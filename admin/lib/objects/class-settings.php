@@ -243,7 +243,7 @@ class ezAdmin_Settings extends DB_Class {
 				$setting = 'site_logo';
 				break;
 			case 'fav_icon':
-				$setting = 'site_fav_icon';
+				$setting = 'site_icon';
 				break;
 			default:
 				break;
@@ -277,7 +277,7 @@ class ezAdmin_Settings extends DB_Class {
 								'email' 	=> $data['0']['site_email'],
 								'about' 	=> $data['0']['site_about'],
 								'logo'  	=> $data['0']['site_logo'],
-								'fav_icon'	=> $data['0']['site_fav_icon']
+								'fav_icon'	=> $data['0']['site_icon']
 							);
 			return $settings;
 		} else {

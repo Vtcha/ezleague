@@ -104,7 +104,7 @@ class ezAdmin extends DB_Class {
 			$hash = '$2a$05$Bs3HEiQG6G9PZHkY.Ay3CeE1lBUiLRSiRSl57pmRs61C8GWsKAt6G';
 			$sql = "
 			DROP TABLE IF EXISTS `" . $this->prefix . "comments`;
-			CREATE TABLE `comments` (
+			CREATE TABLE `" . $this->prefix . "comments` (
 			  `id` int(10) NOT NULL AUTO_INCREMENT,
 			  `post_id` int(10) DEFAULT NULL,
 			  `author` varchar(100) DEFAULT NULL,
@@ -366,15 +366,14 @@ class ezAdmin extends DB_Class {
 			  `site_facebook` varchar(100) DEFAULT NULL,
 			  `site_google_plus` varchar(100) DEFAULT NULL,
 			  `site_youtube` varchar(200) DEFAULT NULL,
-			  `twitter_count` int(10) DEFAULT NULL,
+			  `twitter_count` int(10) DEFAULT '0',
 			  `twitter_api` varchar(250) DEFAULT NULL,
 			  `twitter_secret` varchar(250) DEFAULT NULL,
 			  `twitter_token` varchar(250) DEFAULT NULL,
 			  `twitter_token_secret` varchar(250) DEFAULT NULL,
-			  `site_fav_icon` varchar(250) DEFAULT NULL,
+			  `site_icon` varchar(250) DEFAULT NULL,
 			  PRIMARY KEY (`id`)
 			);
-			INSERT INTO `" . $this->prefix . "settings` SET site_name = '$site_name', site_url = '$this->site_url';
 			DROP TABLE IF EXISTS `" . $this->prefix . "users`;
 			CREATE TABLE `" . $this->prefix . "users` (
 			  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -402,13 +401,35 @@ class ezAdmin extends DB_Class {
 			  `friends` blob,
 			  PRIMARY KEY (`id`)
 			); 
-			INSERT INTO `" . $this->prefix . "users` SET username = 'admin', salt = '$salt', hash = '$hash', role = 'admin';
+			INSERT INTO `" . $this->prefix . "settings` SET site_name = '" . $site_name . "', site_url = '" . $this->site_url . "';
+			INSERT INTO `" . $this->prefix . "users` SET username = 'admin', salt = '" . $salt . "', hash = '" . $hash . "', role = 'admin';
 			ENGINE=MyISAM DEFAULT CHARSET=latin1;
 			";
-				
-			mysqli_multi_query($test_connection, $sql);
-			unlink('install.php');
-			$this->success('Installation Completed. Please <a href="admin">Login</a>');
+			
+			/*	
+			if( mysqli_multi_query($test_connection, $sql) ) {
+				$this->success('Installation Completed. Please <a href="admin">Login</a>');
+				unlink('install.php');
+			} else {
+				$this->error('Installation failed:' . mysql_error( $test_connection ) );
+			}
+			*/
+			if (mysqli_multi_query($test_connection, $sql)) {
+			    do {
+			        /* store first result set */
+			        if ($result = mysqli_store_result($test_connection)) {
+			            while ($row = mysqli_fetch_row($result)) {
+			                printf("%s\n", $row[0]);
+			            }
+			            mysqli_free_result($result);
+			        }
+			        /* print divider */
+			        if (mysqli_more_results($test_connection)) {
+			            printf("-----------------\n");
+			        }
+			    } while (mysqli_next_result($test_connection));
+			}
+			
 		} else {
 			$this->error('Please check your connection details and try again');
 		}
