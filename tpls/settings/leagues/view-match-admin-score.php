@@ -7,13 +7,17 @@
 	 <div class="form-group col-lg-12">
 	 	<label class="control-label">Reported By <span class="text-primary"><?php echo $match_details['reporter']; ?></span></label>
 	 </div>
-	 <div class="form-group col-lg-6">
+	 <div class="form-group col-lg-12">
 	 	<label class="control-label"><em><?php echo $match_details['home_team']; ?></em></label>
-	 	<input id="match-home-score" type="text" class="form-control" value="<?php echo $match_details['home_score']; ?>" />
+	 	<div class="col-lg-6">
+	 		<input id="match-home-score" type="text" class="form-control" value="<?php echo $match_details['home_score']; ?>" />
+	 	</div>
 	 </div>
-	 <div class="form-group  col-lg-6">
+	 <div class="form-group  col-lg-12">
 	 	<label class="control-label"><em><?php echo $match_details['away_team']; ?></em></label>
-	 	<input id="match-away-score" type="text" class="form-control" value="<?php echo $match_details['away_score']; ?>" />
+	 	<div class="col-lg-6">
+	 		<input id="match-away-score" type="text" class="form-control" value="<?php echo $match_details['away_score']; ?>" />
+	 	</div>
 	 </div>
 	 <div class="form-group">
 	 	<button type="submit" class="btn btn-success">Submit</button>
