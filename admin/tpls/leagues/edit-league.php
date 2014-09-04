@@ -51,6 +51,14 @@
                             </select>
                         </div>
                         <div class="form-group">
+                            <label>Start Date</label>
+                            <input class="form-control" id="start" value="<?php echo $league['start_date']; ?>" placeholder="Start Date" />
+                        </div>
+                        <div class="form-group">
+                            <label>End Date</label>
+                            <input class="form-control" id="end" value="<?php echo $league['end_date']; ?>" placeholder="End Date" />
+                        </div>
+                        <div class="form-group">
                             <button class="btn btn-success" type="submit">Edit League</button>
                             <button class="btn btn-warning" type="reset">Reset</button>
                         </div>

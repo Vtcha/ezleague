@@ -46,6 +46,14 @@
                             </select>
                         </div>
                         <div class="form-group">
+                            <label>Start Date</label>
+                            <input class="form-control" id="start" placeholder="Start Date" />
+                        </div>
+                        <div class="form-group">
+                            <label>End Date</label>
+                            <input class="form-control" id="end" placeholder="End Date" />
+                        </div>
+                        <div class="form-group">
                             <button class="btn btn-success" type="submit">Create League</button>
                         </div>
                         <div class="success">

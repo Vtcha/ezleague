@@ -95,8 +95,8 @@ class ezAdmin_League extends DB_Class {
 				'teams'		 => $data['0']['teams'],
 				'game'		 => $data['0']['game'],
 				'status'	 => $data['0']['open'],
-				'start_date' => date('F d, Y', strtotime($data['0']['start_date'])),
-				'end_date' 	 => date('F d, Y', strtotime($data['0']['end_date'])),
+				'start_date' => date('Y-m-d', strtotime($data['0']['start_date'])),
+				'end_date' 	 => date('Y-m-d', strtotime($data['0']['end_date'])),
 				'games'		 => $data['0']['total_games'],
 				'rules'		 => $data['0']['rules']
 		);
@@ -104,17 +104,25 @@ class ezAdmin_League extends DB_Class {
 		
 	}
 	
-	public function create_league($league, $game, $teams, $games) {
+	public function create_league($league, $game, $max_teams, $total_games, $start_date, $end_date) {
 		
+		$league 		= $this->sanitize( $league );
+		$game 			= $this->sanitize( $game );
+		$max_teams		= $this->sanitize( $max_teams );
+		$total_games	= $this->sanitize( $total_games );
+		$start_date 	= $this->sanitize( $start_date );
+		$end_date 		= $this->sanitize( $end_date );
+		$start_date = date( 'Y-m-d', $start_date );
+		$end_date = date( 'Y-m-d', $end_date );
 		$result = $this->link->query("SELECT league FROM `" . $this->prefix . "leagues` WHERE (league = '$league') AND (game = '$game')");
 		$count = $this->numRows($result);
-		if($count > 0) {
-			echo "<strong>Error</strong> League Name already exists";
+		if( $count > 0 ) {
+			$this->error('League Name already exists');
 		} else {
 			$league = $this->sanitize($league);
-			$this->link->query("INSERT INTO `" . $this->prefix . "leagues` SET league = '$league', game = '$game', teams = '$teams',
-					total_games = '$games'
-					");
+			$this->link->query("INSERT INTO `" . $this->prefix . "leagues` 
+								SET league = '$league', game = '$game', teams = '$max_teams', total_games = '$total_games', start_date = '$start_date', end_date = '$end_date'
+							");
 	
 			$this->success('' . $league . ' League added...reloading');
 		}
@@ -122,12 +130,19 @@ class ezAdmin_League extends DB_Class {
 		
 	}
 	
-	public function edit_league($max_teams, $total_games, $league_id) {
+	public function edit_league($max_teams, $total_games, $league_id, $start_date, $end_date) {
 		
 		$max_teams		= $this->sanitize( $max_teams );
 		$total_games	= $this->sanitize( $total_games );
 		$league_id		= $this->sanitize( $league_id );
-		$this->link->query("UPDATE `" . $this->prefix . "leagues` SET teams = '$max_teams', total_games = '$total_games' WHERE id = '$league_id'");
+		$start_date 	= $this->sanitize( $start_date );
+		$end_date 		= $this->sanitize( $end_date );
+		$start_date = date( 'Y-m-d', $start_date );
+		$end_date = date( 'Y-m-d', $end_date );
+		$this->link->query("UPDATE `" . $this->prefix . "leagues` 
+							SET teams = '$max_teams', total_games = '$total_games', start_date = '$start_date', end_date = '$end_date' 
+							WHERE id = '$league_id'
+						");
 		$this->success('League details updated');
 		return;
 		
