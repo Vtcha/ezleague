@@ -366,6 +366,7 @@ class ezAdmin extends DB_Class {
 			  `site_facebook` varchar(100) DEFAULT NULL,
 			  `site_google_plus` varchar(100) DEFAULT NULL,
 			  `site_youtube` varchar(200) DEFAULT NULL,
+			  `twitter_handle` varchar(250) DEFAULT NULL,
 			  `twitter_count` int(10) DEFAULT '0',
 			  `twitter_api` varchar(250) DEFAULT NULL,
 			  `twitter_secret` varchar(250) DEFAULT NULL,
