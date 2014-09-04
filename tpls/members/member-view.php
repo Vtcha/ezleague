@@ -35,7 +35,7 @@
 	</div>
 	<div class="col-md-9">
 		<div class="row">
-			<div class="col-md-9 profile-info">
+			<div class="col-md-8 profile-info">
 				<h1><?php echo $user_profile['username']; ?></h1>
 				<p>
 					 <?php echo $user_profile['bio']; ?>
@@ -58,7 +58,7 @@
 				</ul>
 			</div>
 			<!--end col-md-3-->
-			<div class="col-md-3">
+			<div class="col-md-4">
 				<div class="portlet profile-summary">
 					<div class="portlet-title">
 						<div class="caption">
@@ -72,7 +72,7 @@
 								DATE JOINED <i class="fa fa-img-up"></i>
 								</span><br/>
 								<span class="profile-num">
-								<?php echo date('F d, Y', strtotime($user_profile['created'])); ?> </span>
+								<?php echo date( 'F d, Y', strtotime( $user_profile['created'] ) ); ?> </span>
 							</li>
 							<li>
 								<span class="profile-info">
@@ -85,7 +85,7 @@
 								<span class="profile-info">
 								TEAM </span><br/>
 								<span class="profile-num">
-								<?php echo $ez_users->get_user_team($user_profile['guild_id']); ?> </span>
+								<?php echo $ez_users->get_user_team( $user_profile['guild_id'] ); ?> </span>
 							</li>
 						</ul>
 					</div>

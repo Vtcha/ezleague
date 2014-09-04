@@ -103,7 +103,8 @@ tr.strikeout td:before {
 	text-align:center;
 }
 .recent_matches_date {
-	margin-left:40%;
+	font-size:80%;
+	font-style:italic;
 }
 .post-image {
 	text-align:center;

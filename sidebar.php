@@ -22,7 +22,7 @@
 			<em>versus</em>
 			<?php echo ( $match['winner'] == $match['away_id'] ? '<strong>' . $match['away'] . '</strong>' : '' . $match['away'] . '' ); ?>
 		</h4>
-		<span><?php echo $match['league']; ?> </span>
+		<span><?php echo $match['league']; ?> </span><br/>
 		<small class="recent_matches_date"><?php echo date( 'F d, Y', strtotime( $match['date'] ) ); ?></small>
 		</a>
 	</div>
