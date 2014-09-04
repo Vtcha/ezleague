@@ -127,10 +127,10 @@ class ezAdmin_Match extends DB_Class {
 		$disputes = array();
 		switch( $status ) {
 			case 'open':
-				$status_query = "disputes.status = '0' AND ";
+				$status_query = "" . $this->prefix . "disputes.status = '0' AND ";
 				break;
 			case 'closed':
-				$status_query = "disputes.status = '1' AND ";
+				$status_query = "" . $this->prefix . "disputes.status = '1' AND ";
 				break;
 			default:
 				$status_query = "";
@@ -139,21 +139,22 @@ class ezAdmin_Match extends DB_Class {
 		
 		switch( $category ) {
 			case 'cheating':
-				$category_query = "disputes.category = 'cheating' AND ";
+				$category_query = "" . $this->prefix . "disputes.category = 'cheating' AND ";
 				break;
 			case 'player':
-				$category_query = "disputes.category = 'player' AND ";
+				$category_query = "" . $this->prefix . "disputes.category = 'player' AND ";
 				break;
 			case 'other':
-				$category_query = "disputes.category = 'other' AND ";
+				$category_query = "" . $this->prefix . "disputes.category = 'other' AND ";
 				break;
 			default:
+				$category_query = '';
 				break;
 		}
 		
-		$data = $this->fetch("SELECT disputes.*, matches.league AS mlid, leagues.league AS league_name
+		$data = $this->fetch("SELECT " . $this->prefix . "disputes.*, " . $this->prefix . "matches.league AS mlid, " . $this->prefix . "leagues.league AS league_name
 								FROM `" . $this->prefix . "disputes`, `" . $this->prefix . "matches`, `" . $this->prefix . "leagues`
-								WHERE $status_query $category_query matches.id = disputes.match_id AND leagues.id = matches.league
+								WHERE $status_query $category_query " . $this->prefix . "matches.id = " . $this->prefix . "disputes.match_id AND " . $this->prefix . "leagues.id = " . $this->prefix . "matches.league
 							");
 		
 		if( $data ) {
@@ -166,7 +167,7 @@ class ezAdmin_Match extends DB_Class {
 				$dispute['status']  = $item['status'];
 				$dispute['date']	= $item['created'];
 				$dispute['league']  = $item['league_name'];
-				$dispute['lid']		= $item['lid'];
+				$dispute['lid']		= $item['mlid'];
 				array_push( $disputes, $dispute );
 			}
 			return $disputes;
@@ -185,9 +186,9 @@ class ezAdmin_Match extends DB_Class {
 		
 		$dispute_id	= $this->sanitize( $dispute_id );
 		$dispute = array();
-		$data = $this->fetch("SELECT disputes.*, matches.league AS mlid, leagues.league AS league_name 
+		$data = $this->fetch("SELECT " . $this->prefix . "disputes.*, " . $this->prefix . "matches.league AS mlid, " . $this->prefix . "leagues.league AS league_name 
 								FROM `" . $this->prefix . "disputes`, `" . $this->prefix . "matches`, `" . $this->prefix . "leagues`
-								WHERE disputes.id = '$dispute_id' AND matches.id = disputes.match_id AND leagues.id = matches.league
+								WHERE " . $this->prefix . "disputes.id = '$dispute_id' AND " . $this->prefix . "matches.id = " . $this->prefix . "disputes.match_id AND " . $this->prefix . "leagues.id = " . $this->prefix . "matches.league
 							");
 		if( $data ) {
 			$dispute['id']		= $data['0']['id'];
@@ -198,7 +199,7 @@ class ezAdmin_Match extends DB_Class {
 			$dispute['status']	= $data['0']['status'];
 			$dispute['date']	= $data['0']['created'];
 			$dispute['league']  = $data['0']['league_name'];
-			$dispute['lid']		= $data['0']['lid'];
+			$dispute['lid']		= $data['0']['mlid'];
 			return $dispute;	
 		} else {
 			return;
