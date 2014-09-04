@@ -47,11 +47,7 @@ If you run into any issues, please post them on the Issues page (https://github.
 
 v3.0 BUG FIXES AND UPDATES
 ------------------------------------------------------------------------------------------------------------------------
-###September 1st, 2014
-- Delete installer after successful installation
-- Upgrade file
-- Sidebar recent twitter tweets
-- Fix setup files function
+https://github.com/stoopkid1/ezleague/issues
 
 #ezLeague v2.x
 The previous ezLeague v2.x can still be downloaded from here: http://www.mdloring.com/ezleague-v2.zip , but no future updates will be released for it (except for maybe some sort of v2.0 to 3.0 upgrade)
