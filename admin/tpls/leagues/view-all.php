@@ -21,8 +21,8 @@
                                 <th>Game</th>
                                 <th>Total Teams</th>
                                 <th>Max Teams</th>
-                                <th>Start</th>
-                                <th>End</th>
+                                <th>Ssn Start</th>
+                                <th>Ssn End</th>
                                 <th>Current Season</th>
                                 <th></th>
                             </tr>
