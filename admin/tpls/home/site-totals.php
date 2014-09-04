@@ -16,12 +16,7 @@
         </a>
         <a href="#" class="list-group-item">
             <i class="fa fa-sitemap fa-fw"></i> Matches
-            <span class="pull-right text-muted small"><em>0</em>
-            </span>
-        </a>
-        <a href="#" class="list-group-item">
-            <i class="fa fa-exchange fa-fw"></i> Challenges
-            <span class="pull-right text-muted small"><em><?php echo $ez_frontend->get_total( 'challenges' ); ?></em>
+            <span class="pull-right text-muted small"><em><?php echo $ez_frontend->get_total( 'matches' ); ?></em>
             </span>
         </a>
         <a href="#" class="list-group-item">
@@ -32,16 +27,6 @@
         <a href="#" class="list-group-item">
             <i class="fa fa-gamepad fa-fw"></i> Games
             <span class="pull-right text-muted small"><em><?php echo $ez_frontend->get_total( 'games' ); ?></em>
-            </span>
-        </a>
-        <a href="#" class="list-group-item">
-            <i class="fa fa-comment fa-fw"></i> Forum Posts
-            <span class="pull-right text-muted small"><em>0</em>
-            </span>
-        </a>
-        <a href="#" class="list-group-item">
-            <i class="fa fa-comments fa-fw"></i> Forum Topics
-            <span class="pull-right text-muted small"><em>0</em>
             </span>
         </a>
     </div>
