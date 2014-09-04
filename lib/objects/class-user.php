@@ -318,7 +318,11 @@ class ezLeague_User extends DB_Class {
 	public function get_user_team($team_id) {
 		
 		$data = $this->fetch("SELECT guild FROM `" . $this->prefix . "guilds` WHERE id = '$team_id'");
-		return $data['0']['guild'];
+		if( $data ) {
+			return $data['0']['guild'];
+		} else {
+			echo 'No Team';
+		}
 		
 	}
 	
