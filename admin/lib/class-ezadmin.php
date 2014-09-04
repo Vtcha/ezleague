@@ -426,7 +426,6 @@ class ezAdmin extends DB_Class {
 			        }
 			        /* print divider */
 			        if (mysqli_more_results($test_connection)) {
-			            printf("-----------------\n");
 			        }
 			    } while (mysqli_next_result($test_connection));
 			}
@@ -449,7 +448,7 @@ class ezAdmin extends DB_Class {
 		if( $test_connection ) {
 			$sql = "
 					ALTER TABLE `" . $this->prefix . "settings`
-					ADD COLUMN site_fav_icon VARCHAR(250);
+					ADD COLUMN site_icon VARCHAR(250);
 					ALTER TABLE `" . $this->prefix . "settings`
 					ADD COLUMN twitter_handle VARCHAR(250);
 					ALTER TABLE `" . $this->prefix . "settings`
