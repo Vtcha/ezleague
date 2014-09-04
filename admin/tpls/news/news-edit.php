@@ -19,7 +19,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                      <form role="form" id="editNews" name="editNews" method="POST">
-                      <input type="hidden" name="news_id" id="news_id" value="<?php echo $post_id; ?>" />
+                      <input type="hidden" name="news_id" id="post-id" value="<?php echo $post_id; ?>" />
                     	<div class="form-group">
 						    <label>Title</label>
 						    <input class="form-control" id="title" name="title" placeholder="Post Title" value="<?php echo $post['title']; ?>" />
@@ -101,7 +101,7 @@
                   <div class="form-group">
 				    <div class="radio">
 				        <label>
-				            <input <?php echo ( $game['slug'] == $post['game'] ? 'checked' : '' ); ?> type="radio" name="game" id="game" value="<?php echo $game['slug']; ?>"></input> <?php echo $game['game']; ?>
+				            <input <?php echo ( strtolower( $game['slug'] ) == strtolower( $post['game'] ) ? 'checked' : '' ); ?> type="radio" name="game" id="game" value="<?php echo $game['slug']; ?>"></input> <?php echo $game['game']; ?>
 				        </label>
 				    </div>
 				  </div>
@@ -116,6 +116,7 @@
             <!-- /.panel-heading -->
             <div class="panel-body">
              <?php $news_categories = $ez_news->get_categories(); ?>
+             <?php if( count( $news_categories ) > 0 ) { ?>
               <?php foreach( $news_categories as $category ) { ?>
 			       <div class="form-group">
 				   	<div class="checkbox">
@@ -124,6 +125,9 @@
 				        </label>
 					</div>
 			  <?php } ?>
+            <?php } else { ?>
+                No post categories found, please <a href="news.php?page=categories" target="_blank">add some</a>
+            <?php } ?>
 				   </div>
 	 </form>
 <?php } else { ?>

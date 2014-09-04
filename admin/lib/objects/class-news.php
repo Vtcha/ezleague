@@ -24,6 +24,31 @@ class ezAdmin_News extends DB_Class {
 		return;
 		
 	}
+
+	/*
+	 * Edit news post
+	 * 
+	 * @return string
+	 */
+	public function edit_news($post_id, $title, $body, $author, $categories, $game, $media) {
+		
+		$body		= $this->sanitize( $body );
+		$title		= $this->sanitize( $title );
+		$author 	= $this->sanitize( $author );
+		$categories = $this->sanitize( $categories );
+		$categories = strtolower( $categories );
+		$game		= $this->sanitize( $game );
+		$media		= $this->sanitize( $media );
+		$post_id 	= $this->sanitize( $post_id );
+		$this->link->query("UPDATE `" . $this->prefix . "news` 
+							SET title = '$title', body = '$body', author = '$author',
+							category = '$categories', game = '$game', media = '$media'
+							WHERE id = '$post_id'
+						");
+		$this->success('Post has been edited...reloading');
+		return;
+		
+	}
 	
 	/*
 	 * Save news post as draft

@@ -17,6 +17,17 @@ $ez_news   = new ezAdmin_News();
     	 		$media		  = $_POST['media'];
     	 		 $ez_news->add_news( $title, $body, $author, $categories, $game, $media );
     	 	 	break;
+
+            case 'edit-news':
+                $title        = $_POST['title'];
+                $body         = $_POST['body'];
+                $author       = $_POST['author'];
+                $game         = $_POST['game'];
+                $categories   = $_POST['categories'];
+                $media        = $_POST['media'];
+                $post_id      = $_POST['post_id'];
+                 $ez_news->edit_news( $post_id, $title, $body, $author, $categories, $game, $media );
+                break;
     	 	 	
     	 	case 'save-draft':
     	 		$title 		  = $_POST['title'];
