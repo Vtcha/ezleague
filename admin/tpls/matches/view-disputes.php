@@ -40,7 +40,8 @@
             			<option <?php echo ( $category == 'other' ? 'selected' : '' ); ?> value="other">Other</option>
             		</select>
             	</form>
-            	
+            	<?php $disputes = $ez_match->get_disputes( $status, $category ); ?>
+                <?php if( $disputes ) { ?>
                 <div class="table-responsive">
                     <table class="table table-hover">
                         <thead>
@@ -52,7 +53,7 @@
                                 <th></th>
                             </tr>
                         </thead>
-              <?php $disputes = $ez_match->get_disputes( $status, $category ); ?>
+              
                         <tbody>
               <?php foreach( $disputes as $dispute ) { ?>
                             <tr>
@@ -66,6 +67,9 @@
                         </tbody>
                      </table>
                  </div>
+                <?php } else { ?>
+                    No disputes found
+                <?php } ?>
             </div>
         </div>
     </div>
