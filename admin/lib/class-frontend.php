@@ -4,6 +4,7 @@ class ezAdmin_Frontend extends DB_Class {
 	
 	public function get_recent_users($total) {
 		
+		$total 	= $this->sanitize( $total );
 		$data = $this->fetch("SELECT id, username, email, created FROM `" . $this->prefix . "users` ORDER BY id DESC LIMIT $total");
 		return $data;
 		
@@ -11,6 +12,7 @@ class ezAdmin_Frontend extends DB_Class {
 	
 	public function get_recent_teams($total) {
 		
+		$total 	= $this->sanitize( $total );
 		$data = $this->fetch("SELECT guild, abbreviation, gm, admin, id FROM `" . $this->prefix . "guilds` ORDER BY id DESC LIMIT $total");
 		return $data;
 		
@@ -18,6 +20,7 @@ class ezAdmin_Frontend extends DB_Class {
 	
 	public function get_total($table) {
 		
+		$table	= $this->sanitize( $table );
 		switch($table) {
 			case 'users':
 				$table = 'users';
@@ -27,6 +30,14 @@ class ezAdmin_Frontend extends DB_Class {
 				break;
 			case 'leagues':
 				$table = 'leagues';
+				break;
+			case 'matches':
+				$table = 'matches';
+				break;
+			case 'games':
+				$table = 'games';
+				break;
+			default:
 				break;
 		}
 			
@@ -38,6 +49,7 @@ class ezAdmin_Frontend extends DB_Class {
 	
 	public function get_page_content($page) {
 		
+		$page 	= $this->sanitize( $page );
 		$data = $this->fetch("SELECT site_" . $page . " FROM `" . $this->prefix . "settings` WHERE id = '1'");
 		$content = $data['0']['site_' . $page . ''];
 		return $content;
@@ -46,9 +58,10 @@ class ezAdmin_Frontend extends DB_Class {
 	
 	public function update_page_content($page, $content) {
 		
+		$page 	= $this->sanitize( $page );
 		$content = $this->sanitize( $content );
 		$this->link->query("UPDATE `" . $this->prefix . "settings` SET site_$page = '$content' WHERE id = '1'");
-		echo "<strong>Success!</strong> $page content has been updated.";
+		$this->success('' . $page . ' content has been updated.');
 		
 	}
 	
