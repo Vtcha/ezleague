@@ -63,7 +63,8 @@ if(isset($_POST['id'])) {
               </div>
               <div style="height: auto;" id="collapseOne" class="panel-collapse">
                 <div class="panel-body">
-                <?php $matches = $ez_team->get_team_matches( $team_id ); ?>
+                <?php $matches = $ez_team->get_team_matches( $team_id ); ?> 
+                <?php if( count( $matches ) > 0 ) { ?>
 					<div class="table-responsive">
 	                    <table class="table table-hover">
 	                        <thead>
@@ -74,21 +75,23 @@ if(isset($_POST['id'])) {
 	                            </tr>
 	                        </thead>
 	                        <tbody>
-	              <?php foreach( $matches as $match ) { ?>
+	              	<?php foreach( $matches as $match ) { ?>
 	                            <tr>
 	                                <td><?php echo $match['home']; ?> (<?php echo $match['home_score']; ?>)</td>
 	                                <td><?php echo $match['away']; ?> (<?php echo $match['away_score']; ?>)</td>
 	                                <td><a href="matches.php?page=match&id=<?php echo $match['id']; ?>" class="btn btn-primary btn-xs">View Match</a></td>
 	                            </tr>
-	               <?php } ?>
+	               	<?php } ?>
 	                        </tbody>
 	                     </table>
-                    </div>
+	                </div>
+	            	<?php } else { ?>
+	            		No matches completed
+	        		<?php } ?>
                 </div>
               </div>
             </div>
            </div>
-           
           </div>
            
            <div class="col-lg-6"> 

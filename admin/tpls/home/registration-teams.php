@@ -11,8 +11,9 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Guild</th>
-                            <th>GM</th>
+                            <th>Team</th>
+                            <th>Leader</th>
+                            <th>Admin</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -23,7 +24,8 @@
                             <td>#<?php echo $team['id']; ?></td>
                             <td><?php echo $team['guild']; ?> (<?php echo $team['abbreviation']; ?>)</td>
                             <td><?php echo $team['gm']; ?></td>
-                            <td><a href="teams_view.php?id=<?php echo $team['id']; ?>" class="btn btn-info btn-xs">View</a></td>
+                            <td><?php echo $team['admin']; ?></td>
+                            <td><button onclick="getTeam('<?php echo $team['id']; ?>');" data-toggle="modal" data-target="#editTeamModal" class="btn btn-info btn-xs">View Team</button></td>
                         </tr>
         <?php } ?>
                     </tbody>

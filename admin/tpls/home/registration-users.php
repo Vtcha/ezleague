@@ -25,7 +25,7 @@
                             <td><?php echo $user['username']; ?></td>
                             <td><?php echo $user['email']; ?></td>
                             <td><small><?php echo date('M d h:ia', strtotime($user['created'])); ?></small></td>
-                        	<td><a href="users_view.php?id=<?php echo $user['id']; ?>" class="btn btn-info btn-xs">View</a></td>
+                        	<td><button onclick="getUser('<?php echo $user['id']; ?>');" data-toggle="modal" data-target="#editUserModal" class="btn btn-info btn-xs">View User</button></td>
                         </tr>
         <?php } ?>
                     </tbody>

@@ -11,7 +11,7 @@ class ezAdmin_Frontend extends DB_Class {
 	
 	public function get_recent_teams($total) {
 		
-		$data = $this->fetch("SELECT guild, abbreviation, gm, id FROM `" . $this->prefix . "guilds` ORDER BY id DESC LIMIT $total");
+		$data = $this->fetch("SELECT guild, abbreviation, gm, admin, id FROM `" . $this->prefix . "guilds` ORDER BY id DESC LIMIT $total");
 		return $data;
 		
 	}
