@@ -5,7 +5,7 @@ include('lib/class-ezadmin.php');
 $ez = new ezAdmin();
 
 /**
- * Upgrades include: Recent Twitter Tweets, Site Favorite Icon
+ * Upgrades include: Recent Twitter Tweets, Site Favorite Icon v2
  */    
      if( isset($_SESSION['ez_admin'] ) ) {
      	$ez->run_upgrade();
