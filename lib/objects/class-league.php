@@ -475,6 +475,90 @@ class ezLeague_League extends DB_Class {
 		}
 	
 	}
+
+	/*
+	 * Get featured match
+	 *
+	 * @return array
+	 */
+	public function get_featured_match($week, $league_id) {
+
+		$match = array();
+		$week 		= $this->sanitize( $week );
+		$league_id 	= $this->sanitize( $league_id );
+		if( is_numeric( $week ) ) {
+			$data = $this->fetch("SELECT `" . $this->prefix . "matches`.*, `" . $this->prefix . "map_schedule`.* 
+									FROM `" . $this->prefix . "matches`, ezlmap_schedule 
+									WHERE `" . $this->prefix . "matches`.`featured` = '1' AND `" . $this->prefix . "matches`.`week` = '$week' 
+									AND `" . $this->prefix . "matches`.`week` = `" . $this->prefix . "map_schedule`.`week`
+									AND `" . $this->prefix . "matches`.`league` = '$league_id'
+								");
+
+			if( $data ) {
+				$match['id']		  = $data['0']['id'];
+				$match['league_id']	  = $data['0']['league'];
+				$match['home']		  = $data['0']['homeTeam'];
+				$match['home_id']	  = $data['0']['homeTeamID'];
+				$match['home_logo']   = $this->get_team_logo( $match['home_id'] );
+				$match['away']		  = $data['0']['awayTeam'];
+				$match['away_id']	  = $data['0']['awayTeamID'];
+				$match['away_logo']   = $this->get_team_logo( $match['away_id'] );
+				$match['season']	  = $data['0']['season'];
+				$match['date']		  = $data['0']['matchDate'];
+				$match['time']		  = $data['0']['matchTime'];
+				$match['zone']		  = $data['0']['matchZone'];
+				$match['map']		  = $data['0']['map'];
+				return $match;
+			} else {
+				return;
+			}
+		} else {
+			$data = $this->fetch("SELECT `" . $this->prefix . "matches`.*, `" . $this->prefix . "map_schedule`.* 
+									FROM `" . $this->prefix . "matches`, ezlmap_schedule 
+									WHERE (`" . $this->prefix . "matches`.`featured` = '1') AND (`" . $this->prefix . "matches`.`league` = '$league_id' AND `" . $this->prefix . "map_schedule`.`week` = `" . $this->prefix . "matches`.`week`)
+									ORDER BY RAND() LIMIT 1
+								");
+			if( $data ) {
+				$match['id']		  = $data['0']['id'];
+				$match['league_id']	  = $data['0']['league'];
+				$match['home']		  = $data['0']['homeTeam'];
+				$match['home_id']	  = $data['0']['homeTeamID'];
+				$match['home_logo']   = $this->get_team_logo( $match['home_id'] );
+				$match['away']		  = $data['0']['awayTeam'];
+				$match['away_id']	  = $data['0']['awayTeamID'];
+				$match['away_logo']   = $this->get_team_logo( $match['away_id'] );
+				$match['season']	  = $data['0']['season'];
+				$match['date']		  = $data['0']['matchDate'];
+				$match['time']		  = $data['0']['matchTime'];
+				$match['zone']		  = $data['0']['matchZone'];
+				$match['map']		  = $data['0']['map'];
+				$match['week'] 		  = $data['0']['week'];
+				return $match;
+			} else {
+				return;
+			}
+		}
+
+
+	}
+
+	/*
+	 * Get a teams' logo
+	 *
+	 * @return string
+	 */
+	public function get_team_logo($team_id) {
+
+		$team_id 	= $this->sanitize( $team_id );
+		$data = $this->fetch("SELECT logo FROM `" . $this->prefix . "guilds` WHERE id = '$team_id'");
+		if( $data ) {
+			$logo = $data['0']['logo'];
+			return $logo;
+		} else {
+			return;
+		}
+
+	}
 	
 }
 

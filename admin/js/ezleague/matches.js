@@ -26,3 +26,21 @@ $('#editScore').submit(function(e) {
   });
  
 });
+
+function updateFeatured(match_id, week, league_id, method) {
+
+	$.ajax({
+     type: "POST",
+     url: "lib/submit/submit-matches.php",
+     async:true,
+     crossbrowser:true,
+     data: { form: 'update-featured-match', match_id: '' + match_id + '', week: '' + week + '', league_id: '' + league_id + '', method: '' + method + '' }
+   }).success(function( msg ) {
+	   		$('.success').css("display", "");
+	   		$(".success").fadeIn(1000, "linear");
+	   		$('.success_text').fadeIn("slow");
+	   		$('.success_text').html(msg);
+	   		setTimeout(function(){location.reload()},3000);
+  });
+
+}

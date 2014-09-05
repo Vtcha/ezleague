@@ -40,6 +40,7 @@ class ezAdmin_Match extends DB_Class {
 				$match['winner']	= $item['winner'];
 				$match['loser']		= $item['loser'];
 				$match['week']		= $item['week'];
+				$match['featured']  = $item['featured'];
 				array_push( $matches, $match );
 			}
 			return $matches;
@@ -221,6 +222,28 @@ class ezAdmin_Match extends DB_Class {
 		$this->success('Dispute status updated');
 		return;
 		
+	}
+
+	/*
+	 * Set featured match
+	 *
+	 * @return string
+	 */
+	public function update_featured_match($match_id, $week, $league_id, $method) {
+
+		$match_id 	= $this->sanitize( $match_id );
+		$week 		= $this->sanitize( $week );
+		$league_id  = $this->sanitize( $league_id );
+		$method  	= $this->sanitize( $method );
+		$this->link->query("UPDATE `" . $this->prefix . "matches` SET featured = '0' WHERE week = '$week' AND league = '$league_id'");
+		if( $method == 'set' ) {
+			$this->link->query("UPDATE `" . $this->prefix . "matches` SET featured = '1' WHERE id = '$match_id'");
+			$this->success('Featured match has been set for week ' . $week);
+		} else {
+			$this->success('Featured match has been removed for week ' . $week);
+		}
+		return;
+
 	}
 	
 }
