@@ -35,6 +35,16 @@
              					<td><?php echo $match['time']; ?> <?php echo $match['zone']; ?></td>
              				</tr>
              				<tr>
+             					<td><strong>Stream URL</strong></td>
+             					<td>
+             					<?php if( isset( $match['stream_url'] ) ) { ?>
+             						<a href="<?php echo $match['stream_url']; ?>" target="_blank"><?php echo $match['stream_url']; ?></a>
+             					<?php } else { ?>
+             						Not Set
+             					<?php } ?>
+             					</td>
+             				</tr>
+             				<tr>
              					<td><strong>Status</strong></td>
              					<td>
              					<?php echo ( $match['status'] == 1 ? '<span class="text-success bolder">completed</span>' : '<span class="text-warning">pending</span>' ); ?>

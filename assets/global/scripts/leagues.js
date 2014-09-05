@@ -41,13 +41,14 @@
 					date	    = $("#match-date").val();
 					time	    = $("#match-time").val();
 					zone		= $("#match-zone").val();
+					stream_url  = $("#match-stream-url").val();
 
 				 e.preventDefault();
 				 
 			 $.ajax({
 			     type: "POST",
 			     url: "lib/submit/submit-league.php",
-			     data: { form: 'update-match-details', id: '' + match_id + '', date: '' + date + '', time: '' + time + '', zone: '' + zone + '' }
+			     data: { form: 'update-match-details', id: '' + match_id + '', date: '' + date + '', time: '' + time + '', zone: '' + zone + '', stream_url: '' + stream_url + '' }
 			   }).success(function( msg ) {
 						    $(".success").css("display", "");
 					   		$(".success").fadeIn(1000, "linear");

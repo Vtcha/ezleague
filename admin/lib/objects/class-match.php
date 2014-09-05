@@ -79,6 +79,7 @@ class ezAdmin_Match extends DB_Class {
 			$match['time']		  = $data['0']['matchTime'];
 			$match['zone']		  = $data['0']['matchZone'];
 			$match['chat']		  = $data['0']['chat_log'];
+			$match['stream_url']  = $data['0']['streamURL'];
 			return $match;
 		} else {
 			return;

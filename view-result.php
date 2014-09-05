@@ -153,6 +153,15 @@
 												<td>de_dust2</td>
 											</tr>
 											<tr>
+												<th>Watch</th>
+												<td><?php if( isset( $match_result['stream_url'] ) ) { ?>
+														<a href="<?php echo $match_result['stream_url']; ?>" target="_blank">Stream URL</a>
+													<?php } else { ?>
+														Stream URL Not Set
+													<?php } ?>
+												</td>
+											</tr>
+											<tr>
 												<th>Screenshots</th>
 												<td>
 											<?php if( $screenshots ) { ?>

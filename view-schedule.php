@@ -99,7 +99,13 @@
 									<?php if( $featured_match ) { ?>
 										<div class="news-block-tags">
 											<strong><?php echo date( 'F d', strtotime( $featured_match['date'] ) ) . ', ' . $featured_match['time'] . '' . $featured_match['zone']; ?></strong>
-											<em><?php echo $featured_match['map']; ?></em>
+											<em><?php echo $featured_match['map']; ?></em><br/>
+											<strong>Watch</strong> 
+											<?php if( isset( $featured_match['stream_url'] ) ) { ?>
+												<a href="<?php echo $featured_match['stream_url']; ?>" target="_blank">Stream URL</a>
+											<?php } else { ?>
+												No Stream URL
+											<?php } ?>
 										</div>
 											<div class="row featured_match">
 												<div class="col-md-5">

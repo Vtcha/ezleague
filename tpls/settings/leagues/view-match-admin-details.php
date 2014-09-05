@@ -22,6 +22,10 @@
  	</select>
  </div>
  <div class="form-group">
+ 	<label class="control-label">Stream URL</label>
+ 	<input type="text" class="form-control" id="match-stream-url" value="<?php echo $match_details['stream_url']; ?>" />
+ </div>
+ <div class="form-group">
  	<button type="submit" class="btn btn-success">Update</button>
  <?php 
 	 if( $match_details['home_id'] == $profile['guild_id'] ) {
