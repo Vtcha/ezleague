@@ -120,6 +120,7 @@ class ezLeague_League extends DB_Class {
 			$match['status']		= $data['0']['completed'];
 			$match['featured']		= $data['0']['featured'];
 			$match['reporter']		= $data['0']['reporter'];
+			$match['stream_url']	= $data['0']['streamURL'];
 			return $match;
 		}
 		
@@ -130,15 +131,16 @@ class ezLeague_League extends DB_Class {
 	 * 
 	 * @return
 	 */
-	public function update_match_details($match_id, $date, $time, $zone) {
+	public function update_match_details($match_id, $date, $time, $zone, $stream_url) {
 		
 		$match_id		= $this->sanitize( $match_id );
 		$date			= $this->sanitize( $date );
 			$date = date('Y-m-d', strtotime( $date ) );
 		$time			= $this->sanitize( $time );
 		$zone			= $this->sanitize( $zone );
+		$stream_url 	= $this->sanitize( $stream_url );
 		$this->link->query("UPDATE `" . $this->prefix . "matches`
-							SET matchDate = '$date', matchTime = '$time', matchZone = '$zone'
+							SET matchDate = '$date', matchTime = '$time', matchZone = '$zone', streamURL = '$stream_url'
 							WHERE id = '$match_id'
 						");
 		$this->success('Match details have been updated');
@@ -432,6 +434,7 @@ class ezLeague_League extends DB_Class {
 			$results['time']		= $data['0']['matchTime'];
 			$results['zone']		= $data['0']['matchZone'];
 			$results['week']		= $data['0']['week'];
+			$results['stream_url']  = $data['0']['streamURL'];
 		}
 		return $results;
 		
@@ -508,6 +511,7 @@ class ezLeague_League extends DB_Class {
 				$match['time']		  = $data['0']['matchTime'];
 				$match['zone']		  = $data['0']['matchZone'];
 				$match['map']		  = $data['0']['map'];
+				$match['stream_url']  = $data['0']['streamURL'];
 				return $match;
 			} else {
 				return;
@@ -533,6 +537,7 @@ class ezLeague_League extends DB_Class {
 				$match['zone']		  = $data['0']['matchZone'];
 				$match['map']		  = $data['0']['map'];
 				$match['week'] 		  = $data['0']['week'];
+				$match['stream_url']  = $data['0']['streamURL'];
 				return $match;
 			} else {
 				return;

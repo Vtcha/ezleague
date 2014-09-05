@@ -13,7 +13,8 @@ $ez_league = new ezLeague_League();
 		 		$date	 	= $_POST['date'];
 		 		$time		= $_POST['time'];
 		 		$zone		= $_POST['zone'];
-		 			$ez_league->update_match_details($match_id, $date, $time, $zone);
+		 		$stream_url = $_POST['stream_url'];
+		 			$ez_league->update_match_details($match_id, $date, $time, $zone, $stream_url);
 		 		break;
 		 		
 		 	case 'accept-match-details':
