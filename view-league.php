@@ -40,7 +40,15 @@
 							<h2><?php echo $league['league']; ?></h2>
 							<div class="row">
 								
-								<div class="col-md-3">
+								<div class="col-md-2">
+									<div class="top-news">
+										<a href="view-league.php?id=<?php echo $league_id; ?>" class="btn grey">
+											<span>Information </span>
+											<i class="fa fa-cogs top-news-icon"></i>
+										</a>
+									</div>
+								</div>
+								<div class="col-md-2">
 									<div class="top-news">
 										<a href="view-standings.php?league=<?php echo $league_id; ?>" class="btn red">
 											<span>Standings </span>
@@ -48,7 +56,7 @@
 										</a>
 									</div>
 								</div>
-								<div class="col-md-3">
+								<div class="col-md-2">
 									<div class="top-news">
 										<a href="view-schedule.php?league=<?php echo $league_id; ?>" class="btn green">
 											<span>Schedule </span>
@@ -56,7 +64,7 @@
 										</a>
 									</div>
 								</div>
-								<div class="col-md-3">
+								<div class="col-md-2">
 									<div class="top-news">
 										<a href="view-results.php?league=<?php echo $league_id; ?>" class="btn blue">
 										<span>Results </span>
@@ -64,7 +72,7 @@
 										</a>
 									</div>
 								</div>
-								<div class="col-md-3">
+								<div class="col-md-2">
 									<div class="top-news">
 										<a href="view-teams.php?league=<?php echo $league_id; ?>" class="btn yellow">
 										<span>Teams </span>
@@ -87,12 +95,14 @@
 												<td>
 												<?php if( $league['status'] == '1' ) { ?>
 														<span class="text-success bolder">Open</span>
-														<?php if( $profile['team_admin'] == true ) { ?>
-															<?php $exist = $ez_league->check_for_team( $profile['guild_id'], $league_id ); ?>
-															<?php if( $exist == false ) { ?>
-																	<button type="button" class="btn green btn-sm" onclick="registerTeam('<?php echo $profile['guild_id']; ?>', '<?php echo $league_id; ?>')">Register Team</button>
-															<?php } else { ?>
-																	<button disabled class="btn danger btn-sm">Already Registered</button>
+														<?php if( isset( $profile ) ) { ?>
+															<?php if( $profile['team_admin'] == true ) { ?>
+																<?php $exist = $ez_league->check_for_team( $profile['guild_id'], $league_id ); ?>
+																<?php if( $exist == false ) { ?>
+																		<button type="button" class="btn green btn-sm" onclick="registerTeam('<?php echo $profile['guild_id']; ?>', '<?php echo $league_id; ?>')">Register Team</button>
+																<?php } else { ?>
+																		<button disabled class="btn danger btn-sm">Already Registered</button>
+																<?php } ?>
 															<?php } ?>
 														<?php } ?>
 												<?php } else { ?>

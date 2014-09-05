@@ -51,7 +51,15 @@
 							<h2><?php echo $league['league']; ?> Match Results</h2>
 							<div class="row">
 								
-								<div class="col-md-3">
+								<div class="col-md-2">
+									<div class="top-news">
+										<a href="view-league.php?id=<?php echo $league_id; ?>" class="btn grey">
+											<span>Information </span>
+											<i class="fa fa-cogs top-news-icon"></i>
+										</a>
+									</div>
+								</div>
+								<div class="col-md-2">
 									<div class="top-news">
 										<a href="view-standings.php?league=<?php echo $league_id; ?>" class="btn red">
 											<span>Standings </span>
@@ -59,7 +67,7 @@
 										</a>
 									</div>
 								</div>
-								<div class="col-md-3">
+								<div class="col-md-2">
 									<div class="top-news">
 										<a href="view-schedule.php?league=<?php echo $league_id; ?>" class="btn green">
 											<span>Schedule </span>
@@ -67,7 +75,7 @@
 										</a>
 									</div>
 								</div>
-								<div class="col-md-3">
+								<div class="col-md-2">
 									<div class="top-news">
 										<a href="view-results.php?league=<?php echo $league_id; ?>" class="btn blue">
 										<span>Results </span>
@@ -75,7 +83,7 @@
 										</a>
 									</div>
 								</div>
-								<div class="col-md-3">
+								<div class="col-md-2">
 									<div class="top-news">
 										<a href="view-teams.php?league=<?php echo $league_id; ?>" class="btn yellow">
 										<span>Teams </span>
