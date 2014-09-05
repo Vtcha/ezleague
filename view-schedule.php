@@ -173,7 +173,7 @@
 									             	?>
 									             </td>
 									             <td>
-									                <a href="teams_view.php?id=<?php echo $matchup['id']; ?>" class="btn btn-info btn-xs"><i class="fa fa-search"></i> View</a>
+									                <a href="view-result.php?league=<?php echo $league_id; ?>&id=<?php echo $matchup['id']; ?>" class="btn btn-info btn-xs"><i class="fa fa-search"></i> View</a>
 									             </td>
 									            </tr>
 									<?php } ?>
