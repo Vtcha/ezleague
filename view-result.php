@@ -155,11 +155,15 @@
 											<tr>
 												<th>Screenshots</th>
 												<td>
+											<?php if( $screenshots ) { ?>
 												<?php foreach( $screenshots as $image ) { ?>
 													<a href="screenshots/<?php echo $image['image']; ?>" class="fancybox" data-fancybox-group="match-screenshots" title="<?php echo $match_result['home'] . " vs " . $match_result['away']; ?>" data-rel="fancybox-button">
 														<img src="screenshots/<?php echo $image['image']; ?>" width="100px" height="100px" />
 													</a>
 												<?php } ?>
+											<?php } else { ?>
+													No screenshots have been uploaded for this match
+											<?php } ?>
 												</td>
 											</tr>
 										</table>
