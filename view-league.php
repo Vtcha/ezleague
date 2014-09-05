@@ -137,27 +137,33 @@
 							
 							<!-- FEATURED MATCH -->
 								<div class="col-md-6">
+								<?php $featured_match = $ez_league->get_featured_match( 'random', $league_id ); ?>
 									<div class="news-blocks">
 										<h3 class="title"><a href="#">Featured Match </a></h3>
+									<?php if( $featured_match ) { ?>
 										<div class="news-block-tags">
-											<strong>Aug 12th, 5:00pm</strong>
-											<em>de_dust2</em>
+											<h4>Week <?php echo $featured_match['week']; ?></h4>
+											<strong><?php echo date( 'F d', strtotime( $featured_match['date'] ) ) . ', ' . $featured_match['time'] . '' . $featured_match['zone']; ?></strong>
+											<em><?php echo $featured_match['map']; ?></em>
 										</div>
 											<div class="row featured_match">
 												<div class="col-md-5">
-													<img class="featured_match" src="assets/admin/pages/media/gallery/image3.jpg" alt="">
-													<h3>compLexity</h3>
+													<img class="featured_match" src="logos/<?php echo $featured_match['home_logo']; ?>" alt="">
+													<h4><?php echo $featured_match['home']; ?></h4>
 													<a href="#" class="btn blue prediction btn-block">predict <i class="fa fa-check"></i></a>
 												</div>
 												<div class="col-md-2">
 													<h4 class="versus">vs</h4>
 												</div>
 												<div class="col-md-5">
-													<img class="featured_match" src="assets/admin/pages/media/gallery/image3.jpg" alt="">
-													<h4>oBsolete</h4>
+													<img class="featured_match" src="logos/<?php echo $featured_match['away_logo']; ?>" alt="">
+													<h4><?php echo $featured_match['away']; ?></h4>
 													<a href="#" class="btn blue prediction btn-block">predict <i class="fa fa-check"></i></a>
 												</div>
 											</div>
+									<?php } else { ?>
+										No featured matches
+									<?php } ?>
 									</div>
 								</div>
 							<!-- /. Featured Match -->

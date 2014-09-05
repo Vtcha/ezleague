@@ -14,6 +14,7 @@
                 <i class="fa fa-sitemap"></i> Current Matches for <em><?php echo $league['league']; ?></em>
             </div>
             <div class="panel-body">
+                <div class="success"><span class="success_text"></span></div>
                 <div class="table-responsive">
                     <table class="table table-hover">
                         <thead>
@@ -59,7 +60,14 @@
                                 <td>
                                 	<?php echo ( $match['status'] == 1 ? '<span class="text-success bolder">completed</span>' : '<span class="text-warning italic">pending</span>' ); ?>
                                 </td>
-                                <td><a href="matches.php?page=match&id=<?php echo $match['id']; ?>" class="btn btn-primary btn-xs">View Match</a></td>
+                                <td>
+                                    <a href="matches.php?page=match&id=<?php echo $match['id']; ?>" class="btn btn-primary btn-xs">View Match</a>
+                        <?php if( $match['featured'] == 0 ) { ?>
+                                    <button type="button" onclick="updateFeatured('<?php echo $match['id']; ?>', '<?php echo $match['week']; ?>', '<?php echo $league_id; ?>', 'set')" class="btn btn-success btn-xs">Set as Featured</button>
+                        <?php } else { ?>
+                                    <button type="button" onclick="updateFeatured('<?php echo $match['id']; ?>', '<?php echo $match['week']; ?>', '<?php echo $league_id; ?>', 'remove')" class="btn btn-warning btn-xs">Remove as Featured</button>
+                        <?php } ?>
+                                </td>
                             </tr>
                <?php } ?>
                         </tbody>

@@ -43,9 +43,11 @@
 							
 							if( isset( $_GET['week'] ) && is_numeric( $_GET['week'] ) ) {
 								$week = trim( $_GET['week'] );
+								$featured_week = $week;
 								$current_schedule = $ez_schedule->get_week_schedule($league_id, $current_season, $week);
 							} else {
 								$week = 0;
+								$featured_week = 'all';
 								$current_schedule = $ez_schedule->get_schedule( $league_id, $current_season );
 							}
 						?>
@@ -91,27 +93,36 @@
 							<div class="row">
 							<!-- FEATURED MATCH -->
 								<div class="col-md-4">
+									<?php $featured_match = $ez_league->get_featured_match( $featured_week, $league_id ); ?>
 									<div class="news-blocks">
-										<h3 class="title">Featured Match</h3>
+										<h3 class="title"><a href="#">Featured Match </a></h3>
+									<?php if( $featured_match ) { ?>
 										<div class="news-block-tags">
-											<strong>Aug 12th, 5:00pm</strong>
-											<em>de_dust2</em>
+											<strong><?php echo date( 'F d', strtotime( $featured_match['date'] ) ) . ', ' . $featured_match['time'] . '' . $featured_match['zone']; ?></strong>
+											<em><?php echo $featured_match['map']; ?></em>
 										</div>
 											<div class="row featured_match">
 												<div class="col-md-5">
-													<img class="featured_match" src="assets/admin/pages/media/gallery/image3.jpg" alt="">
-													<h4>compLexity</h4>
-													<a href="#" class="btn blue prediction btn-xs">predict <i class="fa fa-check"></i></a>
+													<a href="view-team.php?id=<?php echo $featured_match['home_id']; ?>">
+														<img class="featured_match" src="logos/<?php echo $featured_match['home_logo']; ?>" alt="">
+													<h4><?php echo $featured_match['home']; ?></h4>
+													</a>
+													<a href="#" class="btn blue prediction btn-block">predict <i class="fa fa-check"></i></a>
 												</div>
 												<div class="col-md-2">
 													<h4 class="versus">vs</h4>
 												</div>
 												<div class="col-md-5">
-													<img class="featured_match" src="assets/admin/pages/media/gallery/image3.jpg" alt="">
-													<h4>oBsolete</h4>
-													<a href="#" class="btn blue prediction btn-xs">predict <i class="fa fa-check"></i></a>
+													<a href="view-team.php?id=<?php echo $featured_match['away_id']; ?>">
+														<img class="featured_match" src="logos/<?php echo $featured_match['away_logo']; ?>" alt="">
+													<h4><?php echo $featured_match['away']; ?></h4>
+													</a>
+													<a href="#" class="btn blue prediction btn-block">predict <i class="fa fa-check"></i></a>
 												</div>
 											</div>
+									<?php } else { ?>
+										No featured matches
+									<?php } ?>
 									</div>
 								</div>
 							<!-- /. Featured Match -->
