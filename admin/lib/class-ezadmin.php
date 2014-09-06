@@ -436,7 +436,9 @@ class ezAdmin extends DB_Class {
 
 		$file = 'upgrade.php';
 		if( file_exists( $file ) ) {
+			echo '<div class="update">';
 			echo 'Please <a href="upgrade.php">run the update file</a> to keep your database structured updated.';
+			echo '</div>';
 			return;
 		} else {
 			return;

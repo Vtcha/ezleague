@@ -10,9 +10,7 @@
                         echo 'An update is available. Please <a href="http://www.github.com/stoopkid1/ezleague" target="_blank">update ezleague</a> to avoid issues with the application.';
                         echo '</div>';
                     } else {
-                        echo '<div class="update">';
                         $ez->check_for_upgrade();
-                        echo '</div>';
                     }
                 ?>
                 <div class="col-lg-12">
