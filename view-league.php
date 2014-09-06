@@ -86,7 +86,6 @@
 							<div class="row">
 							<!-- EVENT INFO -->
 								<div class="col-md-6">
-									<div class="success"><span class="success_text"></span></div>
 									<div class="news-blocks">
 										<h3 class="title"><a href="#">League Information </a></h3>
 										<table class="table league-information">
@@ -142,6 +141,7 @@
 											</tr>
 										</table>
 									</div>
+									<div class="success"><span class="success_text"></span></div>
 								</div>
 							<!-- /. Event Info -->
 							
@@ -158,7 +158,6 @@
 												$prediction_check = false;
 											}
 									?>
-									<?php print_r($featured_match); ?>
 										<div class="news-block-tags">
 											<h4>Week <?php echo $featured_match['week']; ?></h4>
 											<strong><?php echo date( 'F d', strtotime( $featured_match['date'] ) ) . ', ' . $featured_match['time'] . '' . $featured_match['zone']; ?></strong>
@@ -177,12 +176,12 @@
 													<button type="button" 
 														<?php 
 															if( isset( $profile ) && $prediction_check == false ) { ?>
-																onclick="makePrediction('<?php echo $featured_match['home_id']; ?>', '<?php echo $featured_match['id']; ?>', <?php echo $profile['username']; ?>')"
+																onclick="makePrediction('<?php echo $featured_match['home_id']; ?>', '<?php echo $featured_match['id']; ?>', '<?php echo $profile['username']; ?>')"
 														<?php } else { ?>
 																disabled
 														<?php } ?>
 															class="btn blue prediction btn-block">
-																predict (<?php echo $featured_match['predictions']['home_percent']; ?>%) <i class="fa fa-check"></i>
+																predict <i class="fa fa-check"></i> <br/>(<?php echo $featured_match['predictions']['home_percent']; ?>) 
 													</button>
 												</div>
 												<div class="col-md-2">
@@ -194,12 +193,12 @@
 													<button type="button" 
 														<?php 
 															if( isset( $profile ) && $prediction_check == false ) { ?>
-																onclick="makePrediction('<?php echo $featured_match['away_id']; ?>', '<?php echo $featured_match['id']; ?>', <?php echo $profile['username']; ?>')"
+																onclick="makePrediction('<?php echo $featured_match['away_id']; ?>', '<?php echo $featured_match['id']; ?>', '<?php echo $profile['username']; ?>')"
 														<?php } else { ?>
 																disabled
 														<?php } ?>
 															class="btn blue prediction btn-block">
-																predict (<?php echo $featured_match['predictions']['away_percent']; ?>%) <i class="fa fa-check"></i>
+																predict <i class="fa fa-check"></i> <br/>(<?php echo $featured_match['predictions']['away_percent']; ?>) 
 													</button>
 												</div>
 											</div>
@@ -228,4 +227,7 @@
 <script src="assets/global/scripts/normal.js" type="text/javascript"></script>
 <div id="register-team-confirm" title="Join this team?" style="display:none;">
 	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Confirm league registration.</p>
+</div>
+<div id="make-prediction-confirm" title="Make game prediction" style="display:none;">
+	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Confirm your prediction.</p>
 </div>
