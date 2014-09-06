@@ -512,6 +512,8 @@ class ezLeague_League extends DB_Class {
 				$match['zone']		  = $data['0']['matchZone'];
 				$match['map']		  = $data['0']['map'];
 				$match['stream_url']  = $data['0']['streamURL'];
+				$match['status'] 	  = $data['0']['completed'];
+				$match['predictions'] = $this->get_predictions( $match['home_id'], $match['away_id'], $match['id'] );
 				return $match;
 			} else {
 				return;
@@ -538,6 +540,8 @@ class ezLeague_League extends DB_Class {
 				$match['map']		  = $data['0']['map'];
 				$match['week'] 		  = $data['0']['week'];
 				$match['stream_url']  = $data['0']['streamURL'];
+				$match['status'] 	  = $data['0']['completed'];
+				$match['predictions'] = $this->get_predictions( $match['home_id'], $match['away_id'], $match['id'] );
 				return $match;
 			} else {
 				return;
@@ -562,6 +566,72 @@ class ezLeague_League extends DB_Class {
 		} else {
 			return;
 		}
+
+	}
+
+	/*
+	 * Save prediction vote
+	 *
+	 * @return string
+	 */
+	public function cast_prediction($team_id, $match_id, $username) {
+
+		$team_id 	= $this->sanitize( $team_id );
+		$match_id 	= $this->sanitize( $match_id );
+		$username 	= $this->sanitize( $username );
+		$this->link->query("INSERT INTO `" . $this->prefix . "predictions` SET team = '$team_id', match_id = '$match_id', user = '$username'");
+		$this->success('Your prediction has been submitted');
+		return;
+
+	}
+
+	/*
+	 * Check if a user has predicted a match
+	 *
+	 * @return string
+	 */
+	public function check_if_predicted($username, $match_id) {
+
+		$username 	= $this->sanitize( $username );
+		$match_id 	= $this->sanitize( $match_id );
+		$data = $this->fetch("SELECT id FROM `" . $this->prefix . "predictions` WHERE match_id = '$match_id' AND user = '$username'");
+		if( $data ) {
+			return true;
+		} else {
+			return false;
+		}
+
+	}
+
+	/*
+	 * Get predictions for a match
+	 *
+	 * @return array
+	 */
+	public function get_predictions($home_team, $away_team, $match_id) {
+
+		$home_team 	= $this->sanitize( $home_team );
+		$away_team 	= $this->sanitize( $away_team );
+		$match_id 	= $this->sanitize( $match_id );
+		$prediction = array();
+		$total_data = $this->fetch("SELECT * FROM `" . $this->prefix . "predictions` WHERE match_id = '$match_id'");
+		$home_data  = $this->fetch("SELECT * FROM `" . $this->prefix . "predictions` WHERE team = '$home_team' AND match_id = '$match_id'");
+		$away_data  = $this->fetch("SELECT * FROM `" . $this->prefix . "predictions` WHERE team = '$away_team' AND match_id = '$match_id'");
+		
+		$prediction['total'] 	= count( $total_data );
+		$prediction['home'] 	= count( $home_data );
+		if( $prediction['home'] != 0 ) {
+			$prediction['home_percent']	= ( $prediction['total'] / $prediction['home'] );
+		} else {
+			$prediction['home_percent'] = 0;
+		}
+		$prediction['away'] 	= count( $away_data );
+		if( $prediction['away'] != 0 ) {
+			$prediction['away_percent']	= ( $prediction['total'] / $prediction['away'] );
+		} else {
+			$prediction['away_percent'] = 0;
+		}
+		return $prediction;
 
 	}
 	
