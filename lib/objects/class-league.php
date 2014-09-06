@@ -121,6 +121,7 @@ class ezLeague_League extends DB_Class {
 			$match['featured']		= $data['0']['featured'];
 			$match['reporter']		= $data['0']['reporter'];
 			$match['stream_url']	= $data['0']['streamURL'];
+			$match['predictions'] = $this->get_predictions( $match['home_id'], $match['away_id'], $match['id'] );
 			return $match;
 		}
 		
