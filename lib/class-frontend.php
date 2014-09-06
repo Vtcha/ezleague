@@ -174,7 +174,7 @@ class ezLeague_Frontend extends DB_Class {
 				$member['guild_name'] = '';
 			}
 			
-			array_push($members, $member);
+			array_push( $members, $member );
 		}
 		
 		return $members;
@@ -199,7 +199,7 @@ class ezLeague_Frontend extends DB_Class {
 				$member['guild_name'] = $this->get_guild_name( $member['guild'] );
 			}
 				
-			array_push($members, $member);
+			array_push( $members, $member );
 		}
 		return $members;
 		
@@ -212,9 +212,15 @@ class ezLeague_Frontend extends DB_Class {
 	 */
 	public function get_guild_name( $guild_id ) {
 		
+		$guild_id	= $this->sanitize( $guild_id );
 		$data = $this->fetch("SELECT guild FROM `" . $this->prefix . "guilds` WHERE id = '$guild_id'");
-		$guild = $data['0']['guild'];
-		return $guild;
+		if( $data ) { 
+			$guild = $data['0']['guild'];
+			return $guild;
+		} else {
+			return;
+		}
+
 	}
 	
 	/*
