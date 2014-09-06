@@ -113,7 +113,6 @@ tr.strikeout td:before {
 .view-team-logo {
 	margin:0 auto;
 }
-<<<<<<< HEAD
 .well-social-networks {
 	background:#EEEEEE;
 	padding:15px;
@@ -137,8 +136,10 @@ tr.strikeout td:before {
 }
 .contact-social-networks .fa-google-plus:hover {
 	color: #DC4937;
-=======
+}
 .about-content {
 	padding:10px;
->>>>>>> master
+}
+.match_details h4 {
+	text-align: center;
 }
