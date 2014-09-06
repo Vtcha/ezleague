@@ -41,24 +41,21 @@
 						<?php if( isset( $_GET['league'] ) && is_numeric( $_GET['league'] ) && isset( $_GET['id'] ) && is_numeric( $_GET['id'] ) ) { ?>
 						<?php 
 							$league_id = trim( $_GET['league'] );
-							$league = $ez_league->get_league( $league_id ); 
-							$season = $ez_league->get_current_season( $league_id );
-							$current_season = $season['season'];
 							$match_id = trim( $_GET['id'] );
-							
-							if( isset( $_GET['week'] ) && is_numeric( $_GET['week'] ) ) {
-								$week = trim( $_GET['week'] );
-								$current_schedule = $ez_schedule->get_week_schedule($league_id, $current_season, $week);
-							} else {
-								$week = 0;
-								$current_schedule = $ez_schedule->get_schedule( $league_id, $current_season );
-							}
 						?>
 							<h1><?php echo $league['game']; ?></h1>
 							<h2><?php echo $league['league']; ?> Match Result Details</h2>
 							<div class="row">
 								
-								<div class="col-md-3">
+								<div class="col-md-2">
+									<div class="top-news">
+										<a href="view-league.php?id=<?php echo $league_id; ?>" class="btn grey">
+											<span>Information </span>
+											<i class="fa fa-cogs top-news-icon"></i>
+										</a>
+									</div>
+								</div>
+								<div class="col-md-2">
 									<div class="top-news">
 										<a href="view-standings.php?league=<?php echo $league_id; ?>" class="btn red">
 											<span>Standings </span>
@@ -66,7 +63,7 @@
 										</a>
 									</div>
 								</div>
-								<div class="col-md-3">
+								<div class="col-md-2">
 									<div class="top-news">
 										<a href="view-schedule.php?league=<?php echo $league_id; ?>" class="btn green">
 											<span>Schedule </span>
@@ -74,7 +71,7 @@
 										</a>
 									</div>
 								</div>
-								<div class="col-md-3">
+								<div class="col-md-2">
 									<div class="top-news">
 										<a href="view-results.php?league=<?php echo $league_id; ?>" class="btn blue">
 										<span>Results </span>
@@ -82,7 +79,7 @@
 										</a>
 									</div>
 								</div>
-								<div class="col-md-3">
+								<div class="col-md-2">
 									<div class="top-news">
 										<a href="view-teams.php?league=<?php echo $league_id; ?>" class="btn yellow">
 										<span>Teams </span>
