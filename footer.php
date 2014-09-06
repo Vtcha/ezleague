@@ -3,6 +3,7 @@
 	<div class="page-footer-inner">
 		 2013-2014 &copy; <a href="http://www.mdloring.com/ezleague-free-php-online-gaming-league-script/" target="_blank"><em>ezLeague</em></a> is Developed &amp; Maintained by <a href="http://www.mdloring.com" target="_blank">Michael Loring</a>. 
 		 Logo Design by <a href="http://www.arma3.ru">Alexey</a>.
+		 Currently running <em>ezLeague v<?php echo EZL_VERSION; ?></em>
 	</div>
 	<div class="page-footer-tools">
 		<span class="go-top">

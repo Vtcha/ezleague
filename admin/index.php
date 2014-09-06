@@ -4,6 +4,17 @@
 
         <div id="page-wrapper">
             <div class="row">
+                <?php 
+                    if( $check_for_update != EZL_VERSION ) {
+                        echo '<div class="update">';
+                        echo 'An update is available. Please <a href="http://www.github.com/stoopkid1/ezleague" target="_blank">update ezleague</a> to avoid issues with the application.';
+                        echo '</div>';
+                    } else {
+                        echo '<div class="update">';
+                        $ez->check_for_upgrade();
+                        echo '</div>';
+                    }
+                ?>
                 <div class="col-lg-12">
                     <h1 class="page-header">Admin Dashboard</h1>
                 </div>

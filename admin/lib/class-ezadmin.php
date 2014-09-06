@@ -304,7 +304,7 @@ class ezAdmin extends DB_Class {
 			DROP TABLE IF EXISTS `" . $this->prefix . "predictions`;
 			CREATE TABLE `" . $this->prefix . "predictions` (
 			  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-			  `cid` int(10) DEFAULT NULL,
+			  `match_id` int(10) DEFAULT NULL,
 			  `team` int(10) DEFAULT NULL,
 			  `comment` varchar(500) DEFAULT NULL,
 			  `user` varchar(50) DEFAULT NULL,
@@ -425,6 +425,23 @@ class ezAdmin extends DB_Class {
 		}
 		return;
 		
+	}
+
+	/*
+	 * Check for upgrade
+	 *
+	 * @return string
+	 */
+	public function check_for_upgrade() {
+
+		$file = 'upgrade.php';
+		if( file_exists( $file ) ) {
+			echo 'Please <a href="upgrade.php">run the update file</a> to keep your database structured updated.';
+			return;
+		} else {
+			return;
+		}
+
 	}
 
 	/*

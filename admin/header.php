@@ -1,4 +1,6 @@
 <?php session_start();
+define( 'EZL_VERSION', '3.2.1' );
+$check_for_update = file_get_contents( 'http://www.mdloring.com/ezleague_version.php', TRUE );
 date_default_timezone_set('America/Chicago');
 include('lib/class-db.php');
 include('lib/class-ezadmin.php');
@@ -66,7 +68,7 @@ $ez_schedule = new ezAdmin_Schedule();
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.php">ezLeague <sup>v3.0</sup></a>
+                <a class="navbar-brand" href="index.php">ezLeague <sup>v<?php echo EZL_VERSION; ?></sup></a>
             </div>
             <!-- /.navbar-header -->
 
