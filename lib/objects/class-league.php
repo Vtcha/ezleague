@@ -574,7 +574,7 @@ class ezLeague_League extends DB_Class {
 	 *
 	 * @return string
 	 */
-	public function cast_prediction($team_id, $match_id, $username) {
+	public function make_prediction($team_id, $match_id, $username) {
 
 		$team_id 	= $this->sanitize( $team_id );
 		$match_id 	= $this->sanitize( $match_id );
@@ -621,13 +621,15 @@ class ezLeague_League extends DB_Class {
 		$prediction['total'] 	= count( $total_data );
 		$prediction['home'] 	= count( $home_data );
 		if( $prediction['home'] != 0 ) {
-			$prediction['home_percent']	= ( $prediction['total'] / $prediction['home'] );
+			$home_percent	= ( $prediction['home'] / $prediction['total'] );
+			$prediction['home_percent'] = sprintf("%.2f%%", $home_percent * 100);
 		} else {
 			$prediction['home_percent'] = 0;
 		}
 		$prediction['away'] 	= count( $away_data );
 		if( $prediction['away'] != 0 ) {
-			$prediction['away_percent']	= ( $prediction['total'] / $prediction['away'] );
+			$away_percent	= ( $prediction['away'] / $prediction['total'] );
+			$prediction['away_percent'] = sprintf("%.2f%%", $away_percent * 100);
 		} else {
 			$prediction['away_percent'] = 0;
 		}
