@@ -58,6 +58,13 @@ $ez_league = new ezLeague_League();
 	 			$reporter		= $_POST['reporter'];
 	 				$ez_league->dispute_match($match_id, $category, $dispute, $reporter);
 	 			break;
+
+	 		case 'make-prediction':
+	 			$match_id 		= $_POST['match_id'];
+	 			$team_id 		= $_POST['team_id'];
+	 			$username 		= $_POST['user'];
+	 			 $ez_league->make_prediction($team_id, $match_id, $username);
+	 			break;
 		 		
 		 	default:
 		 		break;

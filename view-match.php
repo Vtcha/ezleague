@@ -91,34 +91,54 @@
 								<hr/>
 							</div>
 							<div class="row">
-							<?php $match_result = $ez_league->get_result( $match_id ); ?>
-							<?php if( $match_result ) { ?>
-							<?php $screenshots = $ez_league->get_screenshots( $match_id ); ?>
+							<?php $match_details = $ez_league->get_match_details( $match_id ); ?>
+							<?php if( $match_details ) { ?>
+							<?php
+									if( isset( $profile ) ) { 
+										$prediction_check = $ez_league->check_if_predicted( $profile['username'], $match_details['id'] );
+									} else {
+										$prediction_check = false;
+									}
+							?>
 							<!-- MATCHUP -->
 								<div class="col-md-6">
 									<div class="news-blocks">
 										<h3 class="title">Matchup</h3>
-											<div class="row match_result">
+											<div class="row match_details">
 												<div class="col-md-5">
-													<a href="view-team.php?id=<?php echo $match_result['home_id']; ?>">
-														<img class="featured_match" src="logos/<?php echo $ez_team->get_logo( $match_result['home_id'] ); ?>" alt="">
+													<a href="view-team.php?id=<?php echo $match_details['home_id']; ?>">
+														<img class="featured_match" src="logos/<?php echo $ez_team->get_logo( $match_details['home_id'] ); ?>" alt="">
 													</a>
-													<h4><a href="view-team.php?id=<?php echo $match_result['home_id']; ?>"><?php echo $match_result['home']; ?></a></h4>
-													<a href="#" class="btn <?php echo ( $match_result['winner'] == $match_result['home_id'] ? 'green' : 'red' ); ?> result btn-xs">
-														<?php echo $match_result['home_score']; ?> <i class="fa <?php echo ( $match_result['winner'] == $match_result['home_id'] ? 'fa-check' : 'fa-times' ); ?>"></i>
-													</a>
+													<h4><a href="view-team.php?id=<?php echo $match_details['home_id']; ?>"><?php echo $match_details['home_team']; ?></a></h4>
+													<button type="button" 
+														<?php 
+															if( isset( $profile ) && $prediction_check == false ) { ?>
+																onclick="makePrediction('<?php echo $match_details['home_id']; ?>', '<?php echo $match_details['id']; ?>', '<?php echo $profile['username']; ?>')"
+														<?php } else { ?>
+																disabled
+														<?php } ?>
+															class="btn blue prediction btn-block">
+																predict <i class="fa fa-check"></i> <br/>(<?php echo $match_details['predictions']['home_percent']; ?>) 
+													</button>
 												</div>
 												<div class="col-md-2">
 													<h4 class="versus">vs</h4>
 												</div>
 												<div class="col-md-5">
-													<a href="view-team.php?id=<?php echo $match_result['away_id']; ?>">
-														<img class="featured_match" src="logos/<?php echo $ez_team->get_logo( $match_result['away_id'] ); ?>" alt="">
+													<a href="view-team.php?id=<?php echo $match_details['away_id']; ?>">
+														<img class="featured_match" src="logos/<?php echo $ez_team->get_logo( $match_details['away_id'] ); ?>" alt="">
 													</a>
-													<h4><a href="view-team.php?id=<?php echo $match_result['away_id']; ?>"><?php echo $match_result['away']; ?></a></h4>
-													<a href="#" class="btn <?php echo ( $match_result['winner'] == $match_result['away_id'] ? 'green' : 'red' ); ?> result btn-xs">
-														<?php echo $match_result['away_score']; ?> <i class="fa <?php echo ( $match_result['winner'] == $match_result['away_id'] ? 'fa-check' : 'fa-times' ); ?>"></i>
-													</a>
+													<h4><a href="view-team.php?id=<?php echo $match_details['away_id']; ?>"><?php echo $match_details['away_team']; ?></a></h4>
+													<button type="button" 
+														<?php 
+															if( isset( $profile ) && $prediction_check == false ) { ?>
+																onclick="makePrediction('<?php echo $match_details['away_id']; ?>', '<?php echo $match_details['id']; ?>', '<?php echo $profile['username']; ?>')"
+														<?php } else { ?>
+																disabled
+														<?php } ?>
+															class="btn blue prediction btn-block">
+																predict <i class="fa fa-check"></i> <br/>(<?php echo $match_details['predictions']['away_percent']; ?>) 
+													</button>
 												</div>
 											</div>
 									</div>
@@ -131,19 +151,11 @@
 										<table class="table league-information">
 											<tr>
 												<th>Date</th>
-												<td><?php echo date( 'F d, Y', strtotime( $match_result['date'] ) ); ?></td>
+												<td><?php echo ( $match_details['date'] == '' ? 'Not Set' : date( 'F d, Y', strtotime( $match_details['date'] ) ) ); ?></td>
 											</tr>
 											<tr>
 												<th>Time</th>
-												<td><?php echo $match_result['time'];?> <?php echo $match_result['zone']; ?></td>
-											</tr>
-											<tr>
-												<th>Home Score</th>
-												<td><?php echo $match_result['home_score']; ?></td>
-											</tr>
-											<tr>
-												<th>Away Score</th>
-												<td><?php echo $match_result['away_score']; ?></td>
+												<td><?php echo $match_details['time'];?> <?php echo $match_details['zone']; ?></td>
 											</tr>
 											<tr>
 												<th>Map</th>
@@ -151,29 +163,16 @@
 											</tr>
 											<tr>
 												<th>Watch</th>
-												<td><?php if( isset( $match_result['stream_url'] ) ) { ?>
-														<a href="<?php echo $match_result['stream_url']; ?>" target="_blank">Stream URL</a>
+												<td><?php if( isset( $match_details['stream_url'] ) ) { ?>
+														<a href="<?php echo $match_details['stream_url']; ?>" target="_blank">Stream URL</a>
 													<?php } else { ?>
 														Stream URL Not Set
 													<?php } ?>
 												</td>
 											</tr>
-											<tr>
-												<th>Screenshots</th>
-												<td>
-											<?php if( $screenshots ) { ?>
-												<?php foreach( $screenshots as $image ) { ?>
-													<a href="screenshots/<?php echo $image['image']; ?>" class="fancybox" data-fancybox-group="match-screenshots" title="<?php echo $match_result['home'] . " vs " . $match_result['away']; ?>" data-rel="fancybox-button">
-														<img src="screenshots/<?php echo $image['image']; ?>" width="100px" height="100px" />
-													</a>
-												<?php } ?>
-											<?php } else { ?>
-													No screenshots have been uploaded for this match
-											<?php } ?>
-												</td>
-											</tr>
 										</table>
 									</div>
+									<div class="success"><span class="success_text"></span></div>
 								</div>
 							<!-- /. Match Screenshots -->
 							<?php } else { ?>
@@ -195,5 +194,7 @@
 </div>
 <!-- END CONTAINER -->
 <?php include('footer.php'); ?>
-<script type="text/javascript" src="assets/global/plugins/fancybox/source/jquery.fancybox.pack.js"></script>
-<script>$('.fancybox').fancybox();</script>
+<script src="assets/global/scripts/normal.js" type="text/javascript"></script>
+<div id="make-prediction-confirm" title="Make game prediction" style="display:none;">
+	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Confirm your prediction.</p>
+</div>

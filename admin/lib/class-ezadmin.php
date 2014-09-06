@@ -406,15 +406,7 @@ class ezAdmin extends DB_Class {
 			INSERT INTO `" . $this->prefix . "users` SET username = 'admin', salt = '" . $salt . "', hash = '" . $hash . "', role = 'admin';
 			ENGINE=MyISAM DEFAULT CHARSET=latin1;
 			";
-			
-			/*	
-			if( mysqli_multi_query($test_connection, $sql) ) {
-				$this->success('Installation Completed. Please <a href="admin">Login</a>');
-				unlink('install.php');
-			} else {
-				$this->error('Installation failed:' . mysql_error( $test_connection ) );
-			}
-			*/
+
 			if (mysqli_multi_query($test_connection, $sql)) {
 			    do {
 			        /* store first result set */
@@ -424,9 +416,7 @@ class ezAdmin extends DB_Class {
 			            }
 			            mysqli_free_result($result);
 			        }
-			        /* print divider */
-			        if (mysqli_more_results($test_connection)) {
-			        }
+			        if (mysqli_more_results($test_connection)) {}
 			    } while (mysqli_next_result($test_connection));
 			}
 			
@@ -447,6 +437,10 @@ class ezAdmin extends DB_Class {
 		$test_connection = mysqli_connect($this->host, $this->username, $this->password, $this->database) or die("Error " . mysqli_error( $test_connection ) );
 		if( $test_connection ) {
 			$sql = "
+					ALTER TABLE `" . $this->prefix . "predictions`
+					ADD COLUMN match_id INT(10);
+					ALTER TABLE `" . $this->prefix . "predictions`
+					DROP COLUMN cid;
 					ALTER TABLE `" . $this->prefix . "settings`
 					ADD COLUMN site_icon VARCHAR(250);
 					ALTER TABLE `" . $this->prefix . "settings`

@@ -346,3 +346,35 @@ function registerTeam(team_id, league_id) {
 	});
 	
 }
+
+function makePrediction(team_id, match_id, user) {
+
+	 $(function() {
+		 $( "#make-prediction-confirm" ).dialog({
+			 resizable: false,
+			 height:200,
+			 modal: true,
+			 buttons: {
+				 "Make Prediction": function() {
+					 $.ajax({
+					     type: "POST",
+					     url: "lib/submit/submit-league.php",
+					     data: { form: 'make-prediction', team_id: '' + team_id + '', match_id: '' + match_id + '', user: '' + user + '' }
+					   }).success(function( msg ) {
+								    $(".success").css("display", "");
+							   		$(".success").fadeIn(1000, "linear");
+							   		$(".success_text").fadeIn("slow");
+							   		$(".success").html(msg);
+							   		setTimeout(function(){location.reload()},3000);
+					  });
+					 
+					 $( this ).dialog( "close" );
+				 },
+				 Cancel: function() {
+					 $( this ).dialog( "close" );
+				 }
+			 }
+		 });
+	});
+	
+}
