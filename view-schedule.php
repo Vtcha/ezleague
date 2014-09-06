@@ -219,7 +219,11 @@
 									             	?>
 									             </td>
 									             <td>
-									                <a href="view-result.php?league=<?php echo $league_id; ?>&id=<?php echo $matchup['id']; ?>" class="btn btn-info btn-xs"><i class="fa fa-search"></i> View</a>
+									             <?php if( $matchup['completed'] == 1 ) { ?>
+									                <a href="view-result.php?league=<?php echo $league_id; ?>&id=<?php echo $matchup['id']; ?>" class="btn btn-info btn-xs"><i class="fa fa-search"></i> Result</a>
+									             <?php } else { ?>
+									             	<a href="view-match.php?league=<?php echo $league_id; ?>&id=<?php echo $matchup['id']; ?>" class="btn btn-primary btn-xs"><i class="fa fa-search"></i> Details</a>
+									         	<?php } ?>
 									             </td>
 									            </tr>
 									<?php } ?>
