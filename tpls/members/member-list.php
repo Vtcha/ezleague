@@ -29,10 +29,12 @@ $pages = ceil( $total_members/15 );
 		$order = $_GET['order'];
 		switch( $order ) {
 			case 'DESC':
-				$order_text = 'ASC';
+				$order_text = 'DESC';
+				$reverse = 'ASC';
 				break;
 			case 'ASC':
-				$order_text = 'DESC';
+				$order_text = 'ASC';
+				$reverse = 'DESC';
 				break;
 			default:
 
@@ -54,20 +56,35 @@ $members = $ez_frontend->get_members($position, $order_by, $order_text); ?>
 	<table class="table table-hover">
 		<thead>
 		<tr>
-			<th><a href="members.php?page=<?php echo $page; ?>&by=id&order=<?php echo $order_text; ?>">ID</a></th>
-			<th><a href="members.php?page=<?php echo $page; ?>&by=username&order=<?php echo $order_text; ?>">Username</a></th>
+			<th><a href="members.php?page=<?php echo $page; ?>&by=id&order=<?php echo $reverse; ?>">ID</a></th>
+			<th><a href="members.php?page=<?php echo $page; ?>&by=username&order=<?php echo $reverse; ?>">Username</a></th>
 			<th>Contact</th>
-			<th><a href="members.php?page=<?php echo $page; ?>&by=guild&order=<?php echo $order_text; ?>">Team</a></th>
-			<th><a href="members.php?page=<?php echo $page; ?>&by=role&order=<?php echo $order_text; ?>">Role</a></th>
+			<th><a href="members.php?page=<?php echo $page; ?>&by=guild&order=<?php echo $reverse; ?>">Team</a></th>
+			<th><a href="members.php?page=<?php echo $page; ?>&by=role&order=<?php echo $reverse; ?>">Role</a></th>
 			<th></th>
 		</tr>
 		</thead>
 		<tbody>
 	<?php foreach( $members as $member ) { ?>
-		<tr>
+	<?php 
+		if( isset( $profile ) ) {
+			$friend_list = (array) json_decode( $profile['friends'] );
+			if( in_array( $member['id'], $friend_list ) ) {
+				$email = str_replace('@', '[at]', $member['email']);
+				$friends = true;
+			} else {
+				$friends = false;
+				$email = $ez_users->get_email_name( $member['email'] ) . '...';
+			}
+		} else {
+			$friends = false;
+			$email = '<em>Users only</em>';
+		}
+	?>
+		<tr <?php echo ( $friends == true ? 'class="text-success bolder"' : '' ); ?>>
 			<td><?php echo $member['id']; ?></td>
-			<td><?php echo $member['username']; ?></td>
-			<td><?php echo str_replace('@', '[at]', $member['email']); ?>
+			<td><?php echo ( $friends == true ? '<i class="fa fa-user text-success"></i>' : '' ); ?> <?php echo $member['username']; ?></td>
+			<td><?php echo $email; ?></td>
 			<td><?php echo ( $member['guild_name'] == '' ? 'No Team' : $member['guild_name'] ); ?></td>
 			<td><?php echo $member['role']; ?></td>
 			<td>

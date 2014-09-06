@@ -43,10 +43,11 @@
 										</button>
 										</span>
 									</div>
-								</form>
+								</form><br/>
+								<p>* Must be friends to view a members' full e-mail address</p>
 							</div>
 						</div>
-						<?php if( !isset( $_GET['search'] ) || $_GET['search'] == '' ) { ?>
+						<?php if( ! isset( $_GET['search'] ) || $_GET['search'] == '' ) { ?>
 							<?php include('tpls/members/member-list.php'); ?>
 						<?php } elseif( isset( $_GET['search'] ) && strlen( $_GET['search'] ) >= 3 ) { ?>
 							<?php include('tpls/members/member-search.php'); ?>

@@ -110,7 +110,8 @@ class ezLeague_User extends DB_Class {
 							'occupation'=> $data['0']['occupation'],
 							'hobbies'	=> $data['0']['hobbies'],
 							'location'	=> $data['0']['location'],
-							'avatar'	=> $data['0']['avatar']
+							'avatar'	=> $data['0']['avatar'],
+							'friends'	=> $data['0']['friends']
 							);
 			
 			return $profile;
@@ -456,6 +457,18 @@ class ezLeague_User extends DB_Class {
 		}
 		
 	}
+
+	/*
+	 * Get a users email name up to @
+	 *
+	 * @return string
+	 */
+	public function get_email_name ($email) {
+
+		$email = $this->sanitize( $email );
+        return substr($email, 0, strpos($email, '@' ) );
+
+    }
 	
 }
 
