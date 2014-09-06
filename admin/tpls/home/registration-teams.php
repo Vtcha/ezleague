@@ -1,7 +1,7 @@
 <div class="panel panel-default">
 <div class="panel-heading">
     <i class="fa fa-group fa-fw"></i> Recent Team Registrations
-     <a href="teams_view.php" class="btn btn-success btn-xs pull-right">View All Teams</a>
+     <a href="teams.php?page=all" class="btn btn-success btn-xs pull-right">View All Teams</a>
 </div>
 <div class="panel-body">
     <div class="row">
