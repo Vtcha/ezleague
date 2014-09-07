@@ -18,13 +18,16 @@
 						    <input type="text" class="form-control" id="game" placeholder="Game Name" />
 						</div>
 						<div class="form-group">
-						    <label>Short Name (ex: CS: GO)</label>
+						    <label>Short Name (ex: CS: GO) <small>10 character max length</small></label>
 						    <input type="text" class="form-control" id="short-name" placeholder="Game Short Name" />
 						</div>
 						<div class="form-group">
 						    <label>Slug (ex: wow)</label>
 						    <input type="text" class="form-control" id="slug" placeholder="Game Slug" />
 						</div>
+                        <div class="form-group">
+                            <small>* game icon can be uploaded by editing the game after it is added *</small>
+                        </div>
 						<div class="form-group">
 							<button class="btn btn-success" type="submit">Add Game</button>
 						</div>

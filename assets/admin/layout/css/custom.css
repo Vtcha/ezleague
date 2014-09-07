@@ -112,6 +112,7 @@ tr.strikeout td:before {
 }
 .view-team-logo {
 	margin:0 auto;
+	width:100%;
 }
 .well-social-networks {
 	background:#EEEEEE;
@@ -142,4 +143,8 @@ tr.strikeout td:before {
 }
 .match_details h4 {
 	text-align: center;
+}
+img.game-icon {
+	width:24px;
+	height:24px;
 }

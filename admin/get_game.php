@@ -61,11 +61,31 @@ if(isset($_POST['id'])) {
            <div class="col-lg-6"> 
             <div class="panel panel-default">
               <div class="panel-heading">
-                <h3 class="panel-title text-info">Game Logo</h3>
+                <h3 class="panel-title text-info">Game Navigation Icon</h3>
               </div>
               <div style="height: auto;" id="collapseOne" class="panel-collapse">
                 <div class="panel-body">
-              
+              		<form role="form" id="setGameIcon" action="./lib/submit/game-logo-upload.php" method="POST" enctype="multipart/form-data">
+              		 <input type="hidden" name="game_id" value="<?php echo $game['id']; ?>" />
+                      <div class="form-group">
+                       <label>Choose image</label><br/>
+                       <small>extensions: jpg, jpeg, gif, png accepted</small>
+                       <input type="file" name="file">
+                       <small>navigation image displayed at 24x24</small>
+                      </div>
+                      <div class="form-group">
+                      	<label>Current Icon</label><br/>
+                      	<?php if( $game['logo'] != '' ) { ?>
+                      		<img src="../logos/<?php echo $game['logo']; ?>" class="img-responsive" />
+                      	<?php } else { ?>
+                      		Please upload an icon
+                      	<?php } ?>
+                      </div>     
+                      <div class="form-group">
+                       <button type="submit" class="btn btn-success">Update Icon</button>
+                       <button type="reset" class="btn btn-warning">Reset</button>
+                      </div> 
+                    </form>
                 </div>
               </div>
             </div>

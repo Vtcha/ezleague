@@ -22,17 +22,25 @@
 				<?php foreach( $games as $game ) { ?>
 				<li>
 					<a href="javascript:;">
+				<?php if( $game['logo'] != '' ) { ?>
+					<img src="logos/<?php echo $game['logo']; ?>" class="game-icon" />
+				<?php } else { ?>
 					<i class="fa fa-gamepad"></i>
+				<?php } ?>
 					<span class="title"><?php echo $game['game']; ?></span>
 					<span class="arrow "></span>
 					</a>
 					<ul class="sub-menu">
 					<?php $leagues = $ez_frontend->get_game_leagues( $game['slug'] ); ?>
+					<?php if( $leagues ) { ?>
 					<?php foreach( $leagues as $league ) { ?>
 						<li>
 							<a href="view-league.php?id=<?php echo $league['id']; ?>">
 							<?php echo $league['league']; ?></a>
 						</li>
+					<?php } ?>
+					<?php } else { ?>
+						<li>No Leagues Found</li>
 					<?php } ?>
 					</ul>
 				</li>
