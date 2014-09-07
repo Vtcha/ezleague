@@ -118,6 +118,19 @@ class ezAdmin_Settings extends DB_Class {
 		}
 		
 	}
+
+	/*
+	 * Update game icon
+	 *
+	 * @return string
+	 */
+	public function update_game_icon($game_id, $file) {
+
+		$game_id 	= $this->sanitize( $game_id );
+		$file 		= $this->sanitize( $file );
+		$this->link->query("UPDATE `" . $this->prefix . "games` SET logo = '$file' WHERE id = '$game_id'");
+
+	}
 	
 	/*
 	 * Create a new admin account
@@ -203,20 +216,6 @@ class ezAdmin_Settings extends DB_Class {
 		
 	}
 	
-	public function getSettingsGame( $game_id ) {
-		
-		$data = $this->fetch("SELECT * FROM `" . $this->prefix . "games` WHERE id = '$game_id'");
-		$game = array(
-				'id'	=> $data['0']['id'],
-				'game'	=> $data['0']['game'],
-				'slug'	=> $data['0']['slug'],
-				'short'	=> $data['0']['short_name'],
-				'logo'	=> $data['0']['logo']
-				);
-				return $game;
-				
-	}
-	
 	/*
 	 * Update basic site setting
 	 * 
@@ -250,13 +249,6 @@ class ezAdmin_Settings extends DB_Class {
 		}
 		$this->link->query("UPDATE `" . $this->prefix . "settings` SET $setting = '$value'");
 		$this->success('Setting has been updated...reloading');
-		return;
-		
-	}
-
-	public function siteSettingsLogo($image) {
-		
-		$this->link->query("UPDATE `" . $this->prefix . "settings` SET site_logo = '$image'");
 		return;
 		
 	}
@@ -350,29 +342,6 @@ class ezAdmin_Settings extends DB_Class {
 		$this->success('Twitter app settings have been updated');
 		return;
 
-	}
-	
-	public function getFooterLinks() {
-		
-		$data = $this->fetch("SELECT * FROM `" . $this->prefix . "links`");
-		return $data;
-		
-	}
-	
-	public function addFooterLink($url, $text) {
-		
-		$this->link->query("INSERT INTO `" . $this->prefix . "links` SET url = '$url', text = '$text'");
-		echo "<strong>Success!</strong> Footer Link added";
-		return;
-		
-	}
-	
-	public function deleteFooterLink($id) {
-		
-		$this->link->query("DELETE FROM `" . $this->prefix . "links` WHERE id = '$id'");
-		echo "<strong>Success!</strong> Footer Link deleted";
-		return;
-		
 	}
 	
 }
