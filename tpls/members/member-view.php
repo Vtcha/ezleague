@@ -9,9 +9,9 @@
 				<img src="avatars/unknown.png" class="img-responsive" alt="">
 			<?php } ?>
 			</li>
-	<?php if( $profile ) { ?>
+	<?php if( isset( $profile ) ) { ?>
 			<li>
-				<a href="#">
+				<a data-toggle="modal" href="#send-message">
 				Send Message </a>
 			</li>
 			<li>
@@ -25,7 +25,7 @@
 			</li>
 		<?php } ?>
 	<?php } ?>
-	<?php if( $user_profile['guild_id'] == '' && $profile['team_admin'] ) { ?>
+	<?php if( $user_profile['guild_id'] == '' && isset( $profile['team_admin'] ) ) { ?>
 			<li>
 				<a onclick="sendTeamInvite('<?php echo $profile['guild_id']; ?>', '<?php echo $user_profile['id']; ?>')">
 				Send Guild Invite </a>
@@ -92,4 +92,39 @@
 			<!--end col-md-4-->
 		</div>
 		<!--end row-->
+</div>
+<div class="modal fade" id="send-message" tabindex="-1" role="basic" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+				<h4 class="modal-title">Send User Message</h4>
+			</div>
+			<div class="modal-body">
+				 <form role="form" id="sendMessage" method="POST">
+		           <input type="hidden" id="from" value="<?php echo $profile['username']; ?>" />
+		           <input type="hidden" id="to" value="<?php echo $user_profile['username']; ?>" />
+		            <div class="form-group">
+		              <h5>Recipient</h5>
+		              <input disabled type="text" class="form-control text placeholder" value="<?php echo $user_profile['username']; ?>" />
+		            </div>
+		            <div class="form-group">
+		              <h5>Subject</h5>
+		              <input id="subject" class="form-control text placeholder" placeholder="Subject" type="text">
+		            </div>
+		            <div class="form-group">
+		              <h5>Message</h5>
+		              <textarea id="inbox_message" class="form-control email placeholder" placeholder="Message"></textarea>
+		            </div>
+		            <div class="success">
+					 <span class="success_text"></span>
+					</div>
+		         </div>
+		      <div class="modal-footer">
+		        <button type="submit" class="btn btn-primary">Send Message</button>
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		      </div>
+		     </form>
+		</div>
+	</div>
 </div>

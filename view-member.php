@@ -57,4 +57,14 @@
 <div id="remove-friend-confirm" title="Remove user as friend?" style="display:none;">
 	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Confirm removing user as friend.</p>
 </div>
-<script src="assets/global/scripts/normal.js" type="text/javascript"></script>
+<script src="assets/global/scripts/inbox.js"></script>
+<script src="assets/global/scripts/normal.js"></script>
+<script src="assets/global/plugins/ckeditor/ckeditor.js" type="text/javascript"></script>
+<script>
+CKEDITOR.replace( 'inbox_message', {
+	toolbar: [
+		[ 'Bold', 'Italic', '-', 'NumberedList', 'BulletedList', '-', 'Link', 'Unlink' ],
+		[ 'FontSize', 'TextColor', 'BGColor' ]
+	]
+});
+</script>
