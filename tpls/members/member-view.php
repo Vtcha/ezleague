@@ -68,24 +68,22 @@
 					<div class="portlet-body">
 						<ul class="list-unstyled">
 							<li>
-								<span class="profile-info">
-								DATE JOINED <i class="fa fa-img-up"></i>
-								</span><br/>
+								<p class="profile-info">
+								DATE JOINED<br/>
 								<span class="profile-num">
-								<?php echo date( 'F d, Y', strtotime( $user_profile['created'] ) ); ?> </span>
+								<?php echo date( 'F d, Y', strtotime( $user_profile['created'] ) ); ?></span> </p>
 							</li>
 							<li>
-								<span class="profile-info">
-								FORUM POSTS <i class="fa fa-img-down"></i>
-								</span><br/>
+								<p class="profile-info">
+								FORUM POSTS<br/>
 								<span class="profile-num">
-								<?php echo $user_profile['post_count']; ?> </span>
+								<?php echo $user_profile['post_count']; ?></span> </p>
 							</li>
 							<li>
-								<span class="profile-info">
-								TEAM </span><br/>
+								<p class="profile-info">
+								TEAM<br/>
 								<span class="profile-num">
-								<?php echo $ez_users->get_user_team( $user_profile['guild_id'] ); ?> </span>
+								<?php echo $ez_users->get_user_team( $user_profile['guild_id'] ); ?></span> </p>
 							</li>
 						</ul>
 					</div>
