@@ -163,7 +163,7 @@ class ezAdmin extends DB_Class {
 			CREATE TABLE `" . $this->prefix . "games` (
 			  `id` int(10) NOT NULL AUTO_INCREMENT,
 			  `game` varchar(100) DEFAULT NULL,
-			  `short_name` varchar(5) DEFAULT NULL,
+			  `short_name` varchar(10) DEFAULT NULL,
 			  `slug` varchar(50) NOT NULL,
 			  `logo` varchar(100) DEFAULT NULL,
 			  PRIMARY KEY (`id`)
@@ -456,6 +456,8 @@ class ezAdmin extends DB_Class {
 		$test_connection = mysqli_connect($this->host, $this->username, $this->password, $this->database) or die("Error " . mysqli_error( $test_connection ) );
 		if( $test_connection ) {
 			$sql = "
+					ALTER TABLE `" . $this->prefix . "games`
+					MODIFY short_name VARCHAR(10);
 					ALTER TABLE `" . $this->prefix . "predictions`
 					ADD COLUMN match_id INT(10);
 					ALTER TABLE `" . $this->prefix . "predictions`

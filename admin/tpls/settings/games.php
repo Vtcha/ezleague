@@ -18,7 +18,7 @@
 						    <input type="text" class="form-control" id="game" placeholder="Game Name" />
 						</div>
 						<div class="form-group">
-						    <label>Short Name (ex: CS: GO)</label>
+						    <label>Short Name (ex: CS: GO) <small>10 character max length</small></label>
 						    <input type="text" class="form-control" id="short-name" placeholder="Game Short Name" />
 						</div>
 						<div class="form-group">
