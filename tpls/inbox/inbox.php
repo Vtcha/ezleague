@@ -28,7 +28,7 @@
 				<i class="fa fa-times"></i>
 			</td>
 			<td class="view-message hidden-xs">
-				 <a href="view-inbox.php?page=view&id=<?php echo $message['msg_id']; ?>"><?php echo $message['sender']; ?></a>
+				 <a href="view-inbox.php?page=view&id=<?php echo $message['msg_id']; ?>"><?php echo ( $message['sender'] == $profile['username'] ? 'You' : $message['sender'] ); ?></a>
 			</td>
 			<td class="view-message" colspan="2">
 				 <a href="view-inbox.php?page=view&id=<?php echo $message['msg_id']; ?>"><?php echo $message['subject']; ?></a>

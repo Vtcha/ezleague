@@ -9,7 +9,7 @@ class ezLeague_Inbox extends DB_Class {
 	 */
 	public function get_inbox($username) {
 		
-		$data = $this->fetch("SELECT * FROM `" . $this->prefix . "inbox_messages` WHERE recipient = '$username'");
+		$data = $this->fetch("SELECT * FROM `" . $this->prefix . "inbox_messages` WHERE (recipient = '$username') OR (sender = '$username')");
 		return $data;
 	}
 	
@@ -56,7 +56,7 @@ class ezLeague_Inbox extends DB_Class {
 	public function check_message_access($message_id, $username) {
 	
 		$result = $this->link->query("SELECT id FROM `" . $this->prefix . "inbox_messages`
-										WHERE msg_id = '$message_id' AND recipient = '$username'
+										WHERE msg_id = '$message_id' AND (recipient = '$username' OR sender = '$username')
 									");
 		$total = $this->numRows( $result );
 		if( $total == 0 ) {
