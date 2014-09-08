@@ -21,9 +21,11 @@ class ezAdmin_League extends DB_Class {
 		$data = $this->fetch("SELECT * FROM `" . $this->prefix . "seasons` WHERE league_id = '$league_id' ORDER BY season DESC LIMIT 1");
 		if( $data ) {
 			$season = array(
+							'id'		=> $data['0']['id'],
 							'season'	=> $data['0']['season'],
 							'start'		=> $data['0']['start'],
-							'end'		=> $data['0']['end']
+							'end'		=> $data['0']['end'],
+							'register'	=> $data['0']['register_end']
 							);
 			return $season;
 		} else {
@@ -75,6 +77,45 @@ class ezAdmin_League extends DB_Class {
 		$this->success('New season has been created');
 		return;
 			
+	}
+
+	public function get_season($season_id) {
+
+		$season_id 	= $this->sanitize( $season_id);
+		$data = $this->fetch("SELECT * FROM `" . $this->prefix . "seasons` WHERE id = '$season_id'");
+		if( $data ) {
+			foreach( $data as $season ) {
+				$season['id']			= $season['id'];
+				$season['season']		= $season['season'];
+				$season['start']		= $season['start'];
+				$season['end']			= $season['end'];
+				$season['registration'] = $season['register_end'];
+			}
+			return $season;
+		} else {
+			return false;
+		}
+
+	}
+
+	public function edit_season($season_id, $start_date, $end_date, $register_date) {
+
+		$season_id 		= $this->sanitize( $season_id );
+		if( $start_date != '' ) { 
+			$start_date 	= date( 'Y-m-d', $start_date );
+			$this->link->query("UPDATE `" . $this->prefix . "seasons` SET start = '$start_date' WHERE id = '$season_id'");
+		}
+		if( $end_date != '' ) {
+			$end_date 		= date( 'Y-m-d', $end_date );
+			$this->link->query("UPDATE `" . $this->prefix . "seasons` SET end = '$end_date' WHERE id = '$season_id'");
+		}
+		if( $register_date != '' ) {
+			$register_date 	= date( 'Y-m-d', $register_date );
+			$this->link->query("UPDATE `" . $this->prefix . "seasons` SET register_end = '$register_date' WHERE id = '$season_id'");
+		}
+		$this->success('Season date details have been updated');
+		return;
+
 	}
 	
 	public function delete_season($season_id) {

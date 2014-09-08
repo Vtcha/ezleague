@@ -136,6 +136,50 @@ $('#createSeason').submit(function(e) {
 });
 
 /**
+ * Edit season
+ */
+ $('#editSeason').submit(function(e) {
+	var start			= $("#start").val();
+		end	    		= $("#end").val();
+		registration	= $("#registration").val();
+		season_id 		= $("#season-id").val();
+		
+	 e.preventDefault();
+
+ $.ajax({
+     type: "POST",
+     url: "lib/submit/submit-league.php",
+     async:true,
+     crossbrowser:true,
+     data: { form: 'edit-season', start: '' + start + '', end: '' + end + '', registration: '' + registration + '', season_id: '' + season_id + '' }
+   }).success(function( msg ) {
+	   		$('.success').css("display", "");
+	   		$(".success").fadeIn(1000, "linear");
+	   		$('.success_text').fadeIn("slow");
+	   		$('.success_text').html(msg);
+	   		setTimeout(function(){location.reload()},3000);
+  });
+});
+
+/**
+ * Get season details for modal
+ * @param league_id
+ * @param season_id
+ */
+function getSeason(league_id, season_id) {
+	
+	$.ajax({
+	     type: "POST",
+	     async: false,
+	     url: "get_season.php",
+	     data: { league_id: '' + league_id + '', season_id: '' + season_id + '' }
+	   }).success(function( msg ) {
+		   $('#editSeasonModal').html(msg);
+	  });
+	
+}
+
+/**
  * Delete a season
  * @param league_id
  * @param season

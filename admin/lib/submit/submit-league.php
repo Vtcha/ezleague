@@ -65,6 +65,14 @@ $ez_league = new ezAdmin_League();
                 $end            = strtotime( $_POST['end'] );
     	 		 $ez_league->create_league( $league, $game, $teams, $games, $max_roster, $start, $end );
     	 		break;
+
+            case 'edit-season':
+                $start          = strtotime( $_POST['start'] );
+                $end            = strtotime( $_POST['end'] );    
+                $registration   = strtotime( $_POST['registration'] ); 
+                $season_id      = $_POST['season_id'];
+                 $ez_league->edit_season( $season_id, $start, $end, $registration );
+                break;
     	 	
 
     	 	default:

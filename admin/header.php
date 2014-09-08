@@ -1,5 +1,5 @@
 <?php session_start();
-define( 'EZL_VERSION', '3.2.8' );
+define( 'EZL_VERSION', '3.2.9' );
 $check_for_update = file_get_contents( 'http://www.mdloring.com/ezleague_version.php', TRUE );
 date_default_timezone_set('America/Chicago');
 include('lib/class-db.php');
