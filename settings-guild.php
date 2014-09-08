@@ -81,6 +81,9 @@
 <div id="remove-logo-confirm" title="Remove team logo?" style="display:none;">
 	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>This action cannot be undone. Are you sure?</p>
 </div>
+<div id="remove-league-member-confirm" title="Remove league member?" style="display:none;">
+	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Confirm removing member from league roster.</p>
+</div>
 <script src="assets/global/scripts/teams.js"></script>
 <script src="assets/global/scripts/leagues.js"></script>
 <script src="assets/global/scripts/normal.js"></script>

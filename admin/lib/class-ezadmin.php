@@ -224,6 +224,7 @@ class ezAdmin extends DB_Class {
 			  `total_games` int(10) DEFAULT '8',
 			  `rules` varchar(10000) DEFAULT NULL,
 			  `rosters` int(1) DEFAULT '1',
+			  `max_roster` int(10) DEFAULT '7',
 			  PRIMARY KEY (`id`)
 			);
 			DROP TABLE IF EXISTS `" . $this->prefix . "links`;
@@ -456,6 +457,8 @@ class ezAdmin extends DB_Class {
 		$test_connection = mysqli_connect($this->host, $this->username, $this->password, $this->database) or die("Error " . mysqli_error( $test_connection ) );
 		if( $test_connection ) {
 			$sql = "
+					ALTER TABLE `" . $this->prefix . "leagues`
+					ADD COLUMN max_roster INT(10) DEFAULT '8';
 					ALTER TABLE `" . $this->prefix . "games`
 					MODIFY short_name VARCHAR(10);
 					ALTER TABLE `" . $this->prefix . "predictions`

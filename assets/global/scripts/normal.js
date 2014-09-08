@@ -378,3 +378,35 @@ function makePrediction(team_id, match_id, user) {
 	});
 	
 }
+
+function removeLeagueMember(league_id, team_id, user_id) {
+
+	 $(function() {
+		 $( "#remove-league-member-confirm" ).dialog({
+			 resizable: false,
+			 height:200,
+			 modal: true,
+			 buttons: {
+				 "Remove Member": function() {
+					 $.ajax({
+					     type: "POST",
+					     url: "lib/submit/submit-team.php",
+					     data: { form: 'remove-league-roster', league_id: '' + league_id + '', team_id: '' + team_id + '', user_id: '' + user_id + ''}
+					   }).success(function( msg ) {
+								    $(".success").css("display", "");
+							   		$(".success").fadeIn(1000, "linear");
+							   		$(".success_text").fadeIn("slow");
+							   		$(".success").html(msg);
+							   		setTimeout(function(){location.reload()},3000);
+					  });
+					 
+					 $( this ).dialog( "close" );
+				 },
+				 Cancel: function() {
+					 $( this ).dialog( "close" );
+				 }
+			 }
+		 });
+	});
+	
+}

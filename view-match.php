@@ -42,9 +42,12 @@
 						<?php 
 							$league_id = trim( $_GET['league'] );
 							$match_id = trim( $_GET['id'] );
+							$league = $ez_league->get_league( $league_id ); 
+							$season = $ez_league->get_current_season( $league_id );
+							$current_season = $season['season'];	
 						?>
 							<h1><?php echo $league['game']; ?></h1>
-							<h2><?php echo $league['league']; ?> Match Result Details</h2>
+							<h2><?php echo $league['league']; ?> Match Details</h2>
 							<div class="row">
 								
 								<div class="col-md-2">
@@ -140,11 +143,12 @@
 																predict <i class="fa fa-check"></i> <br/>(<?php echo $match_details['predictions']['away_percent']; ?>) 
 													</button>
 												</div>
+												<div class="success"><span class="success_text"></span></div>
 											</div>
 									</div>
 								</div>
 							<!-- /. Matchup -->
-							<!-- MATCH SCREENSHOTS -->
+							<!-- MATCH DETAILS -->
 								<div class="col-md-6">
 									<div class="news-blocks">
 										<h3 class="title">Match Details</h3>
@@ -172,9 +176,50 @@
 											</tr>
 										</table>
 									</div>
-									<div class="success"><span class="success_text"></span></div>
 								</div>
-							<!-- /. Match Screenshots -->
+							<!-- /. Match Details -->
+							<!-- MATCH ROSTERS -->
+								<div class="col-md-6">
+									<div class="news-blocks">
+										<h3 class="title">Team League Rosters</h3>
+										<div class="col-md-6">
+											<h4><a href="view-team.php?id=<?php echo $match_details['home_id']; ?>"><?php echo $match_details['home_team']; ?></a></h4>
+											<table class="table league-information">
+												<tbody>
+												<?php $home_roster = $ez_team->get_league_roster( $league_id, $match_details['home_id'] ); ?>
+												<?php if( $home_roster ) { ?>
+													<?php foreach( $home_roster as $home_member ) { ?>
+														<tr>
+															<td><?php echo $home_member['username']; ?></td>
+														</tr>
+													<?php } ?>
+												<?php } else { ?>
+												Roster has not been set
+												<?php } ?>
+												</tbody>
+											</table>
+										</div>
+										<div class="col-md-6">
+											<h4><a href="view-team.php?id=<?php echo $match_details['away_id']; ?>"><?php echo $match_details['away_team']; ?></a></h4>
+											<table class="table league-information">
+												<tbody>
+												<?php $away_roster = $ez_team->get_league_roster( $league_id, $match_details['away_id'] ); ?>
+												<?php if( $away_roster ) { ?>
+													<?php foreach( $away_roster as $away_member ) { ?>
+														<tr>
+															<td><?php echo $away_member['username']; ?></td>
+														</tr>
+													<?php } ?>
+												<?php } else { ?>
+												Roster has not been set
+												<?php } ?>
+												</tbody>
+											</table>
+										</div>
+										<div style="clear:both;"></div>
+									</div>
+								</div>
+							<!-- /. Match Rosters -->
 							<?php } else { ?>
 							<h3>Invalid Match ID</h3>
 							<?php } ?>

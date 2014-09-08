@@ -36,6 +36,14 @@
                             </select>
                         </div>
                         <div class="form-group">
+                            <label>Max Roster</label>
+                            <select class="form-control" id="max-roster">
+                              <?php for( $i = 1; $i <= 12; $i++ ) { ?> 
+                                <option <?php echo ( $i == 8 ? 'selected' : '' ); ?> value="<?php echo $i; ?>"><?php echo $i; ?></option>
+                              <?php } ?>
+                            </select>
+                        </div>
+                        <div class="form-group">
                             <label>Game</label>
                             <select class="form-control" id="game">
                                 <option></option>
