@@ -64,6 +64,7 @@
     <!-- SB Admin Scripts - Include with every page -->
     <script src="js/sb-admin.js"></script>
     <script src="js/ezleague/league.js"></script>
+    <script src="js/ezleague/teams.js"></script>
     <script src="js/ckeditor/ckeditor.js"></script>
 	<script>
 	CKEDITOR.replace( 'body', {

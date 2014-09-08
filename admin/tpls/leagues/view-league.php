@@ -26,17 +26,19 @@
                 <div class="col-lg-6">
                    <div class="panel panel-default">
                     <div class="panel-heading">
-                        <i class="fa fa-file-o"></i> Details for <em><?php echo $league['league']; ?></em>
+                        <i class="fa fa-file-o"></i> Details for <em><?php echo $league['league']; ?> Season <?php echo $season['season']; ?></em>
                         <div class="pull-right">
-                        	<a href="leagues.php?page=edit&id=<?php echo $league['id']; ?>" class="btn btn-primary btn-xs">Edit Details</a>
+                        	<a href="leagues.php?page=edit&id=<?php echo $league['id']; ?>" class="btn btn-primary btn-xs">Edit League</a>
+                            <button class="btn btn-warning btn-xs" onclick="getSeason('<?php echo $league_id; ?>', '<?php echo $season['id']; ?>')" data-toggle="modal" data-target="#editSeasonModal">Edit Season</button><br/>
                         </div>
                     </div>
                     <div class="panel-body">
                         <strong>League</strong> <span class="gm"><?php echo $league['league']; ?></span><br/>
                         <strong>Total Teams</strong> <span class="gm"><?php echo $league['teams']; ?></span><br/>
                         <strong>Game</strong> <span class="gm"><?php echo $league['game']; ?></span><br/>
-                        <strong>Start Date</strong> <span class="gm"><?php echo date( 'F d, Y', strtotime( $season['start'] ) ); ?></span><br/>
-                        <strong>End Date</strong> <span class="gm"><?php echo date( 'F d, Y', strtotime( $season['end'] ) ); ?></span><br/>
+                        <strong>Season Start Date</strong> <span class="gm"><?php echo date( 'F d, Y', strtotime( $season['start'] ) ); ?></span><br/>
+                        <strong>Season End Date</strong> <span class="gm"><?php echo date( 'F d, Y', strtotime( $season['end'] ) ); ?></span><br/>
+                        <strong>Registration End Date</strong> <span class="gm"><?php echo date( 'F d, Y', strtotime( $season['register'] ) ); ?></span><br/>
                         <strong>Status</strong> <span class="gm"><?php echo ($league['status'] == 1 ? '<span class=\'text-success bolder\'>Running</span>' : '<span class=\'text-danger\'>Completed</span>'); ?></span><br/>
                     </div>
                    </div>
@@ -73,7 +75,7 @@
                                 <tr>
                                  <td><?php echo $team['guild']; ?></td>
                                  <td>
-                                    <a href="teams_view.php?id=<?php echo $team['id']; ?>" class="btn btn-info btn-xs"><i class="fa fa-search"></i> View Team</a>
+                                    <button onclick="getTeam('<?php echo $team['id']; ?>');" data-toggle="modal" data-target="#editTeamModal" class="btn btn-primary btn-xs">Edit Team</button>
                                     <button onclick="kickTeam('<?php echo $league_id; ?>', '<?php echo $team['id']; ?>')" data-toggle="modal" data-target="#kickTeamModal" class="btn btn-danger btn-xs"><i class="fa fa-times"></i> Kick Team</button>
                                  </td>
                                 </tr>
@@ -94,3 +96,5 @@
             </div>
         </div>
     </div>
+    <div id="editTeamModal" class="modal"></div>
+    <div id="editSeasonModal" class="modal"></div>
