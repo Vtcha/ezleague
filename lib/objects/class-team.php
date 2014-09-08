@@ -199,8 +199,12 @@ class ezLeague_Team extends DB_Class {
 		$team_id	= $this->sanitize( $team_id );
 		$league_id	= $this->sanitize( $league_id );
 		$data = $this->fetch("SELECT id FROM `" . $this->prefix . "rosters` WHERE team = '$team_id' AND league = '$league_id'");
-		$roster_id = $data['0']['id'];
-		return $roster_id;
+		if( $data ) {
+			$roster_id = $data['0']['id'];
+			return $roster_id;
+		} else {
+			return;
+		}
 		
 	}
 	
@@ -214,19 +218,54 @@ class ezLeague_Team extends DB_Class {
 		$league_id	= $this->sanitize( $league_id );
 		$team_id	= $this->sanitize( $team_id );
 		$user_id	= $this->sanitize( $user_id );
+		$roster_id  = $this->sanitize( $roster_id );
 		if( $roster_id != '' ) { 
 			$roster = $this->get_league_roster_ids($league_id, $team_id);
 			array_push( $roster, $user_id );
 			$updated_roster = json_encode( $roster );
 			$this->link->query("UPDATE `" . $this->prefix . "rosters` SET roster = '$updated_roster' WHERE id = '$roster_id'");
 		} else {
-			array_push( $league_roster, $user_id );
+			$league_roster = array( $user_id );
 			$updated_roster = json_encode( $league_roster );
 			$this->link->query("INSERT INTO `" . $this->prefix . "rosters` SET league = '$league_id', team = '$team_id', roster = '$updated_roster'");
 		}
 		$this->success('Roster has been updated');
 		return;
 		
+	}
+
+	/*
+	 * Remove a team member from a league roster
+	 *
+	 * @return string
+	 */
+	public function remove_league_member($league_id, $team_id, $user_id) {
+
+		$roster = $this->get_league_roster_ids( $league_id, $team_id );
+		if(($key = array_search($user_id, $roster)) !== false) {
+		    unset($roster[$key]);
+		    $updated_roster = json_encode( $roster );
+		    $this->link->query("UPDATE `" . $this->prefix . "rosters` SET roster = '$updated_roster' WHERE league = '$league_id' AND team = '$team_id'");
+		    $this->success('Member has been removed from league roster');
+		} else {
+			$this->error('There was a problem removing this user from the league roster');
+		}
+		return;
+
+	}
+
+	/*
+	 * Check if member is on the league roster
+	 *
+	 * @return string
+	 */
+	public function member_league_check($array, $key, $val) {
+
+	    foreach ($array as $item)
+	        if (isset($item[$key]) && $item[$key] == $val)
+	            return true;
+	    return false;
+	    
 	}
 	
 	/*
@@ -338,6 +377,7 @@ class ezLeague_Team extends DB_Class {
 		$details['league_id']	= $data['0']['id'];
 		$details['league']		= $data['0']['league'];
 		$details['game']		= $data['0']['game'];
+		$details['max_roster'] 	= $data['0']['max_roster'];
 		$details['status']		= $data['0']['open'];
 		$details['start']		= date( 'F d, Y', strtotime( $data['0']['start_date'] ) );
 		$details['rosters']		= $data['0']['rosters'];
