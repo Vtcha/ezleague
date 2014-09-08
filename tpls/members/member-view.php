@@ -28,7 +28,7 @@
 	<?php if( $user_profile['guild_id'] == '' && isset( $profile['team_admin'] ) ) { ?>
 			<li>
 				<a onclick="sendTeamInvite('<?php echo $profile['guild_id']; ?>', '<?php echo $user_profile['id']; ?>')">
-				Send Guild Invite </a>
+				Send Team Invite </a>
 			</li>
 	<?php } ?>
 		</ul>
