@@ -44,6 +44,13 @@ $ez_team = new ezLeague_Team();
 		 		$roster_id	= $_POST['roster'];
 		 			$ez_team->add_league_member($league_id, $team_id, $roster_id, $user_id);
 		 		break;
+
+		 	case 'remove-league-roster':
+		 		$team_id	= $_POST['team_id'];
+		 		$user_id	= $_POST['user_id'];
+		 		$league_id	= $_POST['league_id'];
+		 			$ez_team->remove_league_member($league_id, $team_id, $user_id);
+		 		break;
 		 		
 		 	case 'remove-logo':
 		 		$team_id	= $_POST['id'];
