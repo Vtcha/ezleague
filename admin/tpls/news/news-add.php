@@ -22,8 +22,8 @@
                             <textarea class="ckeditor form-control" id="body"></textarea>
                         </div>
                         <div class="form-group">
-                            <button class="btn btn-success" type="submit">Publish Post</button>
-                            <button class="btn btn-warning" type="button" onclick="saveDraft();">Save as Draft</button>
+                            <button id="publish-btn" class="btn btn-success" type="submit">Publish Post</button>
+                            <button id="save-draft-btn" class="btn btn-warning" type="button" onclick="saveDraft();">Save as Draft</button>
                         </div>
                         <div class="success">
                             <span class="success_text"></span>
@@ -94,6 +94,7 @@
             <!-- /.panel-heading -->
             <div class="panel-body">
              <?php $news_categories = $ez_news->get_categories(); ?>
+             <?php if( $news_categories ) { ?>
               <?php foreach( $news_categories as $category ) { ?>
                   <div class="form-group">
                     <div class="checkbox">
@@ -102,6 +103,15 @@
                         </label>
                     </div>
               <?php } ?>
+            <?php } else { ?>
+            <script type="text/javascript">
+              var publish = document.getElementById('publish-btn');
+                  draft   = document.getElementById('save-draft-btn');
+              publish.disabled = true;
+              draft.disabled = true;
+            </script>
+              No categories found, please <a href="news.php?page=categories" target="_blank">add categories</a>
+            <?php } ?>
                    </div>
                  </form>
             </div>
