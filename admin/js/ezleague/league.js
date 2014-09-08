@@ -24,6 +24,7 @@ $('#createLeague').submit(function(e) {
 		max_teams  		= $("#max-teams").val();
 		total_games		= $("#total-games").val();
 		league			= $("#league").val();
+		max_roster 		= $("#max-roster").val();
 		start_date 		= $("#start").val();
 		end_date 		= $("#end").val();
 		
@@ -34,7 +35,7 @@ $('#createLeague').submit(function(e) {
      url: "lib/submit/submit-league.php",
      async:true,
      crossbrowser:true,
-     data: { form: 'create-league', start: '' + start_date + '', end: '' + end_date + '', max_teams: '' + max_teams + '', total_games: '' + total_games + '', league: '' + league + '', game: '' + game + '' }
+     data: { form: 'create-league', start: '' + start_date + '', end: '' + end_date + '', max_teams: '' + max_teams + '', total_games: '' + total_games + '', max_roster: '' + max_roster + '', league: '' + league + '', game: '' + game + '' }
    }).success(function( msg ) {
 	   		$('.success').css("display", "");
 	   		$(".success").fadeIn(1000, "linear");
@@ -51,6 +52,7 @@ $('#editLeague').submit(function(e) {
 	var league_id		= $("#league-id").val();
 		max_teams  		= $("#max-teams").val();
 		total_games		= $("#total-games").val();
+		max_roster 		= $("#max-roster").val();
 		start_date 		= $("#start").val();
 		end_date 		= $("#end").val();
 		
@@ -61,7 +63,7 @@ $('#editLeague').submit(function(e) {
      url: "lib/submit/submit-league.php",
      async:true,
      crossbrowser:true,
-     data: { form: 'edit-league', start: '' + start_date + '', end: '' + end_date + '', max_teams: '' + max_teams + '', total_games: '' + total_games + '', league_id: '' + league_id + '' }
+     data: { form: 'edit-league', start: '' + start_date + '', end: '' + end_date + '', max_teams: '' + max_teams + '', total_games: '' + total_games + '', max_roster: '' + max_roster + '', league_id: '' + league_id + '' }
    }).success(function( msg ) {
 	   		$('.success').css("display", "");
 	   		$(".success").fadeIn(1000, "linear");
