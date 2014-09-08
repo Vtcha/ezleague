@@ -17,7 +17,7 @@
 				<label class="col-md-3 control-label">Current Team</label>
 				<div class="col-md-4">
 					<span class="form-control-static">
-						<a href="view-guild.php?id=<?php echo $profile['guild_id']; ?>">
+						<a href="view-team.php?id=<?php echo $profile['guild_id']; ?>">
 							<?php echo $ez_frontend->get_guild_name( $profile['guild_id'] ); ?>
 						</a>
 					</span>
