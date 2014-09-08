@@ -187,6 +187,8 @@ class ezAdmin_News extends DB_Class {
 				array_push( $categories, $cat );
 			}
 			return $categories;
+		} else {
+			return false;
 		}
 		
 	}

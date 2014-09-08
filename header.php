@@ -1,5 +1,5 @@
 <?php session_start();
-define( 'EZL_VERSION', '3.2.7' );
+define( 'EZL_VERSION', '3.2.8' );
 date_default_timezone_set('America/Chicago');
 include('lib/class-db.php');
 include('lib/class-ezleague.php');

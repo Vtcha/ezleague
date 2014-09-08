@@ -36,6 +36,8 @@
             </div>
             <div class="panel-body">
                 <div class="table-responsive">
+             <?php $categories = $ez_news->get_categories(); ?>
+             <?php if( $categories ) { ?>
                     <table class="table">
                         <thead>
                             <tr>
@@ -43,7 +45,6 @@
                                 <th>Options</th>
                             </tr>
                         </thead>
-            <?php $categories = $ez_news->get_categories(); ?>
                         <tbody>
               <?php foreach($categories as $category) { ?>
                             <tr>
@@ -55,6 +56,9 @@
                <?php } ?>
                         </tbody>
                      </table>
+            <?php } else { ?>
+                No categories found
+            <?php } ?>
                     </div>
             </div>
         </div>
