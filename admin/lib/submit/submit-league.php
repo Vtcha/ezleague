@@ -73,6 +73,16 @@ $ez_league = new ezAdmin_League();
                 $season_id      = $_POST['season_id'];
                  $ez_league->edit_season( $season_id, $start, $end, $registration );
                 break;
+
+            case 'lock-rosters':
+                $league_id      = $_POST['league_id'];
+                 $ez_league->lock_rosters( $league_id );
+                break;
+
+            case 'unlock-rosters':
+                $league_id      = $_POST['league_id'];
+                 $ez_league->unlock_rosters( $league_id );
+                break;
     	 	
 
     	 	default:

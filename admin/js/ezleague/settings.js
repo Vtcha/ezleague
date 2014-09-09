@@ -329,6 +329,30 @@ $('#siteContact').submit(function(e) {
 });
 
 /**
+ * Update site Mandrill settings
+ */
+$('#siteMandrill').submit(function(e) {
+	var username			= $("#mandrill-username").val();
+		password 			= $("#mandrill-password").val();
+		
+	 e.preventDefault();
+
+ $.ajax({
+     type: "POST",
+     url: "lib/submit/submit-settings.php",
+     async:true,
+     crossbrowser:true,
+     data: { form: 'update-mandrill', username: '' + username + '', password: '' + password + '' }
+   }).success(function( msg ) {
+	   		$('.success').css("display", "");
+	   		$(".success").fadeIn(1000, "linear");
+	   		$('.success_text').fadeIn("slow");
+	   		$('.success_text').html(msg);
+	   		setTimeout(function(){location.reload()},3000);
+  });
+});
+
+/**
  * Update site about content
  */
 $('#siteAbout').submit(function(e) {

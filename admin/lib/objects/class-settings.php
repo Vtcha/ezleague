@@ -264,12 +264,14 @@ class ezAdmin_Settings extends DB_Class {
 		$data = $this->fetch("SELECT * FROM `" . $this->prefix . "settings` WHERE id = '1'");
 		if( $data ) {
 			$settings = array(
-								'name'  	=> $data['0']['site_name'],
-								'url' 		=> $data['0']['site_url'],
-								'email' 	=> $data['0']['site_email'],
-								'about' 	=> $data['0']['site_about'],
-								'logo'  	=> $data['0']['site_logo'],
-								'fav_icon'	=> $data['0']['site_icon']
+								'name'  			=> $data['0']['site_name'],
+								'url' 				=> $data['0']['site_url'],
+								'email' 			=> $data['0']['site_email'],
+								'about' 			=> $data['0']['site_about'],
+								'logo'  			=> $data['0']['site_logo'],
+								'fav_icon'			=> $data['0']['site_icon'],
+								'mandrill_username'	=> $data['0']['mandrill_username'],
+								'mandrill_password' => $data['0']['mandrill_password']
 							);
 			return $settings;
 		} else {
@@ -340,6 +342,21 @@ class ezAdmin_Settings extends DB_Class {
 							WHERE id = '1'
 						");
 		$this->success('Twitter app settings have been updated');
+		return;
+
+	}
+
+	/*
+	 * Update Mandrill STMP settings
+	 *
+	 * @return string
+	 */
+	public function update_mandrill($username, $password) {
+
+		$username 	= $this->sanitize( $username );
+		$password 	= $this->sanitize( $password );
+		$this->link->query("UPDATE `" . $this->prefix . "settings` SET mandrill_username = '$username', mandrill_password = '$password' WHERE id = '1'");
+		$this->success('Mandrill settings have been updated');
 		return;
 
 	}
