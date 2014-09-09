@@ -1,14 +1,22 @@
 <?php session_start(); 
 include('lib/class-db.php');
 include('lib/class-ezadmin.php');
+include('lib/class-frontend.php');
 $ez = new ezAdmin();
 $ez->setup_ezadmin();
 
 $ez_user     = new ezAdmin_User();
+$ez_frontend = new ezAdmin_Frontend();
 
-		if(isset($_SESSION['ez_admin'])) {
-			header("Location: index.php");
-		}
+        if(isset($_SESSION['ez_admin'])) {
+            header("Location: index.php");
+        } else {
+            $total_admins = $ez_user->check_admins();
+            if( $total_admins == 0  ) {
+                header("Location: install.php");
+            }
+        }
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -38,12 +46,8 @@ $ez_user     = new ezAdmin_User();
                 <div class="login-panel panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title">ezLeague Admin - Please Sign In</h3> 
-                         <?php $total_admins = $ez_user->check_admins(); ?>
                     </div>
                     <div class="panel-body">
-                     <?php if( $total_admins == 0 ) { ?>
-                     	No Admins were detected. Please <a href="create_admin.php">Create an Admin</a>.
-                     <?php } else { ?>
                         <form role="form" id="ezLeagueLogin" name="ezLeagueLogin">
                             <fieldset>
                                 <div class="form-group">
@@ -59,7 +63,6 @@ $ez_user     = new ezAdmin_User();
 				                </div>
                             </fieldset>
                         </form>
-                      <?php } ?>
                     </div>
                 </div>
             </div>
