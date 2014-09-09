@@ -139,6 +139,7 @@ class ezAdmin_League extends DB_Class {
 				'start_date' => date('Y-m-d', strtotime($data['0']['start_date'])),
 				'end_date' 	 => date('Y-m-d', strtotime($data['0']['end_date'])),
 				'games'		 => $data['0']['total_games'],
+				'rosters'	 => $data['0']['rosters'],
 				'max_roster' => $data['0']['max_roster'],
 				'rules'		 => $data['0']['rules']
 		);
@@ -229,21 +230,6 @@ class ezAdmin_League extends DB_Class {
 		$rules 	   = $this->sanitize( $rules );
 		$this->link->query("UPDATE `" . $this->prefix . "leagues` SET rules = '$rules' WHERE id = '$league_id'");
 		$this->success('League Rules have been updated...reloading');
-		
-	}
-	
-	public function getLeagueName($league_id) {
-		
-		$data = $this->fetch("SELECT league FROM `" . $this->prefix . "leagues` WHERE id = '$league_id'");
-		$league = $data['0']['league'];
-		return $league;
-		
-	}
-	
-	public function getLeagueDisputes($league_id) {
-		
-		$data = $this->fetch("SELECT * FROM `" . $this->prefix . "disputes` WHERE status = '0'");
-		return $data;
 		
 	}
 	
@@ -385,10 +371,21 @@ class ezAdmin_League extends DB_Class {
 		
 	}
 	
-	public function getTeamLeagues($team_id) {
+	public function lock_rosters($league_id) {
 		
-		$data = $this->fetch("SELECT leagues FROM `" . $this->prefix . "guilds` WHERE id = '$team_id'");
-		return $data;
+		$league_id 	= $this->sanitize( $league_id );
+		$this->link->query("UPDATE `" . $this->prefix . "leagues` SET rosters = '0' WHERE id = '$league_id'");
+		$this->success('Rosters have been locked');
+		return;
+		
+	}
+
+	public function unlock_rosters($league_id) {
+		
+		$league_id 	= $this->sanitize( $league_id );
+		$this->link->query("UPDATE `" . $this->prefix . "leagues` SET rosters = '1' WHERE id = '$league_id'");
+		$this->success('Rosters have been unlocked');
+		return;
 		
 	}
 		

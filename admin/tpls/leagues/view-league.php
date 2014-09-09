@@ -33,13 +33,51 @@
                         </div>
                     </div>
                     <div class="panel-body">
-                        <strong>League</strong> <span class="gm"><?php echo $league['league']; ?></span><br/>
-                        <strong>Total Teams</strong> <span class="gm"><?php echo $league['teams']; ?></span><br/>
-                        <strong>Game</strong> <span class="gm"><?php echo $league['game']; ?></span><br/>
-                        <strong>Season Start Date</strong> <span class="gm"><?php echo date( 'F d, Y', strtotime( $season['start'] ) ); ?></span><br/>
-                        <strong>Season End Date</strong> <span class="gm"><?php echo date( 'F d, Y', strtotime( $season['end'] ) ); ?></span><br/>
-                        <strong>Registration End Date</strong> <span class="gm"><?php echo date( 'F d, Y', strtotime( $season['register'] ) ); ?></span><br/>
-                        <strong>Status</strong> <span class="gm"><?php echo ($league['status'] == 1 ? '<span class=\'text-success bolder\'>Running</span>' : '<span class=\'text-danger\'>Completed</span>'); ?></span><br/>
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <tr>
+                                    <td><strong>League</strong></td>
+                                    <td><?php echo $league['league']; ?></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Total Teams</strong></td>
+                                    <td><?php echo $league['teams']; ?></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Game</strong></td>
+                                    <td><?php echo $league['game']; ?></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Season Start Date</strong></td>
+                                    <td><?php echo date( 'F d, Y', strtotime( $season['start'] ) ); ?></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Season End Date</strong></td>
+                                    <td><?php echo date( 'F d, Y', strtotime( $season['end'] ) ); ?></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Registration End Date</strong></td>
+                                    <td><?php echo date( 'F d, Y', strtotime( $season['register'] ) ); ?></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Rosters</strong></td>
+                                    <td>
+                                        <?php if( $league['rosters'] == 1 ) { ?>
+                                               <span class="text-success bolder">Open</span>
+                                               <button class="btn btn-danger btn-xs" onclick="rostersLock('<?php echo $league_id; ?>')">Lock Rosters</button>
+                                        <?php } else { ?>
+                                               <span class="text-danger">Locked</span>
+                                               <button class="btn btn-success btn-xs" onclick="rostersUnLock('<?php echo $league_id; ?>')">Unlock Rosters</button>
+                                        <?php } ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Status</strong></td>
+                                    <td><?php echo ( $league['status'] == 1 ? '<span class=\'text-success bolder\'>Running</span>' : '<span class=\'text-danger\'>Completed</span>' ); ?></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="success"><span class="success_text"></span></div>
                     </div>
                    </div>
                    
@@ -87,9 +125,6 @@
                        </div>
                     </div>
                 </div>
-                    <div class="success">
-                     <span class="success_text"></span>
-                    </div>
               <?php } else { ?>
                 No league was selected to view
               <?php } ?>

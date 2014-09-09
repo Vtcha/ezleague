@@ -276,6 +276,48 @@ $('#editRules').submit(function(e) {
 });
 
 /**
+ * Lock league rosters
+ */
+ function rostersLock(league_id) {
+
+ 	$.ajax({
+	     type: "POST",
+	     url: "lib/submit/submit-league.php",
+	     async:true,
+	     crossbrowser:true,
+	     data: { form: 'lock-rosters', league_id: '' + league_id + '' }
+	   }).success(function( msg ) {
+		   		$('.success').css("display", "");
+		   		$(".success").fadeIn(1000, "linear");
+		   		$('.success_text').fadeIn("slow");
+		   		$('.success_text').html(msg);
+		   		setTimeout(function(){location.reload()},3000);
+	  });
+
+ }
+
+/**
+ * Lock league rosters
+ */
+ function rostersUnLock(league_id) {
+
+ 	$.ajax({
+	     type: "POST",
+	     url: "lib/submit/submit-league.php",
+	     async:true,
+	     crossbrowser:true,
+	     data: { form: 'unlock-rosters', league_id: '' + league_id + '' }
+	   }).success(function( msg ) {
+		   		$('.success').css("display", "");
+		   		$(".success").fadeIn(1000, "linear");
+		   		$('.success_text').fadeIn("slow");
+		   		$('.success_text').html(msg);
+		   		setTimeout(function(){location.reload()},3000);
+	  });
+
+ }
+
+/**
  * Search and replace specifically used for CKEDITOR values to handle single quotes
  * 
  * @param search
