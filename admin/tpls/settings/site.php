@@ -4,7 +4,7 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-lg-8">
+    <div class="col-lg-10">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <i class="fa fa-gear"></i> Modify Basic Site Settings
@@ -19,6 +19,9 @@
                     </li>
                     <li class="">
                         <a data-toggle="tab" href="#site-contact">Contact E-Mail</a>
+                    </li>
+                    <li class="">
+                        <a data-toggle="tab" href="#site-mandrill">Mandrill SMTP (E-Mail)</a>
                     </li>
                     <li class="">
                         <a data-toggle="tab" href="#site-about">About Content</a>
@@ -74,6 +77,37 @@
                               <span class="success_text"></span>
                             </div>
                           </form>
+                    </div>
+                    <div class="tab-pane fade" id="site-mandrill">
+                      <div class="row">
+                        <div class="col-lg-6">
+                        <h4>Mandrill SMTP API Settings (Mail Send)</h4>
+                         <form method="POST" id="siteMandrill">
+                            <div class="form-group">
+                                <input class="form-control" id="mandrill-username" placeholder="Mandrill Username" value="<?php echo $site_settings['mandrill_username']; ?>" />
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" id="mandrill-password" placeholder="Mandrill API" value="<?php echo $site_settings['mandrill_password']; ?>" />
+                            </div>
+                            <div class="form-group">
+                                <button class="btn btn-success" type="submit">Save</button>
+                            </div>
+                            <div class="success">
+                              <span class="success_text"></span>
+                            </div>
+                          </form>
+                        </div>
+                        <div class="col-lg-6">
+                          <h4>How to setup Mandrill</h4>
+                          <ol>
+                            <li>Register a <a href="http://mandrill.com/" target="_blank"><strong>FREE</strong> account</a></li>
+                            <li><a href="https://mandrillapp.com/login" target="_blank">Login</a> &amp; go to settings</li>
+                            <li>Generate an API key</li>
+                            <li>Enter your username &amp; API key on the left</li>
+                            <li>Save your settings. That's it!</li>
+                          </ol>
+                        </div>
+                      </div>
                     </div>
                     <div class="tab-pane fade" id="site-about">
                         <h4>Web Site About Content</h4>

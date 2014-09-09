@@ -71,6 +71,12 @@ $ez_settings = new ezAdmin_Settings();
                 $token_secret = $_POST['token_secret'];
                  $ez_settings->update_twitter_app_settings( $count, $handle, $api, $secret, $token, $token_secret );
                 break;
+
+            case 'update-mandrill':
+                $username      = $_POST['username'];
+                $password      = $_POST['password'];
+                 $ez_settings->update_mandrill( $username, $password );
+                break;
     	 	
     	 	default:
     	 		break;

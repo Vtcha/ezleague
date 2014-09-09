@@ -351,24 +351,48 @@ class ezLeague_Frontend extends DB_Class {
 		$from    = $this->sanitize( $from );
 		$subject = $this->sanitize( $subject );
 		$name 	 = $this->sanitize( $name );
-		$message = $this->sanitize( $message );
+		$body 	 = $message;
 
-		$headers = "From: " . strip_tags($from) . "\r\n";
-		$headers .= "Reply-To: ". strip_tags($from) . "\r\n";
-		$headers .= "MIME-Version: 1.0\r\n";
-		$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
+		$data = $this->fetch("SELECT mandrill_username, mandrill_password FROM `" . $this->prefix . "settings` WHERE id = '1'");
 
 		$message = '<html><body>';
 		$message .= '<table rules="all" style="border-color: #666;" cellpadding="10">';
 		$message .= "<tr><td><strong>From</strong> </td><td>" . strip_tags($name) . " (" . strip_tags($from) . ")</td></tr>";
-		$message .= "<tr><td><strong>Message:</strong> </td><td>" . strip_tags($message) . "</td></tr>";
+		$message .= "<tr><td><strong>Message:</strong> </td><td>" . strip_tags($body) . "</td></tr>";
 		$message .= "</table>";
 		$message .= "</body></html>";
-
-		if( mail($to, $subject, $message, $headers) ) {
-			$this->success('Thank you, your message has been sent');
-		} else {
-			$this->error('There was a problem sending your message, please try again');
+		if( $data ) {
+			require_once "Mail.php";
+			$mandrill_username = $data['0']['mandrill_username'];
+			$mandrill_password = $data['0']['mandrill_password']; 
+			if( class_exists( 'Mail' ) && ( $mandrill_username != '' && $mandrill_password != '' ) ) { 
+				$host = "smtp.mandrillapp.com"; 
+				$username = $mandrill_username; 
+				$password = $mandrill_password;
+				$headers = array ('From' => $from,   'To' => $to, 'MIME-Version' => '1.0', 'Content-Type' => 'text/html; charset=ISO-8859-1', 'Subject' => $subject); 
+				$smtp = Mail::factory(
+								'smtp',   
+								array (
+									'host' => $host,     
+									'auth' => true,
+									'port' => 587,     
+									'username' => $username,     
+									'password' => $password
+									)
+								);  
+				$mail = $smtp->send($to, $headers, $message);  
+				if (PEAR::isError($mail)) {   
+					echo("<p>" . $mail->getMessage() . "</p>");  
+				} else {   
+					echo("<p>Message successfully sent!</p>");  
+				}
+			} else {
+				if( mail($to, $subject, $message, $headers) ) {
+					$this->success('Thank you, your message has been sent');
+				} else {
+					$this->error('There was a problem sending your message, please try again');
+				}
+			}
 		}
 		return;
 
