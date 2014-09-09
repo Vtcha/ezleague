@@ -36,7 +36,8 @@
 						<?php echo ( count( $league_roster ) >= $league_details['max_roster'] ? '<span class="text-danger bolder">League roster limit reached</span>' : '' ); ?>
 					<?php } else { ?>
 						<p class="text-danger bolder">League rosters are locked.</p>
-						<p class="text-danger bolder">No changes can be made to your roster while rosters are locked.</p>
+						<p class="text-danger bolder">No changes can be made to your roster during this time.</p>
+						<p class="text-danger bolder">Please <a href="contact-us.php">contact the admins</a> if you have an urgent request.</p>
 					<?php } ?>
 					</div>
 					<div class="success"><span class="success_text"></span></div>
