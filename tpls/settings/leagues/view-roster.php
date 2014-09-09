@@ -31,8 +31,13 @@
 						</select>
 					</div>
 					<div class="form-group">
+					<?php if( $league_details['rosters'] == 1 ) { ?>
 						<button <?php echo ( count( $league_roster ) >= $league_details['max_roster'] ? 'disabled' : '' ); ?> type="submit" class="btn btn-primary btn-block">Add Member</button>
 						<?php echo ( count( $league_roster ) >= $league_details['max_roster'] ? '<span class="text-danger bolder">League roster limit reached</span>' : '' ); ?>
+					<?php } else { ?>
+						<p class="text-danger bolder">League rosters are locked.</p>
+						<p class="text-danger bolder">No changes can be made to your roster while rosters are locked.</p>
+					<?php } ?>
 					</div>
 					<div class="success"><span class="success_text"></span></div>
 				</div>
@@ -57,7 +62,7 @@
 				<tr>
 					<td><?php echo $member['username']; ?></td>
 					<td>
-						<button class="btn btn-danger btn-xs" onclick="removeLeagueMember('<?php echo $league_id; ?>', '<?php echo $profile['guild_id']; ?>', '<?php echo $member['id']; ?>')">
+						<button <?php echo ( $league_details['rosters'] == 0 ? 'disabled' : '' ); ?> class="btn btn-danger btn-xs" onclick="removeLeagueMember('<?php echo $league_id; ?>', '<?php echo $profile['guild_id']; ?>', '<?php echo $member['id']; ?>')">
 							<i class="fa fa-times"></i> Remove User
 						</button>
 					</td>
