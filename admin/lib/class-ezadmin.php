@@ -373,6 +373,8 @@ class ezAdmin extends DB_Class {
 			  `twitter_secret` varchar(250) DEFAULT NULL,
 			  `twitter_token` varchar(250) DEFAULT NULL,
 			  `twitter_token_secret` varchar(250) DEFAULT NULL,
+			  `mandrill_username` varchar(250) DEFAULT NULL,
+			  `mandrill_password` varchar(250) DEFAULT NULL,
 			  `site_icon` varchar(250) DEFAULT NULL,
 			  PRIMARY KEY (`id`)
 			);
@@ -457,6 +459,10 @@ class ezAdmin extends DB_Class {
 		$test_connection = mysqli_connect($this->host, $this->username, $this->password, $this->database) or die("Error " . mysqli_error( $test_connection ) );
 		if( $test_connection ) {
 			$sql = "
+					ALTER TABLE `" . $this->prefix . "settings`
+					ADD COLUMN mandrill_username VARCHAR(250);
+					ALTER TABLE `" . $this->prefix . "settings`
+					ADD COLUMN mandrill_password VARCHAR(250);
 					ALTER TABLE `" . $this->prefix . "leagues`
 					ADD COLUMN max_roster INT(10) DEFAULT '8';
 					ALTER TABLE `" . $this->prefix . "games`
