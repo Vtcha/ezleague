@@ -376,6 +376,7 @@ class ezAdmin extends DB_Class {
 			  `mandrill_username` varchar(250) DEFAULT NULL,
 			  `mandrill_password` varchar(250) DEFAULT NULL,
 			  `site_icon` varchar(250) DEFAULT NULL,
+			  `site_timezone` varchar(250) DEFAULT NULL,
 			  PRIMARY KEY (`id`)
 			);
 			DROP TABLE IF EXISTS `" . $this->prefix . "users`;
@@ -459,6 +460,8 @@ class ezAdmin extends DB_Class {
 		$test_connection = mysqli_connect($this->host, $this->username, $this->password, $this->database) or die("Error " . mysqli_error( $test_connection ) );
 		if( $test_connection ) {
 			$sql = "
+					ALTER TABLE `" . $this->prefix . "settings`
+					ADD COLUMN site_timezone VARCHAR(250);
 					ALTER TABLE `" . $this->prefix . "settings`
 					ADD COLUMN mandrill_username VARCHAR(250);
 					ALTER TABLE `" . $this->prefix . "settings`
