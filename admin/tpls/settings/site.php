@@ -32,9 +32,6 @@
                     <li class="">
                         <a data-toggle="tab" href="#site-fav-icon">Fav Icon</a>
                     </li>
-                    <li class="">
-                        <a data-toggle="tab" href="#site-timezone">Site Timezone</a>
-                    </li>
                 </ul>
                 
                 <div class="tab-content">
@@ -170,29 +167,6 @@
                           <a href="../logos/<?php echo $site_settings['fav_icon']; ?>">
                             <img src="../logos/<?php echo $site_settings['fav_icon']; ?>" class="img-responsive" />
                           </a>
-                        </div>
-                    </div>
-                    <div class="tab-pane fade" id="site-timezone">
-                        <h4>Server Timezone</h4>
-                        <div class="col-lg-5">
-                         <form role="form" id="siteTimezone" method="POST">
-                           <div class="form-group">
-                            <label>Choose Timezone</label>
-                            <?php $tzlist = DateTimeZone::listIdentifiers(DateTimeZone::ALL); ?>
-                            <select id="timezone" class="form-control">
-                              <option></option>
-                              <?php foreach( $tzlist as $timezone ) { ?>
-                                <option <?php echo ( $site_settings['timezone'] == $timezone ? 'selected' : '' ); ?> value="<?php echo $timezone; ?>"><?php echo $timezone; ?></option>
-                              <?php } ?>
-                            </select>
-                           </div>                 
-                           <div class="form-group">
-                            <button type="submit" class="btn btn-primary">Update Timezone</button>
-                           </div> 
-                         </form>
-                         <div class="success">
-                           <span class="success_text"></span>
-                         </div>
                         </div>
                     </div>
                 </div>
