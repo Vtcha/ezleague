@@ -5,7 +5,7 @@ include('lib/class-ezadmin.php');
 $ez = new ezAdmin();
 
 /**
- * Upgrades include: Recent Twitter Tweets, Site Favorite Icon v2, Prediction System, Installation v3, Game Edit Short Name, Max League Roster, Mandrill SMTP Settings
+ * Upgrades include: Recent Twitter Tweets, Site Favorite Icon v2, Prediction System, Installation v3, Game Edit Short Name, Max League Roster, Mandrill SMTP Settings, Site Timezone
  */    
      if( isset($_SESSION['ez_admin'] ) ) {
      	$ez->run_upgrade();

@@ -4,7 +4,7 @@ $pages = ceil($total_teams/15);
 
 if( isset( $_GET['search'] ) ) {
 	$search = trim( $_GET['search'] );
-	$teams = $ez_team->search_teams( $team_name );
+	$teams = $ez_team->search_teams( $search );
 } else {
 	if( isset( $_GET['p'] ) && is_numeric( $_GET['p'] ) ) {
 		$page = $_GET['p'] - 1;
@@ -28,13 +28,13 @@ if( isset( $_GET['search'] ) ) {
             <div class="panel-heading">
                 <i class="fa fa-sitemap"></i> Team List (<?php echo $total_teams; ?> total teams)
                 
-                <form class="form-inline pull-right search-user" id="search-teams" name="search-teams" method="POST" role="form">
+                <form class="form-inline pull-right search-team" id="search-teams" name="search-teams" method="GET" role="form">
 				  <input type="hidden" name="page" value="all" />
 				  <div class="form-group">
 				    <input type="text" class="form-control input-sm" id="search" name="search" placeholder="Team Name">
 				  </div>
 				  <button type="submit" name="submit" class="btn btn-primary btn-sm">Search</button>
-				  <a href="users.php?page=all" class="btn btn-info btn-sm">Clear</a>
+				  <a href="teams.php?page=all" class="btn btn-info btn-sm">Clear</a>
 				</form>
             </div>
             <div class="panel-body">

@@ -109,7 +109,7 @@ class ezAdmin_User extends DB_Class {
 	public function get_users($position, $order_by, $order_text) {
 		
 		$users = array();
-		$data = $this->fetch("SELECT * FROM `" . $this->prefix . "users` ORDER BY $order_by $order LIMIT $position, 15");
+		$data = $this->fetch("SELECT * FROM `" . $this->prefix . "users` ORDER BY $order_by $order_text LIMIT $position, 15");
 		if( $data ) {
 			foreach( $data as $item ) {
 				$user['id']			= $item['id'];
