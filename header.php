@@ -1,5 +1,10 @@
 <?php session_start();
+<<<<<<< HEAD
 define( 'EZL_VERSION', '3.3.2' );
+=======
+define( 'EZL_VERSION', '3.3.1' );
+date_default_timezone_set('America/Chicago');
+>>>>>>> origin/master
 include('lib/class-db.php');
 include('lib/class-ezleague.php');
 
@@ -8,7 +13,6 @@ $ez->setup_ezleague();
 $ez->test_connection();
 $ez_news 	 = new ezLeague_News();
 $ez_frontend = new ezLeague_Frontend();
-$site_settings = $ez_frontend->get_site_settings();
 $ez_users    = new ezLeague_User();
 $ez_team	 = new ezLeague_Team();
 $ez_league	 = new ezLeague_League();
@@ -36,7 +40,7 @@ if( $site_settings['handle'] != '' ) {
 
 	$tweets = (array) $cb->statuses_userTimeline($params);
 }
-date_default_timezone_set('' . $site_settings['timezone'] . '');
+
 ?>
 <!DOCTYPE html>
 <!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->

@@ -53,10 +53,10 @@ class ezAdmin_Team extends DB_Class {
 	 * 
 	 * @return array
 	 */
-	public function search_teams($search) {
+	public function search_teams($team) {
 		
 		$teams = array();
-		$data = $this->fetch("SELECT * FROM `" . $this->prefix . "guilds` WHERE guild LIKE '%$search%'");
+		$data = $this->fetch("SELECT * FROM `" . $this->prefix . "guilds` WHERE guild LIKE '%$team%'");
 		if( $data ) {
 			foreach( $data as $item ) {
 				$team['id']			= $item['id'];

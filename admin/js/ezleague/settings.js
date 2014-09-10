@@ -373,29 +373,6 @@ $('#siteAbout').submit(function(e) {
 		  });
 });
 
-/**
- * Update site timezone
- */
- $('#siteTimezone').submit(function(e) {
-	var timezone			= $("#timezone").val();
-
-	 e.preventDefault();
-
- $.ajax({
-     type: "POST",
-     url: "lib/submit/submit-settings.php",
-     async:true,
-     crossbrowser:true,
-     data: { form: 'update-settings', setting: 'timezone', value: '' + timezone + '' }
-   }).success(function( msg ) {
-	   		$('.success').css("display", "");
-	   		$(".success").fadeIn(1000, "linear");
-	   		$('.success_text').fadeIn("slow");
-	   		$('.success_text').html(msg);
-	   		setTimeout(function(){location.reload()},3000);
-  });
-});
-
 $('#updateEmail').submit(function(e) {
 	var user_id		= $("#user-id").val();
 		email		= $("#admin-email").val();

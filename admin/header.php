@@ -1,6 +1,7 @@
 <?php session_start();
 define( 'EZL_VERSION', '3.3.2' );
 $check_for_update = file_get_contents( 'http://www.mdloring.com/ezleague_version.php', TRUE );
+date_default_timezone_set('America/Chicago');
 include('lib/class-db.php');
 include('lib/class-ezadmin.php');
 $ez = new ezAdmin();
@@ -13,7 +14,6 @@ $ez_team	 = new ezAdmin_Team();
 $ez_league	 = new ezAdmin_League();
 $ez_match	 = new ezAdmin_Match();
 $ez_settings = new ezAdmin_Settings();
-$site_settings = $ez_settings->get_settings();
 $ez_forum	 = new ezAdmin_Forum();
 $ez_schedule = new ezAdmin_Schedule();
     
@@ -28,7 +28,6 @@ $ez_schedule = new ezAdmin_Schedule();
      	$username = $_SESSION['ez_admin'];
      	$user_settings = $ez_user->get_user_settings( $username );
      }
-date_default_timezone_set('' . $site_settings['timezone'] . '');
 ?>
 
 <!DOCTYPE html>
