@@ -1,6 +1,10 @@
 <?php session_start();
+<<<<<<< HEAD
+define( 'EZL_VERSION', '3.3.2' );
+=======
 define( 'EZL_VERSION', '3.3.1' );
 date_default_timezone_set('America/Chicago');
+>>>>>>> origin/master
 include('lib/class-db.php');
 include('lib/class-ezleague.php');
 
