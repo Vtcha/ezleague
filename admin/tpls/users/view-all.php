@@ -27,7 +27,8 @@ if( isset( $_GET['search'] ) ) {
         <div class="panel panel-default">
             <div class="panel-heading">
                 <i class="fa fa-sitemap"></i> Site Users (<?php echo $total_members; ?> total users)
-                <form class="form-inline pull-right search-user" id="search-user" name="search-user" method="GET" action="users.php" role="form">
+                
+                <form class="form-inline pull-right search-user" id="search-user" name="search-user" method="POST" role="form">
 				  <input type="hidden" name="page" value="all" />
 				  <div class="form-group">
 				    <input type="text" class="form-control input-sm" id="search" name="search" placeholder="Username">

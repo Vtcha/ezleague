@@ -244,9 +244,6 @@ class ezAdmin_Settings extends DB_Class {
 			case 'fav_icon':
 				$setting = 'site_icon';
 				break;
-			case 'timezone':
-				$setting = 'site_timezone';
-				break;
 			default:
 				break;
 		}
@@ -274,8 +271,7 @@ class ezAdmin_Settings extends DB_Class {
 								'logo'  			=> $data['0']['site_logo'],
 								'fav_icon'			=> $data['0']['site_icon'],
 								'mandrill_username'	=> $data['0']['mandrill_username'],
-								'mandrill_password' => $data['0']['mandrill_password'],
-								'timezone'			=> $data['0']['site_timezone']
+								'mandrill_password' => $data['0']['mandrill_password']
 							);
 			return $settings;
 		} else {
