@@ -228,6 +228,7 @@ class ezAdmin_User extends DB_Class {
 				$user['email']		= $item['email'];
 				$user['role']		= $item['role'];
 				$user['date']		= $item['created'];
+				$user['status']		= $item['status'];
 				array_push( $users, $user );
 			}
 			return $users;
