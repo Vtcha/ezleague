@@ -333,7 +333,7 @@ class ezAdmin_League extends DB_Class {
 		
 	}
 	
-	public function kick_team($league_id, $team_id) {
+	public function kick_team($league_id, $team_id, $reason) {
 		
 		$league_id 	= $this->sanitize( $league_id );
 		$team_id 	= $this->sanitize( $team_id );
@@ -368,7 +368,13 @@ class ezAdmin_League extends DB_Class {
 			}
 		}
 		$this->link->query("UPDATE `" . $this->prefix . "guilds` SET leagues = '$new_leagues' WHERE id = '$team_id'");
+		
 		$this->success('Team has been kicked from League, and all future matches forfeited.');
+		$team_admin_data = $this->fetch("SELECT " . $this->prefix . "users.`email`, " . $this->prefix . "guilds.`admin`, " . $this->prefix . "guilds.`id`, " . $this->prefix . "users.`username` 
+											FROM `" . $this->prefix . "users`, `" . $this->prefix . "guilds` 
+											WHERE `" . $this->prefix . "guilds`.id = '$team_id' AND `" . $this->prefix . "guilds`.admin = `" . $this->prefix . "users`.username");
+		$admin_email = $team_admin_data['0']['email'];
+		echo $admin_email;
 		return;
 
 	}

@@ -87,7 +87,8 @@ $ez_league = new ezAdmin_League();
             case 'kick-team':
                 $league_id      = $_POST['league_id'];
                 $team_id        = $_POST['team_id'];
-                 $ez_league->kick_team( $league_id, $team_id );
+                $reason         = $_POST['reason'];
+                 $ez_league->kick_team( $league_id, $team_id, $reason );
                 break;
 
     	 	default:
