@@ -317,6 +317,42 @@ $('#editRules').submit(function(e) {
 
  }
 
+ /**
+ * Kick team from league
+ */
+ function kickTeam(league_id, team_id) {
+
+ 	$(function() {
+		 $( "#kick-team-confirm" ).dialog({
+			 resizable: false,
+			 height:220,
+			 width:375,
+			 modal: true,
+			 buttons: {
+				 "Kick Team": function() {
+					 $.ajax({
+					     type: "POST",
+					     url: "lib/submit/submit-league.php",
+					     data: { form: 'kick-team', team_id: '' + team_id + '', league_id: '' + league_id + '' }
+					   }).success(function( msg ) {
+								    $(".success").css("display", "");
+							   		$(".success").fadeIn(1000, "linear");
+							   		$(".success_text").fadeIn("slow");
+							   		$(".success").html(msg);
+							   		setTimeout(function(){location.reload()},3000);
+					  });
+					 
+					 $( this ).dialog( "close" );
+				 },
+				 Cancel: function() {
+					 $( this ).dialog( "close" );
+				 }
+			 }
+		 });
+	});
+
+ }
+
 /**
  * Search and replace specifically used for CKEDITOR values to handle single quotes
  * 

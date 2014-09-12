@@ -333,42 +333,21 @@ class ezAdmin_League extends DB_Class {
 		
 	}
 	
-	public function kickTeamFromLeague($league_id, $team_id, $reason) {
+	public function kick_team($league_id, $team_id) {
 		
+		$league_id 	= $this->sanitize( $league_id );
+		$team_id 	= $this->sanitize( $team_id );
 		$data = $this->fetch("SELECT leagues FROM `" . $this->prefix . "guilds` WHERE id = '$team_id'");
 		$team_leagues = $data['0']['leagues'];
-		$leagues = explode(",", $team_leagues);
-		$new_leagues = ezLeague::removeArrayValue($league_id, $leagues);
-		$new_leagues = implode(",", $new_leagues);
+		$explode = explode( ',', $team_leagues );
+			if(($key = array_search($league_id, $explode)) !== false) {
+				unset($explode[$key]);
+			}
+		$new_leagues = implode(",", $explode);
 		$this->link->query("UPDATE `" . $this->prefix . "guilds` SET leagues = '$new_leagues' WHERE id = '$team_id'");
-		 
-		$team_admin = ezLeague::getTeamAdminEmail($team_id);
-		//get the name of your site
-		$site_settings = ezLeague::getSiteSettings();
-		$site_name = $site_settings['name'];
-		 
-		//email message sent to teams gm
-		$to = $team_admin['email'];
-		 
-		$subject = '' . $site_name . ' - ' . $team_admin['team'] . ' Kicked from League';
-		 
-		$headers = "From: no-reply@ezleague.com\r\n";
-		$headers .= "Reply-To: no-reply@ezleague.com\r\n";
-		$headers .= "MIME-Version: 1.0\r\n";
-		$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
-		 
-		$message = '<html><body>';
-		$message .= '<h1>' . $site_name . '</h1><h3>Team Kicked From League</h3>';
-		$message .= '<p>Your Team has been kicked from League ID #' . $league_id . ' for:</p>';
-		$message .= '<p><em>' . $reason . '</em></p>';
-		$message .= '<p>Please contact an admin if you wish to dispute this action.</p>';
-		$message .= '<small>You received this message because the email account is registered on ' . $this->site_url . '.</small>';
-		$message .= '</body></html>';
-		 
-		mail($to, $subject, $message, $headers);
-	
-		print "<strong>Success!</strong> Team has been kicked from League";
-		
+		$this->success('Team has been kicked from League');
+		return;
+
 	}
 	
 	public function lock_rosters($league_id) {
