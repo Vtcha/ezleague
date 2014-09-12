@@ -53,7 +53,7 @@
     <div id="delete-league-confirm" title="Delete league?" style="display:none;">
 		<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>All corresponding league <em>match, season, schedule &amp; other</em> data will permanently deleted.</p>
 	</div>
-    <div id="kick-team-confirm" title="Suspend Team" style="display:none;">
+    <div id="kick-team-confirm" title="Kick Team" style="display:none;">
         <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>All future team matches will be forfeited. This cannot be undone.</p><p> Are you sure you want to take this action?</p>
     </div>
     

@@ -133,3 +133,4 @@
     </div>
     <div id="editTeamModal" class="modal"></div>
     <div id="editSeasonModal" class="modal"></div>
+    <div id="kickTeamModal" class="modal"></div>

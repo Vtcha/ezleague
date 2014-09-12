@@ -344,8 +344,31 @@ class ezAdmin_League extends DB_Class {
 				unset($explode[$key]);
 			}
 		$new_leagues = implode(",", $explode);
+		$future_matches_data = $this->fetch("SELECT * FROM `" . $this->prefix . "matches`
+												WHERE (homeTeamID = '$team_id' OR awayTeamID = '$team_id')
+												AND (completed = '0')
+										");
+		if( $future_matches_data ) {
+			foreach( $future_matches_data as $future_match ) {
+				if( $future_match['homeTeamID'] == $team_id ) {
+					$this->link->query("UPDATE `" . $this->prefix . "matches`
+										SET winner = '$future_match[awayTeamID]', loser = '$team_id', completed = '1', 
+											homeTeam_accept = '1', awayTeam_accept = '1', awayScore = '1', homeScore = '0',
+											reporter = 'admin'
+										WHERE id = '$future_match[id]'
+									");
+				} else {
+					$this->link->query("UPDATE `" . $this->prefix . "matches`
+										SET winner = '$future_match[homeTeamID]', loser = '$team_id', completed = '1', 
+											homeTeam_accept = '1', awayTeam_accept = '1', homeScore = '1', awayScore = '0',
+											reporter = 'admin'
+										WHERE id = '$future_match[id]'
+									");
+				}
+			}
+		}
 		$this->link->query("UPDATE `" . $this->prefix . "guilds` SET leagues = '$new_leagues' WHERE id = '$team_id'");
-		$this->success('Team has been kicked from League');
+		$this->success('Team has been kicked from League, and all future matches forfeited.');
 		return;
 
 	}
