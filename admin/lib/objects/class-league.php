@@ -337,17 +337,12 @@ class ezAdmin_League extends DB_Class {
 		
 		$league_id 	= $this->sanitize( $league_id );
 		$team_id 	= $this->sanitize( $team_id );
-		$data = $this->fetch("SELECT leagues FROM `" . $this->prefix . "guilds` WHERE id = '$team_id'");
-		$team_leagues = $data['0']['leagues'];
-		$explode = explode( ',', $team_leagues );
-			if(($key = array_search($league_id, $explode)) !== false) {
-				unset($explode[$key]);
-			}
-		$new_leagues = implode(",", $explode);
+
 		$future_matches_data = $this->fetch("SELECT * FROM `" . $this->prefix . "matches`
 												WHERE (homeTeamID = '$team_id' OR awayTeamID = '$team_id')
 												AND (completed = '0')
 										");
+
 		if( $future_matches_data ) {
 			foreach( $future_matches_data as $future_match ) {
 				if( $future_match['homeTeamID'] == $team_id ) {
@@ -367,14 +362,68 @@ class ezAdmin_League extends DB_Class {
 				}
 			}
 		}
-		$this->link->query("UPDATE `" . $this->prefix . "guilds` SET leagues = '$new_leagues' WHERE id = '$team_id'");
-		
+
+		$this->suspend_team( $league_id, $team_id );
 		$this->success('Team has been kicked from League, and all future matches forfeited.');
-		$team_admin_data = $this->fetch("SELECT " . $this->prefix . "users.`email`, " . $this->prefix . "guilds.`admin`, " . $this->prefix . "guilds.`id`, " . $this->prefix . "users.`username` 
+		$team_admin_data = $this->fetch("SELECT " . $this->prefix . "users.`email`, " . $this->prefix . "guilds.`admin`, " . $this->prefix . "guilds.`id`, " . $this->prefix . "users.`username`, " . $this->prefix . "guilds.`guild`
 											FROM `" . $this->prefix . "users`, `" . $this->prefix . "guilds` 
 											WHERE `" . $this->prefix . "guilds`.id = '$team_id' AND `" . $this->prefix . "guilds`.admin = `" . $this->prefix . "users`.username");
 		$admin_email = $team_admin_data['0']['email'];
-		echo $admin_email;
+		$team_name   = $team_admin_data['0']['guild'];
+
+		$league_details = $this->get_league( $league_id );
+		$league_name = $league_details['league'];
+		
+		$email_data = $this->fetch("SELECT site_name, site_email, site_url, mandrill_username, mandrill_password FROM `" . $this->prefix . "settings` WHERE id = '1'");
+
+		$to 	 = $admin_email;
+		$from    = $email_data['0']['site_email'];
+		$site_name = $email_data['0']['site_name'];
+		$site_url  = $email_data['0']['site_url'];
+		$subject = 'Team has been suspended';
+
+
+		$message = '<html><body>';
+		$message .= '<h3>' . $site_name . '</h3>';
+		$message .= '<p>Sorry, but your team [<em>' . $team_name . '</em>] has been suspended from the <em>' . $league_name . ' League</em> for the remainder of the season.</p><hr/>';
+		$message .= '<p><strong>Reason:</strong><em> ' . $reason . '</em></p>';
+		$message .= '<hr/><p>Please <a href="' . $site_url . '/contact-us.php">contact the site admins</a> to discuss your teams reinstatement into the league for next season.</p>';
+		$message .= '<p>- ' . $site_name . ' Admins</p>';
+		$message .= '<small>You are receiving this email because it is marked as the admin contact for a team participating in a ' . $site_name . ' League. If this is incorrect, please respond to this email.</small>';
+		$message .= "</body></html>";
+
+			require_once "Mail.php";
+			$mandrill_username = $email_data['0']['mandrill_username'];
+			$mandrill_password = $email_data['0']['mandrill_password']; 
+			if( class_exists( 'Mail' ) && ( $mandrill_username != '' && $mandrill_password != '' ) ) { 
+				$host = "smtp.mandrillapp.com"; 
+				$username = $mandrill_username; 
+				$password = $mandrill_password;
+				$headers = array ('From' => $from,   'To' => $to, 'MIME-Version' => '1.0', 'Content-Type' => 'text/html; charset=ISO-8859-1', 'Subject' => $subject); 
+				$smtp = Mail::factory(
+								'smtp',   
+								array (
+									'host' => $host,     
+									'auth' => true,
+									'port' => 587,     
+									'username' => $username,     
+									'password' => $password
+									)
+								);  
+				$mail = $smtp->send($to, $headers, $message);  
+				if (PEAR::isError($mail)) {   
+					echo("<p>" . $mail->getMessage() . "</p>");  
+				} else {   
+					echo("<p>Message successfully sent!</p>");  
+				}
+			} else {
+				if( mail($to, $subject, $message, $headers) ) {
+					$this->success('Thank you, your message has been sent');
+				} else {
+					$this->error('There was a problem sending your message, please try again');
+				}
+			}
+
 		return;
 
 	}
@@ -395,6 +444,45 @@ class ezAdmin_League extends DB_Class {
 		$this->success('Rosters have been unlocked');
 		return;
 		
+	}
+
+	public function get_suspended_teams($league_id) {
+
+		$league_id 	= $this->sanitize( $league_id );
+		$data = $this->fetch("SELECT suspended FROM `" . $this->prefix . "leagues` WHERE id = '$league_id'");
+		if( $data ) {
+			$teams = (array) json_decode( $data['0']['suspended'], TRUE );
+			return $teams;
+		} else {
+			return;
+		}
+	}
+
+	public function suspend_team($league_id, $team_id) {
+
+		$league_id	= $this->sanitize( $league_id );
+		$team_id 	= $this->sanitize( $team_id );
+		$suspended_teams = $this->get_suspended_teams( $league_id );
+		array_push( $suspended_teams, $team_id );
+		$updated_suspended = json_encode( $suspended_teams );
+		$this->link->query("UPDATE `" . $this->prefix . "leagues` SET suspended = '$updated_suspended' WHERE id = '$league_id'");
+		return;
+
+	}
+
+	public function unsuspend_team($league_id, $team_id) {
+
+		$suspended_teams = $this->get_suspended_teams( $league_id );
+		if(($key = array_search($team_id, $suspended_teams)) !== false) {
+			unset($suspended_teams[$key]);
+			$updated_suspended = json_encode( $suspended_teams );
+			$this->link->query("UPDATE `" . $this->prefix . "leagues` SET suspended = '$updated_suspended' WHERE id = '$league_id'");
+			$this->success('Team league suspension lifted');
+		} else {
+			echo 'no';
+			return;
+		}
+
 	}
 		
 }

@@ -380,6 +380,29 @@ $('#kickTeam').submit(function(e) {
 });
 
 /**
+ * Unkick a team from a league
+ * @param league_id
+ * @param team_id
+ */
+ function unkickTeam(league_id, team_id) {
+	
+	$.ajax({
+	     type: "POST",
+	     url: "lib/submit/submit-league.php",
+	     async:true,
+	     crossbrowser:true,
+	     data: { form: 'unkick-team', league_id: '' + league_id + '', team_id: '' + team_id + '' }
+	   }).success(function( msg ) {
+		   		$('.success').css("display", "");
+		   		$(".success").fadeIn(1000, "linear");
+		   		$('.success_text').fadeIn("slow");
+		   		$('.success_text').html(msg);
+		   		setTimeout(function(){location.reload()},3000);
+	  });
+	
+}
+
+/**
  * Search and replace specifically used for CKEDITOR values to handle single quotes
  * 
  * @param search
