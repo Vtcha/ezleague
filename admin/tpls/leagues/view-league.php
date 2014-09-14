@@ -99,7 +99,8 @@
                         <i class="fa fa-file-o"></i> Teams in <em><?php echo $league['league']; ?></em>
                     </div>
                     <div class="panel-body">
-                     <?php $teams = $ez_league->get_league_teams($league_id); ?>
+                     <?php $teams = $ez_league->get_league_teams( $league_id ); ?>
+                     <?php $suspended_teams = $ez_league->get_suspended_teams( $league_id ); ?>
                         <div class="table-responsive">
                            <table class="table table-hover">
                             <thead>
@@ -114,7 +115,11 @@
                                  <td><?php echo $team['guild']; ?></td>
                                  <td>
                                     <button onclick="getTeam('<?php echo $team['id']; ?>');" data-toggle="modal" data-target="#editTeamModal" class="btn btn-primary btn-xs">Edit Team</button>
+                      <?php if ( in_array( $team['id'], $suspended_teams ) ) { ?>
+                                    <button onclick="unkickTeam('<?php echo $league_id; ?>', '<?php echo $team['id']; ?>')" class="btn btn-warning btn-xs">Reinstate Team</button>
+                      <?php } else { ?>
                                     <button onclick="kickTeam('<?php echo $league_id; ?>', '<?php echo $team['id']; ?>')" data-toggle="modal" data-target="#kickTeamModal" class="btn btn-danger btn-xs"><i class="fa fa-times"></i> Kick Team</button>
+                      <?php } ?>
                                  </td>
                                 </tr>
                              <?php } ?>
@@ -133,3 +138,4 @@
     </div>
     <div id="editTeamModal" class="modal"></div>
     <div id="editSeasonModal" class="modal"></div>
+    <div id="kickTeamModal" class="modal"></div>

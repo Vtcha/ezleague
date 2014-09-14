@@ -318,6 +318,91 @@ $('#editRules').submit(function(e) {
  }
 
 /**
+ * Kick team from league modal popup
+ * @param league_id
+ * @param team_id
+ */
+function kickTeam(league_id, team_id) {
+	
+	$.ajax({
+	     type: "POST",
+	     async: false,
+	     url: "get_kick_team.php",
+	     data: { league_id: '' + league_id + '', team_id: '' + team_id + '' }
+	   }).success(function( msg ) {
+		   $('#kickTeamModal').html(msg);
+	  });
+	
+}
+
+ /**
+ * Kick team from league form
+ */
+$('#kickTeam').submit(function(e) {
+	var league_id		= $("#league-id").val();
+		team_id  		= $("#team-id").val();
+		reason			= $("textarea#reason").val();
+
+	 e.preventDefault();
+	 
+	 $('.modal').css('z-index', '100');
+	 $('.modal-backdrop').css('position', 'relative');
+ 	$(function() {
+		 $( "#kick-team-confirm" ).dialog({
+			 resizable: false,
+			 height:220,
+			 width:375,
+			 modal: true,
+			 buttons: {
+				 "Kick Team": function() {
+					 $.ajax({
+					     type: "POST",
+					     url: "lib/submit/submit-league.php",
+					     data: { form: 'kick-team', team_id: '' + team_id + '', league_id: '' + league_id + '', reason: '' + reason + '' }
+					   }).success(function( msg ) {
+								    $(".success").css("display", "");
+							   		$(".success").fadeIn(1000, "linear");
+							   		$(".success_text").fadeIn("slow");
+							   		$(".success").html(msg);
+							   		setTimeout(function(){location.reload()},3000);
+					  });
+					 
+					 $( this ).dialog( "close" );
+				 },
+				 Cancel: function() {
+				 	$('.modal').css('z-index', '1050');
+	 				$('.modal-backdrop').css('position', 'relative');
+					 $( this ).dialog( "close" );
+				 }
+			 }
+		 });
+	});
+});
+
+/**
+ * Unkick a team from a league
+ * @param league_id
+ * @param team_id
+ */
+ function unkickTeam(league_id, team_id) {
+	
+	$.ajax({
+	     type: "POST",
+	     url: "lib/submit/submit-league.php",
+	     async:true,
+	     crossbrowser:true,
+	     data: { form: 'unkick-team', league_id: '' + league_id + '', team_id: '' + team_id + '' }
+	   }).success(function( msg ) {
+		   		$('.success').css("display", "");
+		   		$(".success").fadeIn(1000, "linear");
+		   		$('.success_text').fadeIn("slow");
+		   		$('.success_text').html(msg);
+		   		setTimeout(function(){location.reload()},3000);
+	  });
+	
+}
+
+/**
  * Search and replace specifically used for CKEDITOR values to handle single quotes
  * 
  * @param search

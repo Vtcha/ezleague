@@ -225,6 +225,7 @@ class ezAdmin extends DB_Class {
 			  `rules` varchar(10000) DEFAULT NULL,
 			  `rosters` int(1) DEFAULT '1',
 			  `max_roster` int(10) DEFAULT '7',
+			  `suspended` blob DEFAULT NULL,
 			  PRIMARY KEY (`id`)
 			);
 			DROP TABLE IF EXISTS `" . $this->prefix . "links`;
@@ -460,6 +461,8 @@ class ezAdmin extends DB_Class {
 		$test_connection = mysqli_connect($this->host, $this->username, $this->password, $this->database) or die("Error " . mysqli_error( $test_connection ) );
 		if( $test_connection ) {
 			$sql = "
+					ALTER TABLE `" . $this->prefix . "leagues`
+					ADD COLUMN suspended BLOB;
 					ALTER TABLE `" . $this->prefix . "settings`
 					ADD COLUMN site_timezone VARCHAR(250);
 					ALTER TABLE `" . $this->prefix . "settings`

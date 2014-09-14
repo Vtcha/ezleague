@@ -84,6 +84,18 @@ $ez_league = new ezAdmin_League();
                  $ez_league->unlock_rosters( $league_id );
                 break;
     	 	
+            case 'kick-team':
+                $league_id      = $_POST['league_id'];
+                $team_id        = $_POST['team_id'];
+                $reason         = $_POST['reason'];
+                 $ez_league->kick_team( $league_id, $team_id, $reason );
+                break;
+
+            case 'unkick-team':
+                $league_id      = $_POST['league_id'];
+                $team_id        = $_POST['team_id'];
+                 $ez_league->unsuspend_team( $league_id, $team_id );
+                break;
 
     	 	default:
     	 		break;

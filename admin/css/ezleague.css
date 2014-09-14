@@ -117,3 +117,7 @@
  .update a {
  	color:#c5ffc5;
  }
+
+ .ui-dialog {
+ 	z-index:999999;
+ }
