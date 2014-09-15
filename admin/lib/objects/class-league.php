@@ -173,7 +173,7 @@ class ezAdmin_League extends DB_Class {
 		
 	}
 	
-	public function edit_league($max_teams, $total_games, $league_id, $max_roster, $start_date, $end_date) {
+	public function edit_league($max_teams, $total_games, $league_id, $league, $max_roster, $start_date, $end_date) {
 		
 		$max_teams		= $this->sanitize( $max_teams );
 		$total_games	= $this->sanitize( $total_games );
@@ -183,7 +183,7 @@ class ezAdmin_League extends DB_Class {
 		$start_date = date( 'Y-m-d', $start_date );
 		$end_date = date( 'Y-m-d', $end_date );
 		$this->link->query("UPDATE `" . $this->prefix . "leagues` 
-							SET teams = '$max_teams', total_games = '$total_games', max_roster = '$max_roster', start_date = '$start_date', end_date = '$end_date' 
+							SET league = '$league', teams = '$max_teams', total_games = '$total_games', max_roster = '$max_roster', start_date = '$start_date', end_date = '$end_date' 
 							WHERE id = '$league_id'
 						");
 		$this->success('League details updated');

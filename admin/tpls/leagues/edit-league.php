@@ -20,7 +20,7 @@
                       <input type="hidden" id="league-id" value="<?php echo $league_id; ?>" />
                         <div class="form-group">
                             <label>League</label>
-                            <input disabled class="form-control" id="league" value="<?php echo $league['league']; ?>" placeholder="League Name" />
+                            <input class="form-control" id="league" value="<?php echo $league['league']; ?>" placeholder="League Name" />
                         </div>
                         <div class="form-group">
                             <label>Max Teams</label>
