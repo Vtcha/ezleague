@@ -98,29 +98,32 @@ class ezLeague_League extends DB_Class {
 		$data = $this->fetch("SELECT * FROM `" . $this->prefix . "matches` WHERE id = '$match_id'");
 		if( $data ) {
 			$league_details = $this->get_league( $data['0']['league'] );
-			$match['id']	 		= $data['0']['id'];
-			$match['league_id'] 	= $data['0']['league'];
-			$match['league']		= $league_details['league'];
-			$match['home_team'] 	= $data['0']['homeTeam'];
-			$match['home_id']		= $data['0']['homeTeamID'];
-			$match['home_accept'] 	= $data['0']['homeTeam_accept'];
-			$match['home_score']	= $data['0']['homeScore'];
-			$match['away_team'] 	= $data['0']['awayTeam'];
-			$match['away_id']		= $data['0']['awayTeamID'];
-			$match['away_accept']	= $data['0']['awayTeam_accept'];
-			$match['away_score']	= $data['0']['awayScore'];
-			$match['season']		= $data['0']['season'];
-			$match['week']			= $data['0']['week'];
-			$match['map'] 			= $this->get_week_map( $match['league_id'], $match['week'] );
-			$match['created']		= $data['0']['created'];
-			$match['chat']			= $data['0']['chat_log'];
-			$match['date']			= $data['0']['matchDate'];
-			$match['time']			= $data['0']['matchTime'];
-			$match['zone']			= $data['0']['matchZone'];
-			$match['status']		= $data['0']['completed'];
-			$match['featured']		= $data['0']['featured'];
-			$match['reporter']		= $data['0']['reporter'];
-			$match['stream_url']	= $data['0']['streamURL'];
+			$match['id']	 			= $data['0']['id'];
+			$match['league_id'] 		= $data['0']['league'];
+			$match['league']			= $league_details['league'];
+			$match['home_team'] 		= $data['0']['homeTeam'];
+			$match['home_id']			= $data['0']['homeTeamID'];
+			$match['home_accept'] 		= $data['0']['homeTeam_accept'];
+			$match['home_score']		= $data['0']['homeScore'];
+			$match['away_team'] 		= $data['0']['awayTeam'];
+			$match['away_id']			= $data['0']['awayTeamID'];
+			$match['away_accept']		= $data['0']['awayTeam_accept'];
+			$match['away_score']		= $data['0']['awayScore'];
+			$match['season']			= $data['0']['season'];
+			$match['week']				= $data['0']['week'];
+			$match['map'] 				= $this->get_week_map( $match['league_id'], $match['week'] );
+			$match['created']			= $data['0']['created'];
+			$match['chat']				= $data['0']['chat_log'];
+			$match['date']				= $data['0']['matchDate'];
+			$match['time']				= $data['0']['matchTime'];
+			$match['zone']				= $data['0']['matchZone'];
+			$match['status']			= $data['0']['completed'];
+			$match['featured']			= $data['0']['featured'];
+			$match['reporter']			= $data['0']['reporter'];
+			$match['stream_url']		= $data['0']['streamURL'];
+			$match['server_ip']			= $data['0']['server_ip'];
+			$match['server_password'] 	= $data['0']['server_password'];
+			$match['moderator']			= $data['0']['match_moderator'];
 			$match['predictions'] = $this->get_predictions( $match['home_id'], $match['away_id'], $match['id'] );
 			return $match;
 		}
@@ -147,6 +150,58 @@ class ezLeague_League extends DB_Class {
 		$this->success('Match details have been updated');
 		return;
 		
+	}
+
+	/*
+	 * Update match information
+	 *
+	 * @return string
+	 */
+	public function update_match_information($match_id, $ip, $password, $moderator) {
+
+		$match_id 	= $this->sanitize( $match_id );
+		$ip 		= $this->sanitize( $ip );
+		$password 	= $this->sanitize( $password );
+		$moderator  = $this->sanitize( $moderator );
+		$this->link->query("UPDATE `" . $this->prefix . "matches` SET server_ip = '$ip', server_password = '$password', match_moderator = '$moderator' WHERE id = '$match_id'");
+		$this->success('Match information has been updated');
+		return;
+
+	}
+
+	/*
+	 * Get team rosters for a match
+	 *
+	 * @return array
+	 */
+	public function get_match_rosters($league_id, $home_team, $away_team) {
+
+		$league_id 	= $this->sanitize( $league_id );
+		$home_team  = $this->sanitize( $home_team );
+		$away_team  = $this->sanitize( $away_team );
+		$rosters = array();
+		$home_data = $this->fetch("SELECT * FROM `" . $this->prefix . "rosters` WHERE league = '$league_id' AND team = '$home_team'");
+		if( $home_data ) {
+			$home_roster = (array) json_decode( $home_data['0']['roster'] );
+			foreach( $home_roster as $home_user ) {
+				$user_data = $this->fetch("SELECT username FROM `" . $this->prefix . "users` WHERE id = '$home_user'");
+				$roster['username'] = $user_data['0']['username'];
+				array_push( $rosters, $roster );
+			}
+		}
+
+		$away_data = $this->fetch("SELECT * FROM `" . $this->prefix . "rosters` WHERE league = '$league_id' AND team = '$away_team'");
+		if( $away_data ) {
+			$away_roster = (array) json_decode( $away_data['0']['roster'] );
+			foreach( $away_roster as $away_user ) {
+				$user_data = $this->fetch("SELECT username FROM `" . $this->prefix . "users` WHERE id = '$away_user'");
+				$roster['username'] = $user_data['0']['username'];
+				array_push( $rosters, $roster );
+			}
+		}
+
+		return $rosters;
+
 	}
 	
 	/*

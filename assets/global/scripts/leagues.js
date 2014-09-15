@@ -12,6 +12,7 @@
 			this.updateChatLog();
 			this.reportMatch();
 			this.disputeMatch();
+			this.updateMatchInformation();
 			this.bindEvents();
 
 		},
@@ -27,6 +28,7 @@
 			this.update_chat_form = $('#matchChat');
 			this.report_match_form = $('#matchReport');
 			this.dispute_match_form = $('#disputeMatch');
+			this.match_info_form = $('#matchInformation');
 
 		},
 		
@@ -49,6 +51,35 @@
 			     type: "POST",
 			     url: "lib/submit/submit-league.php",
 			     data: { form: 'update-match-details', id: '' + match_id + '', date: '' + date + '', time: '' + time + '', zone: '' + zone + '', stream_url: '' + stream_url + '' }
+			   }).success(function( msg ) {
+						    $(".success").css("display", "");
+					   		$(".success").fadeIn(1000, "linear");
+					   		$(".success_text").fadeIn("slow");
+					   		$(".success").html(msg);
+					   		setTimeout(function(){location.reload()},3000);
+			  });
+			});
+			
+		},
+
+		/**
+		 * Update a matchs' server information
+		 */
+		updateMatchInformation: function() {
+
+			this.match_info_form.submit(function(e) {
+
+				var match_id	= $("#match-id").val();
+					ip		    = $("#match-server-ip").val();
+					password    = $("#match-server-password").val();
+					moderator   = $("#match-server-moderator").val();
+
+				 e.preventDefault();
+				 
+			 $.ajax({
+			     type: "POST",
+			     url: "lib/submit/submit-league.php",
+			     data: { form: 'update-match-information', id: '' + match_id + '', ip: '' + ip + '', password: '' + password + '', moderator: '' + moderator + '' }
 			   }).success(function( msg ) {
 						    $(".success").css("display", "");
 					   		$(".success").fadeIn(1000, "linear");

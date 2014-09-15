@@ -275,6 +275,9 @@ class ezAdmin extends DB_Class {
 			  `streamURL` varchar(200) DEFAULT NULL,
 			  `featured` int(1) DEFAULT '0',
 			  `reporter` varchar(50) DEFAULT NULL,
+			  `server_ip` varchar(250) DEFAULT NULL,
+			  `server_password` varchar(250) DEFAULT NULL,
+			  `match_moderator` varchar(250) DEFAULT NULL,
 			  PRIMARY KEY (`id`)
 			);
 			DROP TABLE IF EXISTS `" . $this->prefix . "news`;
@@ -461,6 +464,12 @@ class ezAdmin extends DB_Class {
 		$test_connection = mysqli_connect($this->host, $this->username, $this->password, $this->database) or die("Error " . mysqli_error( $test_connection ) );
 		if( $test_connection ) {
 			$sql = "
+					ALTER TABLE `" . $this->prefix . "matches`
+					ADD COLUMN server_ip VARCHAR(250);
+					ALTER TABLE `" . $this->prefix . "matches`
+					ADD COLUMN server_password VARCHAR(250);
+					ALTER TABLE `" . $this->prefix . "matches`
+					ADD COLUMN match_moderator VARCHAR(250);
 					ALTER TABLE `" . $this->prefix . "leagues`
 					ADD COLUMN suspended BLOB;
 					ALTER TABLE `" . $this->prefix . "settings`

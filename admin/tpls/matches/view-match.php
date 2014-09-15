@@ -87,6 +87,30 @@
 	      </div>
 	    </div>
 	    <div class="col-lg-5">
+	    	<div class="panel panel-default">
+	            <div class="panel-heading">
+	                <i class="fa fa-comment"></i> Match Information
+	            </div>
+	            <div class="panel-body">
+	               <div class="table-responsive">
+	                    <table class="table">
+             				<tr>
+             					<td><strong>Server IP</strong></td>
+             					<td><?php echo $match['server_ip']; ?></td>
+             				</tr>
+             				<tr>
+             					<td><strong>Server Password</strong></td>
+             					<td><?php echo $match['server_password']; ?></td>
+             				</tr>
+             				<tr>
+             					<td><strong>Match Moderator</strong></td>
+             					<td><?php echo $match['moderator']; ?></td>
+             				</tr>
+	                     </table>
+	                 </div>
+	            </div>
+	        </div>
+
 	        <div class="panel panel-default">
 	            <div class="panel-heading">
 	                <i class="fa fa-comment"></i> Chat Log
