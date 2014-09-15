@@ -103,7 +103,6 @@ class ezAdmin extends DB_Class {
 
 			$hash = '$2a$05$Bs3HEiQG6G9PZHkY.Ay3CeE1lBUiLRSiRSl57pmRs61C8GWsKAt6G';
 			$sql = "
-			DROP TABLE IF EXISTS `" . $this->prefix . "comments`;
 			CREATE TABLE `" . $this->prefix . "comments` (
 			  `id` int(10) NOT NULL AUTO_INCREMENT,
 			  `post_id` int(10) DEFAULT NULL,
@@ -113,7 +112,6 @@ class ezAdmin extends DB_Class {
 			  `created` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
 			  PRIMARY KEY (`id`)
 			); 
-			DROP TABLE IF EXISTS `" . $this->prefix . "disputes`;
 			CREATE TABLE `" . $this->prefix . "disputes` (
 			  `id` int(10) NOT NULL AUTO_INCREMENT,
 			  `match_id` int(10) DEFAULT NULL,
@@ -124,7 +122,6 @@ class ezAdmin extends DB_Class {
 			  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
 			  PRIMARY KEY (`id`)
 			); 
-			DROP TABLE IF EXISTS `" . $this->prefix . "forum_answer`;
 			CREATE TABLE `" . $this->prefix . "forum_answer` (
 			  `a_id` int(10) NOT NULL AUTO_INCREMENT,
 			  `question_id` int(10) NOT NULL,
@@ -135,7 +132,6 @@ class ezAdmin extends DB_Class {
 			  `a_user_id` int(10) NOT NULL,
 			  PRIMARY KEY (`a_id`)
 			);
-			DROP TABLE IF EXISTS `" . $this->prefix . "forum_question`;
 			CREATE TABLE `" . $this->prefix . "forum_question` (
 			  `id` int(10) NOT NULL AUTO_INCREMENT,
 			  `topic` varchar(255) NOT NULL,
@@ -151,7 +147,6 @@ class ezAdmin extends DB_Class {
 			  `recent_modified` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
 			  PRIMARY KEY (`id`)
 			);
-			DROP TABLE IF EXISTS `" . $this->prefix . "forum_section`;
 			CREATE TABLE `" . $this->prefix . "forum_section` (
 			  `id` int(10) NOT NULL AUTO_INCREMENT,
 			  `section_name` varchar(50) NOT NULL,
@@ -159,7 +154,6 @@ class ezAdmin extends DB_Class {
 			  `status` varchar(50) DEFAULT 'enabled',
 			  PRIMARY KEY (`id`)
 			);
-			DROP TABLE IF EXISTS `" . $this->prefix . "games`;
 			CREATE TABLE `" . $this->prefix . "games` (
 			  `id` int(10) NOT NULL AUTO_INCREMENT,
 			  `game` varchar(100) DEFAULT NULL,
@@ -168,7 +162,6 @@ class ezAdmin extends DB_Class {
 			  `logo` varchar(100) DEFAULT NULL,
 			  PRIMARY KEY (`id`)
 			);
-			DROP TABLE IF EXISTS `" . $this->prefix . "guilds`;
 			CREATE TABLE `" . $this->prefix . "guilds` (
 			  `id` int(10) NOT NULL AUTO_INCREMENT,
 			  `guild` varchar(50) DEFAULT NULL,
@@ -183,7 +176,6 @@ class ezAdmin extends DB_Class {
 			  `logo` varchar(250) DEFAULT NULL,
 			  PRIMARY KEY (`id`,`admin`)
 			);
-			DROP TABLE IF EXISTS `" . $this->prefix . "inbox_messages`;
 			CREATE TABLE `" . $this->prefix . "inbox_messages` (
 			  `id` int(10) NOT NULL AUTO_INCREMENT,
 			  `msg_id` int(10) NOT NULL,
@@ -194,7 +186,6 @@ class ezAdmin extends DB_Class {
 			  `date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
 			  PRIMARY KEY (`id`)
 			);
-			DROP TABLE IF EXISTS `" . $this->prefix . "inbox_original`;
 			CREATE TABLE `" . $this->prefix . "inbox_original` (
 			  `id` int(10) NOT NULL AUTO_INCREMENT,
 			  `sender` varchar(50) DEFAULT NULL,
@@ -203,7 +194,6 @@ class ezAdmin extends DB_Class {
 			  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
 			  PRIMARY KEY (`id`)
 			);
-			DROP TABLE IF EXISTS `" . $this->prefix . "inbox_replies`;
 			CREATE TABLE `" . $this->prefix . "inbox_replies` (
 			  `id` int(10) NOT NULL AUTO_INCREMENT,
 			  `msg_id` int(10) DEFAULT NULL,
@@ -212,7 +202,6 @@ class ezAdmin extends DB_Class {
 			  `date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
 			  PRIMARY KEY (`id`)
 			);
-			DROP TABLE IF EXISTS `" . $this->prefix . "leagues`;
 			CREATE TABLE `" . $this->prefix . "leagues` (
 			  `id` int(10) NOT NULL AUTO_INCREMENT,
 			  `league` varchar(50) DEFAULT NULL,
@@ -228,14 +217,12 @@ class ezAdmin extends DB_Class {
 			  `suspended` blob DEFAULT NULL,
 			  PRIMARY KEY (`id`)
 			);
-			DROP TABLE IF EXISTS `" . $this->prefix . "links`;
 			CREATE TABLE `" . $this->prefix . "links` (
 			  `id` int(10) NOT NULL AUTO_INCREMENT,
 			  `url` varchar(500) DEFAULT NULL,
 			  `text` varchar(250) DEFAULT NULL,
 			  PRIMARY KEY (`id`)
 			);
-			DROP TABLE IF EXISTS `" . $this->prefix . "map_schedule`;
 			CREATE TABLE `" . $this->prefix . "map_schedule` (
 			  `id` int(10) NOT NULL AUTO_INCREMENT,
 			  `map` varchar(250) DEFAULT NULL,
@@ -243,14 +230,12 @@ class ezAdmin extends DB_Class {
 			  `league` int(10) DEFAULT NULL,
 			  PRIMARY KEY (`id`)
 			);
-			DROP TABLE IF EXISTS `" . $this->prefix . "maps`;
 			CREATE TABLE `" . $this->prefix . "maps` (
 			  `id` int(10) NOT NULL AUTO_INCREMENT,
 			  `map` varchar(250) DEFAULT NULL,
 			  `league` int(10) DEFAULT NULL,
 			  PRIMARY KEY (`id`)
 			);
-			DROP TABLE IF EXISTS `" . $this->prefix . "matches`;
 			CREATE TABLE `" . $this->prefix . "matches` (
 			  `id` int(10) NOT NULL AUTO_INCREMENT,
 			  `league` int(10) DEFAULT NULL,
@@ -280,7 +265,6 @@ class ezAdmin extends DB_Class {
 			  `match_moderator` varchar(250) DEFAULT NULL,
 			  PRIMARY KEY (`id`)
 			);
-			DROP TABLE IF EXISTS `" . $this->prefix . "news`;
 			CREATE TABLE `" . $this->prefix . "news` (
 			  `id` int(10) NOT NULL AUTO_INCREMENT,
 			  `title` varchar(255) DEFAULT NULL,
@@ -293,20 +277,17 @@ class ezAdmin extends DB_Class {
 			  `game` varchar(25) DEFAULT NULL,
 			  PRIMARY KEY (`id`)
 			);
-			DROP TABLE IF EXISTS `" . $this->prefix . "news_category`;
 			CREATE TABLE `" . $this->prefix . "news_category` (
 			  `id` int(10) NOT NULL AUTO_INCREMENT,
 			  `category` varchar(50) DEFAULT NULL,
 			  PRIMARY KEY (`id`)
 			);
-			DROP TABLE IF EXISTS `" . $this->prefix . "news_media`;
 			CREATE TABLE `" . $this->prefix . "news_media` (
 			  `id` int(10) NOT NULL AUTO_INCREMENT,
 			  `filename` varchar(100) DEFAULT NULL,
 			  `created` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
 			  PRIMARY KEY (`id`)
 			);
-			DROP TABLE IF EXISTS `" . $this->prefix . "predictions`;
 			CREATE TABLE `" . $this->prefix . "predictions` (
 			  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
 			  `match_id` int(10) DEFAULT NULL,
@@ -316,7 +297,6 @@ class ezAdmin extends DB_Class {
 			  `date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
 			  PRIMARY KEY (`id`)
 			);
-			DROP TABLE IF EXISTS `" . $this->prefix . "results`;
 			CREATE TABLE `" . $this->prefix . "results` (
 			  `id` int(10) NOT NULL AUTO_INCREMENT,
 			  `guild_id` int(10) NOT NULL,
@@ -327,7 +307,6 @@ class ezAdmin extends DB_Class {
 			  `points_given` int(10) DEFAULT '0',
 			  PRIMARY KEY (`id`)
 			);
-			DROP TABLE IF EXISTS `" . $this->prefix . "rosters`;
 			CREATE TABLE `" . $this->prefix . "rosters` (
 			  `id` int(10) NOT NULL AUTO_INCREMENT,
 			  `league` int(10) DEFAULT NULL,
@@ -335,7 +314,6 @@ class ezAdmin extends DB_Class {
 			  `roster` blob,
 			  PRIMARY KEY (`id`)
 			);
-			DROP TABLE IF EXISTS `" . $this->prefix . "screenshots`;
 			CREATE TABLE `" . $this->prefix . "screenshots` (
 			  `id` int(10) NOT NULL AUTO_INCREMENT,
 			  `filename` varchar(255) NOT NULL,
@@ -344,7 +322,6 @@ class ezAdmin extends DB_Class {
 			  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
 			  PRIMARY KEY (`id`)
 			);
-			DROP TABLE IF EXISTS `" . $this->prefix . "seasons`;
 			CREATE TABLE `" . $this->prefix . "seasons` (
 			  `id` int(10) NOT NULL AUTO_INCREMENT,
 			  `league_id` int(10) DEFAULT NULL,
@@ -356,7 +333,6 @@ class ezAdmin extends DB_Class {
 			  `created` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
 			  PRIMARY KEY (`id`)
 			);
-			DROP TABLE IF EXISTS `" . $this->prefix . "settings`;
 			CREATE TABLE `" . $this->prefix . "settings` (
 			  `id` int(1) NOT NULL DEFAULT '1',
 			  `site_name` varchar(100) DEFAULT NULL,
@@ -383,7 +359,6 @@ class ezAdmin extends DB_Class {
 			  `site_timezone` varchar(250) DEFAULT NULL,
 			  PRIMARY KEY (`id`)
 			);
-			DROP TABLE IF EXISTS `" . $this->prefix . "users`;
 			CREATE TABLE `" . $this->prefix . "users` (
 			  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
 			  `username` varchar(50) DEFAULT NULL,
