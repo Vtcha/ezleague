@@ -16,6 +16,14 @@ $ez_league = new ezLeague_League();
 		 		$stream_url = $_POST['stream_url'];
 		 			$ez_league->update_match_details($match_id, $date, $time, $zone, $stream_url);
 		 		break;
+
+		 	case 'update-match-information':
+		 		$match_id 	= $_POST['id'];
+		 		$ip 		= $_POST['ip'];
+		 		$password 	= $_POST['password'];
+		 		$moderator 	= $_POST['moderator'];
+		 			$ez_league->update_match_information($match_id, $ip, $password, $moderator);
+		 		break;
 		 		
 		 	case 'accept-match-details':
 		 		$match_id	= $_POST['id'];

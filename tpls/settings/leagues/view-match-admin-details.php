@@ -26,7 +26,7 @@
  	<input type="text" class="form-control" id="match-stream-url" value="<?php echo $match_details['stream_url']; ?>" />
  </div>
  <div class="form-group">
- 	<button type="submit" class="btn btn-success">Update</button>
+ 	<button type="submit" class="btn btn-success">Update Details</button>
  <?php 
 	 if( $match_details['home_id'] == $profile['guild_id'] ) {
 	 	if( $match_details['home_accept'] == 0 ) { ?>
