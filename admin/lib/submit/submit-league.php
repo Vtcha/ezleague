@@ -42,12 +42,13 @@ $ez_league = new ezAdmin_League();
     	 		
     	 	case 'edit-league':
     	 		$league_id		= $_POST['league_id'];
+                $league         = $_POST['league'];
     	 		$total_games	= $_POST['total_games'];
     	 		$max_teams		= $_POST['max_teams'];
                 $max_roster     = $_POST['max_roster'];
                 $start          = strtotime( $_POST['start'] );
                 $end            = strtotime( $_POST['end'] );
-    	 		 $ez_league->edit_league( $max_teams, $total_games, $league_id, $max_roster, $start, $end );
+    	 		 $ez_league->edit_league( $max_teams, $total_games, $league_id, $league, $max_roster, $start, $end );
     	 		break;
     	 		
     	 	case 'delete-league':
