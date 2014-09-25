@@ -254,7 +254,7 @@ class ezAdmin extends DB_Class {
 			  `chat_log` blob,
 			  `matchDate` date DEFAULT NULL,
 			  `matchTime` varchar(30) DEFAULT NULL,
-			  `matchZone` varchar(5) DEFAULT NULL,
+			  `matchZone` varchar(250) DEFAULT NULL,
 			  `completed` int(1) DEFAULT '0',
 			  `week` int(10) DEFAULT NULL,
 			  `streamURL` varchar(200) DEFAULT NULL,
@@ -439,6 +439,8 @@ class ezAdmin extends DB_Class {
 		$test_connection = mysqli_connect($this->host, $this->username, $this->password, $this->database) or die("Error " . mysqli_error( $test_connection ) );
 		if( $test_connection ) {
 			$sql = "
+					ALTER TABLE `" . $this->prefix . "matches`
+					MODIFY matchZone VARCHAR(250);
 					ALTER TABLE `" . $this->prefix . "matches`
 					ADD COLUMN server_ip VARCHAR(250);
 					ALTER TABLE `" . $this->prefix . "matches`

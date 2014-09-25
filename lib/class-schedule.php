@@ -106,7 +106,8 @@ class ezLeague_Schedule extends DB_Class {
     							WHERE league = '$league_id' AND season = '$season'
     							ORDER BY week ASC
     						");
-    	if( $data ) {
+
+    	if( count($data) > 0 ) {
     		foreach( $data as $match ) {
     			$matchup['id']		   = $match['id'];
     			$matchup['home_team']  = $match['homeTeam'];
