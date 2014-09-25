@@ -74,11 +74,11 @@ $members = $ez_frontend->get_members($position, $order_by, $order_text); ?>
 				$friends = true;
 			} else {
 				$friends = false;
-				$email = $ez_users->get_email_name( $member['email'] ) . '...';
+				$email = '<em>Friends only</em>';
 			}
 		} else {
 			$friends = false;
-			$email = '<em>Users only</em>';
+			$email = '<em>Friends only</em>';
 		}
 	?>
 		<tr <?php echo ( $friends == true ? 'class="text-success bolder"' : '' ); ?>>
