@@ -45,7 +45,7 @@ class ezAdmin_Match extends DB_Class {
 			}
 			return $matches;
 		} else {
-			return;
+			return false;
 		}
 		
 	}
