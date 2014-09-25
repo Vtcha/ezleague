@@ -13,12 +13,12 @@
  </div>
  <div class="form-group">
  	<label class="control-label">Match Zone</label>
+ <?php $timezones = $ez_frontend->generate_timezone_list(); ?>
  	<select id="match-zone" class="form-control">
  	 <option value=""></option>
- 	 <option <?php echo ( $match_details['zone'] == 'EST' ? 'selected' : '' ); ?> value="EST">Eastern Standard (EST)</option>
- 	 <option <?php echo ( $match_details['zone'] == 'CST' ? 'selected' : '' ); ?> value="CST">Central Standard (CST)</option>
- 	 <option <?php echo ( $match_details['zone'] == 'MST' ? 'selected' : '' ); ?> value="MST">Mountain Standard (MST)</option>
- 	 <option <?php echo ( $match_details['zone'] == 'PST' ? 'selected' : '' ); ?> value="PST">Pacific Standard (PST)</option>
+ <?php foreach($timezones as $zone) { ?>
+ 	 <option <?php echo ( $match_details['zone'] == $zone['abbrev'] ? 'selected' : '' ); ?> value="<?php echo $zone['abbrev']; ?>"><?php echo $zone['display']; ?></option>
+ <?php } ?>
  	</select>
  </div>
  <div class="form-group">
