@@ -16,6 +16,8 @@
             <div class="panel-body">
                 <div class="success"><span class="success_text"></span></div>
                 <div class="table-responsive">
+            <?php $matches = $ez_match->get_matches( $league_id ); ?>
+            <?php if( $matches ) { ?>
                     <table class="table table-hover">
                         <thead>
                             <tr>
@@ -26,7 +28,6 @@
                                 <th></th>
                             </tr>
                         </thead>
-            <?php $matches = $ez_match->get_matches( $league_id ); ?>
                         <tbody>
               <?php foreach( $matches as $match ) { ?>
                             <tr>
@@ -72,6 +73,9 @@
                <?php } ?>
                         </tbody>
                      </table>
+            <?php } else { ?>
+                <span class="text-danger bolder">No matches to display, you should <a href="leagues.php?page=schedule&id=<?php echo $league_id; ?>">generate</a> the match schedule</span>
+            <?php } ?>
                  </div>
             </div>
          <?php } else { ?>
