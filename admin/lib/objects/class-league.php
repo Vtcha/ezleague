@@ -59,8 +59,12 @@ class ezAdmin_League extends DB_Class {
 
 		$league_id  	= $this->sanitize( $league_id );
 		$start			= $this->sanitize( $start );
+			$start = date('Y-m-d', strtotime( $start ) );
 		$end			= $this->sanitize( $end );
+			$end = date('Y-m-d', strtotime( $end ) );
 		$register_end 	= $this->sanitize( $register_end );
+			$register_end = date('Y-m-d', strtotime( $register_end ) );
+
 		$data = $this->fetch("SELECT season FROM `" . $this->prefix . "seasons` WHERE league_id = '$league_id' ORDER BY season DESC LIMIT 1");
 		if( $data ) {
 			$season = $data['0']['season'] + 1;
