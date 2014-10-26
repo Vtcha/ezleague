@@ -203,6 +203,24 @@ class ezLeague_League extends DB_Class {
 		return $rosters;
 
 	}
+
+	/*
+	 * Get the acceptance status of a match
+	 */
+	public function get_acceptance_status($match_id) {
+
+		$match_id 	= $this->sanitize( $match_id );
+		$status = array();
+		$data = $this->fetch("SELECT homeTeam_accept, awayTeam_accept FROM `" . $this->prefix . "matches` WHERE id = '$match_id'");
+		if( $data ) {
+			$status['home'] = $data['0']['homeTeam_accept'];
+			$status['away'] = $data['0']['awayTeam_accept'];
+			return $status;
+		} else {
+			return;
+		}
+
+	}
 	
 	/*
 	 * Toggle acceptance or rejection of match details
@@ -227,9 +245,125 @@ class ezLeague_League extends DB_Class {
 							SET $match_side = '$update' 
 							WHERE id = '$match_id'
 						");
+		$status = $this->get_acceptance_status( $match_id );
+		$teams = $this->get_match_teams( $match_id );
+		$home_team_admin = $this->get_team_admin( $teams['home'] );
+		$away_team_admin = $this->get_team_admin( $teams['away'] );
+		$teams = $home_team_admin['team'] . ' vs ' . $away_team_admin['team'];
+		$emails = $away_team_admin['email'] . ',' . $home_team_admin['email'];
+		if( $status['home'] == 1 && $status['away'] == 1 ) {
+			$this->send_match_update_message( $emails, 'ezLeagueMatchUpdates@no-reply.com', '[ezleague] Match Details Updated', $match_id, $teams, 'Both Teams have Accepted the match details. Please notify your team of the match.');
+		} else {
+			$this->send_match_update_message( $emails, 'ezLeagueMatchUpdates@no-reply.com', '[ezleague] Match Details Updated', $match_id, $teams, 'Match Acceptance has been updated');
+		}
+		
+
 		$this->success('Acceptance status has been updated');
 		return;
 		
+	}
+
+	/*
+	 * Trigger message send
+	 *
+	 * @return string
+	 */
+	public function send_match_update_message( $to, $from, $subject, $match_id, $teams, $message ) {
+
+		$to 	 = $this->sanitize( $to );
+		$from    = $this->sanitize( $from );
+		$subject = $this->sanitize( $subject );
+		$match 	 = $this->sanitize( $match_id );
+		$body 	 = $message;
+
+		$data = $this->fetch("SELECT mandrill_username, mandrill_password FROM `" . $this->prefix . "settings` WHERE id = '1'");
+
+		$message = '<html><body>';
+		$message .= '<table rules="all" style="border-color: #666;" cellpadding="10">';
+		$message .= "<tr><td><strong>Match ID</strong> </td><td> <a href='" . $this->site_url . "/settings-guild.php?page=match&view=details&mid=106'> #" . strip_tags($match) . "</a> (" . strip_tags($teams) . ")</td></tr>";
+		$message .= "<tr><td><strong>Message:</strong> </td><td>" . strip_tags($body) . "</td></tr>";
+		$message .= "<tr><td></td><td>Go to your <em>View Match Details</em> under <em>My Team > Leagues > View Schedule</em> and view the Match Details update.</td></tr>";
+		$message .= "</table>";
+		$message .= "</body></html>";
+		if( $data ) {
+			require_once "Mail.php";
+			$mandrill_username = $data['0']['mandrill_username'];
+			$mandrill_password = $data['0']['mandrill_password']; 
+			if( class_exists( 'Mail' ) && ( $mandrill_username != '' && $mandrill_password != '' ) ) { 
+				$host = "smtp.mandrillapp.com"; 
+				$username = $mandrill_username; 
+				$password = $mandrill_password;
+				$headers = array ('From' => $from,   'To' => $to, 'MIME-Version' => '1.0', 'Content-Type' => 'text/html; charset=ISO-8859-1', 'Subject' => $subject); 
+				$smtp = Mail::factory(
+								'smtp',   
+								array (
+									'host' => $host,     
+									'auth' => true,
+									'port' => 587,     
+									'username' => $username,     
+									'password' => $password
+									)
+								);  
+				$mail = $smtp->send($to, $headers, $message);  
+				if (PEAR::isError($mail)) {   
+					echo("<p>" . $mail->getMessage() . "</p>");  
+				} else {   
+					echo("<p>A Match Details Update email has been sent to team admins.</p>");  
+				}
+			} else {
+				if( mail($to, $subject, $message, $headers) ) {
+					$this->success('Thank you, your message has been sent');
+				} else {
+					$this->error('There was a problem sending your message, please try again');
+				}
+			}
+		}
+		return;
+
+	}
+
+	/*
+	 * Get team admin email
+	 * @return string
+	 */
+	public function get_team_admin($team_id) {
+
+		$team_id 	= $this->sanitize( $team_id );
+		$data = $this->fetch("SELECT " . $this->prefix . "users.username, " . $this->prefix . "users.email, 
+									 " . $this->prefix . "guilds.admin, " . $this->prefix . "guilds.id,  " . $this->prefix . "guilds.guild 
+							  FROM `" . $this->prefix . "users`, `" . $this->prefix . "guilds` 
+							  WHERE (" . $this->prefix . "guilds.admin = " . $this->prefix . "users.username) AND " . $this->prefix . "guilds.id = '$team_id'
+							");
+		if( $data ) {
+			$admin['username'] = $data['0']['username'];
+			$admin['admin']	   = $data['0']['admin'];
+			$admin['email']	   = $data['0']['email'];
+			$admin['team_id']  = $data['0']['id'];
+			$admin['team']	   = $data['0']['guild'];
+			return $admin;
+		} else {
+			return;
+		}
+
+	}
+
+	/*
+	 * Get team ids of match
+	 * @return int
+	 */
+	public function get_match_teams($match_id) {
+
+		$match_id = $this->sanitize( $match_id );
+		$match = array();
+		$data = $this->fetch("SELECT homeTeamID, awayTeamID FROM `" . $this->prefix . "matches` WHERE id = '$match_id'");
+		if( $data ) {
+			$match['home']	= $data['0']['homeTeamID'];
+			$match['away']	= $data['0']['awayTeamID'];
+			return $match;
+		} else {
+			return;
+		}
+
 	}
 	
 	/*
@@ -252,6 +386,15 @@ class ezLeague_League extends DB_Class {
 			$updated_chat = json_encode( $message );
 			$updated_chat = $this->sanitize( $updated_chat );
 		}
+
+		$teams = $this->get_match_teams( $match_id );
+		$home_team_admin = $this->get_team_admin( $teams['home'] );
+		$away_team_admin = $this->get_team_admin( $teams['away'] );
+		$teams = $home_team_admin['team'] . ' vs ' . $away_team_admin['team'];
+		$emails = $away_team_admin['email'] . ',' . $home_team_admin['email'];
+
+		$this->send_match_update_message( $emails, 'ezLeagueMatchUpdates@no-reply.com', '[ezleague] Match Details Updated', $match_id, $teams, 'A new message has been posted in the <em>Chat Log</em> regarding the match.');
+		
 		$this->link->query("UPDATE `" . $this->prefix . "matches` SET chat_log = '$updated_chat' WHERE id = '$match_id'");
 		$this->success('Message added to chat log');
 		return;
