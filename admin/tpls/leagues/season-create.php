@@ -52,6 +52,8 @@
             </div>
             <div class="panel-body">
                 <div class="table-responsive">
+             <?php $seasons = $ez_league->get_past_seasons( $league_id ); ?>
+             <?php if( $seasons ) { ?>
                     <table class="table table-hover current_leagues">
                         <thead>
                             <tr>
@@ -62,7 +64,6 @@
                                 <th>Options</th>
                             </tr>
                         </thead>
-            <?php $seasons = $ez_league->get_past_seasons( $league_id ); ?>
                         <tbody>
               <?php foreach( $seasons as $season ) { ?>
                             <tr>
@@ -77,6 +78,9 @@
                <?php } ?>
                         </tbody>
                      </table>
+             <?php } else { ?>
+                <span class="text-danger bolder">No seasons found for this league</span>
+             <?php } ?>
                     </div>
             </div>
         </div>
