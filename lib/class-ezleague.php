@@ -104,6 +104,79 @@ class ezLeague extends DB_Class {
 		}
 	
 	}
+
+	public function forget_password_generator($email, $length) {
+		$emailCheck = $this->fetch("SELECT email FROM `" . $this->prefix . "users`
+				   				 	WHERE email = '$email'
+						   		 ");
+
+		if( count( $emailCheck ) > 0 ) {
+		    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+		    $randomString = '';
+		    for ( $i = 0; $i < $length; $i++ ) {
+		        $randomString .= $characters[ rand( 0, strlen( $characters ) - 1 ) ];
+		    }
+		    
+		    $this->query("UPDATE `" . $this->prefix . "users`
+		   				  SET forgot = '$randomString'
+		   				  WHERE email = '$email'
+				   		 ");
+
+		    echo "<p><span style='color:green;font-weight:700;'>Success!</span> An e-mail has been sent with directions on how to reset your password.</p>";
+			$from = 'reset@no-reply.net';
+			$name = 'ezLeague Password Reset';
+			$message = '
+			<h3>Password Reset</h3>
+			 <p>To complete the password reset process, please go here: <a href="' . $this->site_url . '/forget-password.php?code=' . $randomString . '">' . $this->site_url . '/forget-password.php?code=' . $randomString . '</a></p>
+			 <small>If you did not request to have your password reset, please disregard this message.</small>
+			';
+
+			$this->frontend->send_message( $email, $from, $subject, $name, $message );
+
+		} else {
+			echo "<p><span style='color:red;font-weight:700;'>ERROR</span> The <em>e-mail address</em>, <strong>$email</strong>, does not exist in our records.</p>";
+			echo "<a href='forget-password.php' class='btn btn-primary'>Forget Password Form</a>";
+
+		}
+	}
+
+	function validate_password_code($code) {
+		$validate_check = $this->fetch("SELECT id, email, forgot FROM `" . $this->prefix . "users`
+				   				 	   WHERE forgot = '$code'
+						   		 ");
+		
+		 if( count( $validate_check ) > 0 ) {
+		 	$valid = array();
+		 	$valid['id']	= $validate_check['0']['id'];
+		 	$valid['email'] = $validate_check['0']['email'];
+		 	$valid['code']	= $validate_check['0']['forgot'];
+		 	return $valid;
+		 } else {
+		 	return false;
+		 }
+	}
+
+	function reset_password($user_id, $newPassword) {
+		$saltData = $this->fetch("SELECT salt, hash_string
+								  FROM `" . $this->prefix . "users`
+								  WHERE id = '$user_id'
+								");
+
+		$salt = $saltData['0']['salt'];
+		$hash = $saltData['0']['hash_string'];
+
+			  $cost = 5;
+			  $salt = strtr(base64_encode(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM)), '+', '.');
+			  $salt = sprintf("$2a$%02d$", $cost) . $salt;
+			  $hash = crypt($newPassword, $salt);
+			   
+			   $this->query("UPDATE `" . $this->prefix . "users`
+			   				 SET salt = '$salt', hash_string = '$hash'
+			   				 WHERE id = '$user_id'
+			   			   ");
+
+			   echo "<p><span style='color:green;font-weight:700;'>Success!</span> Your new password has been applied.</p>";
+	}
 	
 	/*
 	 * Get a friendly time difference between 2 dates
