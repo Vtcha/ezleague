@@ -357,6 +357,7 @@ class ezAdmin extends DB_Class {
 			  `mandrill_password` varchar(250) DEFAULT NULL,
 			  `site_icon` varchar(250) DEFAULT NULL,
 			  `site_timezone` varchar(250) DEFAULT NULL,
+			  `forum_link` varchar(250) DEFAULT NULL,
 			  PRIMARY KEY (`id`)
 			);
 			CREATE TABLE IF NOT EXISTS `" . $this->prefix . "users` (
@@ -439,6 +440,8 @@ class ezAdmin extends DB_Class {
 		$test_connection = mysqli_connect($this->host, $this->username, $this->password, $this->database) or die("Error " . mysqli_error( $test_connection ) );
 		if( $test_connection ) {
 			$sql = "
+					ALTER TABLE `" . $this->prefix . "settings`
+					ADD COLUMN forum_link VARCHAR(250);
 					ALTER TABLE `" . $this->prefix . "matches`
 					MODIFY matchZone VARCHAR(250);
 					ALTER TABLE `" . $this->prefix . "matches`

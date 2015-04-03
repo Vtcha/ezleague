@@ -71,9 +71,11 @@ if( $site_settings['handle'] != '' ) {
 				<li class="main-nav">
 					<a href="members.php" class="btn blue">Members</a>
 				</li>
+		<?php if( ! empty( $site_settings['forum'] ) ) { ?>
 				<li class="main-nav">
-					<a href="#" class="btn blue-hoki">Forums</a>
+					<a href="<?php echo $site_settings['forum']; ?>" target="_blank" class="btn blue-hoki">Forums</a>
 				</li>
+		<?php } ?>
 				<li class="main-nav">
 					<a href="about.php" class="btn blue-steel">About</a>
 				</li>

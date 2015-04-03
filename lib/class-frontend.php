@@ -311,6 +311,7 @@ class ezLeague_Frontend extends DB_Class {
 			$settings['token']   		= $data['0']['twitter_token'];
 			$settings['token_secret']	= $data['0']['twitter_token_secret'];
 			$settings['timezone']		= $data['0']['site_timezone'];
+			$settings['forum']			= $data['0']['forum_link'];
 			return $settings;
 		} else {
 			return;

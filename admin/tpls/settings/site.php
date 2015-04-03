@@ -4,7 +4,7 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-lg-10">
+    <div class="col-lg-12">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <i class="fa fa-gear"></i> Modify Basic Site Settings
@@ -34,6 +34,9 @@
                     </li>
                     <li class="">
                         <a data-toggle="tab" href="#site-timezone">Site Timezone</a>
+                    </li>
+                    <li class="">
+                        <a data-toggle="tab" href="#site-forum">Forum URL</a>
                     </li>
                 </ul>
                 
@@ -194,6 +197,20 @@
                            <span class="success_text"></span>
                          </div>
                         </div>
+                    </div>
+                    <div class="tab-pane fade" id="site-forum">
+                        <h4>Forum URL <small>(URL must start with <em>http://</em>)</small></h4>
+                         <form method="POST" id="siteForum">
+                            <div class="form-group">
+                                <input class="form-control" id="forum-url" placeholder="http://link-to-your-forum.com" value="<?php echo $site_settings['forum_url']; ?>" />
+                            </div>
+                            <div class="form-group">
+                                <button class="btn btn-success" type="submit">Save</button>
+                            </div>
+                            <div class="success">
+                              <span class="success_text"></span>
+                            </div>
+                          </form>
                     </div>
                 </div>
             </div>

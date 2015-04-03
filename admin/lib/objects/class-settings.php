@@ -247,6 +247,9 @@ class ezAdmin_Settings extends DB_Class {
 			case 'timezone':
 				$setting = 'site_timezone';
 				break;
+			case 'forum':
+				$setting = 'forum_link';
+				break;
 			default:
 				break;
 		}
@@ -275,7 +278,8 @@ class ezAdmin_Settings extends DB_Class {
 								'fav_icon'			=> $data['0']['site_icon'],
 								'mandrill_username'	=> $data['0']['mandrill_username'],
 								'mandrill_password' => $data['0']['mandrill_password'],
-								'timezone'			=> $data['0']['site_timezone']
+								'timezone'			=> $data['0']['site_timezone'],
+								'forum_url'			=> $data['0']['forum_link']
 							);
 			return $settings;
 		} else {
