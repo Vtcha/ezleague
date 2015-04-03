@@ -12,7 +12,7 @@
 	</a>
 	<div class="media-body">
 		<h4 class="media-heading">
-			<a href="view-user.php?id=<?php echo $comment['author_id']; ?>">
+			<a href="view-member.php?id=<?php echo $comment['author_id']; ?>">
 				<?php echo $comment['author']; ?> 
 			</a>
 			<span>posted</span> <span class="text-primary"><?php echo $ez->dateDiff($comment['created'], $now) . "\n"; ?></span><span>ago</span> 
