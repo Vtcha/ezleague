@@ -7,6 +7,7 @@
 http://www.mdloring.com/ezleague-free-php-online-gaming-league-script/
 
 demo: http://www.mdloring.com/ezl
+###Default Login###
 username: admin
 
 password: ezadmin
