@@ -42,6 +42,7 @@ $pages = ceil( $total_members/15 );
 		}
 	} else {
 		$order_text = 'ASC';
+		$reverse = 'DESC';
 	}
 	
 	if( isset( $_GET['page'] ) && is_numeric( $_GET['page'] ) ) {
