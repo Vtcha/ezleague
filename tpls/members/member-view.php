@@ -37,6 +37,7 @@
 		<div class="row">
 			<div class="col-md-8 profile-info">
 				<h1><?php echo $user_profile['username']; ?></h1>
+				<h2><?php echo $user_profile['first'] . ' ' . $user_profile['last']; ?></h2>
 				<p>
 					 <?php echo $user_profile['bio']; ?>
 				</p>
