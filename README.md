@@ -12,6 +12,10 @@ username: admin
 
 password: ezadmin
 
+###Dummy Data SQL Dump###
+The following sql data dump is available for download to test and explore ezLeague
+http://www.mdloring.com/ezleague/ezleague-sql-dummy-data.zip
+
 Installation
 ------------------------------------------------------------------------------------------------------------------------
 1. Open '/lib/db.class.php' & '/admin/lib/db.class.php' and modify your site URL and database values
