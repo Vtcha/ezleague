@@ -71,7 +71,11 @@ $members = $ez_frontend->get_members($position, $order_by, $order_text); ?>
 		if( isset( $profile ) ) {
 			$friend_list = (array) json_decode( $profile['friends'] );
 			if( in_array( $member['id'], $friend_list ) ) {
-				$email = str_replace('@', '[at]', $member['email']);
+				if( $site_settings['friends_email'] == 1 ) {
+					$email = str_replace('@', '[at]', $member['email']);
+				} else {
+					$email = '<em>View email disabled';
+				}
 				$friends = true;
 			} else {
 				$friends = false;

@@ -358,6 +358,7 @@ class ezAdmin extends DB_Class {
 			  `site_icon` varchar(250) DEFAULT NULL,
 			  `site_timezone` varchar(250) DEFAULT NULL,
 			  `forum_link` varchar(250) DEFAULT NULL,
+			  `friends_email` int(1) DEFAULT '1',
 			  PRIMARY KEY (`id`)
 			);
 			CREATE TABLE IF NOT EXISTS `" . $this->prefix . "users` (
@@ -440,6 +441,8 @@ class ezAdmin extends DB_Class {
 		$test_connection = mysqli_connect($this->host, $this->username, $this->password, $this->database) or die("Error " . mysqli_error( $test_connection ) );
 		if( $test_connection ) {
 			$sql = "
+					ALTER TABLE `" . $this->prefix . "settings` 
+					ADD `friends_email` INT(1) NOT NULL DEFAULT '1';
 					ALTER TABLE `" . $this->prefix . "settings`
 					ADD COLUMN forum_link VARCHAR(250);
 					ALTER TABLE `" . $this->prefix . "matches`
