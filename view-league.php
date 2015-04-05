@@ -34,7 +34,13 @@
 							$league_id = trim( $_GET['id'] );
 							$league = $ez_league->get_league( $league_id ); 
 							$season = $ez_league->get_current_season( $league_id );
-							$current_season = $season['season'];	
+							$current_season = $season['season'];
+							$league_registration = 'open';
+							if( strtotime( $season['register'] ) <= strtotime( 'now' ) ) {
+								$league_registration = 'closed';
+							} else {
+								$league_registration = 'open';
+							}
 						?>
 							<h1><?php echo $league['game']; ?></h1>
 							<h2><?php echo $league['league']; ?></h2>
@@ -92,7 +98,7 @@
 											<tr>
 												<th>Registration</th>
 												<td>
-												<?php if( $league['status'] == '1' ) { ?>
+												<?php if( $league['status'] == '1' && $league_registration == 'open' ) { ?>
 														<span class="text-success bolder">Open</span>
 														<?php if( isset( $profile ) ) { ?>
 															<?php if( $profile['team_admin'] == true ) { ?>
