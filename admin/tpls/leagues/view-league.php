@@ -21,6 +21,11 @@
                        if( $start_date > $now ) {
                             $started = false;
                        }
+                      if( strtotime( $season['end'] ) <= strtotime( 'now' ) ) {
+                        $league_status = 'finished';
+                      } else {
+                        $league_status = 'running';
+                      }
              ?>
                 
                 <div class="col-lg-6">
@@ -73,7 +78,7 @@
                                 </tr>
                                 <tr>
                                     <td><strong>Status</strong></td>
-                                    <td><?php echo ( $league['status'] == 1 ? '<span class=\'text-success bolder\'>Running</span>' : '<span class=\'text-danger\'>Completed</span>' ); ?></td>
+                                    <td><?php echo ( $league['status'] == 1 && $league_status == 'running' ? '<span class=\'text-success bolder\'>Running</span>' : '<span class=\'text-danger\'>Completed</span>' ); ?></td>
                                 </tr>
                             </table>
                         </div>

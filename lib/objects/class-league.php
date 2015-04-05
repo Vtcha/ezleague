@@ -516,7 +516,8 @@ class ezLeague_League extends DB_Class {
 			$season = array(
 					'season'	=> $data['0']['season'],
 					'start'		=> $data['0']['start'],
-					'end'		=> $data['0']['end']
+					'end'		=> $data['0']['end'],
+					'register'	=> $data['0']['register_end']
 			);
 			return $season;
 		} else {
