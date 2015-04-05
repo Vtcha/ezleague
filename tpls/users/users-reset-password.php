@@ -1,6 +1,8 @@
 <?php 
 	$reset = trim( $_GET['reset'] ); 
-	$user_id = $ez_users->get_user_by_reset_code( $reset );
+	$user = $ez_users->get_user_by_reset_code( $reset );
+	$user_id 	= $user['user_id'];
+	$username 	= $user['username'];
 ?>
 <div class="col-md-9 col-sm-8 article-block">
 	<h1>Reset Account Password</h1>
@@ -14,7 +16,7 @@
 		            <div class="form-group">
 						<div class="input-icon">
 							<i class="fa fa-user"></i>
-							<input type="text" id="account-username" class="form-control" placeholder="Your Username">
+							<input disabled type="text" id="account-username" class="form-control" placeholder="Your Username" value="<?php echo $username; ?>">
 						</div>
 					</div>
 					<div class="form-group">

@@ -129,8 +129,8 @@ class ezLeague_User extends DB_Class {
 				$to 		= $email;
 
 				$message = '<html><body>';
-				$message .= "Greetings $username, <p>A <em>reset password</em> request was made for your account. If you did not make the request, please disregard this email. Otherwise, use the link below to reset the password for your account.</p>";
-				$message .= 'Reset Password Link: <a href="' . $site_url . '/forgot-password.php?reset=' . $password_string . '"></a>';
+				$message .= "Greetings <strong>$username</strong>, <p>A <em>reset password</em> request was made for your account. If you did not make the request, please disregard this email. Otherwise, use the link below to reset the password for your account.</p>";
+				$message .= 'Reset Password Link: <a href="' . $site_url . '/forgot-password.php?reset=' . $password_string . '">' . $site_url . '/forgot-password.php?reset=' . $password_string . '</a>';
 				$message .= "</body></html>";
 				if( class_exists( 'Mail' ) && ( $mandrill_username != '' && $mandrill_password != '' ) ) { 
 					$host = "smtp.mandrillapp.com"; 
@@ -170,15 +170,19 @@ class ezLeague_User extends DB_Class {
 	/*
 	 * Get user id based on reset password code
 	 *
-	 * @return int
+	 * @return array
 	 */
 	public function get_user_by_reset_code($reset_code) {
 		
 		$reset_code = $this->sanitize( $reset_code );
-		$data = $this->fetch("SELECT id FROM `" . $this->prefix . "users` WHERE forget = '$reset_code'");
+		$user = array();
+		$data = $this->fetch("SELECT id, username FROM `" . $this->prefix . "users` WHERE forget = '$reset_code'");
 		if( $data ) {
-			$user_id = $data['0']['id'];
-			return $user_id;
+			$user_id 	= $data['0']['id'];
+			$username 	= $data['0']['username'];
+			$user['user_id'] 	= $user_id;
+			$user['username'] 	= $username;
+			return $user;
 		} else {
 			return;
 		}
