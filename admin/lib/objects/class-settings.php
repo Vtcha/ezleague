@@ -250,6 +250,9 @@ class ezAdmin_Settings extends DB_Class {
 			case 'forum':
 				$setting = 'forum_link';
 				break;
+			case 'friends-email':
+				$setting = 'friends_email';
+				break;
 			default:
 				break;
 		}
@@ -279,7 +282,8 @@ class ezAdmin_Settings extends DB_Class {
 								'mandrill_username'	=> $data['0']['mandrill_username'],
 								'mandrill_password' => $data['0']['mandrill_password'],
 								'timezone'			=> $data['0']['site_timezone'],
-								'forum_url'			=> $data['0']['forum_link']
+								'forum_url'			=> $data['0']['forum_link'],
+								'friends_email'		=> $data['0']['friends_email']
 							);
 			return $settings;
 		} else {

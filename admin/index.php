@@ -7,7 +7,7 @@
                 <?php 
                     if( $check_for_update != EZL_VERSION ) {
                         echo '<div class="update">';
-                        echo 'An update is available. Please <a href="http://www.github.com/stoopkid1/ezleague" target="_blank">update ezleague</a> to avoid issues with the application.';
+                        echo 'An update is available. Please read the <a href="https://github.com/stoopkid1/ezleague/wiki/Upgrade-Instructions" target="_blank">upgrade instructions</a> and <a href="http://www.github.com/stoopkid1/ezleague" target="_blank">update ezleague</a> to avoid issues with the application.';
                         echo '</div>';
                     } else {
                         $ez->check_for_upgrade();

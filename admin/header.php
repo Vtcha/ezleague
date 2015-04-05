@@ -1,5 +1,5 @@
 <?php session_start();
-define( 'EZL_VERSION', '3.4.4' );
+define( 'EZL_VERSION', '3.4.5' );
 $check_for_update = file_get_contents( 'http://www.mdloring.com/ezleague_version.php', TRUE );
 include('lib/class-db.php');
 include('lib/class-ezadmin.php');
@@ -43,7 +43,7 @@ date_default_timezone_set('' . $site_settings['timezone'] . '');
 
     <!-- Core CSS - Include with every page -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
     <!-- Page-Level Plugin CSS - Dashboard -->
     <link href="css/plugins/morris/morris-0.4.3.min.css" rel="stylesheet">

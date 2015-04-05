@@ -312,6 +312,7 @@ class ezLeague_Frontend extends DB_Class {
 			$settings['token_secret']	= $data['0']['twitter_token_secret'];
 			$settings['timezone']		= $data['0']['site_timezone'];
 			$settings['forum']			= $data['0']['forum_link'];
+			$settings['friends_email']	= $data['0']['friends_email'];
 			return $settings;
 		} else {
 			return;

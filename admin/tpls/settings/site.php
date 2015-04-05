@@ -38,6 +38,9 @@
                     <li class="">
                         <a data-toggle="tab" href="#site-forum">Forum URL</a>
                     </li>
+                    <li class="">
+                        <a data-toggle="tab" href="#site-friends-email">Friends View Email</a>
+                    </li>
                 </ul>
                 
                 <div class="tab-content">
@@ -211,6 +214,25 @@
                               <span class="success_text"></span>
                             </div>
                           </form>
+                    </div>
+                    <div class="tab-pane fade" id="site-friends-email">
+                        <h4>Friends Can View E-Mail <small>On the <em>Members</em> page, users can view the email address of their friends</small></h4>
+                        <div class="col-lg-5">
+                          <form method="POST" id="siteFriendsEmail">
+                            <div class="form-group">
+                              <select id="friends-email" class="form-control">
+                                <option value="1" <?php echo ( $site_settings['friends_email'] == 1 ? 'selected' : '' ); ?>>Enabled</option>
+                                <option value="0" <?php echo ( $site_settings['friends_email'] == 0 ? 'selected' : '' ); ?>>Disabled</option>
+                              </select>
+                            </div>
+                            <div class="form-group">
+                              <button class="btn btn-success" type="submit">Save</button>
+                            </div>
+                            <div class="success">
+                              <span class="success_text"></span>
+                            </div>
+                          </form>
+                        </div>
                     </div>
                 </div>
             </div>
