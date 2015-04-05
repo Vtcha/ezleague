@@ -73,23 +73,23 @@
 				 e.preventDefault();
 				 
 				 if( password.length < 6  || confirm.length < 6) {
-					$(".password").css("display", "");
-			   		$(".password").fadeIn(1000, "linear");
-			   		$(".password").fadeIn("slow");
-					$(".password").html('<strong>Error</strong> must be at least 6 characters ');
+					$(".succes").css("display", "");
+			   		$(".succes").fadeIn(1000, "linear");
+			   		$(".success_text").fadeIn("slow");
+					$(".success").html('<strong>Error</strong> must be at least 6 characters ');
 					errors++;
 				} else {
-					$(".password").css("display", "");
+					$(".success").css("display", "");
 				}
 				
 				if( password != confirm ) {
-					$(".confirm").css("display", "");
-			   		$(".confirm").fadeIn(1000, "linear");
-			   		$(".confirm").fadeIn("slow");
-					$(".confirm").html('<strong>Error</strong> Passwords do not match ');
+					$(".succes").css("display", "");
+			   		$(".succes").fadeIn(1000, "linear");
+			   		$(".success_text").fadeIn("slow");
+					$(".success").html('<strong>Error</strong> Passwords do not match ');
 					errors++;
 				} else {
-					$(".confirm").css("display", "");
+					$(".success").css("display", "");
 				}
 
 				if(errors == 0) {
@@ -103,7 +103,7 @@
 							   		$(".success").fadeIn(1000, "linear");
 							   		$(".success_text").fadeIn("slow");
 							   		$(".success").html(msg);
-							   		setTimeout(function(){location.reload()},3000);
+							   		setTimeout(function(){window.location='index.php'},3000);
 					  });
 					 
 				}
