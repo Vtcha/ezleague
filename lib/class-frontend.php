@@ -299,6 +299,7 @@ class ezLeague_Frontend extends DB_Class {
 		$data = $this->fetch("SELECT * FROM `" . $this->prefix . "settings` WHERE id = '1'
 							");
 		if( $data ) {
+			$settings['site_url']		= $data['0']['site_url'];
 			$settings['logo'] 			= $data['0']['site_logo'];
 			$settings['fav_icon']		= $data['0']['site_icon'];
 			$settings['email']			= $data['0']['site_email'];

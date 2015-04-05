@@ -30,7 +30,7 @@
 		            <div class="form-group">
 		              <h5>Password</h5>
 		              <input id="login-password" class="form-control password placeholder" placeholder="Password" name="password" autocomplete="off" type="password">
-		              <small><a href="http://mdloring.com/ezleague/forget.php">Forgot Password?</a></small>
+		              <small><a href="<?php echo $site_settings['site_url']; ?>/forgot-password.php">Forgot Password?</a></small>
 		            </div>
 		         	<div class="login_success">
 					 <span class="login_success_text"></span>

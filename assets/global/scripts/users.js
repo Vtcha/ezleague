@@ -10,6 +10,7 @@
 			this.cacheElements();
 			this.updateProfile();
 			this.updatePassword();
+			this.forgotPassword();
 
 		},
 
@@ -20,6 +21,7 @@
 
 			this.update_user_form = $('#userProfile');
 			this.update_password_form = $('#userPassword');
+			this.forgot_password_form = $('#ezLeagueForgotPassword');
 
 		},
 		
@@ -108,7 +110,55 @@
 				
 			});
 			
-		}
+		},
+
+		/**
+		 * Reset forgotten password
+		 */
+		forgotPassword: function() {
+
+			this.forgot_password_form.submit(function(e) {
+				
+				var username		= $("#account-username").val();
+					email	    	= $("#account-email").val();
+					captcha			= $("#account-captcha").val();
+					captcha_answer	= $("#captcha-answer").val();
+				 e.preventDefault();
+
+				 if( captcha == captcha_answer ) {
+					 if( username.length >= 1 && email.length >= 1 ) {
+					 	$(".success").css("display", "");
+				   		$(".success").fadeIn(1000, "linear");
+				   		$(".success_text").fadeIn("slow");
+				   		$(".success").html('<strong>Error</strong> Only enter either the username or email');
+					 } else if( username.length < 1 && email.length < 1 ) {
+					 	$(".success").css("display", "");
+				   		$(".success").fadeIn(1000, "linear");
+				   		$(".success_text").fadeIn("slow");
+				   		$(".success").html('<strong>Error</strong> Either the username or email must be entered');
+				   	} else {
+					 
+						 $.ajax({
+						     type: "POST",
+						     url: "lib/submit/submit-user.php",
+						     data: { form: 'forgot-password', username: '' + username + '', email: '' + email + ''}
+						   }).success(function( msg ) {
+									    $(".success").css("display", "");
+								   		$(".success").fadeIn(1000, "linear");
+								   		$(".success_text").fadeIn("slow");
+								   		$(".success").html(msg);
+								   		setTimeout(function(){location.reload()},3000);
+						  });
+					}
+				} else {
+					$(".success").css("display", "");
+			   		$(".success").fadeIn(1000, "linear");
+			   		$(".success_text").fadeIn("slow");
+			   		$(".success").html('<strong>Error</strong> Incorrect CAPTCHA answer');	
+				}
+			});
+			
+		},
 
 	};
 
