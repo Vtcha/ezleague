@@ -1,16 +1,4 @@
 <?php include('header.php'); ?>
-<?php 
-$total_posts = $ez_frontend->count_posts();
-$pages = ceil( $total_posts/3 );
-
-if( isset( $_GET['page'] ) && is_numeric( $_GET['page'] ) ) {
-	$page = $_GET['page'] - 1;
-} else {
-	$page = 0;
-}
-
-$position = $page * 3;
-?>
 <!-- BEGIN CONTAINER -->
 <div class="page-container">
 	<?php include('navbar.php'); ?>

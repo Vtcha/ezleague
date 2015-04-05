@@ -27,6 +27,12 @@ $ez_user = new ezLeague_User();
 		 		$user_id		= $_POST['id'];
 		 			$ez_user->update_password($password, $user_id);
 		 		break;
+
+		 	case 'forgot-password':
+		 		$username 		= $_POST['username'];
+		 		$email 			= $_POST['email'];
+		 			$ez_user->forgot_password($username, $email);
+		 		break;
 		 		
 		 	case 'remove-avatar':
 		 		$user_id		= $_POST['id'];

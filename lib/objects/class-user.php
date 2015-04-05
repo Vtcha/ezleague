@@ -7,6 +7,7 @@ class ezLeague_User extends DB_Class {
 	 * 
 	 */
 	public function login($username, $password) {
+
 		$saltData = $this->fetch("SELECT salt, hash, guild, role, status FROM `" . $this->prefix . "users` WHERE username = '$username'");
 		$salt  	  = $saltData['0']['salt'];
 		$hash  	  = $saltData['0']['hash'];
@@ -27,6 +28,7 @@ class ezLeague_User extends DB_Class {
 		} else {
 			print "Incorrect username or password";
 		}
+
 	}
 	
 	/*
@@ -35,6 +37,7 @@ class ezLeague_User extends DB_Class {
 	 * @return string (success or error)
 	 */
 	public function register($username, $password, $email) {
+
 		$strength = '5';
 		$salt = strtr(base64_encode(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM)), '+', '.');
 		//blowfish algorithm
@@ -51,6 +54,7 @@ class ezLeague_User extends DB_Class {
 					");
 			$this->success('Account has been created. You may now login.');
 		}
+		return;
 	
 	}
 		
@@ -72,6 +76,113 @@ class ezLeague_User extends DB_Class {
 		$this->success('Password has been updated');
 		return;
 		
+	}
+
+	/*
+	 * Reset user forgotten password
+	 *
+	 * @return string (success or error)
+	 */
+	public function forgot_password($username, $email) {
+
+		$username 	= $this->sanitize( $username );
+		$email 		= $this->sanitize( $email );
+		$reset 		= false;
+
+		$password_string = md5(mt_rand());
+
+		if( ! empty ( $username ) ) {
+			$data = $this->fetch(" SELECT email, id FROM `" . $this->prefix . "users` WHERE username = '$username'");
+			if( $data ) {
+				$user_id 	= $data['0']['id'];
+				$email 		= $data['0']['email'];
+				$this->link->query("UPDATE `" . $this->prefix . "users` SET forget = '$password_string' WHERE id = '$user_id'");
+				$reset = true;
+			}
+		} elseif( ! empty ( $email ) ) {
+			$data = $this->fetch(" SELECT email, username, id FROM `" . $this->prefix . "users` WHERE email = '$email'");
+			if( $data ) {
+				$user_id 	= $data['0']['id'];
+				$email 		= $data['0']['email'];
+				$username 	= $data['0']['username'];
+				$this->link->query("UPDATE `" . $this->prefix . "users` SET forget = '$password_string' WHERE id = '$user_id'");
+				$reset = true;
+			}
+		} else {
+			echo '<strong>Error</strong> No account matched that <em>username</em> or <em>email address</em>';
+			return;
+		}
+
+		if( $reset ) {
+			$data = $this->fetch("SELECT mandrill_username, mandrill_password, site_url, site_name, site_email FROM `" . $this->prefix . "settings` WHERE id = '1'");
+
+			if( $data ) {
+				require_once "Mail.php";
+				$mandrill_username 	= $data['0']['mandrill_username'];
+				$mandrill_password 	= $data['0']['mandrill_password'];
+				$site_url 			= $data['0']['site_url'];
+				$site_name 			= $data['0']['site_name'];
+
+				$name 		= $site_name . ' Accounts';
+				$from 		= $data['0']['site_email'];
+				$subject 	= $site_name . ' - Password Reset';
+				$to 		= $email;
+
+				$message = '<html><body>';
+				$message .= "Greetings $username, <p>A <em>reset password</em> request was made for your account. If you did not make the request, please disregard this email. Otherwise, use the link below to reset the password for your account.</p>";
+				$message .= 'Reset Password Link: <a href="' . $site_url . '/forgot-password.php?reset=' . $password_string . '"></a>';
+				$message .= "</body></html>";
+				if( class_exists( 'Mail' ) && ( $mandrill_username != '' && $mandrill_password != '' ) ) { 
+					$host = "smtp.mandrillapp.com"; 
+					$username = $mandrill_username; 
+					$password = $mandrill_password;
+					$headers = array ('From' => $from,   'To' => $to, 'MIME-Version' => '1.0', 'Content-Type' => 'text/html; charset=ISO-8859-1', 'Subject' => $subject); 
+					$smtp = Mail::factory(
+									'smtp',   
+									array (
+										'host' => $host,     
+										'auth' => true,
+										'port' => 587,     
+										'username' => $username,     
+										'password' => $password
+										)
+									);  
+					$mail = $smtp->send($to, $headers, $message);  
+					if (PEAR::isError($mail)) {   
+						echo("<p>" . $mail->getMessage() . "</p>");  
+					} else {   
+						echo("<strong>Success!</strong> An email with password reset instructions has been sent.");  
+					}
+				} else {
+					if( mail($to, $subject, $message, $headers) ) {
+						$this->success('<strong>Success!</strong> An email with password reset instructions has been sent.');
+					} else {
+						$this->error('There was a problem sending your password reset email, please try again');
+					}
+				}
+			}
+		}
+
+		return;
+
+	}
+
+	/*
+	 * Get user id based on reset password code
+	 *
+	 * @return int
+	 */
+	public function get_user_by_reset_code($reset_code) {
+		
+		$reset_code = $this->sanitize( $reset_code );
+		$data = $this->fetch("SELECT id FROM `" . $this->prefix . "users` WHERE forget = '$reset_code'");
+		if( $data ) {
+			$user_id = $data['0']['id'];
+			return $user_id;
+		} else {
+			return;
+		}
+
 	}
 	
 	/*
