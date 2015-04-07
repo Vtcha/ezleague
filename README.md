@@ -1,4 +1,4 @@
-#ezLeague 3.4.3#
+#ezLeague 3.4.7#
 
 "a custom php online gaming script"
 
