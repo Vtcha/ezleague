@@ -77,10 +77,13 @@ if( $site_settings['handle'] != '' ) {
 				</li>
 		<?php } ?>
 				<li class="main-nav">
-					<a href="about.php" class="btn blue-steel">About</a>
+					<a href="view-tournaments.php" class="btn blue-steel">Tournaments</a>
 				</li>
 				<li class="main-nav">
-					<a href="contact-us.php" class="btn blue-madison">Contact</a>
+					<a href="about.php" class="btn blue-madison">About</a>
+				</li>
+				<li class="main-nav">
+					<a href="contact-us.php" class="btn blue">Contact</a>
 				</li>
 			</ul>
 		<div class="top-menu">

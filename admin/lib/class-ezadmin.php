@@ -8,14 +8,15 @@ class ezAdmin extends DB_Class {
 	public function setup_ezadmin() {
 	
 		$this->require_files();
-		$this->frontend = new ezAdmin_Frontend();
-		$this->news 	= new ezAdmin_News();
-		$this->team 	= new ezAdmin_Team();
-		$this->league 	= new ezAdmin_League();
-		$this->matches	= new ezAdmin_Match();
-		$this->settings = new ezAdmin_Settings();
-		$this->forum	= new ezAdmin_Forum();
-		$this->schedule = new ezAdmin_Schedule();
+		$this->frontend 	= new ezAdmin_Frontend();
+		$this->news 		= new ezAdmin_News();
+		$this->team 		= new ezAdmin_Team();
+		$this->league 		= new ezAdmin_League();
+		$this->matches		= new ezAdmin_Match();
+		$this->settings 	= new ezAdmin_Settings();
+		$this->forum		= new ezAdmin_Forum();
+		$this->schedule 	= new ezAdmin_Schedule();
+		$this->tournament 	= new ezAdmin_Tournament();
 	
 	}
 	
@@ -33,6 +34,7 @@ class ezAdmin extends DB_Class {
 		require_once dirname( __FILE__ ) . '/objects/class-match.php';
 		require_once dirname( __FILE__ ) . '/objects/class-settings.php';
 		require_once dirname( __FILE__ ) . '/objects/class-forum.php';
+		require_once dirname( __FILE__ ) . '/objects/class-tournament.php';
 		
 	}
 	
