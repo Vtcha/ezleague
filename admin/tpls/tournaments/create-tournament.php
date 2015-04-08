@@ -24,9 +24,10 @@
                         <div class="form-group">
                             <label>Max Teams</label>
                             <select class="form-control" id="max-teams">
-                                <option value="5000">Unlimited</option>
-                             <?php for( $i=2; $i <= 64; $i = $i + 2 ) { ?>
-                                <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
+                                <option value="4">4</option>
+                                <option value="8">8</option>
+                                <option value="16">16</option>
+                                <option value="32">32</option>
                              <?php } ?>
                             </select>
                         </div>

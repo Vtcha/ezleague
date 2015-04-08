@@ -36,10 +36,10 @@
                         <div class="form-group">
                             <label>Max Teams</label>
                             <select class="form-control" id="max-teams">
-                                <option value="5000">Unlimited</option>
-                             <?php for( $i=2; $i <= 64; $i = $i + 2 ) { ?>
-                                <option <?php echo ( $tournament['teams'] == $i ? 'selected' : '' ); ?> value="<?php echo $i; ?>"><?php echo $i; ?></option>
-                             <?php } ?>
+                                <option <?php echo ( $tournament['teams'] == 4 ? 'selected' : '' ); ?> value="4">4</option>
+                                <option <?php echo ( $tournament['teams'] == 8 ? 'selected' : '' ); ?> value="8">8</option>
+                                <option <?php echo ( $tournament['teams'] == 16 ? 'selected' : '' ); ?> value="16">16</option>
+                                <option <?php echo ( $tournament['teams'] == 32 ? 'selected' : '' ); ?> value="32">32</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -105,7 +105,7 @@
                             <tr>
                                 <td><?php echo $team['guild']; ?></td>
                                 <td>
-                                    <button type="button" onclick="kickTeam('<?php echo $team['id']; ?>', '<?php echo $tournament['tid']; ?>')" class="btn btn-danger btn-xs">Kick Team</button>
+                                    <button type="button" onclick="kickTeam('<?php echo $team['id']; ?>', '<?php echo $tournament['id']; ?>')" class="btn btn-danger btn-xs">Kick Team</button>
                                 </td>
                             </tr>
             <?php } ?>
@@ -114,47 +114,48 @@
                 <?php } else { ?>
                     Sorry, no open tournaments were found, try <a href="tournaments.php?page=create">creating one</a>
                 <?php } ?>
+                        <div class="success team">
+                          <span class="success_text team_text"></span>
+                        </div>
                     </div>
             </div>
         </div>
 
         <div class="panel panel-default">
             <div class="panel-heading">
-                <i class="fa fa-sitemap"></i> Current Tournaments
+                <i class="fa fa-sitemap"></i> Tournament Bracket
+                <?php 
+                    $round_1_started    = $ez_tournament->check_if_started( $tournament_id );
+                    if( $round_1_started == false ) { ?>
+                        <div class="pull-right">
+                            <button id="generateMatches" data-tournament-id="<?php echo $tournament_id; ?>" data-tournament-teams="<?php echo $tournament['teams']; ?>" class="btn btn-primary btn-xs">Generate Matchups</a>
+                        </div>
+                <?php 
+                    } 
+                ?>
             </div>
             <div class="panel-body">
-                <div class="table-responsive">
-                <?php $tournaments = $ez_tournament->get_open_tournaments(); ?>
-                <?php if( $tournaments ) { ?>
-                    <table class="table table-hover current_leagues">
-                        <thead>
-                            <tr>
-                                <th>Game</th>
-                                <th>Tournament</th>
-                                <th>Max Teams</th>
-                                <th>Start</th>
-                                <th>Options</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-            <?php foreach( $tournaments as $tournament ) { ?>
-                            <tr>
-                                <td><?php echo $tournament['ggame']; ?></td>
-                                <td><?php echo $tournament['tournament']; ?></td>
-                                <td><?php echo ( $tournament['max_teams'] == 5000 ? 'Unlimited' : $tournament['max_teams'] ); ?></td>
-                                <td><?php echo date( 'F d, Y', strtotime( $tournament['start_date'] ) ); ?></td>
-                                <td>
-                                    <a href="tournaments.php?page=edit&id=<?php echo $tournament['tid']; ?>" class="btn btn-primary btn-xs">Edit</a>
-                                    <button type="button" onclick="deleteTournament('<?php echo $tournament['tid']; ?>')" class="btn btn-danger btn-xs">Delete</button>
-                                </td>
-                            </tr>
-            <?php } ?>
-                        </tbody>
-                     </table>
-                <?php } else { ?>
-                    Sorry, no open tournaments were found, try <a href="tournaments.php?page=create">creating one</a>
-                <?php } ?>
-                    </div>
+            <small>* <em>Round 1</em> matchups can be generated up until a <em>Round 1</em> Match has been completed</small>
+            <?php
+                $max_teams = $tournament['teams'];
+                switch( $max_teams ) {
+                    case 4:
+                        include( 'tpls/tournaments/brackets/view-tournament-bracket-04.php' );
+                        break;
+                    case 8:
+                        include( 'tpls/tournaments/brackets/view-tournament-bracket-08.php' );
+                        break;
+                    case 16:
+                        include( 'tpls/tournaments/brackets/view-tournament-bracket-16.php' );
+                        break;
+                    case 32:
+                        include( 'tpls/tournaments/brackets/view-tournament-bracket-32.php' );
+                        break;
+                    default:
+                        break;
+                }
+                
+            ?>
             </div>
         </div>
      </div>

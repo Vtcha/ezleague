@@ -53,10 +53,9 @@ $ez_tournament = new ezAdmin_Tournament();
     	 		break;
     	 	
             case 'kick-team':
-                $tournament_id  = $_POST['league_id'];
+                $tournament_id  = $_POST['tournament_id'];
                 $team_id        = $_POST['team_id'];
-                $reason         = $_POST['reason'];
-                 $ez_tournament->kick_team( $tournament_id, $team_id, $reason );
+                 $ez_tournament->kick_team( $tournament_id, $team_id );
                 break;
 
             case 'unkick-team':

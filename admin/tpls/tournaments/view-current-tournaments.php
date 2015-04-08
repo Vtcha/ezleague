@@ -25,13 +25,13 @@
              $total_teams = $ez_tournament->get_total_teams( $tournament['tid'] ); 
       ?>
                     <tr>
-                        <td><?php echo $tournament['ggame']; ?></td>
+                        <td><a href="tournaments.php?page=edit&id=<?php echo $tournament['tid']; ?>"><?php echo $tournament['ggame']; ?></a></td>
                         <td><?php echo $tournament['tournament']; ?></td>
                         <td><?php echo $total_teams; ?></td>
                         <td><?php echo $tournament['max_teams']; ?></td>
                         <td><?php echo date( 'F d, Y', strtotime( $tournament['start_date'] ) ); ?></td>
                         <td>
-                            <a href="tournaments.php?page=edit&id=<?php echo $tournament['tid']; ?>" class="btn btn-success btn-xs">Edit Tournament</a>
+                            <a href="tournaments.php?page=edit&id=<?php echo $tournament['tid']; ?>" class="btn btn-success btn-xs">Edit</a>
                         </td>
                     </tr>
        <?php } ?>

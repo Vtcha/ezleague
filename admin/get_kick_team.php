@@ -3,7 +3,7 @@ date_default_timezone_set('America/Chicago');
 include('./lib/class-db.php');
 include('./lib/objects/class-league.php');
 
-$ez_league = new ezAdmin_League();
+$ez_league = new ezAdmin_league();
     
      if(!isset($_SESSION['ez_admin'])) {
      	header("Location: login.php");

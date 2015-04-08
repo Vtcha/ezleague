@@ -228,32 +228,9 @@ $('#editRules').submit(function(e) {
  * @param league_id
  * @param team_id
  */
-function kickTeam(tournament_id, team_id) {
-	
-	$.ajax({
-	     type: "POST",
-	     async: false,
-	     url: "get_kick_team.php",
-	     data: { tournament_id: '' + tournament_id + '', team_id: '' + team_id + '' }
-	   }).success(function( msg ) {
-		   $('#kickTeamModal').html(msg);
-	  });
-	
-}
+function kickTeam(team_id, tournament_id) {
 
- /**
- * Kick team from tournament
- */
-$('#kickTeam').submit(function(e) {
-	var tournament_id	= $("#tournament-id").val();
-		team_id  		= $("#team-id").val();
-		reason			= $("textarea#reason").val();
-
-	 e.preventDefault();
-	 
-	 $('.modal').css('z-index', '100');
-	 $('.modal-backdrop').css('position', 'relative');
- 	$(function() {
+	$(function() {
 		 $( "#kick-team-confirm" ).dialog({
 			 resizable: false,
 			 height:220,
@@ -264,12 +241,12 @@ $('#kickTeam').submit(function(e) {
 					 $.ajax({
 					     type: "POST",
 					     url: "lib/submit/submit-tournament.php",
-					     data: { form: 'kick-team', team_id: '' + team_id + '', tournament_id: '' + tournament_id + '', reason: '' + reason + '' }
+					     data: { form: 'kick-team', team_id: '' + team_id + '', tournament_id: '' + tournament_id + '' }
 					   }).success(function( msg ) {
-								    $(".success").css("display", "");
-							   		$(".success").fadeIn(1000, "linear");
-							   		$(".success_text").fadeIn("slow");
-							   		$(".success").html(msg);
+								    $(".team").css("display", "");
+							   		$(".team").fadeIn(1000, "linear");
+							   		$(".team_text").fadeIn("slow");
+							   		$(".team").html(msg);
 							   		setTimeout(function(){location.reload()},3000);
 					  });
 					 
@@ -283,6 +260,28 @@ $('#kickTeam').submit(function(e) {
 			 }
 		 });
 	});
+	
+}
+
+ /**
+ * Generate tournament round 1 matches
+ * @param tournament_id
+ */
+$('#generateMatches').click(function() {
+
+	var tournament_id = $('#generateMatches').data('tournament-id');
+		tournament_teams = $('#generateMatches').data('tournament-teams');
+
+	$.ajax({
+		type: "POST",
+		url: "generate_bracket.php",
+		data: { form: 'generate-matches', tournament_id: '' + tournament_id + '', max_teams: '' + tournament_teams + '' }
+	}).success(function( msg ) {
+		$(".round-1").fadeIn(1000, "linear");
+		$(".round-1").html(msg);
+		//setTimeout(function(){location.reload()},3000);
+	});
+
 });
 
 /**
