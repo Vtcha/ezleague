@@ -43,6 +43,17 @@
                         </ul>
                     </li>
                     <li>
+                        <a href="#"><i class="fa fa-trophy"></i> Tournaments<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="tournaments.php?page=create">Create Tournament</a>
+                            </li>
+                            <li>
+                                <a href="tournaments.php">View All</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
                         <a href="#"><i class="fa fa-gamepad"></i> Matches<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>

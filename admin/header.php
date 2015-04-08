@@ -1,21 +1,22 @@
 <?php session_start();
-define( 'EZL_VERSION', '3.4.7' );
+define( 'EZL_VERSION', '3.4.8' );
 $check_for_update = file_get_contents( 'http://www.mdloring.com/ezleague_version.php', TRUE );
 include('lib/class-db.php');
 include('lib/class-ezadmin.php');
 $ez = new ezAdmin();
 $ez->setup_ezadmin();
     
-$ez_news 	 = new ezAdmin_News();
-$ez_frontend = new ezAdmin_Frontend();
-$ez_user     = new ezAdmin_User();
-$ez_team	 = new ezAdmin_Team();
-$ez_league	 = new ezAdmin_League();
-$ez_match	 = new ezAdmin_Match();
-$ez_settings = new ezAdmin_Settings();
-$site_settings = $ez_settings->get_settings();
-$ez_forum	 = new ezAdmin_Forum();
-$ez_schedule = new ezAdmin_Schedule();
+$ez_news 	    = new ezAdmin_News();
+$ez_frontend    = new ezAdmin_Frontend();
+$ez_user        = new ezAdmin_User();
+$ez_team	    = new ezAdmin_Team();
+$ez_league	    = new ezAdmin_League();
+$ez_match	    = new ezAdmin_Match();
+$ez_settings    = new ezAdmin_Settings();
+$site_settings  = $ez_settings->get_settings();
+$ez_forum	    = new ezAdmin_Forum();
+$ez_schedule    = new ezAdmin_Schedule();
+$ez_tournament  = new ezAdmin_Tournament();
     
      if( ! isset($_SESSION['ez_admin'] ) ) {
         if( $ez_frontend->test_connection() ) {

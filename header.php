@@ -1,5 +1,5 @@
 <?php session_start();
-define( 'EZL_VERSION', '3.4.7' );
+define( 'EZL_VERSION', '3.4.8' );
 include('lib/class-db.php');
 include('lib/class-ezleague.php');
 
@@ -77,10 +77,13 @@ if( $site_settings['handle'] != '' ) {
 				</li>
 		<?php } ?>
 				<li class="main-nav">
-					<a href="about.php" class="btn blue-steel">About</a>
+					<a href="view-tournaments.php" class="btn blue-steel">Tournaments</a>
 				</li>
 				<li class="main-nav">
-					<a href="contact-us.php" class="btn blue-madison">Contact</a>
+					<a href="about.php" class="btn blue-madison">About</a>
+				</li>
+				<li class="main-nav">
+					<a href="contact-us.php" class="btn blue">Contact</a>
 				</li>
 			</ul>
 		<div class="top-menu">
