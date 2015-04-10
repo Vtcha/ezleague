@@ -36,7 +36,19 @@ $ez_tournament = new ezAdmin_Tournament();
                 $registration   = strtotime( $_POST['registration'] );
     	 		 $ez_tournament->edit_tournament($max_teams, $tournament_id, $tournament, $format, $start, $registration);
     	 		break;
-    	 		
+
+            case 'edit-match':
+                $match_id       = $_POST['match_id'];
+                $home_id        = $_POST['home_id'];
+                $away_id        = $_POST['away_id'];
+                $home_score     = $_POST['home_score'];
+                $home_accept    = $_POST['home_accept'];
+                $away_score     = $_POST['away_score'];
+                $away_accept    = $_POST['away_accept'];
+                $match_status   = $_POST['match_status'];
+                 $ez_tournament->edit_tournament_match( $match_id, $home_id, $home_score, $home_accept, $away_id, $away_score, $away_accept, $match_status );
+                break;
+
     	 	case 'delete-tournament':
     	 		$tournament_id	= $_POST['tournament_id'];
     	 		 $ez_tournament->delete_tournament( $tournament_id );

@@ -307,6 +307,37 @@ $('#clearMatches').click(function() {
 
 });
 
+ /**
+  * Edit a tournament match details
+  * @param match_id, home_score, home_accept, away_score, away_accept, match_status
+  */
+$('#editTournamentMatch').submit(function(e) {
+	var match_id		= $("#match-id").val();
+		home_id 		= $("#home-id").val();
+		away_id 		= $("#away-id").val();
+		home_score  	= $("#home-team-score").val();
+		away_score  	= $("#away-team-score").val();
+		home_accept  	= $("#home-team-accepted").val();
+		away_accept  	= $("#away-team-accepted").val();
+		match_status 	= $("#match-status").val();
+
+		e.preventDefault();
+
+ $.ajax({
+     type: "POST",
+     url: "lib/submit/submit-tournament.php",
+     async:true,
+     crossbrowser:true,
+     data: { form: 'edit-match', match_id: '' + match_id + '', home_id: '' + home_id + '', away_id: '' + away_id + '', home_score: '' + home_score + '', away_score: '' + away_score + '', home_accept: '' + home_accept + '', away_accept: '' + away_accept + '', match_status: '' + match_status + '' }
+   }).success(function( msg ) {
+	   		$('.success').css("display", "");
+	   		$(".success").fadeIn(1000, "linear");
+	   		$('.success_text').fadeIn("slow");
+	   		$('.success_text').html(msg);
+	   		setTimeout(function(){location.reload()},3000);
+  });
+});
+
 /**
  * Unkick a team from a league
  * @param league_id

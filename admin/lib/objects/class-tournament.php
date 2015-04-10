@@ -58,6 +58,18 @@ class ezAdmin_Tournament extends DB_Class {
 		return $tournament;
 		
 	}
+
+	public function get_tournament_name($tournament_id) {
+
+		$data = $this->fetch("SELECT tournament FROM `" . $this->prefix . "tournaments` WHERE id = '$tournament_id'");
+		if( $data ) {
+			echo $data[0]['tournament'];
+			return;
+		} else {
+			return false;
+		}
+
+	}
 	
 	public function create_tournament($tournament, $game, $max_teams, $start_date, $registration, $format) {
 		
@@ -362,6 +374,55 @@ class ezAdmin_Tournament extends DB_Class {
 			return $data;
 		} else {
 			return false;
+		}
+
+	}
+
+	/*
+	 * Get the details of a tournament match
+	 *
+	 * @return array
+	 */
+	public function get_tournament_match($match_id) {
+
+		$match_id = $this->sanitize( $match_id );
+		$data = $this->fetch("SELECT * FROM `" . $this->prefix . "tournament_matches` WHERE id = '$match_id'");
+		if( $data ) {
+			return $data;
+		} else {
+			return false;
+		}
+
+	}
+
+	/*
+	 * Edit a tournament match details
+	 *
+	 * @return boolean
+	 */
+	public function edit_tournament_match($match_id, $home_id, $home_score, $home_accept, $away_id, $away_score, $away_accept, $match_status) {
+
+		$match_id 	  	= $this->sanitize( $match_id );
+		$home_score   	= $this->sanitize( $home_score );
+		$away_score   	= $this->sanitize( $away_score );
+		$home_accept  	= $this->sanitize( $home_accept );
+		$away_accept  	= $this->sanitize( $away_accept );
+		$match_status 	= $this->sanitize( $match_status );
+
+		if( is_numeric( $match_id ) && 
+			is_numeric( $home_score ) && 
+			is_numeric( $away_score ) && 
+			is_numeric( $match_status )
+		) {
+			$this->link->query("UPDATE `" . $this->prefix . "tournament_matches` 
+								SET home_score = '$home_score', away_score = '$away_score', 
+									home_accept = '$home_accept', away_accept = '$away_accept',
+									completed = '$match_status'
+								WHERE id = '$match_id'
+							");
+			return $this->success( 'Match Details have been updated' );
+		} else {
+			return $this->error( 'All values must be numeric' );
 		}
 
 	}
