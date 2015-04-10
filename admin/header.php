@@ -1,19 +1,24 @@
 <?php session_start();
-define( 'EZL_VERSION', '3.4.8' );
+define( 'EZL_VERSION', '3.4.9' );
 $check_for_update = file_get_contents( 'http://www.mdloring.com/ezleague_version.php', TRUE );
 include('lib/class-db.php');
 include('lib/class-ezadmin.php');
 $ez = new ezAdmin();
 $ez->setup_ezadmin();
-    
+$ez_settings    = new ezAdmin_Settings();
+$site_settings  = $ez_settings->get_settings();
+if( ! empty( $site_settings['timezone'] ) ) {
+    date_default_timezone_set('' . $site_settings['timezone'] . '');
+} else {
+    date_default_timezone_set('UTC');
+}
+
 $ez_news 	    = new ezAdmin_News();
 $ez_frontend    = new ezAdmin_Frontend();
 $ez_user        = new ezAdmin_User();
 $ez_team	    = new ezAdmin_Team();
 $ez_league	    = new ezAdmin_League();
 $ez_match	    = new ezAdmin_Match();
-$ez_settings    = new ezAdmin_Settings();
-$site_settings  = $ez_settings->get_settings();
 $ez_forum	    = new ezAdmin_Forum();
 $ez_schedule    = new ezAdmin_Schedule();
 $ez_tournament  = new ezAdmin_Tournament();
@@ -29,7 +34,6 @@ $ez_tournament  = new ezAdmin_Tournament();
      	$username = $_SESSION['ez_admin'];
      	$user_settings = $ez_user->get_user_settings( $username );
      }
-date_default_timezone_set('' . $site_settings['timezone'] . '');
 ?>
 
 <!DOCTYPE html>
