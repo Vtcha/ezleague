@@ -277,8 +277,31 @@ $('#generateMatches').click(function() {
 		url: "generate_bracket.php",
 		data: { form: 'generate-matches', tournament_id: '' + tournament_id + '', max_teams: '' + tournament_teams + '' }
 	}).success(function( msg ) {
+		$("#clearMatches").removeAttr('style');
 		$(".round-1").fadeIn(1000, "linear");
 		$(".round-1").html(msg);
+		//setTimeout(function(){location.reload()},3000);
+	});
+
+});
+
+ /**
+ * Clear previously generated matches
+ * @param tournament_id
+ */
+$('#clearMatches').click(function() {
+
+	var tournament_id = $('#generateMatches').data('tournament-id');
+
+	$.ajax({
+		type: "POST",
+		url: "generate_bracket.php",
+		data: { form: 'clear-matches', tournament_id: '' + tournament_id + '' }
+	}).success(function( msg ) {
+		$(".round-1").fadeIn(1000, "linear");
+		$("#clearMatches").css('display', 'none');
+		$(".game-top").text('');
+		$(".game-bottom").text('');
 		//setTimeout(function(){location.reload()},3000);
 	});
 

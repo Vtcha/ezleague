@@ -156,7 +156,7 @@ class ezAdmin_Tournament extends DB_Class {
 	
 	public function get_tournament_teams($tournament_id) {
 		
-		$data = $this->fetch("SELECT * FROM `" . $this->prefix . "guilds` WHERE tournaments LIKE '%,$tournament_id' OR tournaments LIKE '$tournament_id,%' OR tournaments LIKE '$tournament_id' OR tournaments LIKE '%,$tournament_id,%'");
+		$data = $this->fetch("SELECT id, guild FROM `" . $this->prefix . "guilds` WHERE tournaments LIKE '%,$tournament_id' OR tournaments LIKE '$tournament_id,%' OR tournaments LIKE '$tournament_id' OR tournaments LIKE '%,$tournament_id,%'");
 		return $data;
 		
 	}
@@ -299,6 +299,67 @@ class ezAdmin_Tournament extends DB_Class {
 		$data = $this->fetch("SELECT round, completed, tid FROM `" . $this->prefix . "tournament_matches` WHERE (tid = '$tournament_id') AND (round = '1') AND (completed = '1')");
 		if( $data ) {
 			return true;
+		} else {
+			return false;
+		}
+
+	}
+
+	/*
+	 * Check if a tournament round has completed
+	 *
+	 * @return boolean
+	 */
+	public function check_if_round_completed($tournament_id, $round) {
+		$data = $this->fetch("SELECT round, completed, tid FROM `" . $this->prefix . "tournament_matches` WHERE (tid = '$tournament_id') AND (round = '1') AND (completed = '0')");
+		if( $data ) {
+			return false;
+		} else {
+			return true;
+		}
+
+	}
+
+	/*
+	 * Set tournament matchups
+	 *
+	 * @return boolean
+	 */
+	public function set_tournament_matchups($tournament_id, $home_team, $home_team_id, $away_team, $away_team_id, $round) {
+
+		$this->link->query("INSERT INTO `" . $this->prefix . "tournament_matches`
+							SET home_team = '$home_team', home_team_id = '$home_team_id', away_team = '$away_team', away_team_id = '$away_team_id', 
+								tid = '$tournament_id', round = '1'
+						");
+		return;
+
+	}
+
+	/*
+	 * Clear tournament matchups, specifically for round 1
+	 *
+	 * @return boolean
+	 */
+	public function clear_tournament_matchups($tournament_id) {
+
+		if( $this->link->query("DELETE FROM `" . $this->prefix . "tournament_matches` WHERE tid = '$tournament_id'") ) {
+			return true;
+		} else {
+			return false;
+		}
+
+	}
+
+	/*
+	 * Get tournament matchups by round
+	 *
+	 * @return array
+	 */
+	public function get_tournament_matchups($tournament_id, $round) {
+
+		$data = $this->fetch("SELECT * FROM `" . $this->prefix . "tournament_matches` WHERE tid = '$tournament_id' AND round = '$round'");
+		if( $data ) {
+			return $data;
 		} else {
 			return false;
 		}

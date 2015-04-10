@@ -128,9 +128,19 @@
                     $round_1_started    = $ez_tournament->check_if_started( $tournament_id );
                     if( $round_1_started == false ) { ?>
                         <div class="pull-right">
-                            <button id="generateMatches" data-tournament-id="<?php echo $tournament_id; ?>" data-tournament-teams="<?php echo $tournament['teams']; ?>" class="btn btn-primary btn-xs">Generate Matchups</a>
+                            <button id="generateMatches" style="margin-right:5px;" data-tournament-id="<?php echo $tournament_id; ?>" data-tournament-teams="<?php echo $tournament['teams']; ?>" class="btn btn-primary btn-xs">Generate Round 1 Matchups</a>
+                            <button id="clearMatches" class="btn btn-warning btn-xs" style="display:none;">Clear Matches</button> 
                         </div>
                 <?php 
+                    } else {
+                        $round_1_completed = $ez_tournament->check_if_round_completed( $tournament_id, '1' );
+                        if( $round_1_completed ) {
+                        ?>
+                        <div class="pull-right">
+                            <button id="generateMatchesRound2" style="margin-right:5px;" data-tournament-id="<?php echo $tournament_id; ?>" class="btn btn-primary btn-xs">Generate Round 2 Matchups</a>
+                        </div>
+                        <?php
+                        }
                     } 
                 ?>
             </div>
