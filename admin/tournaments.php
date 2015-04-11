@@ -8,10 +8,6 @@
         		$page = trim( $_GET['page'] );
         		
         		switch( $page ) {
-        			case 'view':
-        				include('tpls/tournaments/view-tournament.php');
-        				break;
-
         			case 'maps':
         				include('tpls/tournaments/view-maps.php');
         				break;

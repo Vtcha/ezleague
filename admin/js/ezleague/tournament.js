@@ -267,17 +267,17 @@ function kickTeam(team_id, tournament_id) {
  * Generate tournament round 1 matches
  * @param tournament_id
  */
-$('#generateMatches').click(function() {
+$('#generateRound1Matches').click(function() {
 
-	var tournament_id = $('#generateMatches').data('tournament-id');
-		tournament_teams = $('#generateMatches').data('tournament-teams');
+	var tournament_id = $('#generateRound1Matches').data('tournament-id');
+		tournament_teams = $('#generateRound1Matches').data('tournament-teams');
 
 	$.ajax({
 		type: "POST",
-		url: "generate_bracket.php",
+		url: "generate-round-01-bracket.php",
 		data: { form: 'generate-matches', tournament_id: '' + tournament_id + '', max_teams: '' + tournament_teams + '' }
 	}).success(function( msg ) {
-		$("#clearMatches").removeAttr('style');
+		$("#clearRound1Matches").removeAttr('style');
 		$(".round-1").fadeIn(1000, "linear");
 		$(".round-1").html(msg);
 		//setTimeout(function(){location.reload()},3000);
@@ -286,20 +286,20 @@ $('#generateMatches').click(function() {
 });
 
  /**
- * Clear previously generated matches
+ * Clear previously generated round 1 matches
  * @param tournament_id
  */
-$('#clearMatches').click(function() {
+$('#clearRound1Matches').click(function() {
 
-	var tournament_id = $('#generateMatches').data('tournament-id');
+	var tournament_id = $('#generateRound1Matches').data('tournament-id');
 
 	$.ajax({
 		type: "POST",
-		url: "generate_bracket.php",
+		url: "generate-round-01-bracket.php",
 		data: { form: 'clear-matches', tournament_id: '' + tournament_id + '' }
 	}).success(function( msg ) {
 		$(".round-1").fadeIn(1000, "linear");
-		$("#clearMatches").css('display', 'none');
+		$("#clearRound1Matches").css('display', 'none');
 		$(".game-top").text('');
 		$(".game-bottom").text('');
 		//setTimeout(function(){location.reload()},3000);

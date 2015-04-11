@@ -25,6 +25,32 @@
 		<li class="game game-bottom <?php echo ( $round1[3]['winner'] == $round1[3]['away_team_id'] ? 'winner' : '' ); ?>"><?php echo $round1[3]['away_team'] . ' - ' . $round1[3]['away_score']; ?></li>
 
 		<li class="spacer">&nbsp;</li>
+
+		<li class="game game-top <?php echo ( $round1[4]['winner'] == $round1[4]['home_team_id'] ? 'winner' : '' ); ?>"><?php echo $round1[4]['home_team'] . ' - ' . $round1[4]['home_score']; ?></li>
+		<li class="game game-spacer"><a href="tournament-match.php?id=<?php echo $round1[4]['id']; ?>">Edit Match</a></li>
+		<li class="game game-bottom <?php echo ( $round1[4]['winner'] == $round1[4]['away_team_id'] ? 'winner' : '' ); ?>"><?php echo $round1[4]['away_team'] . ' - ' . $round1[4]['away_score']; ?></li>
+
+		<li class="spacer">&nbsp;</li>
+		
+		<li class="game game-top <?php echo ( $round1[5]['winner'] == $round1[5]['home_team_id'] ? 'winner' : '' ); ?>"><?php echo $round1[5]['home_team'] . ' - ' . $round1[5]['home_score']; ?></li>
+		<li class="game game-spacer"><a href="tournament-match.php?id=<?php echo $round1[5]['id']; ?>">Edit Match</a></li>
+		<li class="game game-bottom <?php echo ( $round1[5]['winner'] == $round1[5]['away_team_id'] ? 'winner' : '' ); ?>"><?php echo $round1[5]['away_team'] . ' - ' . $round1[5]['away_score']; ?></li>
+
+		<li class="spacer">&nbsp;</li>
+		
+		<li class="game game-top <?php echo ( $round1[6]['winner'] == $round1[6]['home_team_id'] ? 'winner' : '' ); ?>"><?php echo $round1[6]['home_team'] . ' - ' . $round1[6]['home_score']; ?></li>
+		<li class="game game-spacer"><a href="tournament-match.php?id=<?php echo $round1[6]['id']; ?>">Edit Match</a></li>
+		<li class="game game-bottom <?php echo ( $round1[6]['winner'] == $round1[6]['away_team_id'] ? 'winner' : '' ); ?>"><?php echo $round1[6]['away_team'] . ' - ' . $round1[6]['away_score']; ?></li>
+
+		<li class="spacer">&nbsp;</li>
+		
+		<li class="game game-top <?php echo ( $round1[7]['winner'] == $round1[7]['home_team_id'] ? 'winner' : '' ); ?>"><?php echo $round1[7]['home_team'] . ' - ' . $round1[7]['home_score']; ?></li>
+		<li class="game game-spacer"><a href="tournament-match.php?id=<?php echo $round1[7]['id']; ?>">Edit Match</a></li>
+		<li class="game game-bottom <?php echo ( $round1[7]['winner'] == $round1[7]['away_team_id'] ? 'winner' : '' ); ?>"><?php echo $round1[7]['away_team'] . ' - ' . $round1[7]['away_score']; ?></li>
+
+		<li class="spacer">&nbsp;</li>
+
+
 <?php } else { ?>
 		<li class="spacer">&nbsp;</li>
 		<!-- wrap score inside span element -->
@@ -40,7 +66,31 @@
 
 		<li class="spacer">&nbsp;</li>
 		
+		<li class="game game-top "></li>
+		<li class="game game-spacer">&nbsp;</li>
+		<li class="game game-bottom"></li>
+
+		<li class="spacer">&nbsp;</li>
+		
 		<li class="game game-top"></li>
+		<li class="game game-spacer">&nbsp;</li>
+		<li class="game game-bottom "></li>
+
+		<li class="spacer">&nbsp;</li>
+
+		<li class="game game-top"></li>
+		<li class="game game-spacer">&nbsp;</li>
+		<li class="game game-bottom "></li>
+
+		<li class="spacer">&nbsp;</li>
+		
+		<li class="game game-top"></li>
+		<li class="game game-spacer">&nbsp;</li>
+		<li class="game game-bottom "></li>
+
+		<li class="spacer">&nbsp;</li>
+		
+		<li class="game game-top "></li>
 		<li class="game game-spacer">&nbsp;</li>
 		<li class="game game-bottom"></li>
 
