@@ -112,7 +112,7 @@
                         </tbody>
                      </table>
                 <?php } else { ?>
-                    Sorry, no open tournaments were found, try <a href="tournaments.php?page=create">creating one</a>
+                    Sorry, no teams have registered for this tournament yet
                 <?php } ?>
                         <div class="success team">
                           <span class="success_text team_text"></span>
