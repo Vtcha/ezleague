@@ -341,7 +341,7 @@ class ezAdmin_Tournament extends DB_Class {
 
 		$this->link->query("INSERT INTO `" . $this->prefix . "tournament_matches`
 							SET home_team = '$home_team', home_team_id = '$home_team_id', away_team = '$away_team', away_team_id = '$away_team_id', 
-								tid = '$tournament_id', round = '1'
+								tid = '$tournament_id', round = '$round'
 						");
 		return;
 
@@ -423,6 +423,33 @@ class ezAdmin_Tournament extends DB_Class {
 			return $this->success( 'Match Details have been updated' );
 		} else {
 			return $this->error( 'All values must be numeric' );
+		}
+
+	}
+
+	/*
+	 * Get the winners from a given tournament round
+	 *
+	 * @return array
+	 */
+	public function get_round_winners($tournament_id, $round) {
+
+		$data = $this->fetch("SELECT 
+									`" . $this->prefix . "tournament_matches`.id AS match_id, 
+									`" . $this->prefix . "tournament_matches`.tid AS tournament_id, 
+									`" . $this->prefix . "tournament_matches`.winner AS winner, 
+									`" . $this->prefix . "guilds`.guild AS guild, 
+									`" . $this->prefix . "guilds`.id AS guild_id 
+							  FROM `" . $this->prefix . "tournament_matches`, `" . $this->prefix . "guilds` 
+							  WHERE (`" . $this->prefix . "tournament_matches`.winner = `" . $this->prefix . "guilds`.id) 
+							  	AND (`" . $this->prefix . "tournament_matches`.tid = '$tournament_id')
+							  	AND (`" . $this->prefix . "tournament_matches`.round = '$round')
+							  ORDER BY `" . $this->prefix . "tournament_matches`.id ASC
+							");
+		if( $data ) {
+			return $data;
+		} else {
+			return false;
 		}
 
 	}

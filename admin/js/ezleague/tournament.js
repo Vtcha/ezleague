@@ -286,6 +286,26 @@ $('#generateRound1Matches').click(function() {
 });
 
  /**
+ * Generate tournament round 2 matches
+ * @param tournament_id
+ */
+$('#generateRound2Matches').click(function() {
+
+	var tournament_id = $('#generateRound2Matches').data('tournament-id');
+	
+	$.ajax({
+		type: "POST",
+		url: "generate-round-02-bracket.php",
+		data: { form: 'generate-matches', tournament_id: '' + tournament_id + '' }
+	}).success(function( msg ) {
+		$(".round-2").fadeIn(1000, "linear");
+		$(".round-2").html(msg);
+		//setTimeout(function(){location.reload()},3000);
+	});
+
+});
+
+ /**
  * Clear previously generated round 1 matches
  * @param tournament_id
  */

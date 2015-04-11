@@ -137,7 +137,7 @@
                         if( $round_1_completed ) {
                         ?>
                             <div class="pull-right">
-                                <button id="generateMatchesRound2" style="margin-right:5px;" data-tournament-id="<?php echo $tournament_id; ?>" class="btn btn-primary btn-xs">Generate Round 2 Matchups</a>
+                                <button id="generateRound2Matches" style="margin-right:5px;" data-tournament-id="<?php echo $tournament_id; ?>" class="btn btn-primary btn-xs">Generate Round 2 Matchups</a>
                             </div>
                         <?php
                         }
