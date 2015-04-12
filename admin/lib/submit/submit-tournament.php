@@ -46,7 +46,10 @@ $ez_tournament = new ezAdmin_Tournament();
                 $away_score     = $_POST['away_score'];
                 $away_accept    = $_POST['away_accept'];
                 $match_status   = $_POST['match_status'];
-                 $ez_tournament->edit_tournament_match( $match_id, $home_id, $home_score, $home_accept, $away_id, $away_score, $away_accept, $match_status );
+                $round          = $_POST['round'];
+                $tid            = $_POST['tournament_id'];
+                $max_teams      = $_POST['max_teams'];
+                 $ez_tournament->edit_tournament_match( $match_id, $home_id, $home_score, $home_accept, $away_id, $away_score, $away_accept, $match_status, $tid, $max_teams, $round );
                 break;
 
     	 	case 'delete-tournament':

@@ -29,8 +29,15 @@ class ezAdmin_Tournament extends DB_Class {
 
 	public function get_closed_tournaments() {
 		
-		$data = $this->fetch("SELECT " . $this->prefix . "games.slug, " . $this->prefix . "games.game AS ggame, " . $this->prefix . "tournaments.game AS lgame, " . $this->prefix . "tournaments.id AS tid,
-								" . $this->prefix . "tournaments.start_date, " . $this->prefix . "tournaments.tournament
+		$data = $this->fetch("SELECT 
+								" . $this->prefix . "games.slug, 
+								" . $this->prefix . "games.game AS ggame, 
+								" . $this->prefix . "tournaments.game AS lgame, 
+								" . $this->prefix . "tournaments.id AS tid,
+								" . $this->prefix . "tournaments.start_date, 
+								" . $this->prefix . "tournaments.tournament,
+								" . $this->prefix . "tournaments.first_place,
+								" . $this->prefix . "tournaments.second_place
 								FROM `" . $this->prefix . "tournaments`, `" . $this->prefix . "games`
 								WHERE (" . $this->prefix . "games.slug = " . $this->prefix . "tournaments.game) 
 									AND (" . $this->prefix . "tournaments.status = '0')
@@ -318,12 +325,28 @@ class ezAdmin_Tournament extends DB_Class {
 	}
 
 	/*
+	 * Check if a tournament round exists
+	 *
+	 * @return boolean
+	 */
+	public function check_if_round_exists($tournament_id, $round) {
+
+		$data = $this->fetch("SELECT round, completed, tid FROM `" . $this->prefix . "tournament_matches` WHERE (tid = '$tournament_id') AND (round = '$round')");
+		if( $data ) {
+			return true;
+		} else {
+			return false;
+		}
+		
+	}
+
+	/*
 	 * Check if a tournament round has completed
 	 *
 	 * @return boolean
 	 */
 	public function check_if_round_completed($tournament_id, $round) {
-		$data = $this->fetch("SELECT round, completed, tid FROM `" . $this->prefix . "tournament_matches` WHERE (tid = '$tournament_id') AND (round = '1') AND (completed = '0')");
+		$data = $this->fetch("SELECT round, completed, tid FROM `" . $this->prefix . "tournament_matches` WHERE (tid = '$tournament_id') AND (round = '$round') AND (completed = '0')");
 		if( $data ) {
 			return false;
 		} else {
@@ -400,7 +423,7 @@ class ezAdmin_Tournament extends DB_Class {
 	 *
 	 * @return boolean
 	 */
-	public function edit_tournament_match($match_id, $home_id, $home_score, $home_accept, $away_id, $away_score, $away_accept, $match_status) {
+	public function edit_tournament_match($match_id, $home_id, $home_score, $home_accept, $away_id, $away_score, $away_accept, $match_status, $tournament_id, $max_teams, $round) {
 
 		$match_id 	  	= $this->sanitize( $match_id );
 		$home_score   	= $this->sanitize( $home_score );
@@ -408,18 +431,53 @@ class ezAdmin_Tournament extends DB_Class {
 		$home_accept  	= $this->sanitize( $home_accept );
 		$away_accept  	= $this->sanitize( $away_accept );
 		$match_status 	= $this->sanitize( $match_status );
+		$winner 		= '';
+		$loser 			= '';
 
 		if( is_numeric( $match_id ) && 
 			is_numeric( $home_score ) && 
 			is_numeric( $away_score ) && 
 			is_numeric( $match_status )
 		) {
+			if( $home_score > $away_score ) {
+				$winner = $home_id;
+				$loser  = $away_id;
+			} else {
+				$winner = $away_id;
+				$loser  = $home_id;
+			}
 			$this->link->query("UPDATE `" . $this->prefix . "tournament_matches` 
 								SET home_score = '$home_score', away_score = '$away_score', 
 									home_accept = '$home_accept', away_accept = '$away_accept',
+									winner = '$winner', loser = '$loser',
 									completed = '$match_status'
 								WHERE id = '$match_id'
 							");
+			
+			switch( $max_teams ) {
+				case 4:
+					if( $round == 2 ) {
+						$this->link->query("UPDATE `" . $this->prefix . "tournaments` SET first_place = '$winner', second_place = '$loser', status = '0' WHERE id = '$tournament_id'");
+					}
+					break;
+				case 8:
+					if( $round == 3 ) {
+						$this->link->query("UPDATE `" . $this->prefix . "tournaments` SET first_place = '$winner', second_place = '$loser', status = '0' WHERE id = '$tournament_id'");
+					}
+					break;
+				case 16:
+					if( $round == 4 ) {
+						$this->link->query("UPDATE `" . $this->prefix . "tournaments` SET first_place = '$winner', second_place = '$loser', status = '0' WHERE id = '$tournament_id'");
+					}
+					break;
+				case 32:
+					if( $round == 5 ) {
+						$this->link->query("UPDATE `" . $this->prefix . "tournaments` SET first_place = '$winner', second_place = '$loser', status = '0' WHERE id = '$tournament_id'");
+					}
+					break;
+				default:
+					break;
+			}
 			return $this->success( 'Match Details have been updated' );
 		} else {
 			return $this->error( 'All values must be numeric' );
@@ -448,6 +506,60 @@ class ezAdmin_Tournament extends DB_Class {
 							");
 		if( $data ) {
 			return $data;
+		} else {
+			return false;
+		}
+
+	}
+
+	/*
+	 * Get the tournament winner
+	 *
+	 * @return string
+	 */
+	public function get_tournament_champion($tournament_id) {
+
+		$champion = array();
+		$data = $this->fetch("SELECT
+								`" . $this->prefix . "tournaments`.first_place AS champion,
+								`" . $this->prefix . "tournaments`.id AS tid,
+								`" . $this->prefix . "guilds`.id AS guild_id,
+								`" . $this->prefix . "guilds`.guild AS guild
+							  FROM `" . $this->prefix . "guilds`, `" . $this->prefix . "tournaments`
+							  WHERE `" . $this->prefix . "tournaments`.id = '$tournament_id'
+							  	AND `" . $this->prefix . "tournaments`.first_place = `" . $this->prefix . "guilds`.id
+							");
+		if( $data ) {
+			$champion['guild_id']	= $data[0]['guild_id'];
+			$champion['guild'] 		= $data[0]['guild'];
+			return $champion;
+		} else {
+			return false;
+		}
+
+	}
+
+	/*
+	 * Get the tournament runner up
+	 *
+	 * @return string
+	 */
+	public function get_tournament_runner_up($tournament_id) {
+
+		$champion = array();
+		$data = $this->fetch("SELECT
+								`" . $this->prefix . "tournaments`.second_place AS runner_up,
+								`" . $this->prefix . "tournaments`.id AS tid,
+								`" . $this->prefix . "guilds`.id AS guild_id,
+								`" . $this->prefix . "guilds`.guild AS guild
+							  FROM `" . $this->prefix . "guilds`, `" . $this->prefix . "tournaments`
+							  WHERE `" . $this->prefix . "tournaments`.id = '$tournament_id'
+							  	AND `" . $this->prefix . "tournaments`.second_place = `" . $this->prefix . "guilds`.id
+							");
+		if( $data ) {
+			$champion['guild_id']	= $data[0]['guild_id'];
+			$champion['guild'] 		= $data[0]['guild'];
+			return $champion;
 		} else {
 			return false;
 		}
