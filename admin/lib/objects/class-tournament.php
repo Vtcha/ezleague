@@ -167,8 +167,12 @@ class ezAdmin_Tournament extends DB_Class {
 	
 	public function get_total_teams($tournament_id) {
 		
-		$result = $this->link->query("SELECT guild FROM `" . $this->prefix . "guilds` WHERE tournaments LIKE '%,$tournament_id' OR tournaments LIKE '$tournament_id,%' OR tournaments LIKE '$tournament_id'");
-		$count = $this->numRows($result);
+		$data = $this->fetch("SELECT guild FROM `" . $this->prefix . "guilds` WHERE (tournaments LIKE '%,$tournament_id') OR (tournaments LIKE '$tournament_id,%') OR (tournaments LIKE '$tournament_id') OR (tournaments LIKE '%,$tournament_id,%')");
+		if( $data ) {
+			$count = count( $data );
+		} else {
+			$count = 0;
+		}
 		return $count;
 		
 	}
