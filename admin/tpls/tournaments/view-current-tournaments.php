@@ -14,7 +14,8 @@
                     <tr>
                         <th>Game</th>
                         <th>Name</th>
-                        <th>Total Teams</th>
+                        <th>Type</th>
+                        <th>Teams</th>
                         <th>Max Teams</th>
                         <th>Start</th>
                         <th></th>
@@ -22,11 +23,16 @@
                 </thead>
                 <tbody>
       <?php foreach( $tournaments as $tournament ) {
-             $total_teams = $ez_tournament->get_total_teams( $tournament['tid'] ); 
+             $total_teams = $ez_tournament->get_total_teams( $tournament['tid'] );
+             $public = '<span class="text-success">Public</span>';
+             if( $tournament['public'] == 0 ) {
+                $public = '<span class="text-danger">Private</span>';
+             }
       ?>
                     <tr>
                         <td><a href="tournaments.php?page=edit&id=<?php echo $tournament['tid']; ?>"><?php echo $tournament['ggame']; ?></a></td>
                         <td><?php echo $tournament['tournament']; ?></td>
+                        <td><em><?php echo $public; ?></em></td>
                         <td><?php echo $total_teams; ?></td>
                         <td><?php echo $tournament['max_teams']; ?></td>
                         <td><?php echo date( 'F d, Y', strtotime( $tournament['start_date'] ) ); ?></td>

@@ -64,7 +64,8 @@ $ez_tournament = new ezAdmin_Tournament();
                 $start          = strtotime( $_POST['start'] );
                 $registration   = strtotime( $_POST['registration'] );
                 $format         = $_POST['format'];
-    	 		 $ez_tournament->create_tournament( $tournament, $game, $teams, $start, $registration, $format );
+                $public         = $_POST['public'];
+    	 		 $ez_tournament->create_tournament( $tournament, $game, $teams, $start, $registration, $format, $public );
     	 		break;
     	 	
             case 'kick-team':

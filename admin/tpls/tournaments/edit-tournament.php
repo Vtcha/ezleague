@@ -14,6 +14,11 @@
                     $tournament_id = $_GET['id'];
                      $tournament = $ez_tournament->get_tournament( $tournament_id );
                      $max_teams = $tournament['teams'];
+                     $public    = $tournament['public'];
+                     $public_text = 'Public';
+                     if( $public == 0 ) {
+                        $public_text = 'Private';
+                     }
              ?>
                 <div class="row">
                     <div class="col-lg-12">
@@ -21,7 +26,7 @@
                       <input type="hidden" id="tournament-id" value="<?php echo $tournament_id; ?>" />
                         <div class="form-group">
                             <label>Type <small>(only single elimination is currently available)</small></label>
-                            <input disabled class="form-control" id="type" placeholder="Single Elimination" value="Single Elimination" />
+                            <input disabled class="form-control" id="type" placeholder="Single Elimination" value="Single Elimination, <?php echo $public_text; ?>" />
                         </div>
                         <div class="form-group">
                             <label>Tournament</label>
@@ -89,6 +94,11 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <i class="fa fa-sitemap"></i> Tournament Teams
+                <?php if( $public == 0 ) { ?>
+                        <div class="pull-right">
+                            <button onclick="getAvailableTournamentTeams('<?php echo $tournament_id; ?>');" data-toggle="modal" data-target="#addTournamentTeamsModal" class="btn btn-info btn-xs">Add Teams</button>
+                        </div>
+                <?php } ?>
             </div>
             <div class="panel-body">
                 <div class="table-responsive">
@@ -113,7 +123,11 @@
                         </tbody>
                      </table>
                 <?php } else { ?>
-                    Sorry, no teams have registered for this tournament yet
+                    <?php if( $public == 0 ) { ?>
+                            No teams have been added to this tournament
+                <?php     } else { ?>
+                            Sorry, no teams have registered for this tournament yet
+                <?php     } ?>
                 <?php } ?>
                         <div class="success team">
                           <span class="success_text team_text"></span>
@@ -149,3 +163,4 @@
         </div>
      </div>
     </div>
+    <div id="addTournamentTeamsModal" class="modal"></div>

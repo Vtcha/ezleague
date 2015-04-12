@@ -5,7 +5,7 @@ class ezAdmin_Tournament extends DB_Class {
 	public function get_all_tournaments() {
 		
 		$data = $this->fetch("SELECT " . $this->prefix . "games.slug, " . $this->prefix . "games.game AS ggame, " . $this->prefix . "tournaments.game AS lgame, " . $this->prefix . "tournaments.id AS tid,
-								" . $this->prefix . "tournaments.start_date, " . $this->prefix . "tournaments.tournament
+								" . $this->prefix . "tournaments.start_date, " . $this->prefix . "tournaments.tournament, " . $this->prefix . "tournaments.public
 								FROM `" . $this->prefix . "tournaments`, `" . $this->prefix . "games`
 								WHERE " . $this->prefix . "games.slug = " . $this->prefix . "tournaments.game
 								ORDER BY " . $this->prefix . "tournaments.game DESC, " . $this->prefix . "tournaments.id ASC
@@ -17,7 +17,7 @@ class ezAdmin_Tournament extends DB_Class {
 	public function get_open_tournaments() {
 		
 		$data = $this->fetch("SELECT " . $this->prefix . "games.slug, " . $this->prefix . "games.game AS ggame, " . $this->prefix . "tournaments.game AS lgame, " . $this->prefix . "tournaments.id AS tid,
-								" . $this->prefix . "tournaments.start_date, " . $this->prefix . "tournaments.tournament, " . $this->prefix . "tournaments.max_teams
+								" . $this->prefix . "tournaments.start_date, " . $this->prefix . "tournaments.tournament, " . $this->prefix . "tournaments.max_teams, " . $this->prefix . "tournaments.public
 								FROM `" . $this->prefix . "tournaments`, `" . $this->prefix . "games`
 								WHERE (" . $this->prefix . "games.slug = " . $this->prefix . "tournaments.game) 
 									AND (" . $this->prefix . "tournaments.status = '1')
@@ -60,7 +60,8 @@ class ezAdmin_Tournament extends DB_Class {
 				'registration' 	=> date( 'Y-m-d', strtotime( $data['0']['registration_date'] ) ),
 				'format'	 	=> $data['0']['format'],
 				'type' 		 	=> $data['0']['type'],
-				'rules'		 	=> $data['0']['rules']
+				'rules'		 	=> $data['0']['rules'],
+				'public'		=> $data['0']['public']
 		);
 		return $tournament;
 		
@@ -78,7 +79,7 @@ class ezAdmin_Tournament extends DB_Class {
 
 	}
 	
-	public function create_tournament($tournament, $game, $max_teams, $start_date, $registration, $format) {
+	public function create_tournament($tournament, $game, $max_teams, $start_date, $registration, $format, $public) {
 		
 		$tournament 		= $this->sanitize( $tournament );
 		$game 				= $this->sanitize( $game );
@@ -180,6 +181,13 @@ class ezAdmin_Tournament extends DB_Class {
 	public function get_tournament_teams($tournament_id) {
 		
 		$data = $this->fetch("SELECT id, guild FROM `" . $this->prefix . "guilds` WHERE tournaments LIKE '%,$tournament_id' OR tournaments LIKE '$tournament_id,%' OR tournaments LIKE '$tournament_id' OR tournaments LIKE '%,$tournament_id,%'");
+		return $data;
+		
+	}
+
+	public function get_available_teams($tournament_id) {
+		
+		$data = $this->fetch("SELECT id, guild FROM `" . $this->prefix . "guilds` WHERE tournaments NOT LIKE '%,$tournament_id' OR tournaments NOT LIKE '$tournament_id,%' OR tournaments NOT LIKE '$tournament_id' OR tournaments NOT LIKE '%,$tournament_id,%'");
 		return $data;
 		
 	}
