@@ -280,7 +280,6 @@ $('#generateRound1Matches').click(function() {
 		$("#clearRound1Matches").removeAttr('style');
 		$(".round-1").fadeIn(1000, "linear");
 		$(".round-1").html(msg);
-		//setTimeout(function(){location.reload()},3000);
 	});
 
 });
@@ -292,7 +291,7 @@ $('#generateRound1Matches').click(function() {
 $('#generateRound2Matches').click(function() {
 
 	var tournament_id = $('#generateRound2Matches').data('tournament-id');
-	
+
 	$.ajax({
 		type: "POST",
 		url: "generate-round-02-bracket.php",
@@ -300,7 +299,44 @@ $('#generateRound2Matches').click(function() {
 	}).success(function( msg ) {
 		$(".round-2").fadeIn(1000, "linear");
 		$(".round-2").html(msg);
-		//setTimeout(function(){location.reload()},3000);
+	});
+
+});
+
+ /**
+ * Generate tournament round 3 matches
+ * @param tournament_id
+ */
+$('#generateRound3Matches').click(function() {
+
+	var tournament_id = $('#generateRound3Matches').data('tournament-id');
+
+	$.ajax({
+		type: "POST",
+		url: "generate-round-03-bracket.php",
+		data: { form: 'generate-matches', tournament_id: '' + tournament_id + '' }
+	}).success(function( msg ) {
+		$(".round-3").fadeIn(1000, "linear");
+		$(".round-3").html(msg);
+	});
+
+});
+
+ /**
+ * Generate tournament round 4 matches
+ * @param tournament_id
+ */
+$('#generateRound4Matches').click(function() {
+
+	var tournament_id = $('#generateRound4Matches').data('tournament-id');
+
+	$.ajax({
+		type: "POST",
+		url: "generate-round-04-bracket.php",
+		data: { form: 'generate-matches', tournament_id: '' + tournament_id + '' }
+	}).success(function( msg ) {
+		$(".round-4").fadeIn(1000, "linear");
+		$(".round-4").html(msg);
 	});
 
 });
@@ -322,7 +358,6 @@ $('#clearRound1Matches').click(function() {
 		$("#clearRound1Matches").css('display', 'none');
 		$(".game-top").text('');
 		$(".game-bottom").text('');
-		//setTimeout(function(){location.reload()},3000);
 	});
 
 });
@@ -340,6 +375,9 @@ $('#editTournamentMatch').submit(function(e) {
 		home_accept  	= $("#home-team-accepted").val();
 		away_accept  	= $("#away-team-accepted").val();
 		match_status 	= $("#match-status").val();
+		max_teams 		= $("#max-teams").val();
+		round 			= $("#match-round").val();
+		tid 			= $("#tournament-id").val();
 
 		e.preventDefault();
 
@@ -348,7 +386,7 @@ $('#editTournamentMatch').submit(function(e) {
      url: "lib/submit/submit-tournament.php",
      async:true,
      crossbrowser:true,
-     data: { form: 'edit-match', match_id: '' + match_id + '', home_id: '' + home_id + '', away_id: '' + away_id + '', home_score: '' + home_score + '', away_score: '' + away_score + '', home_accept: '' + home_accept + '', away_accept: '' + away_accept + '', match_status: '' + match_status + '' }
+     data: { form: 'edit-match', match_id: '' + match_id + '', tournament_id: '' + tid + '', home_id: '' + home_id + '', away_id: '' + away_id + '', home_score: '' + home_score + '', away_score: '' + away_score + '', home_accept: '' + home_accept + '', away_accept: '' + away_accept + '', match_status: '' + match_status + '', max_teams: '' + max_teams + '', round: '' + round + '' }
    }).success(function( msg ) {
 	   		$('.success').css("display", "");
 	   		$(".success").fadeIn(1000, "linear");
