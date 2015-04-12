@@ -381,20 +381,37 @@ $('#editTournamentMatch').submit(function(e) {
 
 		e.preventDefault();
 
- $.ajax({
-     type: "POST",
-     url: "lib/submit/submit-tournament.php",
-     async:true,
-     crossbrowser:true,
-     data: { form: 'edit-match', match_id: '' + match_id + '', tournament_id: '' + tid + '', home_id: '' + home_id + '', away_id: '' + away_id + '', home_score: '' + home_score + '', away_score: '' + away_score + '', home_accept: '' + home_accept + '', away_accept: '' + away_accept + '', match_status: '' + match_status + '', max_teams: '' + max_teams + '', round: '' + round + '' }
-   }).success(function( msg ) {
-	   		$('.success').css("display", "");
-	   		$(".success").fadeIn(1000, "linear");
-	   		$('.success_text').fadeIn("slow");
-	   		$('.success_text').html(msg);
-	   		setTimeout(function(){location.reload()},3000);
-  });
+	 $.ajax({
+	     type: "POST",
+	     url: "lib/submit/submit-tournament.php",
+	     async:true,
+	     crossbrowser:true,
+	     data: { form: 'edit-match', match_id: '' + match_id + '', tournament_id: '' + tid + '', home_id: '' + home_id + '', away_id: '' + away_id + '', home_score: '' + home_score + '', away_score: '' + away_score + '', home_accept: '' + home_accept + '', away_accept: '' + away_accept + '', match_status: '' + match_status + '', max_teams: '' + max_teams + '', round: '' + round + '' }
+	   }).success(function( msg ) {
+		   		$('.success').css("display", "");
+		   		$(".success").fadeIn(1000, "linear");
+		   		$('.success_text').fadeIn("slow");
+		   		$('.success_text').html(msg);
+		   		setTimeout(function(){location.reload()},3000);
+	  });
 });
+
+/**
+ * Get available tournament teams for the modal
+ * @param tournament_id
+ */
+function getAvailableTournamentTeams(tournament_id) {
+
+	$.ajax({
+	     type: "POST",
+	     async: false,
+	     url: "get_add_tournament_team.php",
+	     data: { id: '' + tournament_id + '' }
+	   }).success(function( msg ) {
+		   $('#addTournamentTeamsModal').html(msg);
+	  });
+	
+}
 
 /**
  * Unkick a team from a league
