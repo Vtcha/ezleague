@@ -10,7 +10,7 @@ $ez_tournament = new ezAdmin_Tournament();
     	 switch($form) {
     	 	case 'add-map':
     	 		$map			= $_POST['map'];
-    	 		$tournament_id	= $_POST['league_id'];
+    	 		$tournament_id	= $_POST['tournament_id'];
     	 		 $ez_tournament->add_map( $map, $tournament_id );
     	 		break;
     	 		
@@ -22,7 +22,7 @@ $ez_tournament = new ezAdmin_Tournament();
     	 		break;
     	 		
     	 	case 'edit-rules':
-    	 		$tournament_id  = $_POST['league_id'];
+    	 		$tournament_id  = $_POST['tournament_id'];
     	 		$rules          = $_POST['body'];
     	 		 $ez_tournament->edit_rules( $tournament_id, $rules );
     	 		break;

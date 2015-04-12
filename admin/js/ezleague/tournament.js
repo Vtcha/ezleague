@@ -157,11 +157,11 @@ $('#addMap').submit(function(e) {
 });
 
 /**
- * Edit league rules
+ * Edit tournament rules
  */
 $('#editRules').submit(function(e) {
 	var body			= CKEDITOR.instances['body'].getData();
-		league_id  		= $("#league_id").val();
+		tournament_id  	= $("#tournament_id").val();
 		
 		e.preventDefault();
 		body = str_replace("&#39;", "\'", body);
@@ -171,7 +171,7 @@ $('#editRules').submit(function(e) {
      url: "lib/submit/submit-tournament.php",
      async:true,
      crossbrowser:true,
-     data: { form: 'edit-rules', body: '' + body + '', league_id: '' + league_id + '' }
+     data: { form: 'edit-rules', body: '' + body + '', tournament_id: '' + tournament_id + '' }
    }).success(function( msg ) {
 	   		$('.success').css("display", "");
 	   		$(".success").fadeIn(1000, "linear");

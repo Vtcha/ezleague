@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-lg-12">
-        <h1 class="page-header">Edit League Rules</h1>
+        <h1 class="page-header">Edit Tournament Rules</h1>
     </div>
     <!-- /.col-lg-12 -->
 </div>
@@ -8,30 +8,28 @@
 <div class="row">
     <div class="col-lg-10">
     	<?php if( isset($_GET['id'] ) ) { 
-            $league_id = $_GET['id'];
-             $league = $ez_league->get_league( $league_id );
-             $season = $ez_league->get_current_season( $league_id );
-             $current_season = $season['season'];
-             $rules  = $ez_league->get_rules( $league_id );
+            $tournament_id = $_GET['id'];
+             $tournament = $ez_tournament->get_tournament( $tournament_id );
+             $rules  = $ez_tournament->get_rules( $tournament_id );
      ?>
         <div class="panel panel-default">
             <div class="panel-heading">
-                <i class="fa fa-sitemap"></i> <em><?php echo $league['league']; ?></em> League Rules
+                <i class="fa fa-sitemap"></i> <em><?php $ez_tournament->get_tournament_name( $tournament_id ); ?></em> Tournament Rules
             </div>
             <!-- /.panel-heading -->
             <div class="panel-body">
 				<form id="editRules" method="POST">
-				 <input type="hidden" id="league_id" value="<?php echo $league_id; ?>" />
-		       	  <textarea class="ckeditor form-control" id="body"><?php echo $league['rules']; ?></textarea>
+				 <input type="hidden" id="tournament_id" value="<?php echo $tournament_id; ?>" />
+		       	  <textarea class="ckeditor form-control" id="body"><?php echo $tournament['rules']; ?></textarea>
 		      	   <hr/>	
 		      		<button type="submit" class="btn btn-primary">Edit</button>
-		        	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		        	<button type="button" class="btn btn-default">Cancel</button>
 		          <div class="success">
-		           <span class="success_text"></span>
+		          <span class="success_text"></span>
 		          </div>
 		       </form>
 	    <?php } else { ?>
-	    	<h3>No League was selected</h3>
+	    	<h3>No Tournament was selected</h3>
 	    <?php } ?>
             </div>
             <!-- /.panel-body -->

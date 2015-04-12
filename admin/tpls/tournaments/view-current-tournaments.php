@@ -31,6 +31,7 @@
                         <td><?php echo $tournament['max_teams']; ?></td>
                         <td><?php echo date( 'F d, Y', strtotime( $tournament['start_date'] ) ); ?></td>
                         <td>
+                            <a href="tournaments.php?page=rules&id=<?php echo $tournament['tid']; ?>" class="btn btn-primary btn-xs">Rules</a>
                             <a href="tournaments.php?page=edit&id=<?php echo $tournament['tid']; ?>" class="btn btn-success btn-xs">Edit / View</a>
                         </td>
                     </tr>
