@@ -13,6 +13,7 @@
             <?php if( isset( $_GET['id'] ) && $_GET['id'] != '' ) { 
                     $tournament_id = $_GET['id'];
                      $tournament = $ez_tournament->get_tournament( $tournament_id );
+                     $max_teams = $tournament['teams'];
              ?>
                 <div class="row">
                     <div class="col-lg-12">
@@ -124,30 +125,9 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <i class="fa fa-sitemap"></i> Tournament Bracket
-                <?php 
-                    $round_1_started    = $ez_tournament->check_if_started( $tournament_id );
-                    if( $round_1_started == false ) { ?>
-                        <div class="pull-right">
-                            <button id="generateRound1Matches" style="margin-right:5px;" data-tournament-id="<?php echo $tournament_id; ?>" data-tournament-teams="<?php echo $tournament['teams']; ?>" class="btn btn-primary btn-xs">Generate Round 1 Matchups</a>
-                            <button id="clearRound1Matches" class="btn btn-warning btn-xs" style="display:none;">Clear Matches</button> 
-                        </div>
-                <?php 
-                    } else {
-                        $round_1_completed = $ez_tournament->check_if_round_completed( $tournament_id, '1' );
-                        if( $round_1_completed ) {
-                        ?>
-                            <div class="pull-right">
-                                <button id="generateRound2Matches" style="margin-right:5px;" data-tournament-id="<?php echo $tournament_id; ?>" class="btn btn-primary btn-xs">Generate Round 2 Matchups</a>
-                            </div>
-                        <?php
-                        }
-                    } 
-                ?>
-            </div>
-            <div class="panel-body">
-            <small>* <em>Round 1</em> matchups can be generated up until a <em>Round 1</em> Match has been completed</small>
+                
             <?php
-                $max_teams = $tournament['teams'];
+                
                 switch( $max_teams ) {
                     case 4:
                         include( 'tpls/tournaments/brackets/view-tournament-bracket-04.php' );
@@ -166,7 +146,6 @@
                 }
                 
             ?>
-            </div>
         </div>
      </div>
     </div>

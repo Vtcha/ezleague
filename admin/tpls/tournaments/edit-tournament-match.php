@@ -5,7 +5,11 @@
 </div>
 <div class="row">
 <?php $match_details = $ez_tournament->get_tournament_match( $match_id ); ?>
-<?php if( $match_details ) { ?>
+<?php if( $match_details ) { 
+        $tournament_details = $ez_tournament->get_tournament( $match_details[0]['tid'] );
+        $tournament_max_teams = $tournament_details['teams'];
+        $tournament_round = $match_details[0]['round'];
+?>
     <div class="col-lg-4">
         <div class="panel panel-default">
             <div class="panel-heading">
@@ -18,10 +22,59 @@
                       <input type="hidden" id="match-id" value="<?php echo $match_id; ?>" />
                       <input type="hidden" id="home-id" value="<?php echo $match_details[0]['home_team_id']; ?>" />
                       <input type="hidden" id="away-id" value="<?php echo $match_details[0]['away_team_id']; ?>" />
+                      <input type="hidden" id="max-teams" value="<?php echo $tournament_max_teams; ?>" />
+                      <input type="hidden" id="match-round" value="<?php echo $tournament_round; ?>" />
+                      <input type="hidden" id="tournament-id" value="<?php echo $match_details[0]['tid']; ?>" />
                         <div class="form-group">
                             <label>Tournament</label><br/>
                             <a href="tournaments.php?page=edit&id=<?php echo $match_details[0]['tid']; ?>"><?php $ez_tournament->get_tournament_name( $match_details[0]['tid'] ); ?></a>,
-                            Round <?php echo $match_details[0]['round']; ?>
+                            Round <?php echo $tournament_round; ?>
+                            <?php
+                                switch( $tournament_max_teams ) {
+                                    case 4:
+                                        if( $tournament_round == 1 ) { ?>
+                                            - <span class="label label-info">Semi-finals</span>
+                                  <?php } elseif( $tournament_round == 2 ) { ?>
+                                            - <span class="label label-warning">Championship</span>
+                                  <?php }
+                                        break;
+                                    case 8:
+                                        if( $tournament_round == 1 ) { ?>
+                                            - <span class="label label-primary">Quarter-finals</span>
+                                  <?php } elseif( $tournament_round == 2 ) { ?>
+                                            - <span class="label label-info">Semi-finals</span>
+                                  <?php } elseif( $tournament_round == 3 ) { ?>
+                                            - <span class="label label-warning">Championship</span>
+                                  <?php }
+                                        break;
+                                    case 16:
+                                        if( $tournament_round == 1 ) { ?>
+                                            - <span class="label label-default">Round 1</span>
+                                  <?php } elseif( $tournament_round == 2 ) { ?>
+                                            - <span class="label label-primary">Quarter-finals</span>
+                                  <?php } elseif( $tournament_round == 3 ) { ?>
+                                            - <span class="label label-info">Semi-finals</span>
+                                  <?php } elseif( $tournament_round == 4 ) { ?>
+                                            - <span class="label label-warning">Championship</span>
+                                  <?php } 
+                                        break;
+                                    case 32:
+                                        if( $tournament_round == 1 ) { ?>
+                                            - <span class="label label-default">Round 1</span>
+                                  <?php } elseif( $tournament_round == 2 ) { ?>
+                                            - <span class="label label-default">Round 2</span>
+                                  <?php } elseif( $tournament_round == 3 ) { ?>
+                                            - <span class="label label-primary">Quarter-finals</span>
+                                  <?php } elseif( $tournament_round == 4 ) { ?>
+                                            - <span class="label label-info">Semi-finals</span>
+                                  <?php } elseif( $tournament_round == 5 ) { ?>
+                                            - <span class="label label-warning">Championship</span>
+                                  <?php }
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            ?>
                         </div>
                         <div class="form-group">
                             <label>Home Team</label>
