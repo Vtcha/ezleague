@@ -91,9 +91,11 @@
         </div>
     </div>
     <div class="col-lg-8">
+    <?php $teams = $ez_tournament->get_tournament_teams( $tournament_id ); ?>
+    <?php $current_teams_amount = count( $teams ); ?>
         <div class="panel panel-default">
             <div class="panel-heading">
-                <i class="fa fa-sitemap"></i> Tournament Teams
+                <i class="fa fa-sitemap"></i> Tournament Teams (<?php echo $current_teams_amount . ' of ' . $max_teams; ?>)
                 <?php if( $public == 0 ) { ?>
                         <div class="pull-right">
                             <button onclick="getAvailableTournamentTeams('<?php echo $tournament_id; ?>');" data-toggle="modal" data-target="#addTournamentTeamsModal" class="btn btn-info btn-xs">Add Teams</button>
@@ -102,7 +104,6 @@
             </div>
             <div class="panel-body">
                 <div class="table-responsive">
-                <?php $teams = $ez_tournament->get_tournament_teams( $tournament_id ); ?>
                 <?php if( $teams ) { ?>
                     <table class="table table-hover tournament-teams">
                         <thead>
