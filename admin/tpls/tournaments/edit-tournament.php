@@ -104,7 +104,7 @@
                 <div class="table-responsive">
                 <?php $teams = $ez_tournament->get_tournament_teams( $tournament_id ); ?>
                 <?php if( $teams ) { ?>
-                    <table class="table table-hover current_leagues">
+                    <table class="table table-hover tournament-teams">
                         <thead>
                             <tr>
                                 <th>Team</th>

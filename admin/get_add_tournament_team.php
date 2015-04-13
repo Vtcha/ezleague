@@ -46,7 +46,7 @@ if(isset($_POST['id'])) {
 	              	<?php $available_team_id = $team['id']; ?>
 	                            <tr>
 	                                <td><?php echo $team['guild']; ?></td>
-	                                <td><a onClick="addTournamenTeam('<?php echo $tournament_id; ?>', '<?php echo $available_team_id; ?>');" class="btn btn-primary btn-xs">Add Team</a></td>
+	                                <td><a onClick="addTournamentTeam('<?php echo $tournament_id; ?>', '<?php echo $available_team_id; ?>');" class="btn btn-primary btn-xs">Add Team</a></td>
 	                            </tr>
 	               <?php } ?>
 	                        </tbody>
@@ -65,7 +65,7 @@ if(isset($_POST['id'])) {
               <div style="height: auto;" id="collapseOne" class="panel-collapse">
                 <div class="panel-body">
               		<div class="table-responsive">
-	                    <table class="table table-hover">
+	                    <table class="table table-hover tournament-teams">
 	                        <thead>
 	                            <tr>
 	                            	<th>Team</th>
@@ -76,7 +76,7 @@ if(isset($_POST['id'])) {
 	              <?php foreach( $current_teams as $team ) { ?>
 	                            <tr>
 	                                <td><?php echo $team['guild']; ?></td>
-	                                <td><a class="btn btn-primary btn-xs">Add Team</a></td>
+	                                <td><button type="button" onclick="kickTeam('<?php echo $team['id']; ?>', '<?php echo $tournament['id']; ?>')" class="btn btn-danger btn-xs">Kick Team</button></td>
 	                            </tr>
 	               <?php } ?>
 	                        </tbody>

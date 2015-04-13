@@ -415,6 +415,26 @@ function getAvailableTournamentTeams(tournament_id) {
 }
 
 /**
+ * Add a team to a private tournament
+ * @param league_id
+ * @param team_id
+ */
+ function addTournamentTeam(tournament_id, team_id) {
+	
+	$.ajax({
+	     type: "POST",
+	     url: "lib/submit/submit-tournament-add-team.php",
+	     async:true,
+	     crossbrowser:true,
+	     data: { form: 'add-tournament-team', tournament_id: '' + tournament_id + '', team_id: '' + team_id + '' }
+	   }).success(function( msg ) {
+		   		$('.tournament-teams').fadeIn("slow");
+		   		$('.tournament-teams').html(msg);
+	  });
+	
+}
+
+/**
  * Unkick a team from a league
  * @param league_id
  * @param team_id

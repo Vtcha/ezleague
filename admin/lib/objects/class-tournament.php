@@ -580,6 +580,44 @@ class ezAdmin_Tournament extends DB_Class {
 
 	}
 
+	/*
+	 * Get team tournament list
+	 *
+	 * @return string
+	 */
+	public function get_team_tournament_list($team_id) {
+
+		$team_id 	= $this->sanitize( $team_id );
+		$data = $this->fetch("SELECT tournaments FROM `" . $this->prefix . "guilds` WHERE id = '$team_id'");
+		if( $data['0']['tournaments'] != '' ) {
+			$current_tournaments = $data['0']['tournaments'];
+		} else {
+			$current_tournaments = '';
+		}
+		return $current_tournaments;
+
+	}
+
+	/*
+	 * Register team for tournament
+	 *
+	 * @return string
+	 */
+	public function register_tournament_team($team_id, $tournament_id) {
+		
+		$team_id 	= $this->sanitize( $team_id );
+		$tournament_id 	= $this->sanitize( $tournament_id );
+		$current_tournaments = $this->get_team_tournament_list( $team_id );
+		if( ! empty( $current_leagues ) ) {
+			$current_tournaments = $current_tournaments . ',' . $tournament_id;
+		} else {
+			$current_tournaments = $tournament_id;
+		}
+		$this->link->query("UPDATE `" . $this->prefix . "guilds` SET tournaments = '$tournament_id' WHERE id = '$team_id'");
+		return;
+
+	}
+
 }
 
 ?>
