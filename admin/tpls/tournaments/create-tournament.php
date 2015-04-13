@@ -22,6 +22,13 @@
                             <input class="form-control" id="tournament" placeholder="Tournament Name" />
                         </div>
                         <div class="form-group">
+                            <label>Public or Private</label>
+                            <select class="form-control" id="public">
+                                <option value="1" selected>Public</option>
+                                <option value="0">Private</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
                             <label>Max Teams</label>
                             <select class="form-control" id="max-teams">
                                 <option value="4">4</option>

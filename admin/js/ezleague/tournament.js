@@ -26,6 +26,7 @@ $('#createTournament').submit(function(e) {
 		start_date 		= $("#start").val();
 		registration 	= $("#registration").val();
 		format 			= $("#format").val();
+		pub 			= $("#public").val();
 		
 	 e.preventDefault();
 
@@ -34,7 +35,7 @@ $('#createTournament').submit(function(e) {
      url: "lib/submit/submit-tournament.php",
      async:true,
      crossbrowser:true,
-     data: { form: 'create-tournament', start: '' + start_date + '', registration: '' + registration + '', max_teams: '' + max_teams + '', tournament: '' + tournament + '', game: '' + game + '', format: '' + format + '' }
+     data: { form: 'create-tournament', start: '' + start_date + '', registration: '' + registration + '', max_teams: '' + max_teams + '', tournament: '' + tournament + '', game: '' + game + '', format: '' + format + '', pub: '' + pub + '' }
    }).success(function( msg ) {
 	   		$('.success').css("display", "");
 	   		$(".success").fadeIn(1000, "linear");

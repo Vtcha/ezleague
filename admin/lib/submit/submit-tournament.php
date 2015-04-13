@@ -64,7 +64,7 @@ $ez_tournament = new ezAdmin_Tournament();
                 $start          = strtotime( $_POST['start'] );
                 $registration   = strtotime( $_POST['registration'] );
                 $format         = $_POST['format'];
-                $public         = $_POST['public'];
+                $public         = $_POST['pub'];
     	 		 $ez_tournament->create_tournament( $tournament, $game, $teams, $start, $registration, $format, $public );
     	 		break;
     	 	

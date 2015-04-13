@@ -96,7 +96,9 @@ class ezAdmin_Tournament extends DB_Class {
 		} else {
 			$tournament = $this->sanitize( $tournament );
 			$this->link->query("INSERT INTO `" . $this->prefix . "tournaments` 
-								SET tournament = '$tournament', game = '$game', max_teams = '$max_teams', start_date = '$start_date', registration_date = '$registration_date', format = '$format'
+								SET tournament = '$tournament', game = '$game', max_teams = '$max_teams', 
+									start_date = '$start_date', registration_date = '$registration_date', 
+									format = '$format', public = '$public'
 							");
 	
 			$this->success('' . $tournament . ' Tournament added...reloading');
