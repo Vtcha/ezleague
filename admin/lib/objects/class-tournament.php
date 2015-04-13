@@ -189,8 +189,7 @@ class ezAdmin_Tournament extends DB_Class {
 
 	public function get_available_teams($tournament_id) {
 		
-		$data = $this->fetch("SELECT id, guild FROM `" . $this->prefix . "guilds` WHERE tournaments NOT LIKE '%,$tournament_id' OR tournaments NOT LIKE '$tournament_id,%' OR tournaments NOT LIKE '$tournament_id' OR tournaments NOT LIKE '%,$tournament_id,%'");
-		echo "SELECT id, guild FROM `" . $this->prefix . "guilds` WHERE tournaments NOT LIKE '%,$tournament_id' OR tournaments NOT LIKE '$tournament_id,%' OR tournaments NOT LIKE '$tournament_id' OR tournaments NOT LIKE '%,$tournament_id,%'";
+		$data = $this->fetch("SELECT id, guild FROM `" . $this->prefix . "guilds` WHERE tournaments NOT LIKE '%$tournament_id%'");
 		return $data;
 		
 	}
