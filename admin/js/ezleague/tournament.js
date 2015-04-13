@@ -428,6 +428,7 @@ function getAvailableTournamentTeams(tournament_id) {
 	     crossbrowser:true,
 	     data: { form: 'add-tournament-team', tournament_id: '' + tournament_id + '', team_id: '' + team_id + '' }
 	   }).success(function( msg ) {
+	   			$('.team-' + team_id).remove();
 		   		$('.tournament-teams').fadeIn("slow");
 		   		$('.tournament-teams').html(msg);
 	  });

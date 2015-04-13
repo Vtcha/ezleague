@@ -44,7 +44,7 @@ if(isset($_POST['id'])) {
 	                        <tbody>
 	              <?php foreach( $available_teams as $team ) { ?>
 	              	<?php $available_team_id = $team['id']; ?>
-	                            <tr>
+	                            <tr class="team-<?php echo $available_team_id; ?>">
 	                                <td><?php echo $team['guild']; ?></td>
 	                                <td><a onClick="addTournamentTeam('<?php echo $tournament_id; ?>', '<?php echo $available_team_id; ?>');" class="btn btn-primary btn-xs">Add Team</a></td>
 	                            </tr>
