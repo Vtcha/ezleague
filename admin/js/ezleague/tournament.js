@@ -421,16 +421,26 @@ function getAvailableTournamentTeams(tournament_id) {
  */
  function addTournamentTeam(tournament_id, team_id) {
 	
+	var max_teams   = $('.tournament-teams-heading').data('max-teams');
+		total_teams = $('.current-teams-amount').data('total-teams');
+
 	$.ajax({
 	     type: "POST",
 	     url: "lib/submit/submit-tournament-add-team.php",
 	     async:true,
 	     crossbrowser:true,
-	     data: { form: 'add-tournament-team', tournament_id: '' + tournament_id + '', team_id: '' + team_id + '' }
+	     data: { form: 'add-tournament-team', tournament_id: '' + tournament_id + '', team_id: '' + team_id + '', max_teams: '' + max_teams + '' }
 	   }).success(function( msg ) {
+	   		var new_total_teams = total_teams + 1;
 	   			$('.team-' + team_id).remove();
+	   			$('.current-teams-amount').attr('data-total-teams', '' + new_total_teams + '');
+	   			$('.current-teams-amount').html('Current Teams (' + new_total_teams + ')');
+	   			$('.tournament-teams-heading').html('Tournament Teams (' + new_total_teams + ' of ' + max_teams + ')');
 		   		$('.tournament-teams').fadeIn("slow");
 		   		$('.tournament-teams').html(msg);
+		   		if( new_total_teams == max_teams ) {
+		   			$('.tournament-add-team').prop('disabled', true);
+		   		}
 	  });
 	
 }

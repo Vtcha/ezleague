@@ -16,8 +16,12 @@ if( isset( $_POST['form'] ) && isset( $_POST['tournament_id'] ) && isset( $_POST
     $team_id        = trim( $_POST['team_id'] );
 
         if( $form == 'add-tournament-team' ) {
-
-            $ez_tournament->register_tournament_team( $team_id, $tournament_id );
+            $max_teams      = trim( $_POST['max_teams'] );
+            $tournament_teams = $ez_tournament->get_tournament_teams( $tournament_id );
+            $current_team_amount = count( $tournament_teams );
+            if( $max_teams != $current_team_amount ) {
+                $ez_tournament->register_tournament_team( $team_id, $tournament_id );
+            }
 
             $tournament_teams = $ez_tournament->get_tournament_teams( $tournament_id );
         ?>

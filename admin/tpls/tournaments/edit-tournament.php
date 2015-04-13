@@ -95,10 +95,10 @@
     <?php $current_teams_amount = count( $teams ); ?>
         <div class="panel panel-default">
             <div class="panel-heading">
-                <i class="fa fa-sitemap"></i> Tournament Teams (<?php echo $current_teams_amount . ' of ' . $max_teams; ?>)
+                <i class="fa fa-sitemap"></i> <span class="tournament-teams-heading" data-max-teams="<?php echo $max_teams; ?>">Tournament Teams (<?php echo $current_teams_amount . ' of ' . $max_teams; ?>)</span>
                 <?php if( $public == 0 ) { ?>
                         <div class="pull-right">
-                            <button onclick="getAvailableTournamentTeams('<?php echo $tournament_id; ?>');" data-toggle="modal" data-target="#addTournamentTeamsModal" class="btn btn-info btn-xs">Add Teams</button>
+                            <button <?php echo ( $current_teams_amount == $max_teams ? 'disabled' : '' ); ?> onclick="getAvailableTournamentTeams('<?php echo $tournament_id; ?>');" data-toggle="modal" data-target="#addTournamentTeamsModal" class="btn btn-info btn-xs tournament-add-team">Add Teams</button>
                         </div>
                 <?php } ?>
             </div>

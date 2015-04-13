@@ -15,6 +15,7 @@ if(isset($_POST['id'])) {
 	$tournament_id = $_POST['id'];
 	 $available_teams = $ez_tournament->get_available_teams( $tournament_id );
 	 $current_teams   = $ez_tournament->get_tournament_teams( $tournament_id );
+	 $current_teams_count = count( $current_teams );
 ?>
 
 <div class="modal-dialog">
@@ -46,7 +47,7 @@ if(isset($_POST['id'])) {
 	              	<?php $available_team_id = $team['id']; ?>
 	                            <tr class="team-<?php echo $available_team_id; ?>">
 	                                <td><?php echo $team['guild']; ?></td>
-	                                <td><a onClick="addTournamentTeam('<?php echo $tournament_id; ?>', '<?php echo $available_team_id; ?>');" class="btn btn-primary btn-xs">Add Team</a></td>
+	                                <td><button onClick="addTournamentTeam('<?php echo $tournament_id; ?>', '<?php echo $available_team_id; ?>');" data-tournament-id="<?php echo $tournament_id; ?>" data-team-id="<?php echo $available_team_id; ?>" class="btn btn-primary btn-xs tournament-add-team-modal">Add Team</a></td>
 	                            </tr>
 	               <?php } ?>
 	                        </tbody>
@@ -60,7 +61,7 @@ if(isset($_POST['id'])) {
            <div class="col-lg-6"> 
             <div class="panel panel-default">
               <div class="panel-heading">
-                <h3 class="panel-title text-info">Current Teams</h3>
+                <h3 class="panel-title text-info current-teams-amount" data-total-teams="<?php echo $current_teams_count; ?>">Current Teams (<?php echo $current_teams_count; ?>)</h3>
               </div>
               <div style="height: auto;" id="collapseOne" class="panel-collapse">
                 <div class="panel-body">
