@@ -2,7 +2,7 @@
     <div class="panel-heading">
         <i class="fa fa-sitemap"></i> Current Tournaments
         <div class="pull-right">
-            <a href="tournaments.php?page=create" class="btn btn-primary btn-xs">Create Tournament</a>
+            <a href="tournaments.php?page=create" class="btn btn-success btn-xs">Create Tournament</a>
         </div>
     </div>
     <div class="panel-body">
@@ -37,8 +37,8 @@
                         <td><?php echo $tournament['max_teams']; ?></td>
                         <td><?php echo date( 'F d, Y', strtotime( $tournament['start_date'] ) ); ?></td>
                         <td>
+                            <a href="tournaments.php?page=edit&id=<?php echo $tournament['tid']; ?>" class="btn btn-info btn-xs">Edit / View</a>
                             <a href="tournaments.php?page=rules&id=<?php echo $tournament['tid']; ?>" class="btn btn-primary btn-xs">Rules</a>
-                            <a href="tournaments.php?page=edit&id=<?php echo $tournament['tid']; ?>" class="btn btn-success btn-xs">Edit / View</a>
                         </td>
                     </tr>
        <?php } ?>
