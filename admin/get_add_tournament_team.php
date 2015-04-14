@@ -21,7 +21,7 @@ if(isset($_POST['id'])) {
 <div class="modal-dialog">
 	<div class="modal-team">
 		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			<button type="button" onclick="javascript:location.reload();" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 			<h4 class="modal-title" id="myModalLabel">Add Tournament Teams</h4>
 		</div>
 		<div class="modal-body">
@@ -91,7 +91,7 @@ if(isset($_POST['id'])) {
           </div>
 		</div>
 		<div class="modal-footer">
-			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			<button type="button" onclick="javascript:location.reload();" class="btn btn-default" data-dismiss="modal">Close</button>
 		</div>
 	</div>
 	<!-- /.modal-content -->
