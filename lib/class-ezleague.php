@@ -9,12 +9,13 @@ class ezLeague extends DB_Class {
 	
 		$this->require_files();
 
-		$this->frontend = new ezLeague_Frontend();
-		$this->news 	= new ezLeague_News();
-		$this->team 	= new ezLeague_Team();
-		$this->league 	= new ezLeague_League();
-		$this->inbox	= new ezLeague_Inbox();
-		$this->schedule = new ezLeague_Schedule();
+		$this->frontend 	= new ezLeague_Frontend();
+		$this->news 		= new ezLeague_News();
+		$this->team 		= new ezLeague_Team();
+		$this->league 		= new ezLeague_League();
+		$this->inbox		= new ezLeague_Inbox();
+		$this->schedule 	= new ezLeague_Schedule();
+		$this->tournament 	= new ezLeague_Tournament();
 	
 	}
 	
@@ -30,6 +31,7 @@ class ezLeague extends DB_Class {
 		require_once(dirname(__FILE__) . "/objects/class-team.php");
 		require_once(dirname(__FILE__) . "/objects/class-inbox.php");
 		require_once(dirname(__FILE__) . "/objects/class-league.php");
+		require_once(dirname(__FILE__) . "/objects/class-tournament.php");
 		
 	}
 	
