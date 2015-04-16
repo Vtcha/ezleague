@@ -229,6 +229,51 @@ class ezLeague_Tournament extends DB_Class {
 
 	}
 
+	/*
+	 * Get teams registered for a tournament
+	 *
+	 * @return array
+	 */
+	public function get_tournament_teams($tournament_id) {
+		
+		$data = $this->fetch("SELECT id, guild FROM `" . $this->prefix . "guilds` WHERE tournaments LIKE '%,$tournament_id' OR tournaments LIKE '$tournament_id,%' OR tournaments LIKE '$tournament_id' OR tournaments LIKE '%,$tournament_id,%'");
+		return $data;
+		
+	}
+
+	/*
+	 * Get tournament matchups by round
+	 *
+	 * @return array
+	 */
+	public function get_tournament_matchups($tournament_id, $round) {
+
+		$data = $this->fetch("SELECT * FROM `" . $this->prefix . "tournament_matches` WHERE tid = '$tournament_id' AND round = '$round'");
+		if( $data ) {
+			return $data;
+		} else {
+			return false;
+		}
+
+	}
+
+	/*
+	 * Get the details of a tournament match
+	 *
+	 * @return array
+	 */
+	public function get_tournament_match($match_id) {
+
+		$match_id = $this->sanitize( $match_id );
+		$data = $this->fetch("SELECT * FROM `" . $this->prefix . "tournament_matches` WHERE id = '$match_id'");
+		if( $data ) {
+			return $data;
+		} else {
+			return false;
+		}
+
+	}
+
 }
 
 ?>
