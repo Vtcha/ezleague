@@ -6,7 +6,7 @@
 <div class="row">
 	<div class="col-md-12">
 		<div class="news-blocks">
-			<h3 class="title">Tournaments Already Completed</h3>
+			<h4 class="title">Tournaments Already Completed</h4>
 	<?php if( $tournaments ) { ?>
 			<table class="table league-information">
 				<tr>

@@ -44,6 +44,7 @@ if( isset( $_GET['id'] ) ) {
 						<tr>
 							<th>Bracket</th>
 							<td><a href="view-tournaments.php?p=bracket&id=<?php echo $tournament_id; ?>" class="btn btn-primary btn-sm"><i class="fa fa-search"></i> View Bracket</a></td>						
+						</tr>
 					</table>
 				</div>
 			</div>

@@ -6,7 +6,7 @@
 <div class="row">
 	<div class="col-md-12">
 		<div class="news-blocks">
-			<h3 class="title">Invite Only Tournaments</h3>
+			<h4 class="title">Invite Only Tournaments</h4>
 	<?php if( $tournaments ) { ?>
 			<table class="table league-information">
 				<tr>

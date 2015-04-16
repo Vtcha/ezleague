@@ -6,7 +6,7 @@
 <div class="row">
 	<div class="col-md-12">
 		<div class="news-blocks">
-			<h4 class="title">Tournaments have not started</h4>
+			<h4 class="title">Public Tournaments that have not started</h4>
 	<?php if( $tournaments ) { ?>
 			<table class="table league-information">
 				<tr>
