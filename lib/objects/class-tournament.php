@@ -136,6 +136,60 @@ class ezLeague_Tournament extends DB_Class {
 		
 	}
 
+	/*
+	 * Get the tournament winner
+	 *
+	 * @return string
+	 */
+	public function get_tournament_champion($tournament_id) {
+
+		$champion = array();
+		$data = $this->fetch("SELECT
+								`" . $this->prefix . "tournaments`.first_place AS champion,
+								`" . $this->prefix . "tournaments`.id AS tid,
+								`" . $this->prefix . "guilds`.id AS guild_id,
+								`" . $this->prefix . "guilds`.guild AS guild
+							  FROM `" . $this->prefix . "guilds`, `" . $this->prefix . "tournaments`
+							  WHERE `" . $this->prefix . "tournaments`.id = '$tournament_id'
+							  	AND `" . $this->prefix . "tournaments`.first_place = `" . $this->prefix . "guilds`.id
+							");
+		if( $data ) {
+			$champion['guild_id']	= $data[0]['guild_id'];
+			$champion['guild'] 		= $data[0]['guild'];
+			return $champion;
+		} else {
+			return false;
+		}
+
+	}
+
+	/*
+	 * Get the tournament runner up
+	 *
+	 * @return string
+	 */
+	public function get_tournament_runner_up($tournament_id) {
+
+		$champion = array();
+		$data = $this->fetch("SELECT
+								`" . $this->prefix . "tournaments`.second_place AS runner_up,
+								`" . $this->prefix . "tournaments`.id AS tid,
+								`" . $this->prefix . "guilds`.id AS guild_id,
+								`" . $this->prefix . "guilds`.guild AS guild
+							  FROM `" . $this->prefix . "guilds`, `" . $this->prefix . "tournaments`
+							  WHERE `" . $this->prefix . "tournaments`.id = '$tournament_id'
+							  	AND `" . $this->prefix . "tournaments`.second_place = `" . $this->prefix . "guilds`.id
+							");
+		if( $data ) {
+			$champion['guild_id']	= $data[0]['guild_id'];
+			$champion['guild'] 		= $data[0]['guild'];
+			return $champion;
+		} else {
+			return false;
+		}
+
+	}
+
 }
 
 ?>

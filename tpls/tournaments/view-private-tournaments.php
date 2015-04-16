@@ -26,8 +26,8 @@
 					<td><?php echo $total_registered; ?></td>
 					<td><?php echo $tournament['max_teams']; ?></td>
 					<td>
-						<a href="#" class="btn btn-primary btn-sm"><i class="fa fa-search"></i> View Bracket</a>
-						<a href="#" class="btn btn-info btn-sm"><i class="fa fa-gavel"></i> Rules</a>
+						<a href="view-tournaments.php?p=view&id=<?php echo $tournament['tid']; ?>" class="btn btn-primary btn-sm"><i class="fa fa-search"></i> View Bracket</a>
+						<a href="view-tournaments.php?p=rules&id=<?php echo $tournament['tid']; ?>" class="btn btn-info btn-sm"><i class="fa fa-gavel"></i> Rules</a>
 					</td>
 				</tr>
 		<?php } ?>

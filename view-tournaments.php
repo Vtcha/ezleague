@@ -30,7 +30,7 @@
 			<div class="col-md-12 blog-page">
 				<div class="row">
 					<?php 
-						if( ! isset( $_GET['id'] ) && ! isset( $_GET['status'] ) ) {
+						if( ! isset( $_GET['id'] ) && ! isset( $_GET['status'] ) && ! isset( $_GET['p'] ) ) {
 							include( 'tpls/tournaments/view-open-tournaments.php' );
 						} elseif( isset( $_GET['status'] ) ) {
 							$status = trim( $_GET['status'] );
@@ -51,12 +51,26 @@
 									include( 'tpls/tournaments/view-open-tournaments.php' );
 									break;
 							}
-						} elseif( isset( $_GET['id'] ) ) {
-							$tournament_id 	= trim( $_GET['id'] );
-							if( is_numeric( $tournament_id ) ) {
-								include( 'tpls/tournaments/view-tournament.php' );
+						} elseif( isset( $_GET['p'] ) ) {
+							$page = trim( $_GET['p'] );
+							if( isset( $_GET['id'] ) ) {
+								$tournament_id 	= trim( $_GET['id'] );
+								if( is_numeric( $tournament_id ) ) {
+									switch( $page ) {
+										case 'view':
+											include( 'tpls/tournaments/view-tournament.php' );
+											break;
+										case 'rules':
+											include( 'tpls/tournaments/view-rules.php' );
+											break;
+										default:
+											break;
+									}
+								} else {
+									echo 'Sorry, <em>tournament ids</em> must be integers';
+								}
 							} else {
-								echo 'Sorry, <em>tournament ids</em> must be integers';
+								echo 'Sorry, no tournament id detected';
 							}
 						}
 					?>

@@ -22,8 +22,6 @@ class ezLeague_Frontend extends DB_Class {
 	public function get_game( $slug ) {
 	
 		$data = $this->fetch("SELECT * FROM `" . $this->prefix . "games` WHERE slug = '$slug'");
-		echo "SELECT * FROM `" . $this->prefix . "games` WHERE slug = '$slug'";
-		return;
 		if( $data ) {
 			$game = array(
 							'id'	=> $data['0']['id'],
