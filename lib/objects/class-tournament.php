@@ -27,6 +27,11 @@ class ezLeague_Tournament extends DB_Class {
 		
 	}
 
+	/*
+	 * Get tournaments that have no matches generated yet
+	 *
+	 * @return array
+	 */
 	public function get_open_public_tournaments() {
 		
 		$data = $this->fetch("SELECT 
@@ -44,6 +49,40 @@ class ezLeague_Tournament extends DB_Class {
 								WHERE (" . $this->prefix . "games.slug = " . $this->prefix . "tournaments.game) 
 									AND (" . $this->prefix . "tournaments.status = '1')
 									AND (" . $this->prefix . "tournaments.public = '1')
+								ORDER BY " . $this->prefix . "tournaments.game DESC, " . $this->prefix . "tournaments.id ASC
+							");
+		return $data;
+		
+	}
+
+	/*
+	 * Get tournaments with generated matches but the tournament has not completed
+	 *
+	 * @return array
+	 */
+	public function get_running_tournaments() {
+		
+		$data = $this->fetch("SELECT DISTINCT
+								" . $this->prefix . "games.slug, 
+								" . $this->prefix . "games.game AS ggame,
+								" . $this->prefix . "games.short_name AS gameshort, 
+								" . $this->prefix . "tournaments.game AS lgame, 
+								" . $this->prefix . "tournaments.id AS tid,
+								" . $this->prefix . "tournaments.start_date, " . $this->prefix . "tournaments.tournament, 
+								" . $this->prefix . "tournaments.max_teams, 
+								" . $this->prefix . "tournaments.format,
+								" . $this->prefix . "tournaments.public,
+								" . $this->prefix . "tournaments.registration_date,
+								" . $this->prefix . "tournament_matches.tid AS matches_tid,
+								" . $this->prefix . "tournament_matches.round
+								FROM 
+									`" . $this->prefix . "tournaments`, 
+									`" . $this->prefix . "games`, 
+									`" . $this->prefix . "tournament_matches`
+								WHERE (" . $this->prefix . "games.slug = " . $this->prefix . "tournaments.game) 
+									AND (" . $this->prefix . "tournaments.status = '1')
+									AND (" . $this->prefix . "tournament_matches.tid = " . $this->prefix . "tournaments.id)
+									AND (" . $this->prefix . "tournament_matches.round = '1')
 								ORDER BY " . $this->prefix . "tournaments.game DESC, " . $this->prefix . "tournaments.id ASC
 							");
 		return $data;

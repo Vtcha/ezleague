@@ -31,12 +31,12 @@
 				<div class="row">
 					<?php 
 						if( ! isset( $_GET['id'] ) && ! isset( $_GET['status'] ) && ! isset( $_GET['p'] ) ) {
-							include( 'tpls/tournaments/view-open-tournaments.php' );
+							include( 'tpls/tournaments/view-public-tournaments.php' );
 						} elseif( isset( $_GET['status'] ) ) {
 							$status = trim( $_GET['status'] );
 							switch( $status ) {
-								case 'open':
-									include( 'tpls/tournaments/view-open-tournaments.php' );
+								case 'public':
+									include( 'tpls/tournaments/view-public-tournaments.php' );
 									break;
 								case 'running':
 									include( 'tpls/tournaments/view-running-tournaments.php' );
@@ -48,7 +48,7 @@
 									include( 'tpls/tournaments/view-closed-tournaments.php' );
 									break;
 								default:
-									include( 'tpls/tournaments/view-open-tournaments.php' );
+									include( 'tpls/tournaments/view-public-tournaments.php' );
 									break;
 							}
 						} elseif( isset( $_GET['p'] ) ) {

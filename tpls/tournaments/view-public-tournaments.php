@@ -1,12 +1,12 @@
 <div class="col-md-12">
 <?php $tournaments = $ez_tournament->get_open_public_tournaments(); ?>
 <h1>Tournaments</h1>
-<h2>Current Open Tournaments</h2>
+<h2>Public Tournaments Without Matches</h2>
 <?php include( 'tpls/tournaments/tournaments-sub-navigation.php' ); ?>
 <div class="row">
 	<div class="col-md-12">
 		<div class="news-blocks">
-			<h3 class="title">Tournament Registration Available</h3>
+			<h4 class="title">Tournaments have not started</h4>
 	<?php if( $tournaments ) { ?>
 			<table class="table league-information">
 				<tr>
