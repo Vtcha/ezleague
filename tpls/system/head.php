@@ -22,6 +22,7 @@
 <!-- BEGIN THEME STYLES -->
 <link href="assets/global/css/components.css?v2" rel="stylesheet" type="text/css"/>
 <link href="assets/global/css/plugins.css" rel="stylesheet" type="text/css"/>
+<link href="assets/global/css/ezleague-tournament.css" rel="stylesheet" type="text/css"/>
 <link href="assets/admin/layout/css/layout.css" rel="stylesheet" type="text/css"/>
 <link id="default" href="assets/admin/layout/css/themes/default.css" rel="stylesheet" type="text/css"/>
 <link href="assets/admin/layout/css/custom.css?v4" rel="stylesheet" type="text/css"/>
