@@ -3,7 +3,7 @@
 		<li class="spacer">&nbsp;</li>
 		<!-- wrap score inside span element -->
 		<li class="game game-top <?php echo ( $round3[0]['winner'] == $round3[0]['home_team_id'] ? 'winner' : '' ); ?>"><?php echo $round3[0]['home_team'] . ' - ' . $round3[0]['home_score']; ?></li>
-		<li class="game game-spacer">&nbsp;</li>
+		<li class="game game-spacer"><a href="view-tournaments.php?p=matchup&id=<?php echo $round3[0]['id'];  ?>">View Details</a></li>
 		<li class="game game-bottom <?php echo ( $round3[0]['winner'] == $round3[0]['away_team_id'] ? 'winner' : '' ); ?>"><?php echo $round3[0]['away_team'] . ' - ' . $round3[0]['away_score']; ?></li>
 
 		<li class="spacer">&nbsp;</li>

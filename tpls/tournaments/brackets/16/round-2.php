@@ -3,25 +3,25 @@
 		<li class="spacer">&nbsp;</li>
 		<!-- wrap score inside span element -->
 		<li class="game game-top <?php echo ( $round2[0]['winner'] == $round2[0]['home_team_id'] ? 'winner' : '' ); ?>"><?php echo $round2[0]['home_team'] . ' - ' . $round2[0]['home_score']; ?></li>
-		<li class="game game-spacer">&nbsp;</li>
+		<li class="game game-spacer"><a href="view-tournaments.php?p=matchup&id=<?php echo $round2[0]['id'];  ?>">View Details</a></li>
 		<li class="game game-bottom <?php echo ( $round2[0]['winner'] == $round2[0]['away_team_id'] ? 'winner' : '' ); ?>"><?php echo $round2[0]['away_team'] . ' - ' . $round2[0]['away_score']; ?></li>
 
 		<li class="spacer">&nbsp;</li>
 		
 		<li class="game game-top <?php echo ( $round2[1]['winner'] == $round2[1]['home_team_id'] ? 'winner' : '' ); ?>"><?php echo $round2[1]['home_team'] . ' - ' . $round2[1]['home_score']; ?></li>
-		<li class="game game-spacer">&nbsp;</li>
+		<li class="game game-spacer"><a href="view-tournaments.php?p=matchup&id=<?php echo $round2[1]['id'];  ?>">View Details</a></li>
 		<li class="game game-bottom <?php echo ( $round2[1]['winner'] == $round2[1]['away_team_id'] ? 'winner' : '' ); ?>"><?php echo $round2[1]['away_team'] . ' - ' . $round2[1]['away_score']; ?></li>
 
 		<li class="spacer">&nbsp;</li>
 
 		<li class="game game-top <?php echo ( $round2[2]['winner'] == $round2[2]['home_team_id'] ? 'winner' : '' ); ?>"><?php echo $round2[2]['home_team'] . ' - ' . $round2[2]['home_score']; ?></li>
-		<li class="game game-spacer">&nbsp;</li>
+		<li class="game game-spacer"><a href="view-tournaments.php?p=matchup&id=<?php echo $round2[2]['id'];  ?>">View Details</a></li>
 		<li class="game game-bottom <?php echo ( $round2[2]['winner'] == $round2[2]['away_team_id'] ? 'winner' : '' ); ?>"><?php echo $round2[2]['away_team'] . ' - ' . $round2[2]['away_score']; ?></li>
 
 		<li class="spacer">&nbsp;</li>
 		
 		<li class="game game-top <?php echo ( $round2[3]['winner'] == $round2[3]['home_team_id'] ? 'winner' : '' ); ?>"><?php echo $round2[3]['home_team'] . ' - ' . $round2[3]['home_score']; ?></li>
-		<li class="game game-spacer">&nbsp;</li>
+		<li class="game game-spacer"><a href="view-tournaments.php?p=matchup&id=<?php echo $round2[3]['id'];  ?>">View Details</a></li>
 		<li class="game game-bottom <?php echo ( $round2[3]['winner'] == $round2[3]['away_team_id'] ? 'winner' : '' ); ?>"><?php echo $round2[3]['away_team'] . ' - ' . $round2[3]['away_score']; ?></li>
 
 		<li class="spacer">&nbsp;</li>
