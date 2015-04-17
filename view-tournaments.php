@@ -20,6 +20,24 @@
 					<li>
 						<a href="#">Tournaments</a>
 					</li>
+				<?php if( isset($_GET['p'] ) ) { ?>
+					<?php if( $_GET['p'] == 'matchup' ) { ?>
+						<li>
+							<i class="fa fa-angle-right"></i>
+							<a href="#">View Matchup</a>
+						</li>
+					<?php } elseif( $_GET['p'] == 'view' ) { ?>
+						<li>
+							<i class="fa fa-angle-right"></i>
+							<a href="#">View Bracket</a>
+						</li>
+					<?php } elseif( $_GET['p'] == 'rules' ) { ?>
+						<li>
+							<i class="fa fa-angle-right"></i>
+							<a href="#">View Rules</a>
+						</li>
+					<?php } ?>
+				<?php } ?>
 				</ul>
 				<!-- END PAGE TITLE & BREADCRUMB-->
 			</div>
