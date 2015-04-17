@@ -268,9 +268,27 @@ class ezLeague_Tournament extends DB_Class {
 	public function get_tournament_match($match_id) {
 
 		$match_id = $this->sanitize( $match_id );
+		$matchup = array();
 		$data = $this->fetch("SELECT * FROM `" . $this->prefix . "tournament_matches` WHERE id = '$match_id'");
 		if( $data ) {
-			return $data;
+			$matchup['home_id']		= $data['0']['home_team_id'];
+			$matchup['home']		= $data['0']['home_team'];
+			$matchup['home_score']	= $data['0']['home_score'];
+			$matchup['away_id']		= $data['0']['away_team_id'];
+			$matchup['away']		= $data['0']['away_team'];
+			$matchup['away_score']	= $data['0']['away_score'];
+			$matchup['date']		= $data['0']['match_date'];
+			$matchup['time']		= $data['0']['match_time'];
+			$matchup['zone']		= $data['0']['match_zone'];
+			$matchup['stream_url']	= $data['0']['stream_url'];
+			if( $matchup['home_score'] > $matchup['away_score'] ) {
+				$matchup['winner'] = $matchup['home_id'];
+				$matchup['loser'] = $matchup['away_id'];
+			} else {
+				$matchup['winner'] = $matchup['away_id'];
+				$matchup['loser'] = $matchup['home_id'];
+			}
+			return $matchup;
 		} else {
 			return false;
 		}
