@@ -63,6 +63,9 @@
 										case 'rules':
 											include( 'tpls/tournaments/view-rules.php' );
 											break;
+										case 'matchup':
+											include( 'tpls/tournaments/view-matchup.php' );
+											break;
 										default:
 											break;
 									}
