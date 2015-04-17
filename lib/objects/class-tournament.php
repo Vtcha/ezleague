@@ -116,10 +116,13 @@ class ezLeague_Tournament extends DB_Class {
 		$data = $this->fetch("SELECT 
 								" . $this->prefix . "games.slug, 
 								" . $this->prefix . "games.game AS ggame, 
+								" . $this->prefix . "games.short_name AS gameshort, 
 								" . $this->prefix . "tournaments.game AS lgame, 
 								" . $this->prefix . "tournaments.id AS tid,
 								" . $this->prefix . "tournaments.start_date, 
 								" . $this->prefix . "tournaments.tournament,
+								" . $this->prefix . "tournaments.format,
+								" . $this->prefix . "tournaments.max_teams,
 								" . $this->prefix . "tournaments.first_place,
 								" . $this->prefix . "tournaments.second_place
 								FROM `" . $this->prefix . "tournaments`, `" . $this->prefix . "games`
