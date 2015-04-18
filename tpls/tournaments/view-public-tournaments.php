@@ -28,6 +28,18 @@
 					<td><?php echo $tournament['max_teams']; ?></td>
 					<td><?php echo date( 'F d, Y', strtotime( $tournament['registration_date'] ) ); ?></td>
 					<td>
+						<?php if( $tournament['max_teams'] > $total_registered ) { ?>
+								<?php if( isset( $profile ) ) { ?>
+									<?php if( $profile['team_admin'] == true ) { ?>
+										<?php $exist = $ez_tournament->check_for_team( $profile['guild_id'], $tournament_id ); ?>
+										<?php if( $exist == false ) { ?>
+												<button type="button" class="btn green btn-sm" onclick="registerTeam('<?php echo $profile['guild_id']; ?>', '<?php echo $tournament['tid']; ?>')"><i class="fa fa-pencil"></i> REGISTER TEAM</button>
+										<?php } else { ?>
+												<button disabled class="btn danger btn-sm">Already Registered</button>
+										<?php } ?>
+									<?php } ?>
+								<?php } ?>
+						<?php } ?>
 						<a href="view-tournaments.php?p=view&id=<?php echo $tournament['tid']; ?>" class="btn btn-primary btn-sm"><i class="fa fa-search"></i> View Bracket</a>
 						<a href="view-tournaments.php?p=rules&id=<?php echo $tournament['tid']; ?>" class="btn btn-info btn-sm"><i class="fa fa-gavel"></i> Rules</a>
 					</td>

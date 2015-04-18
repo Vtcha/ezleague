@@ -295,6 +295,29 @@ class ezLeague_Tournament extends DB_Class {
 
 	}
 
+	/*
+	 * Check if a team is in a tournament
+	 * 
+	 * @return boolean
+	 */
+	public function check_for_team($team_id, $tournament_id) {
+		
+		$team_id 		= $this->sanitize( $team_id );
+		$tournament_id  = $this->sanitize( $tournament_id );
+		$exist = false;
+		$data = $this->fetch("SELECT tournaments FROM `" . $this->prefix . "guilds` WHERE id = '$team_id'");
+		if( $data ) {
+			$tournaments = explode( ',', $data['0']['tournaments'] );
+			if( in_array( $tournament_id, $tournaments ) ) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+		return;
+		
+	}
+
 }
 
 ?>
