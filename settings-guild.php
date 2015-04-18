@@ -31,15 +31,22 @@
 					if( isset( $_GET['page'] ) && isset( $_GET['view'] ) ) {
 						$page = trim( $_GET['page'] );
 						$view = trim( $_GET['view'] );
-						if( isset( $_GET['id'] ) ) {
+						if( isset( $_GET['id'] ) && $page == 'leagues' ) {
 							$league_id = trim( $_GET['id'] );
 							$league_details = $ez_team->get_league_details( $league_id );
+						} else if( isset( $_GET['id'] ) && $page == 'tournaments' ) {
+							$tournament_id = trim( $_GET['id'] );
+							$tournament_details = $ez_team->get_tournament_details( $tournament_id );
 						}
 						
-						if( isset( $_GET['mid'] ) ) {
+						if( isset( $_GET['mid'] ) && $page == 'match' ) {
 							$match_id = trim( $_GET['mid'] );
 							$match_details = $ez_league->get_match_details( $match_id );
 							$league_id = $match_details['league_id'];
+						} else if( isset( $_GET['mid'] ) && $page == 'tournament_match' ) {
+							$match_id = trim( $_GET['mid'] );
+							$match_details = $ez_tournament->get_tournament_match( $match_id );
+							$tournament_id = $match_details['tid'];
 						}
 
 						include('tpls/settings/view-league.php');
@@ -52,6 +59,12 @@
 								break;
 							case 'match':
 								include('tpls/settings/leagues/view-match.php');
+								break;
+							case 'tournaments':
+								include('tpls/settings/tournaments/view-' . $view . '.php');
+								break;
+							case 'tournament_match':
+								include('tpls/settings/tournaments/view-match.php');
 								break;
 							default:
 								break;
@@ -86,6 +99,7 @@
 </div>
 <script src="assets/global/scripts/teams.js"></script>
 <script src="assets/global/scripts/leagues.js"></script>
+<script src="assets/global/scripts/tournaments.js"></script>
 <script src="assets/global/scripts/normal.js"></script>
 <script>
 $(function() {

@@ -271,16 +271,23 @@ class ezLeague_Tournament extends DB_Class {
 		$matchup = array();
 		$data = $this->fetch("SELECT * FROM `" . $this->prefix . "tournament_matches` WHERE id = '$match_id'");
 		if( $data ) {
-			$matchup['home_id']		= $data['0']['home_team_id'];
-			$matchup['home']		= $data['0']['home_team'];
-			$matchup['home_score']	= $data['0']['home_score'];
-			$matchup['away_id']		= $data['0']['away_team_id'];
-			$matchup['away']		= $data['0']['away_team'];
-			$matchup['away_score']	= $data['0']['away_score'];
-			$matchup['date']		= $data['0']['match_date'];
-			$matchup['time']		= $data['0']['match_time'];
-			$matchup['zone']		= $data['0']['match_zone'];
-			$matchup['stream_url']	= $data['0']['stream_url'];
+			$matchup['id']					= $data['0']['id'];
+			$matchup['home_id']				= $data['0']['home_team_id'];
+			$matchup['home']				= $data['0']['home_team'];
+			$matchup['home_accept']			= $data['0']['home_accept'];
+			$matchup['home_score']			= $data['0']['home_score'];
+			$matchup['away_id']				= $data['0']['away_team_id'];
+			$matchup['away']				= $data['0']['away_team'];
+			$matchup['away_accept']			= $data['0']['away_accept'];
+			$matchup['away_score']			= $data['0']['away_score'];
+			$matchup['date']				= $data['0']['match_date'];
+			$matchup['time']				= $data['0']['match_time'];
+			$matchup['zone']				= $data['0']['match_zone'];
+			$matchup['stream_url']			= $data['0']['stream_url'];
+			$matchup['server_ip']			= $data['0']['server_ip'];
+			$matchup['server_password'] 	= $data['0']['server_password'];
+			$matchup['moderator']			= $data['0']['moderator'];
+			$matchup['reporter']			= $data['0']['reporter'];
 			if( $matchup['home_score'] > $matchup['away_score'] ) {
 				$matchup['winner'] = $matchup['home_id'];
 				$matchup['loser'] = $matchup['away_id'];

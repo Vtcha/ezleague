@@ -23,6 +23,10 @@
 					<a data-toggle="tab" href="#team-leagues">
 					<i class="fa fa-trophy"></i> Leagues </a>
 				</li>
+				<li>
+					<a data-toggle="tab" href="#team-tournaments">
+					<i class="fa fa-trophy"></i> Tournaments </a>
+				</li>
 				<li class="active">
 					<a data-toggle="tab" href="#team-members">
 					<i class="fa fa-users"></i> Members </a>
@@ -44,6 +48,9 @@
 			<?php } ?>
 				<div id="team-leagues" class="tab-pane">
 					<?php include('tpls/settings/guild/guild-leagues.php'); ?>
+				</div>
+				<div id="team-tournaments" class="tab-pane">
+					<?php include('tpls/settings/guild/guild-tournaments.php'); ?>
 				</div>
 				<div id="team-members" class="tab-pane active">
 					<?php include('tpls/settings/guild/guild-members.php'); ?>
