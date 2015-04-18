@@ -1,5 +1,5 @@
 <h4>Match Details</h4>
-<form id="matchDetails" method="POST" role="form">
+<form id="tournamentMatchDetails" method="POST" role="form">
  <input type="hidden" id="match-id" value="<?php echo $match_details['id']; ?>" />
  <input type="hidden" id="match-team" value="<?php echo $profile['guild_id']; ?>" />
  <input type="hidden" id="match-side" value="<?php echo $match_side; ?>" />

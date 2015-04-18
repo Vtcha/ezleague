@@ -21,7 +21,7 @@
 		include('tpls/settings/tournaments/view-match-admin-screenshot.php');
 	}
 
-	if( $match_details['status'] == '0' ) {
+	if( $match_details['status'] == '1' ) {
 			if( $match_details['home_id'] == $profile['guild_id'] ) { 
 				$match_side = 'homeTeam_accept';
 			} else {
@@ -34,7 +34,7 @@
 ?>
 </div>	
 	<div class="col-md-7">
-		<form id="matchInformation" method="POST" role-"form">
+		<form id="tournamentMatchInformation" method="POST" role-"form">
 		<h4>Match Information</h4>
 		<div class="form-group">
 			<label>Server IP</label>
@@ -53,7 +53,7 @@
  		</div>
 		</form>
 
-		<form id="matchChat" method="POST" role="form" disabled>
+		<form id="tournamentMatchChat" method="POST" role="form" disabled>
 		<h4>Chat Log</h4>
 		 <input type="hidden" id="log-id" value="<?php echo $match_details['id']; ?>" />
 		 <input type="hidden" id="log-username" value="<?php echo $profile['username']; ?>" />

@@ -24,11 +24,11 @@
 
 			this.accept_details = $('#acceptDetails');
 			this.reject_details = $('#rejectDetails');
-			this.update_match_form = $('#matchDetails');
-			this.update_chat_form = $('#matchChat');
+			this.update_match_form = $('#tournamentMatchDetails');
+			this.update_chat_form = $('#tournamentMatchChat');
 			this.report_match_form = $('#tournamentMatchReport');
 			this.dispute_match_form = $('#disputeMatch');
-			this.match_info_form = $('#matchInformation');
+			this.match_info_form = $('#tournamentMatchInformation');
 
 		},
 		
@@ -128,9 +128,7 @@
 
 				var match_id	= $("#match-id").val();
 					home_score  = $("#match-home-score").val();
-					home_team	= $("#match-home-team").val();
 					away_score	= $("#match-away-score").val();
-					away_team	= $("#match-away-team").val();
 					reporter	= $("#match-reporter").val();
 
 				 e.preventDefault();
@@ -138,7 +136,7 @@
 			 $.ajax({
 			     type: "POST",
 			     url: "lib/submit/submit-tournament.php",
-			     data: { form: 'report-score', id: '' + match_id + '', home_team: '' + home_team + '', home_score: '' + home_score + '', away_team: '' + away_team + '', away_score: '' + away_score + '', reporter: '' + reporter + '' }
+			     data: { form: 'report-score', id: '' + match_id + '', home_score: '' + home_score + '', away_score: '' + away_score + '', reporter: '' + reporter + '' }
 			   }).success(function( msg ) {
 						    $(".success").css("display", "");
 					   		$(".success").fadeIn(1000, "linear");
