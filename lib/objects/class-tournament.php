@@ -492,6 +492,9 @@ class ezLeague_Tournament extends DB_Class {
 											`" . $this->prefix . "tournament_matches`.away_team,
 											`" . $this->prefix . "tournament_matches`.tid,
 											`" . $this->prefix . "tournament_matches`.id AS match_id,
+											`" . $this->prefix . "tournament_matches`.match_date,
+											`" . $this->prefix . "tournament_matches`.match_time,
+											`" . $this->prefix . "tournament_matches`.match_zone,
 											`" . $this->prefix . "tournaments`.id AS tournament_id,
 											`" . $this->prefix . "tournaments`.tournament
 									FROM `" . $this->prefix . "tournament_matches`, `" . $this->prefix . "tournaments`
@@ -503,12 +506,16 @@ class ezLeague_Tournament extends DB_Class {
 		$match_away_team 	= $match_data['0']['away_team'];
 		$match_tid 			= $match_data['0']['tid'];
 		$match_tournament 	= $match_data['0']['tournament'];
+		$match_date 		= date( 'F d, Y', strtotime( $match_data['0']['match_date'] ) );
+		$match_time 		= $match_data['0']['match_time'];
+		$match_zone 		= $match_data['0']['match_zone'];
 
 
 		$message = '<html><body>';
 		$message .= '<table rules="all" style="border-color: #666;" cellpadding="10">';
 		$message .= "<tr><td><strong>Matchup</strong> </td><td><em>" . $match_home_team . "<em> vs <em>" . $match_away_team . "</em></td></tr>";
 		$message .= "<tr><td><strong>Tournament</strong> </td><td><em>" . $match_tournament . "</em></td></tr>";
+		$message .= "<tr><td><strong>Match Date <br/> Match Time</strong> </td><td>" . $match_date . " @ " . $match_time . " <small>TIMEZONE <em>" . $match_zone . "</em></small></td></tr>";
 		$message .= "<tr><td><strong>Match ID</strong> </td><td> <a href='" . $this->site_url . "/settings-guild.php?page=tournament_match&view=details&mid=" . $match_id . "'> #" . strip_tags($match) . "</a> (" . strip_tags($teams) . ")</td></tr>";
 		$message .= "<tr><td><strong>Message:</strong> </td><td>" . strip_tags($body) . "</td></tr>";
 		$message .= "<tr><td></td><td>Go to your <em>View Match Details</em> under <em>My Team > Tournaments > View Schedule</em> and view the Match Details update.</td></tr>";
