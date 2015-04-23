@@ -13,12 +13,13 @@ if( ! empty( $site_settings['timezone'] ) ) {
 } else {
 	date_default_timezone_set('UTC');
 }
-$ez_news 	 = new ezLeague_News();
-$ez_users    = new ezLeague_User();
-$ez_team	 = new ezLeague_Team();
-$ez_league	 = new ezLeague_League();
-$ez_inbox	 = new ezLeague_Inbox();
-$ez_schedule = new ezLeague_Schedule();
+$ez_news 	 	= new ezLeague_News();
+$ez_users    	= new ezLeague_User();
+$ez_team	 	= new ezLeague_Team();
+$ez_league	 	= new ezLeague_League();
+$ez_inbox	 	= new ezLeague_Inbox();
+$ez_schedule 	= new ezLeague_Schedule();
+$ez_tournament 	= new ezLeague_Tournament();
 
 if( isset( $_SESSION['ez_username'] ) ) {
 	$profile = $ez_users->get_user( $_SESSION['ez_username'] );
