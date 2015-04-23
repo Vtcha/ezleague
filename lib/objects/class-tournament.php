@@ -473,6 +473,83 @@ class ezLeague_Tournament extends DB_Class {
 		return;
 		
 	}
+
+	/*
+	 * Trigger message send
+	 *
+	 * @return string
+	 */
+	public function send_match_update_message( $to, $from, $subject, $match_id, $teams, $message ) {
+
+		$to 	 = $this->sanitize( $to );
+		$from    = $this->sanitize( $from );
+		$subject = $this->sanitize( $subject );
+		$match 	 = $this->sanitize( $match_id );
+		$body 	 = $message;
+
+		$data = $this->fetch("SELECT mandrill_username, mandrill_password FROM `" . $this->prefix . "settings` WHERE id = '1'");
+		$match_data = $this->fetch("SELECT `" . $this->prefix . "tournament_matches`.home_team, 
+											`" . $this->prefix . "tournament_matches`.away_team,
+											`" . $this->prefix . "tournament_matches`.tid,
+											`" . $this->prefix . "tournament_matches`.id AS match_id,
+											`" . $this->prefix . "tournaments`.id AS tournament_id,
+											`" . $this->prefix . "tournaments`.tournament
+									FROM `" . $this->prefix . "tournament_matches`, `" . $this->prefix . "tournaments`
+									WHERE `" . $this->prefix . "tournament_matches`.id = '$match_id'
+									AND `" . $this->prefix . "tournaments`.id = `" . $this->prefix . "tournament_matches`.tid
+								  ");
+
+		$match_home_team 	= $match_data['0']['home_team'];
+		$match_away_team 	= $match_data['0']['away_team'];
+		$match_tid 			= $match_data['0']['tid'];
+		$match_tournament 	= $match_data['0']['tournament'];
+
+
+		$message = '<html><body>';
+		$message .= '<table rules="all" style="border-color: #666;" cellpadding="10">';
+		$message .= "<tr><td><strong>Matchup</strong> </td><td><em>" . $match_home_team . "<em> vs <em>" . $match_away_team . "</em></td></tr>";
+		$message .= "<tr><td><strong>Tournament</strong> </td><td><em>" . $match_tournament . "</em></td></tr>";
+		$message .= "<tr><td><strong>Match ID</strong> </td><td> <a href='" . $this->site_url . "/settings-guild.php?page=tournament_match&view=details&mid=" . $match_id . "'> #" . strip_tags($match) . "</a> (" . strip_tags($teams) . ")</td></tr>";
+		$message .= "<tr><td><strong>Message:</strong> </td><td>" . strip_tags($body) . "</td></tr>";
+		$message .= "<tr><td></td><td>Go to your <em>View Match Details</em> under <em>My Team > Tournaments > View Schedule</em> and view the Match Details update.</td></tr>";
+		$message .= "</table>";
+		$message .= "</body></html>";
+		if( $data ) {
+			require_once "Mail.php";
+			$mandrill_username = $data['0']['mandrill_username'];
+			$mandrill_password = $data['0']['mandrill_password']; 
+			if( class_exists( 'Mail' ) && ( $mandrill_username != '' && $mandrill_password != '' ) ) { 
+				$host = "smtp.mandrillapp.com"; 
+				$username = $mandrill_username; 
+				$password = $mandrill_password;
+				$headers = array ('From' => $from,   'To' => $to, 'MIME-Version' => '1.0', 'Content-Type' => 'text/html; charset=ISO-8859-1', 'Subject' => $subject); 
+				$smtp = Mail::factory(
+								'smtp',   
+								array (
+									'host' => $host,     
+									'auth' => true,
+									'port' => 587,     
+									'username' => $username,     
+									'password' => $password
+									)
+								);  
+				$mail = $smtp->send($to, $headers, $message);  
+				if (PEAR::isError($mail)) {   
+					echo("<p>" . $mail->getMessage() . "</p>");  
+				} else {   
+					echo("<p>A Match Details Update email has been sent to team admins.</p>");  
+				}
+			} else {
+				if( mail($to, $subject, $message, $headers) ) {
+					$this->success('Thank you, your message has been sent');
+				} else {
+					$this->error('There was a problem sending your message, please try again');
+				}
+			}
+		}
+		return;
+
+	}
 }
 
 ?>

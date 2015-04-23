@@ -21,7 +21,7 @@
 		include('tpls/settings/tournaments/view-match-admin-screenshot.php');
 	}
 
-	if( $match_details['status'] == '1' ) {
+	if( $match_details['status'] == 0 ) {
 			if( $match_details['home_id'] == $profile['guild_id'] ) { 
 				$match_side = 'homeTeam_accept';
 			} else {
