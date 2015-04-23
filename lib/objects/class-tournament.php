@@ -557,6 +557,66 @@ class ezLeague_Tournament extends DB_Class {
 		return;
 
 	}
+
+	/*
+	 * Toggle acceptance or rejection of tournament match details
+	 */
+	public function toggle_match_details($match_id, $match_side, $update) {
+		
+		$match_id	= $this->sanitize( $match_id );
+		$match_side = $this->sanitize( $match_side );
+		$update		= $this->sanitize( $update );
+			switch( $update ) {
+				case 'accept':
+					$update = '1';
+					break;
+				case 'reject':
+					$update = '0';
+					break;
+				default:
+					$update = '0';
+				break;
+			}
+		$this->link->query("UPDATE `" . $this->prefix . "tournament_matches` 
+							SET $match_side = '$update' 
+							WHERE id = '$match_id'
+						");
+
+		$status = $this->get_acceptance_status( $match_id );
+		$teams = $this->get_match_teams( $match_id );
+		$home_team_admin = $this->get_team_admin( $teams['home'] );
+		$away_team_admin = $this->get_team_admin( $teams['away'] );
+		$teams = $home_team_admin['team'] . ' vs ' . $away_team_admin['team'];
+		$emails = $away_team_admin['email'] . ',' . $home_team_admin['email'];
+		if( $status['home'] == 1 && $status['away'] == 1 ) {
+			$this->send_match_update_message( $emails, 'ezLeagueMatchUpdates@no-reply.com', '[ezleague] Match Details Updated', $match_id, $teams, 'Both Teams have Accepted the match details. Please notify your team of the match.');
+		} else {
+			$this->send_match_update_message( $emails, 'ezLeagueMatchUpdates@no-reply.com', '[ezleague] Match Details Updated', $match_id, $teams, 'Match Acceptance has been updated');
+		}
+		
+
+		$this->success('Acceptance status has been updated');
+		return;
+		
+	}
+
+	/*
+	 * Get the acceptance status of a match
+	 */
+	public function get_acceptance_status($match_id) {
+
+		$match_id 	= $this->sanitize( $match_id );
+		$status = array();
+		$data = $this->fetch("SELECT home_accept, away_accept FROM `" . $this->prefix . "tournament_matches` WHERE id = '$match_id'");
+		if( $data ) {
+			$status['home'] = $data['0']['home_accept'];
+			$status['away'] = $data['0']['away_accept'];
+			return $status;
+		} else {
+			return;
+		}
+
+	}
 }
 
 ?>

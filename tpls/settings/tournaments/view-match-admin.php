@@ -23,9 +23,9 @@
 
 	if( $match_details['status'] == 0 ) {
 			if( $match_details['home_id'] == $profile['guild_id'] ) { 
-				$match_side = 'homeTeam_accept';
+				$match_side = 'home_accept';
 			} else {
-				$match_side = 'awayTeam_accept';
+				$match_side = 'away_accept';
 			}
 			
 			include('tpls/settings/tournaments/view-match-admin-details.php');

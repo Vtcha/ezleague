@@ -193,7 +193,7 @@
 						   		$(".success").fadeIn(1000, "linear");
 						   		$(".success_text").fadeIn("slow");
 						   		$(".success").html(msg);
-						   		setTimeout(function(){location.reload()},3000);
+						   		//setTimeout(function(){location.reload()},3000);
 				  });
 
 			}, this ) );
