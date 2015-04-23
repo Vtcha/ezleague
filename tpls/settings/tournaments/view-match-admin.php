@@ -65,8 +65,9 @@
 		 </div>
 		 <div class="form-group">
 		 	<?php 
-		 		$chat = (array) json_decode( $match_details['chat'], TRUE ); 
-		 		foreach( $chat as $message ) {
+		 		$chat = (array) json_decode( $match_details['chat'], TRUE );
+		 		$chat_reversed = array_reverse( $chat );
+		 		foreach( $chat_reversed as $message ) {
 					echo '<p><em>' . $message['date'] . '</em><br><strong>' . $message['username'] . '</strong>: ' . $message['message'] . '</p>';
 		 		}
 		 	?>
