@@ -52,9 +52,9 @@
                                 </td>
                                     <?php 
                                     	if( $current_season ) {
-                                    		echo "<td style='background:#E4E4E4;'>Season " . $current_season['season'] . '</td>';
+                                    		echo "<td style='background:#E4E4E4;'><span class='text-success'><strong>Season " . $current_season['season'] . '</strong></span></td>';
                                     	} else {
-                                    		echo "<td></td>";
+                                    		echo "<td><span class='text-danger'><em>No Season Found</em></span></td>";
                                     	}
                                     ?>
                                 <td>
