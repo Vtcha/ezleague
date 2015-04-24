@@ -94,6 +94,19 @@ $ez_tournament = new ezAdmin_Tournament();
                  $ez_tournament->unsuspend_team( $tournament_id, $team_id );
                 break;
 
+            case 'add-tournament-map':
+                $tournament_id  = $_POST['tournament_id'];
+                $map            = $_POST['map'];
+                 $ez_tournament->add_tournament_map( $tournament_id, $map );
+                break;
+
+            case 'set-round-map':
+                $tournament_id  = $_POST['tournament_id'];
+                $round          = $_POST['round'];
+                $map            = $_POST['map'];
+                 $ez_tournament->set_round_map( $tournament_id, $round, $map );
+                break;
+
     	 	default:
     	 		break;
     	 }

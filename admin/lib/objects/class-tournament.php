@@ -791,6 +791,95 @@ class ezAdmin_Tournament extends DB_Class {
 
 	}
 
+	/*
+	 * Get tournament map list
+	 *
+	 * @return string
+	 */
+	public function get_tournament_maps($tournament_id) {
+
+		$tournament_id 	= $this->sanitize( $tournament_id );
+		$data = $this->fetch("SELECT maps FROM `" . $this->prefix . "tournaments` WHERE id = '$tournament_id'");
+		$current_maps = '';
+		if( $data['0']['maps'] != '' ) {
+			$current_maps = $data['0']['maps'];
+		} else {
+			$current_maps = '';
+		}
+		return $current_maps;
+
+	}
+
+	/*
+	 * Add map to tournament
+	 *
+	 * @return string
+	 */
+	public function add_tournament_map($tournament_id, $map) {
+		
+		$map 			= $this->sanitize( $map );
+		$tournament_id 	= $this->sanitize( $tournament_id );
+		$current_maps = $this->get_tournament_maps( $tournament_id );
+		if( ! empty( $current_maps ) ) {
+			$updated_maps = $current_maps . ',' . $map;
+		} else {
+			$updated_maps = $map;
+		}
+		$this->link->query("UPDATE `" . $this->prefix . "tournaments` SET maps = '$updated_maps' WHERE id = '$tournament_id'");
+		$this->success( 'Map has been added' );
+		return;
+
+	}
+
+	/*
+	 * Get the map for a specific round
+	 *
+	 * @return string
+	 */
+	public function get_round_map($tournament_id, $round) {
+
+		$tournament_id 	= $this->sanitize( $tournament_id );
+		$round 			= $this->sanitize( $round );
+		$data = $this->fetch("SELECT map FROM `" . $this->prefix . "tournament_map_schedule`
+								WHERE tournament_id = '$tournament_id' AND round = '$round'
+							");
+		if( $data ) {
+			$map 	= $data['0']['map'];
+			return $map;
+		} else {
+			return false;
+		}
+
+	}
+
+	/*
+	 * Set the map for a tournament round
+	 *
+	 * @return string
+	 */
+	public function set_round_map($tournament_id, $round, $map) {
+
+		$tournament_id 	= $this->sanitize( $tournament_id );
+		$round 			= $this->sanitize( $round );
+		$map 			= $this->sanitize( $map );
+		$data = $this->fetch("SELECT * FROM `" . $this->prefix . "tournament_map_schedule` 
+								WHERE round = '$round' AND tournament_id = '$tournament_id'
+							 ");
+		if( $data ) {
+			$schedule_id = $data['0']['id'];
+			$this->link->query("UPDATE `" . $this->prefix . "tournament_map_schedule`
+								SET map = '$map' WHERE id = '$schedule_id'
+							   ");
+		} else {
+			$this->link->query("INSERT INTO `" . $this->prefix . "tournament_map_schedule`
+								SET map = '$map', round = '$round', tournament_id = '$tournament_id'
+							   ");
+		}
+		$this->success( 'Map has been set for the round' );
+		return;
+
+	}
+
 }
 
 ?>

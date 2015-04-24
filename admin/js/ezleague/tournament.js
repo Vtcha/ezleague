@@ -428,6 +428,28 @@ $('#addChatMessage').submit(function(e) {
 });
 
 /**
+ * Edit tournament rules
+ */
+$('#addTournamentMap').submit(function(e) {
+	var map					= $("#map").val();
+		tournament_id  		= $("#tournament_id").val();
+		
+		e.preventDefault();
+
+	 $.ajax({
+	     type: "POST",
+	     url: "lib/submit/submit-tournament.php",
+	     data: { form: 'add-tournament-map', tournament_id: '' + tournament_id + '', map: '' + map + '' }
+	   }).success(function( msg ) {
+				    $('.maps_success').css("display", "");
+			   		$(".maps_success").fadeIn(1000, "linear");
+			   		$('.maps_text').fadeIn("slow");
+			   		$('.maps_text').html(msg);
+			   		setTimeout(function(){location.reload()},3000);
+	  });
+});
+
+/**
  * Get available tournament teams for the modal
  * @param tournament_id
  */
@@ -443,6 +465,27 @@ function getAvailableTournamentTeams(tournament_id) {
 	  });
 	
 }
+
+/**
+ * Set the map for a tournament round
+ * @param tournament_id
+ * @param round
+ * @param map
+ */
+ function setMap(tournament_id, round, map) {
+
+ 	$.ajax({
+	     type: "POST",
+	     url: "lib/submit/submit-tournament.php",
+	     data: { form: 'set-round-map', tournament_id: '' + tournament_id + '', round: '' + round + '', map: '' + map + '' }
+	   }).success(function( msg ) {
+				    $('.maps_success').css("display", "");
+			   		$(".maps_success").fadeIn(1000, "linear");
+			   		$('.maps_text').fadeIn("slow");
+			   		$('.maps_text').html(msg);
+			   		setTimeout(function(){location.reload()},3000);
+	  });
+ }
 
 /**
  * Add a team to a private tournament
