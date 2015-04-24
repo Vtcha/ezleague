@@ -347,6 +347,43 @@ function registerTeam(team_id, league_id) {
 	
 }
 
+/**
+ * Register team for tournament
+ * @param team_id
+ * @param tournament_id
+ */
+function registerTournamentTeam(team_id, tournament_id) {
+
+	 $(function() {
+		 $( "#register-tournament-team-confirm" ).dialog({
+			 resizable: false,
+			 height:200,
+			 modal: true,
+			 buttons: {
+				 "Join Tournament": function() {
+					 $.ajax({
+					     type: "POST",
+					     url: "lib/submit/submit-team.php",
+					     data: { form: 'register-tournament', tid: '' + team_id + '', tournament_id: '' + tournament_id + ''}
+					   }).success(function( msg ) {
+								    $(".success").css("display", "");
+							   		$(".success").fadeIn(1000, "linear");
+							   		$(".success_text").fadeIn("slow");
+							   		$(".success").html(msg);
+							   		setTimeout(function(){location.reload()},3000);
+					  });
+					 
+					 $( this ).dialog( "close" );
+				 },
+				 Cancel: function() {
+					 $( this ).dialog( "close" );
+				 }
+			 }
+		 });
+	});
+	
+}
+
 function makePrediction(team_id, match_id, user) {
 
 	 $(function() {

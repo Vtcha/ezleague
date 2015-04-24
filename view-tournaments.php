@@ -107,8 +107,8 @@
 <!-- END CONTAINER -->
 <?php include('footer.php'); ?>
 <script src="assets/global/scripts/normal.js" type="text/javascript"></script>
-<div id="register-team-confirm" title="Join this team?" style="display:none;">
-	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Confirm league registration.</p>
+<div id="register-tournament-team-confirm" title="Join this tournament?" style="display:none;">
+	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Confirm tournament registration.</p>
 </div>
 <div id="make-prediction-confirm" title="Make game prediction" style="display:none;">
 	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Confirm your prediction.</p>

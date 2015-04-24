@@ -33,7 +33,7 @@
 									<?php if( $profile['team_admin'] == true ) { ?>
 										<?php $exist = $ez_tournament->check_for_team( $profile['guild_id'], $tournament_id ); ?>
 										<?php if( $exist == false ) { ?>
-												<button type="button" class="btn green btn-sm" onclick="registerTeam('<?php echo $profile['guild_id']; ?>', '<?php echo $tournament['tid']; ?>')"><i class="fa fa-pencil"></i> REGISTER TEAM</button>
+												<button type="button" class="btn green btn-sm" onclick="registerTournamentTeam('<?php echo $profile['guild_id']; ?>', '<?php echo $tournament['tid']; ?>')"><i class="fa fa-pencil"></i> REGISTER TEAM</button>
 										<?php } else { ?>
 												<button disabled class="btn danger btn-sm">Already Registered</button>
 										<?php } ?>
