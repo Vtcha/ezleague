@@ -1,6 +1,6 @@
 <?php $round1 = $ez_tournament->get_tournament_matchups( $tournament_id, '1' ); ?>
 <?php if( $round1 ) { ?>
-		<li class="spacer">&nbsp;</li>
+		<li class="spacer round-name">Round 1</li>
 		<!-- wrap score inside span element -->
 		<li class="game game-top <?php echo ( $round1[0]['winner'] == $round1[0]['home_team_id'] ? 'winner' : '' ); ?>"><?php echo $round1[0]['home_team'] . ' - ' . $round1[0]['home_score']; ?></li>
 		<li class="game game-spacer"><a href="view-tournaments.php?p=matchup&id=<?php echo $round1[0]['id'];  ?>">View Details</a></li>
@@ -26,7 +26,7 @@
 
 		<li class="spacer">&nbsp;</li>
 <?php } else { ?>
-		<li class="spacer">&nbsp;</li>
+		<li class="spacer round-name">Round 1</li>
 		<!-- wrap score inside span element -->
 		<li class="game game-top"></li>
 		<li class="game game-spacer">&nbsp;</li>
