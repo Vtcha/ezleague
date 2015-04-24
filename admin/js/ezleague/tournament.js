@@ -423,7 +423,7 @@ $('#addChatMessage').submit(function(e) {
 			   		$(".chat").fadeIn(1000, "linear");
 			   		$(".chat_text").fadeIn("slow");
 			   		$(".chat").html(msg);
-			   		//setTimeout(function(){location.reload()},3000);
+			   		setTimeout(function(){location.reload()},3000);
 	  });
 });
 
