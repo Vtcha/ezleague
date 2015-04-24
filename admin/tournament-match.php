@@ -39,12 +39,14 @@
     <script src="js/ezleague/teams.js"></script>
     <script src="js/ckeditor/ckeditor.js"></script>
 	<script>
-	CKEDITOR.replace( 'body', {
-		toolbar: [
-			[ 'Bold', 'Italic', '-', 'NumberedList', 'BulletedList', '-', 'Link', 'Unlink' ],
-			[ 'FontSize', 'TextColor', 'BGColor' ]
-		]
-	});
+
+    $(function() {
+        $( "#match-date" ).datepicker();
+        $( "#match-date" ).datepicker( "option", "dateFormat", "yy-mm-dd" );
+        $( "#match-date" ).datepicker({
+            dateFormat: 'yy-mm-dd'
+        }).val('<?php echo $match_date; ?>');
+    });
 	</script>
 </body>
 

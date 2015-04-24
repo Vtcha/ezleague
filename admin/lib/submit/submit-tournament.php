@@ -49,7 +49,21 @@ $ez_tournament = new ezAdmin_Tournament();
                 $round          = $_POST['round'];
                 $tid            = $_POST['tournament_id'];
                 $max_teams      = $_POST['max_teams'];
-                 $ez_tournament->edit_tournament_match( $match_id, $home_id, $home_score, $home_accept, $away_id, $away_score, $away_accept, $match_status, $tid, $max_teams, $round );
+                $date           = $_POST['match_date'];
+                $time           = $_POST['match_time'];
+                $zone           = $_POST['match_zone'];
+                $stream_url     = $_POST['stream_url'];
+                $ip             = $_POST['server_ip'];
+                $password       = $_POST['server_password'];
+                $moderator      = $_POST['match_moderator'];
+                 $ez_tournament->edit_tournament_match( $match_id, $home_id, $home_score, $home_accept, $away_id, $away_score, $away_accept, $match_status, $tid, $max_teams, $date, $time, $zone, $stream_url, $ip, $password, $moderator, $round );
+                break;
+
+            case 'add-chat-message':
+                $match_id   = $_POST['id'];
+                $username   = $_POST['username'];
+                $message    = $_POST['message'];
+                    $ez_tournament->update_chat_log($match_id, $username, $message);
                 break;
 
     	 	case 'delete-tournament':

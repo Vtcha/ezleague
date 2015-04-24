@@ -378,6 +378,13 @@ $('#editTournamentMatch').submit(function(e) {
 		match_status 	= $("#match-status").val();
 		max_teams 		= $("#max-teams").val();
 		round 			= $("#match-round").val();
+		date 			= $("#match-date").val();
+		time 			= $("#match-time").val();
+		zone 			= $("#match-zone").val();
+		ip 				= $("#match-server-ip").val();
+		password 		= $("#match-server-password").val();
+		moderator 		= $("#match-server-moderator").val();
+		stream_url 		= $("#match-stream-url").val();
 		tid 			= $("#tournament-id").val();
 
 		e.preventDefault();
@@ -387,13 +394,36 @@ $('#editTournamentMatch').submit(function(e) {
 	     url: "lib/submit/submit-tournament.php",
 	     async:true,
 	     crossbrowser:true,
-	     data: { form: 'edit-match', match_id: '' + match_id + '', tournament_id: '' + tid + '', home_id: '' + home_id + '', away_id: '' + away_id + '', home_score: '' + home_score + '', away_score: '' + away_score + '', home_accept: '' + home_accept + '', away_accept: '' + away_accept + '', match_status: '' + match_status + '', max_teams: '' + max_teams + '', round: '' + round + '' }
+	     data: { form: 'edit-match', match_id: '' + match_id + '', tournament_id: '' + tid + '', home_id: '' + home_id + '', away_id: '' + away_id + '', home_score: '' + home_score + '', away_score: '' + away_score + '', home_accept: '' + home_accept + '', away_accept: '' + away_accept + '', match_status: '' + match_status + '', max_teams: '' + max_teams + '', round: '' + round + '', match_date: '' + date + '', match_time: '' + time + '', match_zone: '' + zone + '', server_ip: '' + ip + '', server_password: '' + password + '', match_moderator: '' + moderator + '', stream_url: '' + stream_url + '' }
 	   }).success(function( msg ) {
 		   		$('.success').css("display", "");
 		   		$(".success").fadeIn(1000, "linear");
 		   		$('.success_text').fadeIn("slow");
 		   		$('.success_text').html(msg);
 		   		setTimeout(function(){location.reload()},3000);
+	  });
+});
+
+/**
+ * Edit tournament rules
+ */
+$('#addChatMessage').submit(function(e) {
+	var message			= $("#chat-message").val();
+		match_id  		= $("#chat-match-id").val();
+		username 		= $("#chat-username").val();
+		
+		e.preventDefault();
+
+	 $.ajax({
+	     type: "POST",
+	     url: "lib/submit/submit-tournament.php",
+	     data: { form: 'add-chat-message', id: '' + match_id + '', username: '' + username + '', message: '' + message + '' }
+	   }).success(function( msg ) {
+				    $(".chat").css("display", "");
+			   		$(".chat").fadeIn(1000, "linear");
+			   		$(".chat_text").fadeIn("slow");
+			   		$(".chat").html(msg);
+			   		//setTimeout(function(){location.reload()},3000);
 	  });
 });
 

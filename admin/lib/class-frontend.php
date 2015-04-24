@@ -75,6 +75,66 @@ class ezAdmin_Frontend extends DB_Class {
 		}
 		
 	}
+
+	/*
+	 * Timezone list used for match details
+	 *
+	 * Credit http://pastebin.com/vBmW1cnX
+	 * @return array
+	 */
+	function generate_timezone_list() {
+		$the_list = array();
+	    static $regions = array(
+	        DateTimeZone::AFRICA,
+	        DateTimeZone::AMERICA,
+	        DateTimeZone::ANTARCTICA,
+	        DateTimeZone::ASIA,
+	        DateTimeZone::ATLANTIC,
+	        DateTimeZone::AUSTRALIA,
+	        DateTimeZone::EUROPE,
+	        DateTimeZone::INDIAN,
+	        DateTimeZone::PACIFIC,
+	    );
+
+	    $timezones = array();
+	    foreach( $regions as $region )
+	    {
+	        $timezones = array_merge( $timezones, DateTimeZone::listIdentifiers( $region ) );
+	    }
+
+	    $timezone_offsets = array();
+	    foreach( $timezones as $timezone )
+	    {
+	        $tz = new DateTimeZone($timezone);
+	        $timezone_offsets[$timezone] = $tz->getOffset(new DateTime);
+	    }
+
+	    // sort timezone by timezone name
+	    ksort($timezone_offsets);
+
+	    $timezone_list = array();
+	    foreach( $timezone_offsets as $timezone => $offset )
+	    {
+	        $offset_prefix = $offset < 0 ? '-' : '+';
+	        $offset_formatted = gmdate( 'H:i', abs($offset) );
+
+	        $pretty_offset = "UTC${offset_prefix}${offset_formatted}";
+	        
+	        $t = new DateTimeZone($timezone);
+	        $c = new DateTime(null, $t);
+	        $current_time = $c->format('g:i A');
+	        $zone_abbrev = $c->format('T');
+
+	        $timezone_list[$timezone] = "($zone_abbrev) (${pretty_offset}) $timezone - $current_time";
+	        $the_list_item['display'] = $timezone_list[$timezone];
+	        $the_list_item['offset'] = $pretty_offset;
+	        $the_list_item['zone'] = $timezone;
+	        $the_list_item['abbrev'] = $zone_abbrev . '(' . $pretty_offset . ')' . $timezone;
+	        array_push( $the_list, $the_list_item);
+	    }
+
+	    return $the_list;
+	}
 	
 }
 

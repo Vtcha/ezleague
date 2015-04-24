@@ -9,6 +9,7 @@
         $tournament_details = $ez_tournament->get_tournament( $match_details[0]['tid'] );
         $tournament_max_teams = $tournament_details['teams'];
         $tournament_round = $match_details[0]['round'];
+        $match_date = date( 'Y-m-d', strtotime( $match_details[0]['match_date'] ) );
 ?>
     <div class="col-lg-4">
         <div class="panel panel-default">
@@ -80,35 +81,77 @@
                             <label>Home Team</label>
                             <input disabled class="form-control" id="home-team" value="<?php echo $match_details[0]['home_team']; ?>" placeholder="Home Team" />
                         </div>
-                        <div class="form-group">
-                            <label>Home Team Score</label>
-                            <input class="form-control" id="home-team-score" value="<?php echo $match_details[0]['home_score']; ?>" placeholder="Home Team Score" />
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>Score</label>
+                                <input class="form-control" id="home-team-score" value="<?php echo $match_details[0]['home_score']; ?>" placeholder="Home Team Score" />
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label>Home Team Accepted</label>
-                            <select class="form-control" id="home-team-accepted">
-                                <option <?php echo ( $match_details[0]['home_accept'] == 0 ? 'selected' : '' ); ?> value="0">Pending</option>
-                                <option <?php echo ( $match_details[0]['home_accept'] == 1 ? 'selected' : '' ); ?> value="1">Accepted</option>
-                            </select>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>Accepted</label>
+                                <select class="form-control" id="home-team-accepted">
+                                    <option <?php echo ( $match_details[0]['home_accept'] == 0 ? 'selected' : '' ); ?> value="0">Pending</option>
+                                    <option <?php echo ( $match_details[0]['home_accept'] == 1 ? 'selected' : '' ); ?> value="1">Accepted</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label>Away Team</label>
                             <input disabled class="form-control" id="away-team" value="<?php echo $match_details[0]['away_team']; ?>" placeholder="Away Team" />
                         </div>
-                        <div class="form-group">
-                            <label>Away Team Score</label>
-                            <input class="form-control" id="away-team-score" value="<?php echo $match_details[0]['away_score']; ?>" placeholder="Away Team Score" />
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>Score</label>
+                                <input class="form-control" id="away-team-score" value="<?php echo $match_details[0]['away_score']; ?>" placeholder="Away Team Score" />
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>Accepted</label>
+                                <select class="form-control" id="away-team-accepted">
+                                    <option <?php echo ( $match_details[0]['away_accept'] == 0 ? 'selected' : '' ); ?> value="0">Pending</option>
+                                    <option <?php echo ( $match_details[0]['away_accept'] == 1 ? 'selected' : '' ); ?> value="1">Accepted</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>Match Date</label><br/>
+                                <input id="match-date" type="text" class="form-control" value="<?php echo $match_date; ?>" />
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="control-label">Time [24-hour]</label>
+                                <input id="match-time" type="text" class="form-control" value="<?php echo $match_details['0']['match_time']; ?>" />
+                            </div>
                         </div>
                         <div class="form-group">
-                            <label>Away Team Accepted</label>
-                            <select class="form-control" id="away-team-accepted">
-                                <option <?php echo ( $match_details[0]['away_accept'] == 0 ? 'selected' : '' ); ?> value="0">Pending</option>
-                                <option <?php echo ( $match_details[0]['away_accept'] == 1 ? 'selected' : '' ); ?> value="1">Accepted</option>
+                            <label class="control-label">Zone</label>
+                        <?php $timezones = $ez_frontend->generate_timezone_list(); ?>
+                            <select id="match-zone" class="form-control" style="font-size:12px;">
+                                <option value=""></option>
+                        <?php foreach($timezones as $zone) { ?>
+                                <option <?php echo ( $match_details['0']['match_zone'] == $zone['abbrev'] ? 'selected' : '' ); ?> value="<?php echo $zone['abbrev']; ?>"><?php echo $zone['display']; ?></option>
+                         <?php } ?>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label>Match Date</label><br/>
-                            <?php echo date( 'F d, Y h:ia', strtotime( $match_details[0]['match_date'] ) ); ?>
+                            <label>Server IP</label>
+                            <input type="text" id="match-server-ip" class="form-control" value="<?php echo $match_details['0']['server_ip']; ?>" />
+                        </div>
+                        <div class="form-group">
+                            <label>Server Password</label>
+                            <input type="text" id="match-server-password" class="form-control" value="<?php echo $match_details['0']['server_password']; ?>" />
+                        </div>
+                        <div class="form-group">
+                            <label>Match Moderator</label>
+                            <input type="text" id="match-server-moderator" class="form-control" value="<?php echo $match_details['0']['match_moderator']; ?>" />
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Stream URL</label>
+                            <input type="text" class="form-control" id="match-stream-url" value="<?php echo $match_details['0']['stream_url']; ?>" />
                         </div>
                         <div class="form-group">
                             <label>Match Status</label>
@@ -145,6 +188,19 @@
                             echo '<p><small><em>' . $message['date'] . '</em></small> <strong>' . $message['username'] . '</strong>: ' . $message['message'] . '</p><hr/>';
                         }
                     ?>
+                        <form id="addChatMessage" method="POST" role="form">
+                            <input type="hidden" id="chat-match-id" value="<?php echo $match_details['0']['id']; ?>" />
+                            <input type="hidden" id="chat-username" value="(admin) <?php echo $_SESSION['ez_admin']; ?>" />
+                            <div class="form-group">
+                                <textarea id="chat-message" class="form-control"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-success">Add Message</button>
+                            </div>
+                        </form>
+                        <div class="success chat">
+                          <span class="success_text chat_text"></span>
+                        </div>
                     </div>
                 </div>               
             </div>
