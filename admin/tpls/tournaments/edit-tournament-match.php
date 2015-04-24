@@ -130,15 +130,21 @@
             </div>
         </div>
     </div>
-    <div class="col-lg-4">
+    <div class="col-lg-8">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <i class="fa fa-file-o"></i> Match Chat Log #<?php echo $match_id; ?>
             </div>
             <div class="panel-body">
                 <div class="row">
-                    <div class="col-lg-12">
-                     <?php echo $match_details[0]['match_log']; ?>
+                    <div class="col-lg-12 match-log">
+                     <?php 
+                        $chat = (array) json_decode( $match_details['0']['match_log'], TRUE );
+                        $chat_reversed = array_reverse( $chat );
+                        foreach( $chat_reversed as $message ) {
+                            echo '<p><small><em>' . $message['date'] . '</em></small> <strong>' . $message['username'] . '</strong>: ' . $message['message'] . '</p><hr/>';
+                        }
+                    ?>
                     </div>
                 </div>               
             </div>

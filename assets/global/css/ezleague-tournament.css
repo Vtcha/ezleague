@@ -22,9 +22,15 @@ main {
 .round .champion-spacer:first-child, .round .champion-spacer:last-child { 
     flex-grow:.35; 
 }
-
 .round .game-spacer {
     flex-grow:1;
+}
+.round-name {
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #35aa47;
 }
 
 li.game {
