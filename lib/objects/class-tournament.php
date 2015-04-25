@@ -272,6 +272,7 @@ class ezLeague_Tournament extends DB_Class {
 		$data = $this->fetch("SELECT * FROM `" . $this->prefix . "tournament_matches` WHERE id = '$match_id'");
 		if( $data ) {
 			$matchup['id']					= $data['0']['id'];
+			$matchup['tid'] 				= $data['0']['tid'];
 			$matchup['home_id']				= $data['0']['home_team_id'];
 			$matchup['home']				= $data['0']['home_team'];
 			$matchup['home_accept']			= $data['0']['home_accept'];

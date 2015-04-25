@@ -49,7 +49,7 @@
 							$tournament_id = $match_details['tid'];
 						}
 
-						include('tpls/settings/view-league.php');
+						include('tpls/settings/view-sidebar.php');
 				?>
 				<div class="col-md-9">
 				<?php 
