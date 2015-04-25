@@ -107,6 +107,12 @@ $ez_tournament = new ezAdmin_Tournament();
                  $ez_tournament->set_round_map( $tournament_id, $round, $map );
                 break;
 
+            case 'delete-map':
+                $tournament_id  = $_POST['tournament_id'];
+                $map            = $_POST['map'];
+                 $ez_tournament->delete_map( $tournament_id, $map );
+                break;
+
     	 	default:
     	 		break;
     	 }

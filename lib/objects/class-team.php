@@ -258,8 +258,8 @@ class ezLeague_Team extends DB_Class {
 	public function remove_league_member($league_id, $team_id, $user_id) {
 
 		$roster = $this->get_league_roster_ids( $league_id, $team_id );
-		if(($key = array_search($user_id, $roster)) !== false) {
-		    unset($roster[$key]);
+		if( ( $key = array_search( $user_id, $roster ) ) !== false ) {
+		    unset( $roster[$key] );
 		    $updated_roster = json_encode( $roster );
 		    $this->link->query("UPDATE `" . $this->prefix . "rosters` SET roster = '$updated_roster' WHERE league = '$league_id' AND team = '$team_id'");
 		    $this->success('Member has been removed from league roster');

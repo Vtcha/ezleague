@@ -487,6 +487,26 @@ function getAvailableTournamentTeams(tournament_id) {
 	  });
  }
 
+ /**
+ * Delete a map from a tournament
+ * @param tournament_id
+ * @param map
+ */
+ function deleteMap(tournament_id, map) {
+
+ 	$.ajax({
+	     type: "POST",
+	     url: "lib/submit/submit-tournament.php",
+	     data: { form: 'delete-map', tournament_id: '' + tournament_id + '', map: '' + map + '' }
+	   }).success(function( msg ) {
+				    $('.maps_success').css("display", "");
+			   		$(".maps_success").fadeIn(1000, "linear");
+			   		$('.maps_text').fadeIn("slow");
+			   		$('.maps_text').html(msg);
+			   		setTimeout(function(){location.reload()},3000);
+	  });
+ }
+
 /**
  * Add a team to a private tournament
  * @param league_id

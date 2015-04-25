@@ -21,6 +21,7 @@
                 <thead>
                     <tr>
                       <th>Available</th>
+                      <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -29,6 +30,7 @@
                     foreach( $maps as $map ) { ?>
                         <tr>
                             <td><?php echo $map; ?></td>
+                            <td><button class="btn btn-danger btn-xs" onclick="deleteMap('<?php echo $tournament_id; ?>', '<?php echo $map; ?>');"><i class="fa fa-close"></i></button></td>
                         </tr>
               <?php } ?>
                 </tbody>

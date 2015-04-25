@@ -880,6 +880,34 @@ class ezAdmin_Tournament extends DB_Class {
 
 	}
 
+	/*
+	 * Delete a map from a tournament
+	 *
+	 * @return string
+	 */
+	public function delete_map($tournament_id, $map) {
+		$tournament_id 	= $this->sanitize( $tournament_id );
+		$map 			= $this->sanitize( $map );
+
+		$this->link->query("DELETE FROM `" . $this->prefix . "tournament_map_schedule` 
+							WHERE tournament_id = '$tournament_id' AND map = '$map'
+						  ");
+
+		$tournament_maps = $this->get_tournament_maps( $tournament_id );
+		$maps = explode( ',', $tournament_maps );
+		if( ( $key = array_search( $map, $maps ) ) !== false ) {
+		    unset( $maps[$key] );
+		    $updated_maps = implode( ',', $maps );
+		    $this->link->query("UPDATE `" . $this->prefix . "tournaments` SET maps = '$updated_maps' WHERE id = '$tournament_id'");
+		} else {
+			$this->error( 'There was a problem removing this map from the tournament' );
+		}
+
+		$this->success( 'Map has been removed from this tournament' );
+		return;
+
+	}
+
 }
 
 ?>
