@@ -41,6 +41,10 @@ if( isset( $_GET['id'] ) ) {
 							<th>Max Teams</th>
 							<td><?php echo $tournament['teams']; ?></td>
 						</tr>
+						<tr>
+							<th>Rules</th>
+							<td><a class="btn btn-warning btn-sm" href="view-tournaments.php?p=rules&id=<?php echo $tournament_id; ?>"><i class="fa fa-search"></i> View Rules</a></td>
+						</tr>
 					</table>
 				</div>
 
