@@ -617,6 +617,26 @@ class ezLeague_Tournament extends DB_Class {
 		}
 
 	}
+
+	/*
+	 * Get the map for a specific round
+	 *
+	 * @return string
+	 */
+	public function get_round_map($tournament_id, $round) {
+
+		$tournament_id 	= $this->sanitize( $tournament_id );
+		$round 			= $this->sanitize( $round );
+		$data = $this->fetch("SELECT map FROM `" . $this->prefix . "tournament_map_schedule`
+								WHERE tournament_id = '$tournament_id' AND round = '$round'
+							");
+		$map = '';
+		if( $data ) {
+			$map 	= $data['0']['map'];
+		}
+		return $map;
+		
+	}
 }
 
 ?>
