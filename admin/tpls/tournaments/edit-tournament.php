@@ -33,10 +33,13 @@
     </div>
     <div class="col-lg-8">
         <?php include( 'tpls/tournaments/edit-tournament-teams.php' ); ?>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-4">
         <?php include( 'tpls/tournaments/edit-tournament-maps.php' ); ?>
     </div>
-
-    <div class="col-lg-12">
+    <div class="col-lg-8">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <i class="fa fa-sitemap"></i> Tournament Bracket

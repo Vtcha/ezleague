@@ -1,13 +1,13 @@
 <div class="panel panel-default">
     <div class="panel-heading">
-        <i class="fa fa-file-o"></i> Map Rotation</em>
+        <i class="fa fa-file-o"></i> Round Map Rotation</em>
     </div>
     <div class="panel-body">
-        <div class="col-lg-4">
+        <div class="col-lg-5">
             <form id="addTournamentMap" method="POST">
             <input type="hidden" id="tournament_id" value="<?php echo $tournament_id; ?>" />
                 <div class="form-group">
-                    <label>Map Name <small>(ex: de_dust2)</small></label>
+                    <label>Map Name <br/><small>(ex: de_dust2)</small></label>
                     <input type="text" class="form-control" id="map" />
                 </div>
                 <button type="submit" class="btn btn-success">Add Map</button>
@@ -20,8 +20,7 @@
                <table class="table table-hover">
                 <thead>
                     <tr>
-                      <th>Map</th>
-                      <th></th>
+                      <th>Available</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -30,7 +29,6 @@
                     foreach( $maps as $map ) { ?>
                         <tr>
                             <td><?php echo $map; ?></td>
-                            <td></td>
                         </tr>
               <?php } ?>
                 </tbody>
@@ -38,7 +36,7 @@
             </div>
             <?php } ?>
         </div>
-        <div class="col-lg-8">
+        <div class="col-lg-7">
             <form id="addMap" method="POST">
             <input type="hidden" id="tournament_id" value="<?php echo $tournament_id; ?>" />
             <?php 
@@ -49,8 +47,8 @@
                    <table class="table table-hover">
                     <thead>
                         <tr>
-                          <th>Map</th>
                           <th></th>
+                          <th>Map</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -78,7 +76,7 @@
                         $round_map = $ez_tournament->get_round_map($tournament_id, $i);
                 ?>
                         <tr>
-                         <td>Round <?php echo $i; ?></td>
+                         <td><?php echo $i; ?></td>
                          <td>
                            <select name="round_map" id="round_map" onchange="setMap('<?php echo $tournament_id; ?>', '<?php echo $i; ?>', this.value)" class="form-control">
                                 <option></option>
@@ -92,12 +90,12 @@
                      </tbody>
                    </table>
                 </div>
-                <div class="success maps_success">
-                  <span class="success_text maps_text"></span>
-                </div>
             <?php } else { ?>
                     No maps have been added.
             <?php } ?>
+                <div class="success maps_success">
+                  <span class="success_text maps_text"></span>
+                </div>
             </form>
         </div>
     </div>
