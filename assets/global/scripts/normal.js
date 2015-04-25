@@ -60,7 +60,7 @@ function removeAvatar(user_id) {
  * @param user_id
  */
 function sendTeamInvite(team_id, user_id) {
-	
+
 	 $(function() {
 		 $( "#team-invite-confirm" ).dialog({
 			 resizable: false,

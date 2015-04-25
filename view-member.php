@@ -49,7 +49,7 @@
 <!-- END CONTAINER -->
 <?php include('footer.php'); ?>
 <div id="team-invite-confirm" title="Send team invite?" style="display:none;">
-	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Confirm sending team invite.</p>
+	<p style="line-height:16px;margin:0;padding:0;"><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Confirm sending team invite. <br/><small class="text-danger">Invites take up to 10 seconds to send.</em></p>
 </div>
 <div id="add-friend-confirm" title="Add user as friend?" style="display:none;">
 	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Confirm adding user as friend.</p>
