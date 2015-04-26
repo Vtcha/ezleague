@@ -175,6 +175,7 @@ class ezAdmin extends DB_Class {
 			  `admin` varchar(50) NOT NULL,
 			  `game` varchar(25) DEFAULT NULL,
 			  `leagues` varchar(50) DEFAULT NULL,
+			  `tournaments` varchar(50) NOT NULL,
 			  `logo` varchar(250) DEFAULT NULL,
 			  PRIMARY KEY (`id`,`admin`)
 			);
@@ -361,6 +362,57 @@ class ezAdmin extends DB_Class {
 			  `site_timezone` varchar(250) DEFAULT NULL,
 			  `forum_link` varchar(250) DEFAULT NULL,
 			  `friends_email` int(1) DEFAULT '1',
+			  `show_tournaments` int(1) NOT NULL DEFAULT '1',
+			  PRIMARY KEY (`id`)
+			);
+			CREATE TABLE IF NOT EXISTS `" . $this->prefix . "tournaments` (
+			  `id` int(10) NOT NULL,
+			  `tournament` varchar(250) NOT NULL,
+			  `max_teams` int(250) NOT NULL,
+			  `start_date` date NOT NULL,
+			  `registration_date` date NOT NULL,
+			  `format` varchar(50) NOT NULL,
+			  `maps` varchar(1000) NOT NULL,
+			  `type` varchar(25) NOT NULL DEFAULT 'single',
+			  `status` int(1) NOT NULL DEFAULT '1',
+			  `first_place` int(10) NOT NULL,
+			  `second_place` int(10) NOT NULL,
+			  `game` varchar(100) NOT NULL,
+			  `rules` varchar(10000) NOT NULL,
+			  `public` int(1) NOT NULL DEFAULT '1',
+			  PRIMARY KEY (`id`)
+			);
+			CREATE TABLE IF NOT EXISTS `" . $this->prefix . "tournament_map_schedule` (
+			  `id` int(10) NOT NULL,
+			  `map` varchar(250) DEFAULT NULL,
+			  `round` int(10) DEFAULT NULL,
+			  `tournament_id` int(10) DEFAULT NULL,
+			  PRIMARY KEY (`id`)
+			);
+			CREATE TABLE IF NOT EXISTS `" . $this->prefix . "tournament_matches` (
+			  `id` int(10) NOT NULL,
+			  `tid` int(10) NOT NULL,
+			  `round` int(1) NOT NULL,
+			  `home_team` varchar(100) NOT NULL,
+			  `home_team_id` int(10) NOT NULL,
+			  `home_score` int(10) NOT NULL,
+			  `away_team` varchar(100) NOT NULL,
+			  `away_team_id` int(10) NOT NULL,
+			  `away_score` int(10) NOT NULL,
+			  `home_accept` int(1) NOT NULL,
+			  `away_accept` int(1) NOT NULL,
+			  `winner` int(10) NOT NULL,
+			  `loser` int(10) NOT NULL,
+			  `match_date` date NOT NULL,
+			  `match_time` varchar(100) NOT NULL DEFAULT '12:00',
+			  `match_zone` varchar(250) NOT NULL,
+			  `server_ip` varchar(250) NOT NULL,
+			  `server_password` varchar(25) NOT NULL,
+			  `stream_url` varchar(250) NOT NULL,
+			  `match_log` blob NOT NULL,
+			  `reporter` varchar(50) NOT NULL,
+			  `match_moderator` varchar(50) NOT NULL,
+			  `completed` int(1) NOT NULL,
 			  PRIMARY KEY (`id`)
 			);
 			CREATE TABLE IF NOT EXISTS `" . $this->prefix . "users` (
@@ -443,6 +495,60 @@ class ezAdmin extends DB_Class {
 		$test_connection = mysqli_connect($this->host, $this->username, $this->password, $this->database) or die("Error " . mysqli_error( $test_connection ) );
 		if( $test_connection ) {
 			$sql = "
+					CREATE TABLE IF NOT EXISTS `" . $this->prefix . "tournaments` (
+					  `id` int(10) NOT NULL,
+					  `tournament` varchar(250) NOT NULL,
+					  `max_teams` int(250) NOT NULL,
+					  `start_date` date NOT NULL,
+					  `registration_date` date NOT NULL,
+					  `format` varchar(50) NOT NULL,
+					  `maps` varchar(1000) NOT NULL,
+					  `type` varchar(25) NOT NULL DEFAULT 'single',
+					  `status` int(1) NOT NULL DEFAULT '1',
+					  `first_place` int(10) NOT NULL,
+					  `second_place` int(10) NOT NULL,
+					  `game` varchar(100) NOT NULL,
+					  `rules` varchar(10000) NOT NULL,
+					  `public` int(1) NOT NULL DEFAULT '1',
+					  PRIMARY KEY (`id`)
+					);
+					CREATE TABLE IF NOT EXISTS `" . $this->prefix . "tournament_map_schedule` (
+					  `id` int(10) NOT NULL,
+					  `map` varchar(250) DEFAULT NULL,
+					  `round` int(10) DEFAULT NULL,
+					  `tournament_id` int(10) DEFAULT NULL,
+					  PRIMARY KEY (`id`)
+					);
+					CREATE TABLE IF NOT EXISTS `" . $this->prefix . "tournament_matches` (
+					  `id` int(10) NOT NULL,
+					  `tid` int(10) NOT NULL,
+					  `round` int(1) NOT NULL,
+					  `home_team` varchar(100) NOT NULL,
+					  `home_team_id` int(10) NOT NULL,
+					  `home_score` int(10) NOT NULL,
+					  `away_team` varchar(100) NOT NULL,
+					  `away_team_id` int(10) NOT NULL,
+					  `away_score` int(10) NOT NULL,
+					  `home_accept` int(1) NOT NULL,
+					  `away_accept` int(1) NOT NULL,
+					  `winner` int(10) NOT NULL,
+					  `loser` int(10) NOT NULL,
+					  `match_date` date NOT NULL,
+					  `match_time` varchar(100) NOT NULL DEFAULT '12:00',
+					  `match_zone` varchar(250) NOT NULL,
+					  `server_ip` varchar(250) NOT NULL,
+					  `server_password` varchar(25) NOT NULL,
+					  `stream_url` varchar(250) NOT NULL,
+					  `match_log` blob NOT NULL,
+					  `reporter` varchar(50) NOT NULL,
+					  `match_moderator` varchar(50) NOT NULL,
+					  `completed` int(1) NOT NULL,
+					  PRIMARY KEY (`id`)
+					);
+					ALTER TABLE `" . $this->prefix . "guilds`
+					AND `tournaments` VARCHAR(50);
+					ALTER TABLE `" . $this->prefix . "settings`
+					ADD `show_tournaments` INT(1) NOT NULL DEFAULT '1';
 					ALTER TABLE `" . $this->prefix . "settings` 
 					ADD `friends_email` INT(1) NOT NULL DEFAULT '1';
 					ALTER TABLE `" . $this->prefix . "settings`
