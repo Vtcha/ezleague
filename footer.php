@@ -105,6 +105,7 @@
 <!-- END CORE PLUGINS -->
 <script src="assets/global/scripts/metronic.js" type="text/javascript"></script>
 <script src="assets/global/scripts/ezleague.js" type="text/javascript"></script>
+<script src="assets/global/scripts/dfp.js" type="text/javascript"></script>
 <script src="assets/admin/layout/scripts/layout.js" type="text/javascript"></script>
 <script src="assets/admin/layout/scripts/quick-sidebar.js" type="text/javascript"></script>
 <script>
@@ -113,7 +114,8 @@ jQuery(document).ready(function() {
 	Layout.init(); // init current layout
 	QuickSidebar.init() // init quick sidebar
 });
-</script>
+	</script>
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <!-- END JAVASCRIPTS -->
 </body>
 <!-- END BODY -->

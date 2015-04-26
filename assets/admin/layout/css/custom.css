@@ -151,3 +151,18 @@ img.game-icon {
 #match-zone {
 	font-size:10px;
 }
+@media (min-width: 520px) {
+	.dfp-top-leaderboard, .dfp-bottom-leaderboard {
+		text-align: center;
+		display: block;
+	}
+	.dfp-bottom-leaderboard {
+		margin-top:10px;
+	}
+}
+
+@media (max-width: 519px) {
+	.dfp-top-leaderboard, .dfp-bottom-leaderboard {
+		display: none;
+	}
+}

@@ -7,10 +7,15 @@
 		<div class="page-content">
 			<div class="row">
 				<div class="col-md-12">
-					<!-- BEGIN PAGE TITLE & BREADCRUMB-->
-					<h3 class="page-title">
-					About <small>create, manage, game.</small>
-					</h3>
+					<div class="col-lg-4">
+						<h3 class="page-title">
+						About <small>create, manage, game.</small>
+						</h3>
+					</div>
+					<div class="col-lg-8">
+						<?php include( 'tpls/system/top-leaderboard.php' ); ?>
+					</div>
+					<div class="col-lg-12">
 					<ul class="page-breadcrumb breadcrumb">
 						<li>
 							<i class="fa fa-home"></i>
@@ -28,18 +33,15 @@
 			<!-- BEGIN PAGE CONTENT-->
 			<div class="row">
 				<div class="col-md-12 blog-page">
-					<div class="row">
 						<div class="col-md-9 col-sm-8 article-block">
 							<h1>About <?php echo $site_settings['name']; ?></h1>
-							<div class="row">
 								<div class="about-content">
 								<?php echo $site_settings['about']; ?>
 								</div>
-							</div>
+							<?php include( 'tpls/system/bottom-leaderboard.php' ); ?>
 						</div>
 						<!--end col-md-9-->
 						<?php include('sidebar.php'); ?>
-					</div>
 				</div>
 			</div>
 			<!-- END PAGE CONTENT-->

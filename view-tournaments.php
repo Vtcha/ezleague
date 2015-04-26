@@ -7,39 +7,44 @@
 	<div class="page-content">
 		<div class="row">
 			<div class="col-md-12">
-				<!-- BEGIN PAGE TITLE & BREADCRUMB-->
-				<h3 class="page-title">
-				Tournaments <small>register, compete, game.</small>
-				</h3>
-				<ul class="page-breadcrumb breadcrumb">
-					<li>
-						<i class="fa fa-home"></i>
-						<a href="index.php">Home</a>
-						<i class="fa fa-angle-right"></i>
-					</li>
-					<li>
-						<a href="#">Tournaments</a>
-					</li>
-				<?php if( isset($_GET['p'] ) ) { ?>
-					<?php if( $_GET['p'] == 'matchup' ) { ?>
+				<div class="col-lg-4">
+					<h3 class="page-title">
+					Tournaments <small>register, compete, game.</small>
+					</h3>
+				</div>
+				<div class="col-lg-8">
+					<?php include( 'tpls/system/top-leaderboard.php' ); ?>
+				</div>
+				<div class="col-lg-12">
+					<ul class="page-breadcrumb breadcrumb">
 						<li>
+							<i class="fa fa-home"></i>
+							<a href="index.php">Home</a>
 							<i class="fa fa-angle-right"></i>
-							<a href="#">View Matchup</a>
 						</li>
-					<?php } elseif( $_GET['p'] == 'view' ) { ?>
 						<li>
-							<i class="fa fa-angle-right"></i>
-							<a href="#">View Bracket</a>
+							<a href="#">Tournaments</a>
 						</li>
-					<?php } elseif( $_GET['p'] == 'rules' ) { ?>
-						<li>
-							<i class="fa fa-angle-right"></i>
-							<a href="#">View Rules</a>
-						</li>
+					<?php if( isset($_GET['p'] ) ) { ?>
+						<?php if( $_GET['p'] == 'matchup' ) { ?>
+							<li>
+								<i class="fa fa-angle-right"></i>
+								<a href="#">View Matchup</a>
+							</li>
+						<?php } elseif( $_GET['p'] == 'view' ) { ?>
+							<li>
+								<i class="fa fa-angle-right"></i>
+								<a href="#">View Bracket</a>
+							</li>
+						<?php } elseif( $_GET['p'] == 'rules' ) { ?>
+							<li>
+								<i class="fa fa-angle-right"></i>
+								<a href="#">View Rules</a>
+							</li>
+						<?php } ?>
 					<?php } ?>
-				<?php } ?>
-				</ul>
-				<!-- END PAGE TITLE & BREADCRUMB-->
+					</ul>
+				</div>
 			</div>
 		</div>
 		<!-- END PAGE HEADER-->
@@ -95,6 +100,7 @@
 							}
 						}
 					?>
+					<?php include( 'tpls/system/bottom-leaderboard.php' ); ?>
 				</div>
 			</div>
 		</div>
