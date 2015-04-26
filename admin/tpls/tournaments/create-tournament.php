@@ -22,12 +22,19 @@
                             <input class="form-control" id="tournament" placeholder="Tournament Name" />
                         </div>
                         <div class="form-group">
+                            <label>Public or Private</label>
+                            <select class="form-control" id="public">
+                                <option value="1" selected>Public</option>
+                                <option value="0">Private</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
                             <label>Max Teams</label>
                             <select class="form-control" id="max-teams">
-                                <option value="5000">Unlimited</option>
-                             <?php for( $i=2; $i <= 64; $i = $i + 2 ) { ?>
-                                <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
-                             <?php } ?>
+                                <option value="4">4</option>
+                                <option value="8">8</option>
+                                <option value="16">16</option>
+                                <option value="32">32</option>
                             </select>
                         </div>
                         <div class="form-group">

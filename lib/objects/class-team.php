@@ -58,6 +58,22 @@ class ezLeague_Team extends DB_Class {
 		return $team;
 		
 	}
+
+	/*
+	 * Get a teams name
+	 * 
+	 * @return array
+	 */
+	public function get_team_name($team_id) {
+		
+		$data = $this->fetch("SELECT guild, id FROM `" . $this->prefix . "guilds` WHERE id = '$team_id'");
+		$team = array(
+						'id'		=> $data['0']['id'],
+						'team'		=> $data['0']['guild'],
+					);
+		return $team;
+		
+	}
 	
 	/*
 	 * Get all team members
@@ -242,8 +258,8 @@ class ezLeague_Team extends DB_Class {
 	public function remove_league_member($league_id, $team_id, $user_id) {
 
 		$roster = $this->get_league_roster_ids( $league_id, $team_id );
-		if(($key = array_search($user_id, $roster)) !== false) {
-		    unset($roster[$key]);
+		if( ( $key = array_search( $user_id, $roster ) ) !== false ) {
+		    unset( $roster[$key] );
 		    $updated_roster = json_encode( $roster );
 		    $this->link->query("UPDATE `" . $this->prefix . "rosters` SET roster = '$updated_roster' WHERE league = '$league_id' AND team = '$team_id'");
 		    $this->success('Member has been removed from league roster');
@@ -299,7 +315,9 @@ class ezLeague_Team extends DB_Class {
 		return;
 		
 	}
-	
+
+/** LEAGUES START **/
+
 	/*
 	 * Get team leagues
 	 * 
@@ -364,6 +382,45 @@ class ezLeague_Team extends DB_Class {
 		return;
 
 	}
+
+	/*
+	 * Register team for tournament
+	 *
+	 * @return string
+	 */
+	public function register_tournament($team_id, $tournament_id) {
+		
+		$team_id 	= $this->sanitize( $team_id );
+		$tournament_id 	= $this->sanitize( $tournament_id );
+		$current_tournaments = $this->get_team_tournament_list( $team_id );
+		if( ! empty( $current_tournaments ) ) {
+			$current_tournaments = $current_tournaments . ',' . $tournament_id;
+		} else {
+			$current_tournaments = $tournament_id;
+		}
+		$this->link->query("UPDATE `" . $this->prefix . "guilds` SET tournaments = '$current_tournaments' WHERE id = '$team_id'");
+		$this->success('Team has been registered');
+		return;
+
+	}
+
+	/*
+	 * Get team tournament list
+	 *
+	 * @return string
+	 */
+	public function get_team_tournament_list($team_id) {
+
+		$team_id 	= $this->sanitize( $team_id );
+		$data = $this->fetch("SELECT tournaments FROM `" . $this->prefix . "guilds` WHERE id = '$team_id'");
+		if( $data['0']['tournaments'] != '' ) {
+			$current_tournaments = $data['0']['tournaments'];
+		} else {
+			$current_tournaments = '';
+		}
+		return $current_tournaments;
+
+	}
 	
 	/*
 	 * Get details of each participating league
@@ -403,6 +460,91 @@ class ezLeague_Team extends DB_Class {
 		return $data;
 		
 	}
+/** END LEAGUES **/
+
+/** TOURNAMENTS START **/
+
+	/*
+	 * Get team tournaments
+	 * 
+	 * @return array
+	 */
+	public function get_team_tournaments($team_id) {
+		
+		$team_id	= $this->sanitize( $team_id );
+		$team_tournaments = array();
+		$data = $this->fetch("SELECT tournaments FROM `" . $this->prefix . "guilds` WHERE id = '$team_id'");
+		if( $data != '' ) {
+			if( $data['0']['tournaments'] != '' ) {
+				$tournaments = $data['0']['tournaments'];
+				$tournaments = explode( ',', $tournaments );
+				foreach( $tournaments as $tournament ) {
+					$details = $this->get_tournament_details( $tournament );
+					array_push( $team_tournaments, $details );
+				}
+				return $team_tournaments;
+			} else {
+				return false;
+			}
+		}
+		
+	}
+
+	/*
+	 * Get details of each participating tournament
+	 * 
+	 * @return array
+	 */
+	public function get_tournament_details($tournament_id) {
+		
+		$details = array();
+		$data = $this->fetch("SELECT 
+									`" . $this->prefix . "tournaments`.id AS tid,
+									`" . $this->prefix . "tournaments`.tournament,
+									`" . $this->prefix . "tournaments`.max_teams,
+									`" . $this->prefix . "tournaments`.game AS tgame,
+									`" . $this->prefix . "tournaments`.format,
+									`" . $this->prefix . "tournaments`.status,
+									`" . $this->prefix . "games`.slug,
+									`" . $this->prefix . "games`.game AS ggame
+								FROM `" . $this->prefix . "tournaments`, `" . $this->prefix . "games`
+								WHERE `" . $this->prefix . "tournaments`.id = '$tournament_id'
+									AND `" . $this->prefix . "games`.slug = `" . $this->prefix . "tournaments`.game
+							");
+
+		$details['tournament_id']	= $data['0']['tid'];
+		$details['tournament']		= $data['0']['tournament'];
+		$details['teams']			= $data['0']['max_teams'];
+		$details['game']			= $data['0']['ggame'];
+		$details['format'] 			= $data['0']['format'];
+		$details['status']			= $data['0']['status'];
+		$details['game_slug']		= $data['0']['slug'];
+		return $details;
+		
+	}
+
+	/*
+	 * Get tournament matchups for a team
+	 *
+	 * @return array
+	 */
+	public function get_team_tournament_matches($tournament_id, $team_id) {
+
+		$data = $this->fetch("SELECT * FROM `" . $this->prefix . "tournament_matches` 
+								WHERE tid = '$tournament_id' 
+								AND (home_team_id = '$team_id' OR away_team_id = '$team_id') 
+								ORDER BY round
+							");
+		if( $data ) {
+			return $data;
+		} else {
+			return false;
+		}
+
+	}
+
+
+/** END TOURNAMENTS **/
 	
 	/*
 	 * Search for a team by name

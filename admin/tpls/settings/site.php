@@ -10,7 +10,7 @@
                 <i class="fa fa-gear"></i> Modify Basic Site Settings
             </div>
             <div class="panel-body">
-                <ul class="nav nav-pills">
+                <ul class="nav nav-pills site-settings-pill">
                     <li class="active">
                         <a data-toggle="tab" href="#site-name">Name</a>
                     </li>
@@ -40,6 +40,9 @@
                     </li>
                     <li class="">
                         <a data-toggle="tab" href="#site-friends-email">Friends View Email</a>
+                    </li>
+                    <li class="">
+                        <a data-toggle="tab" href="#site-tournaments">Tournaments</a>
                     </li>
                 </ul>
                 
@@ -223,6 +226,25 @@
                               <select id="friends-email" class="form-control">
                                 <option value="1" <?php echo ( $site_settings['friends_email'] == 1 ? 'selected' : '' ); ?>>Enabled</option>
                                 <option value="0" <?php echo ( $site_settings['friends_email'] == 0 ? 'selected' : '' ); ?>>Disabled</option>
+                              </select>
+                            </div>
+                            <div class="form-group">
+                              <button class="btn btn-success" type="submit">Save</button>
+                            </div>
+                            <div class="success">
+                              <span class="success_text"></span>
+                            </div>
+                          </form>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="site-tournaments">
+                        <h4>Tournaments <small>Toggle displaying the <em>Tournaments</em> link in the front-end navigation</small></h4>
+                        <div class="col-lg-5">
+                          <form method="POST" id="siteShowTournaments">
+                            <div class="form-group">
+                              <select id="show-tournaments" class="form-control">
+                                <option value="1" <?php echo ( $site_settings['show_tournaments'] == 1 ? 'selected' : '' ); ?>>Enabled</option>
+                                <option value="0" <?php echo ( $site_settings['show_tournaments'] == 0 ? 'selected' : '' ); ?>>Disabled</option>
                               </select>
                             </div>
                             <div class="form-group">

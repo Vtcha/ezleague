@@ -391,6 +391,32 @@ class ezLeague_User extends DB_Class {
 		}
 	
 	}
+
+	public function get_team_name($team_id) {
+
+		$team_id 	= $this->sanitize( $team_id );
+		$data = $this->fetch("SELECT guild FROM `" . $this->prefix . "guilds` WHERE id = '$team_id'");
+		$team_name = '';
+		if( $data ) {
+			$team_name = $data['0']['guild'];
+		}
+		return $team_name;
+
+	}
+
+	public function get_team_admin_email($team_id) {
+
+		$team_id 	= $this->sanitize( $team_id );
+		$admin = $this->get_team_admin( $team_id );
+		$data = $this->fetch("SELECT email FROM `" . $this->prefix . "users` WHERE username = '$admin'");
+		if( $data ) {
+			$admin_email = $data['0']['email'];
+			return $admin_email;
+		} else {
+			return false;
+		}
+
+	}
 	
 	/*
 	 * Send user a team invite
@@ -399,16 +425,83 @@ class ezLeague_User extends DB_Class {
 	 */
 	public function send_team_invite($team_id, $user_id) {
 	
-		$invites = $this->get_team_invites_id($user_id);
+		$invites = $this->get_team_invites_id( $user_id );
+		$user_profile = $this->get_user_profile( $user_id );
+		$user_email = $user_profile['email'];
+		$user_username = $user_profile['username'];
+		$team = $this->get_team_name( $team_id );
+		$team_admin_email = $this->get_team_admin_email( $team_id );
+
+
 		if( $invites == '' ) {
 			$invites = $team_id;
 		} else {
 			$invites = $team_id . ',' . $invites;
 		}
+		$this->send_team_invite_message( $user_email, 'TeamInvites@ezleague.info', $team, $team_id );
+
 		$this->link->query("UPDATE `" . $this->prefix . "users` SET invites = '$invites' WHERE id = '$user_id'");
-		$this->success('Invite has been sent');
 		return;
 		
+	}
+
+	/*
+	 * Trigger message send
+	 *
+	 * @return string
+	 */
+	public function send_team_invite_message( $to, $from, $team, $team_id ) {
+
+		$data = $this->fetch("SELECT mandrill_username, mandrill_password, site_name FROM `" . $this->prefix . "settings` WHERE id = '1'");
+
+		$message = '<html><body>';
+		$message .= '<h3>Congratulations! The following team has sent you an invitation to join them</h3>';
+		$message .= '<table rules="all" style="border-color: #666;" cellpadding="10">';
+		$message .= "<tr><td><strong>Team</strong> </td><td> <a href='" . $this->site_url . "/view-team.php?id=" . $team_id  . "'>" . $team . "</a> - '" . $this->site_url . "/view-team.php?id=" . $team_id  . "'</td></tr>";
+		$message .= "<tr><td><strong>Your Team Invites</strong> </td><td> <a href='" . $this->site_url . "/settings-profile.php'>View Team Invites</a> - '" . $this->site_url . "/settings-profile.php'</td></tr>";
+		$message .= "<tr><td><strong>Message:</strong> </td><td>You have been sent a <em>Team Invite</em> from " . $team . ". Go to your <em>My Profile > Team & Invites</em> to join this team.</td></tr>";
+		$message .= "</table>";
+
+		if( $data ) {
+			require_once "Mail.php";
+			$mandrill_username 	= $data['0']['mandrill_username'];
+			$mandrill_password 	= $data['0']['mandrill_password'];
+			$site_name 			= $data['0']['site_name'];
+
+			$message .= "<small>You are being sent this email because this email has a registered account on the <em>" . $site_name . "</em> web site. If you would like your account to be removed, please contact the admins from " . $this->site_url . "/contact-us.php</small>";
+			$message .= "</body></html>";
+			$subject = $site_name . ' - Team Invite from ' . $team;	   
+			if( class_exists( 'Mail' ) && ( $mandrill_username != '' && $mandrill_password != '' ) ) { 
+				$host = "smtp.mandrillapp.com"; 
+				$username = $mandrill_username; 
+				$password = $mandrill_password;
+				$headers = array ('From' => $from,   'To' => $to, 'MIME-Version' => '1.0', 'Content-Type' => 'text/html; charset=ISO-8859-1', 'Subject' => $subject); 
+				$smtp = Mail::factory(
+								'smtp',   
+								array (
+									'host' => $host,     
+									'auth' => true,
+									'port' => 587,     
+									'username' => $username,     
+									'password' => $password
+									)
+								);  
+				$mail = $smtp->send($to, $headers, $message);  
+				if (PEAR::isError($mail)) {   
+					$this->error($mail->getMessage());  
+				} else {   
+					$this->success('A Team Invite notification and email has been sent to the user');  
+				}
+			} else {
+				if( mail($to, $subject, $message, $headers) ) {
+					$this->success('A Team Invite notification and email has been sent to the user');
+				} else {
+					$this->error('There was a problem sending your team invite message, please try again');
+				}
+			}
+		}
+		return;
+
 	}
 	
 	/*

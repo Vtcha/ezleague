@@ -7,7 +7,7 @@
 <meta content="" name="description"/>
 <meta content="" name="author"/>
 <!-- BEGIN GLOBAL MANDATORY STYLES -->
-<link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css"/>
+<!-- <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css"/> -->
 <link href="assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
 <link href="assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css"/>
 <link href="assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
@@ -22,10 +22,12 @@
 <!-- BEGIN THEME STYLES -->
 <link href="assets/global/css/components.css?v2" rel="stylesheet" type="text/css"/>
 <link href="assets/global/css/plugins.css" rel="stylesheet" type="text/css"/>
+<link href="assets/global/css/ezleague-tournament.css" rel="stylesheet" type="text/css"/>
 <link href="assets/admin/layout/css/layout.css" rel="stylesheet" type="text/css"/>
 <link id="default" href="assets/admin/layout/css/themes/default.css" rel="stylesheet" type="text/css"/>
 <link href="assets/admin/layout/css/custom.css?v4" rel="stylesheet" type="text/css"/>
-<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/themes/smoothness/jquery-ui.css" />
+<!-- <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/themes/smoothness/jquery-ui.css" /> -->
+<link rel="stylesheet" href="assets/global/plugins/jquery-ui/jquery-ui-1.10.3.custom.min.css" />
 <!-- END THEME STYLES -->
 <?php if( $site_settings['fav_icon'] != '' ) { ?>
 <link rel="shortcut icon" href="logos/<?php echo $site_settings['fav_icon']; ?> "/>

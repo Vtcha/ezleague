@@ -19,21 +19,26 @@ $position = $page * 3;
 		<div class="page-content">
 			<div class="row">
 				<div class="col-md-12">
-					<!-- BEGIN PAGE TITLE & BREADCRUMB-->
-					<h3 class="page-title">
-					Welcome <small>create, manage, game.</small>
-					</h3>
-					<ul class="page-breadcrumb breadcrumb">
-						<li>
-							<i class="fa fa-home"></i>
-							<a href="index.php">Home</a>
-							<i class="fa fa-angle-right"></i>
-						</li>
-						<li>
-							<a href="#">News</a>
-						</li>
-					</ul>
-					<!-- END PAGE TITLE & BREADCRUMB-->
+					<div class="col-lg-4">
+						<h3 class="page-title">
+						Welcome <small>create, manage, game.</small>
+						</h3>
+					</div>
+					<div class="col-lg-8">
+						<?php include( 'tpls/system/top-leaderboard.php' ); ?>
+					</div>
+					<div class="col-lg-12">
+						<ul class="page-breadcrumb breadcrumb">
+							<li>
+								<i class="fa fa-home"></i>
+								<a href="index.php">Home</a>
+								<i class="fa fa-angle-right"></i>
+							</li>
+							<li>
+								<a href="#">News</a>
+							</li>
+						</ul>
+					</div>
 				</div>
 			</div>
 			<!-- END PAGE HEADER-->
@@ -113,7 +118,7 @@ $position = $page * 3;
 									echo $pagination;
 							?>
 							</div>
-							
+							<?php include( 'tpls/system/bottom-leaderboard.php' ); ?>
 						</div>
 						<!--end col-md-9-->
 						<?php include('sidebar.php'); ?>

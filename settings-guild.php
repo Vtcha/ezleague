@@ -8,19 +8,26 @@
 		<div class="page-content">
 			<div class="row">
 				<div class="col-md-12">
-					<h3 class="page-title">
-					Team Settings <small>manage your team.</small>
-					</h3>
-					<ul class="page-breadcrumb breadcrumb">
-						<li>
-							<i class="fa fa-home"></i>
-							<a href="index.php">Home</a>
-							<i class="fa fa-angle-right"></i>
-						</li>
-						<li>
-							<a href="#">Team Settings</a>
-						</li>
-					</ul>
+					<div class="col-lg-4">
+						<h3 class="page-title">
+						Team Settings <small>manage your team.</small>
+						</h3>
+					</div>
+					<div class="col-lg-8">
+						<?php include( 'tpls/system/top-leaderboard.php' ); ?>
+					</div>
+					<div class="col-lg-12">
+						<ul class="page-breadcrumb breadcrumb">
+							<li>
+								<i class="fa fa-home"></i>
+								<a href="index.php">Home</a>
+								<i class="fa fa-angle-right"></i>
+							</li>
+							<li>
+								<a href="#">Team Settings</a>
+							</li>
+						</ul>
+					</div>
 				</div>
 			</div>
 			<!-- BEGIN PAGE CONTENT-->
@@ -31,18 +38,25 @@
 					if( isset( $_GET['page'] ) && isset( $_GET['view'] ) ) {
 						$page = trim( $_GET['page'] );
 						$view = trim( $_GET['view'] );
-						if( isset( $_GET['id'] ) ) {
+						if( isset( $_GET['id'] ) && $page == 'leagues' ) {
 							$league_id = trim( $_GET['id'] );
 							$league_details = $ez_team->get_league_details( $league_id );
+						} else if( isset( $_GET['id'] ) && $page == 'tournaments' ) {
+							$tournament_id = trim( $_GET['id'] );
+							$tournament_details = $ez_team->get_tournament_details( $tournament_id );
 						}
 						
-						if( isset( $_GET['mid'] ) ) {
+						if( isset( $_GET['mid'] ) && $page == 'match' ) {
 							$match_id = trim( $_GET['mid'] );
 							$match_details = $ez_league->get_match_details( $match_id );
 							$league_id = $match_details['league_id'];
+						} else if( isset( $_GET['mid'] ) && $page == 'tournament_match' ) {
+							$match_id = trim( $_GET['mid'] );
+							$match_details = $ez_tournament->get_tournament_match( $match_id );
+							$tournament_id = $match_details['tid'];
 						}
 
-						include('tpls/settings/view-league.php');
+						include('tpls/settings/view-sidebar.php');
 				?>
 				<div class="col-md-9">
 				<?php 
@@ -53,14 +67,23 @@
 							case 'match':
 								include('tpls/settings/leagues/view-match.php');
 								break;
+							case 'tournaments':
+								include('tpls/settings/tournaments/view-' . $view . '.php');
+								break;
+							case 'tournament_match':
+								include('tpls/settings/tournaments/view-match.php');
+								break;
 							default:
 								break;
 						}
+				
+					include( 'tpls/system/bottom-leaderboard.php' ); 
 				?>
 				</div>
 				<?php 
 					} else {
 						include('tpls/settings/view-guild.php');
+						include( 'tpls/system/bottom-leaderboard.php' );
 					} 
 				} else {
 					echo '<h3>You have not joined a team</h3>';
@@ -86,6 +109,7 @@
 </div>
 <script src="assets/global/scripts/teams.js"></script>
 <script src="assets/global/scripts/leagues.js"></script>
+<script src="assets/global/scripts/tournaments.js"></script>
 <script src="assets/global/scripts/normal.js"></script>
 <script>
 $(function() {

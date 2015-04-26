@@ -58,6 +58,7 @@ $ez_tournament  = new ezAdmin_Tournament();
     <link href="css/sb-admin.css" rel="stylesheet">
     
     <link href="css/ezleague.css?v1" rel="stylesheet">
+    <link href="css/ezleague-tournament.css?v1" rel="stylesheet">
     <link href="css/redmond/jquery-ui-1.10.4.custom.min.css" rel="stylesheet">
 
 </head>

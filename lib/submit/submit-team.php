@@ -62,6 +62,12 @@ $ez_team = new ezLeague_Team();
 		 		$league_id  = $_POST['lid'];
 		 		 $ez_team->register_league($team_id, $league_id);
 		 		break;
+
+		 	case 'register-tournament':
+		 		$team_id 		= $_POST['tid'];
+		 		$tournament_id  = $_POST['tournament_id'];
+		 		 $ez_team->register_tournament($team_id, $tournament_id);
+		 		break;
 		 	
 		 	default:
 		 		break;

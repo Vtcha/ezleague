@@ -99,6 +99,18 @@ class ezAdmin_Team extends DB_Class {
 		}
 		
 	}
+
+	public function get_team_name($team_id) {
+		
+		$team_id	= $this->sanitize( $team_id );
+		$data = $this->fetch("SELECT guild FROM `" . $this->prefix . "guilds` WHERE id = '$team_id'");
+		if( $data ) {
+			return $data[0]['guild'];
+		} else {
+			return;
+		}
+		
+	}
 	
 	public function get_team_matches($team_id) {
 		

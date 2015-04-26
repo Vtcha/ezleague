@@ -103,7 +103,7 @@
                         <a href="upgrade.php"><i class="fa fa-database fa-fw"></i> Run Database Upgrade</a>
                     </li>
                     <li>
-                        <a href="../index.php"><i class="fa fa-globe fa-fw"></i> View Site</a>
+                        <a href="../index.php" target="_blank"><i class="fa fa-globe fa-fw"></i> View Site</a>
                     </li>
                 </ul>
             </div>

@@ -121,3 +121,12 @@
  .ui-dialog {
  	z-index:999999;
  }
+
+ .match-log hr {
+ 	margin: 10px 0px 10px 0px;
+ 	border-color: #CCCCCC;
+ 	border-style: dotted;
+ }
+ .site-settings-pill {
+ 	font-size:12px;
+ }

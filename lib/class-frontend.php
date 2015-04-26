@@ -22,14 +22,18 @@ class ezLeague_Frontend extends DB_Class {
 	public function get_game( $slug ) {
 	
 		$data = $this->fetch("SELECT * FROM `" . $this->prefix . "games` WHERE slug = '$slug'");
-		$game = array(
-						'id'	=> $data['0']['id'],
-						'game'	=> $data['0']['game'],
-						'short'	=> $data['0']['short_name'],
-						'slug'	=> $data['0']['slug'],
-						'logo'	=> $data['0']['logo']
-					 );
-		return $game;
+		if( $data ) {
+			$game = array(
+							'id'	=> $data['0']['id'],
+							'game'	=> $data['0']['game'],
+							'short'	=> $data['0']['short_name'],
+							'slug'	=> $data['0']['slug'],
+							'logo'	=> $data['0']['logo']
+						 );
+			return $game;
+		} else {
+			return false;
+		}
 	}
 	
 	/*
@@ -53,7 +57,7 @@ class ezLeague_Frontend extends DB_Class {
 		
 		$data = $this->fetch("SELECT * FROM `" . $this->prefix . "leagues` WHERE id = '$league_id'");
 		$league = array(
-							'id'	=> $data['0']['id'],
+							'id'		=> $data['0']['id'],
 							'league'	=> $data['0']['league'],
 							'game'		=> $data['0']['game'],
 							'teams'		=> $data['0']['teams'],
@@ -314,6 +318,7 @@ class ezLeague_Frontend extends DB_Class {
 			$settings['timezone']		= $data['0']['site_timezone'];
 			$settings['forum']			= $data['0']['forum_link'];
 			$settings['friends_email']	= $data['0']['friends_email'];
+			$settings['tournaments'] 	= $data['0']['show_tournaments'];
 			return $settings;
 		} else {
 			return;

@@ -253,6 +253,8 @@ class ezAdmin_Settings extends DB_Class {
 			case 'friends-email':
 				$setting = 'friends_email';
 				break;
+			case 'show-tournaments':
+				$setting = 'show_tournaments';
 			default:
 				break;
 		}
@@ -283,7 +285,8 @@ class ezAdmin_Settings extends DB_Class {
 								'mandrill_password' => $data['0']['mandrill_password'],
 								'timezone'			=> $data['0']['site_timezone'],
 								'forum_url'			=> $data['0']['forum_link'],
-								'friends_email'		=> $data['0']['friends_email']
+								'friends_email'		=> $data['0']['friends_email'],
+								'show_tournaments'	=> $data['0']['show_tournaments']
 							);
 			return $settings;
 		} else {

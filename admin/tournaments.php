@@ -8,10 +8,6 @@
         		$page = trim( $_GET['page'] );
         		
         		switch( $page ) {
-        			case 'view':
-        				include('tpls/tournaments/view-tournament.php');
-        				break;
-
         			case 'maps':
         				include('tpls/tournaments/view-maps.php');
         				break;
@@ -60,7 +56,7 @@
     <script src="js/sb-admin.js"></script>
     <script src="js/ezleague/tournament.js"></script>
     <script src="js/ezleague/teams.js"></script>
-    <script src="js/ckeditor/ckeditor.js"></script>
+    <script src="//cdn.ckeditor.com/4.4.7/standard/ckeditor.js"></script>
 	<script>
 	CKEDITOR.replace( 'body', {
 		toolbar: [

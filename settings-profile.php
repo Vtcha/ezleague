@@ -7,21 +7,26 @@
 		<div class="page-content">
 			<div class="row">
 				<div class="col-md-12">
-					<!-- BEGIN PAGE TITLE & BREADCRUMB-->
-					<h3 class="page-title">
-					My Settings <small>profile, password, teams.</small>
-					</h3>
-					<ul class="page-breadcrumb breadcrumb">
-						<li>
-							<i class="fa fa-home"></i>
-							<a href="index.php">Home</a>
-							<i class="fa fa-angle-right"></i>
-						</li>
-						<li>
-							<a href="#">My Profile</a>
-						</li>
-					</ul>
-					<!-- END PAGE TITLE & BREADCRUMB-->
+					<div class="col-lg-4">
+						<h3 class="page-title">
+						My Settings <small>profile, password, teams.</small>
+						</h3>
+					</div>
+					<div class="col-lg-8">
+						<?php include( 'tpls/system/top-leaderboard.php' ); ?>
+					</div>
+					<div class="col-lg-12">
+						<ul class="page-breadcrumb breadcrumb">
+							<li>
+								<i class="fa fa-home"></i>
+								<a href="index.php">Home</a>
+								<i class="fa fa-angle-right"></i>
+							</li>
+							<li>
+								<a href="#">My Profile</a>
+							</li>
+						</ul>
+					</div>
 				</div>
 			</div>
 			<!-- END PAGE HEADER-->
@@ -81,6 +86,7 @@
 						<?php } else { ?>
 						<h3>You are not logged in.</h3>
 						<?php } ?>
+						<?php include( 'tpls/system/bottom-leaderboard.php' ); ?>
 						</div>
 					</div>
 				</div>

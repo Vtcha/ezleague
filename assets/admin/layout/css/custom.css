@@ -73,6 +73,10 @@ div.error {
 	text-transform:uppercase;
  	font-size:13px;
  }
+ .tournament-information {
+	text-transform:uppercase;
+ 	font-size:11px;
+ }
  .bolder {
 	font-weight:700;
  }
@@ -150,4 +154,25 @@ img.game-icon {
 }
 #match-zone {
 	font-size:10px;
+}
+@media (min-width: 520px) {
+	.dfp-top-leaderboard, .dfp-bottom-leaderboard {
+		text-align: center;
+		display: block;
+	}
+	.dfp-bottom-leaderboard {
+		margin-top:10px;
+	}
+}
+
+@media (max-width: 519px) {
+	.dfp-top-leaderboard, .dfp-bottom-leaderboard {
+		display: none;
+	}
+}
+span.no-leagues {
+	display: block;
+	text-align: center;
+	color: #FFFFFF;
+	font-weight: 700;
 }

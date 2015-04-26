@@ -441,6 +441,29 @@ $('#siteFriendsEmail').submit(function(e) {
 	   		setTimeout(function(){location.reload()},3000);
   });
 });
+
+/**
+ * Update site show tournaments
+ */
+$('#siteShowTournaments').submit(function(e) {
+	var setting			= $("#show-tournaments").val();
+		
+	 e.preventDefault();
+
+ $.ajax({
+     type: "POST",
+     url: "lib/submit/submit-settings.php",
+     async:true,
+     crossbrowser:true,
+     data: { form: 'update-settings', setting: 'show-tournaments', value: '' + setting + '' }
+   }).success(function( msg ) {
+	   		$('.success').css("display", "");
+	   		$(".success").fadeIn(1000, "linear");
+	   		$('.success_text').fadeIn("slow");
+	   		$('.success_text').html(msg);
+	   		setTimeout(function(){location.reload()},3000);
+  });
+});
  
 $('#updateEmail').submit(function(e) {
 	var user_id		= $("#user-id").val();
