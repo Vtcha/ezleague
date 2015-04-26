@@ -34,7 +34,13 @@
                         <i class="fa fa-file-o"></i> Details for <em><?php echo $league['league']; ?> Season <?php echo $season['season']; ?></em>
                         <div class="pull-right">
                         	<a href="leagues.php?page=edit&id=<?php echo $league['id']; ?>" class="btn btn-primary btn-xs">Edit League</a>
+                    <?php if( ! empty( $season ) ) { ?>  
                             <button class="btn btn-warning btn-xs" onclick="getSeason('<?php echo $league_id; ?>', '<?php echo $season['id']; ?>')" data-toggle="modal" data-target="#editSeasonModal">Edit Season</button><br/>
+                    <?php } else { ?>
+                            <a class="btn btn-info btn-xs" href="leagues.php?page=create_season&id=<?php echo $league_id; ?>">
+                              Create New Season
+                            </a>
+                    <?php } ?>
                         </div>
                     </div>
                     <div class="panel-body">
@@ -52,6 +58,7 @@
                                     <td><strong>Game</strong></td>
                                     <td><?php echo $league['game']; ?></td>
                                 </tr>
+                      <?php if( ! empty( $season ) ) { ?>
                                 <tr>
                                     <td><strong>Season Start Date</strong></td>
                                     <td><?php echo date( 'F d, Y', strtotime( $season['start'] ) ); ?></td>
@@ -64,6 +71,12 @@
                                     <td><strong>Registration End Date</strong></td>
                                     <td><?php echo date( 'F d, Y', strtotime( $season['register'] ) ); ?></td>
                                 </tr>
+                      <?php } else { ?>
+                                <tr>
+                                    <td><strong>Season</strong></td>
+                                    <td><span class="text-warning">No Season found, <a href="leagues.php">go back</a> and create one</span></td>
+                                </tr>
+                      <?php } ?>
                                 <tr>
                                     <td><strong>Rosters</strong></td>
                                     <td>
