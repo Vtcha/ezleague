@@ -13,7 +13,8 @@ $ez_team = new ezAdmin_Team();
 //get an individual user
 if(isset($_POST['id'])) {
 	$team_id = $_POST['id'];
-	 $team = $ez_team->get_team( $team_id );
+	 $team 		= $ez_team->get_team( $team_id );
+	 $roster 	= $ez_team->get_team_roster( $team_id );
 ?>
 
 <div class="modal-dialog">
@@ -45,9 +46,27 @@ if(isset($_POST['id'])) {
               </div>
               <div style="height: auto;" id="collapseOne" class="panel-collapse">
                 <div class="panel-body">
-					<strong>Leader</strong> <?php echo $team['leader']; ?><br/>
-					<strong>Co-Leader</strong> <?php echo $team['coleader']; ?><br/>
-					<strong>Team Admin</strong> <?php echo $team['admin']; ?>
+					<strong>Leader</strong> 
+						<select name="team_leader" id="team_leader" onchange="setTeamLeader('<?php echo $team_id; ?>', this.value)" class="form-control">
+						    <option></option>
+						<?php foreach( $roster as $member ) { ?>
+						    <option <?php echo ( $team['leader'] == $member['username'] ? 'selected' : '' ); ?> value="<?php echo $member['username']; ?>"><?php echo $member['username']; ?></option>
+						<?php } ?>
+						</select>
+					<strong>Co-Leader</strong>
+						<select name="team_coleader" id="team_coleader" onchange="setTeamCoLeader('<?php echo $team_id; ?>', this.value)" class="form-control">
+						    <option></option>
+						<?php foreach( $roster as $member ) { ?>
+						    <option <?php echo ( $team['coleader'] == $member['username'] ? 'selected' : '' ); ?> value="<?php echo $member['username']; ?>"><?php echo $member['username']; ?></option>
+						<?php } ?>
+						</select>
+					<strong>Team Admin</strong>
+						<select name="team_admin" id="team_admin" onchange="setTeamAdmin('<?php echo $team_id; ?>', this.value)" class="form-control">
+						    <option></option>
+						<?php foreach( $roster as $member ) { ?>
+						    <option <?php echo ( $team['admin'] == $member['username'] ? 'selected' : '' ); ?> value="<?php echo $member['username']; ?>"><?php echo $member['username']; ?></option>
+						<?php } ?>
+						</select>
 					<div class="success">
 					  <span class="success_text"></span>
 					 </div>
@@ -110,7 +129,6 @@ if(isset($_POST['id'])) {
 	                            </tr>
 	                        </thead>
 	                        <tbody>
-	              <?php $roster = $ez_team->get_team_roster( $team_id ); ?>
 	              <?php foreach( $roster as $member ) { ?>
 	                            <tr>
 	                                <td><?php echo $member['username']; ?></td>

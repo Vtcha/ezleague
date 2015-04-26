@@ -217,6 +217,36 @@ class ezAdmin_Team extends DB_Class {
 		return $data;
 		
 	}
+
+	public function set_team_leader($team_id, $username) {
+
+		$team_id 	= $this->sanitize( $team_id );
+		$username 	= $this->sanitize( $username );
+		$this->link->query("UPDATE `" . $this->prefix . "guilds` SET gm = '$username' WHERE id = '$team_id'");
+		$this->success( 'Team Leader has been set' );
+		return;
+
+	}
+
+	public function set_team_coleader($team_id, $username) {
+
+		$team_id 	= $this->sanitize( $team_id );
+		$username 	= $this->sanitize( $username );
+		$this->link->query("UPDATE `" . $this->prefix . "guilds` SET agm = '$username' WHERE id = '$team_id'");
+		$this->success( 'Team Co-Leader has been set' );
+		return;
+		
+	}
+
+	public function set_team_admin($team_id, $username) {
+
+		$team_id 	= $this->sanitize( $team_id );
+		$username 	= $this->sanitize( $username );
+		$this->link->query("UPDATE `" . $this->prefix . "guilds` SET admin = '$username' WHERE id = '$team_id'");
+		$this->success( 'Team Admin has been set' );
+		return;
+		
+	}
 				
 }
 
