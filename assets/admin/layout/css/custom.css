@@ -166,3 +166,9 @@ img.game-icon {
 		display: none;
 	}
 }
+span.no-leagues {
+	display: block;
+	text-align: center;
+	color: #FFFFFF;
+	font-weight: 700;
+}

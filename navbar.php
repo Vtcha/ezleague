@@ -40,7 +40,7 @@
 						</li>
 					<?php } ?>
 					<?php } else { ?>
-						<li>No Leagues Found</li>
+						<li><span class="no-leagues">No Leagues Found</span></li>
 					<?php } ?>
 					</ul>
 				</li>
