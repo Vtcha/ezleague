@@ -8,19 +8,26 @@
 		<div class="page-content">
 			<div class="row">
 				<div class="col-md-12">
-					<h3 class="page-title">
-					Team Settings <small>manage your team.</small>
-					</h3>
-					<ul class="page-breadcrumb breadcrumb">
-						<li>
-							<i class="fa fa-home"></i>
-							<a href="index.php">Home</a>
-							<i class="fa fa-angle-right"></i>
-						</li>
-						<li>
-							<a href="#">Team Settings</a>
-						</li>
-					</ul>
+					<div class="col-lg-4">
+						<h3 class="page-title">
+						Team Settings <small>manage your team.</small>
+						</h3>
+					</div>
+					<div class="col-lg-8">
+						<?php include( 'tpls/system/top-leaderboard.php' ); ?>
+					</div>
+					<div class="col-lg-12">
+						<ul class="page-breadcrumb breadcrumb">
+							<li>
+								<i class="fa fa-home"></i>
+								<a href="index.php">Home</a>
+								<i class="fa fa-angle-right"></i>
+							</li>
+							<li>
+								<a href="#">Team Settings</a>
+							</li>
+						</ul>
+					</div>
 				</div>
 			</div>
 			<!-- BEGIN PAGE CONTENT-->
@@ -69,11 +76,14 @@
 							default:
 								break;
 						}
+				
+					include( 'tpls/system/bottom-leaderboard.php' ); 
 				?>
 				</div>
 				<?php 
 					} else {
 						include('tpls/settings/view-guild.php');
+						include( 'tpls/system/bottom-leaderboard.php' );
 					} 
 				} else {
 					echo '<h3>You have not joined a team</h3>';
