@@ -10,10 +10,10 @@ if( isset( $_GET['id'] ) ) {
 		<?php include( 'tpls/tournaments/tournaments-sub-navigation.php' ); ?>
 		<div class="row">
 			<?php if( $tournament ) { ?>
-			<div class="col-md-4">
+			<div class="col-md-3">
 				<div class="news-blocks">
 					<h3 class="title"><?php echo $tournament['tournament']; ?></h3>
-					<table class="table league-information">
+					<table class="table tournament-information">
 					<?php 
 						$total_registered = $ez_tournament->get_total_teams( $tournament['id'] );
 						$game 	= $ez_frontend->get_game( $tournament['game'] );
@@ -52,7 +52,7 @@ if( isset( $_GET['id'] ) ) {
 					<h3 class="title"><?php echo $tournament['tournament']; ?> Registered Teams</h3>
 					<?php $tournament_teams = $ez_tournament->get_tournament_teams( $tournament_id ); ?>
 					<?php if( $tournament_teams ) { ?>
-						<table class="table league-information">
+						<table class="table tournament-information">
 							<tr>
 								<th>Team</th>
 								<th></th>
@@ -71,7 +71,7 @@ if( isset( $_GET['id'] ) ) {
 					<?php } ?>
 				</div>
 			</div>
-			<div class="col-md-8">
+			<div class="col-md-9">
 				<div class="news-blocks">
 					<h3 class="title">Tournament Bracket</h3>
 					<?php

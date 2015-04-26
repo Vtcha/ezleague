@@ -83,7 +83,7 @@
 			<?php include( '32/round-5.php' ); ?>
 		</ul>
 		<ul class="round round-6">
-		<?php if( $round4 && $round4[0]['winner'] != 0 ) { ?>
+		<?php if( $round5 && $round5[0]['winner'] != 0 ) { ?>
 			<?php $champion = $ez_tournament->get_tournament_champion( $tournament_id ); ?>
 			<li class="champion-spacer">&nbsp;</li>
 			<li class="game game-top champion-team"><?php echo $champion['guild']; ?></li>

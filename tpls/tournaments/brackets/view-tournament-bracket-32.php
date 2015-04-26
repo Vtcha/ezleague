@@ -1,111 +1,29 @@
 <main id="tournament">
 	<ul class="round round-1">
-		<li class="spacer">&nbsp;</li>
-		<!-- wrap score inside span element -->
-		<li class="game game-top winner"></li>
-		<li class="game game-spacer">&nbsp;</li>
-		<li class="game game-bottom "></li>
-
-		<li class="spacer">&nbsp;</li>
-		
-		<li class="game game-top winner"></li>
-		<li class="game game-spacer">&nbsp;</li>
-		<li class="game game-bottom "></li>
-
-		<li class="spacer">&nbsp;</li>
-		
-		<li class="game game-top "></li>
-		<li class="game game-spacer">&nbsp;</li>
-		<li class="game game-bottom winner"></li>
-
-		<li class="spacer">&nbsp;</li>
-		
-		<li class="game game-top winner"></li>
-		<li class="game game-spacer">&nbsp;</li>
-		<li class="game game-bottom "></li>
-
-		<li class="spacer">&nbsp;</li>
-		
-		<li class="game game-top winner"></li>
-		<li class="game game-spacer">&nbsp;</li>
-		<li class="game game-bottom "></li>
-
-		<li class="spacer">&nbsp;</li>
-		
-		<li class="game game-top winner"></li>
-		<li class="game game-spacer">&nbsp;</li>
-		<li class="game game-bottom "></li>
-
-		<li class="spacer">&nbsp;</li>
-		
-		<li class="game game-top winner"></li>
-		<li class="game game-spacer">&nbsp;</li>
-		<li class="game game-bottom "></li>
-
-		<li class="spacer">&nbsp;</li>
-		
-		<li class="game game-top winner"></li>
-		<li class="game game-spacer">&nbsp;</li>
-		<li class="game game-bottom "></li>
-
-		<li class="spacer">&nbsp;</li>
+		<?php include( '32/round-1.php' ); ?>
 	</ul>
 	<ul class="round round-2">
-		<li class="spacer">&nbsp;</li>
-		
-		<li class="game game-top winner"></li>
-		<li class="game game-spacer">&nbsp;</li>
-		<li class="game game-bottom "></li>
-
-		<li class="spacer">&nbsp;</li>
-		
-		<li class="game game-top winner"></li>
-		<li class="game game-spacer">&nbsp;</li>
-		<li class="game game-bottom "></li>
-
-		<li class="spacer">&nbsp;</li>
-		
-		<li class="game game-top "></li>
-		<li class="game game-spacer">&nbsp;</li>
-		<li class="game game-bottom winner"></li>
-
-		<li class="spacer">&nbsp;</li>
-		
-		<li class="game game-top "></li>
-		<li class="game game-spacer">&nbsp;</li>
-		<li class="game game-bottom winner"></li>
-
-		<li class="spacer">&nbsp;</li>
+		<?php include( '32/round-2.php' ); ?>
 	</ul>
 	<ul class="round round-3">
-		<li class="spacer">&nbsp;</li>
-		
-		<li class="game game-top winner"></li>
-		<li class="game game-spacer">&nbsp;</li>
-		<li class="game game-bottom "></li>
-
-		<li class="spacer">&nbsp;</li>
-		
-		<li class="game game-top "></li>
-		<li class="game game-spacer">&nbsp;</li>
-		<li class="game game-bottom winner"></li>
-
-		<li class="spacer">&nbsp;</li>
+		<?php include( '32/round-3.php' ); ?>
 	</ul>
 	<ul class="round round-4">
-		<li class="spacer">&nbsp;</li>
-		
-		<li class="game game-top winner"></li>
-		<li class="game game-spacer">&nbsp;</li>
-		<li class="game game-bottom "></li>
-		
-		<li class="spacer">&nbsp;</li>
+		<?php include( '32/round-4.php' ); ?>
 	</ul>
 	<ul class="round round-5">
+		<?php include( '32/round-5.php' ); ?>
+	</ul>
+	<ul class="round round-6">
+	<?php if( $round5 && $round5[0]['winner'] != 0 ) { ?>
+		<?php $champion = $ez_tournament->get_tournament_champion( $tournament_id ); ?>
+		<li class="champion-spacer">&nbsp;</li>
+		<li class="game game-top champion-team"><?php echo $champion['guild']; ?></li>
+		<li class="game spacer champion">Tournament Champion</li>
+	<?php } else { ?>
 		<li class="spacer">&nbsp;</li>
-		
-		<li class="game game-top winner"></li>
-		
-		<li class="spacer">&nbsp;</li>
+		<li class="game game-top"></li>
+		<li class="game spacer champion">Tournament Champion</li>
+	<?php }	?>
 	</ul>
 </main>
