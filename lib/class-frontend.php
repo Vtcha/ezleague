@@ -318,6 +318,7 @@ class ezLeague_Frontend extends DB_Class {
 			$settings['timezone']		= $data['0']['site_timezone'];
 			$settings['forum']			= $data['0']['forum_link'];
 			$settings['friends_email']	= $data['0']['friends_email'];
+			$settings['tournaments'] 	= $data['0']['show_tournaments'];
 			return $settings;
 		} else {
 			return;

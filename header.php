@@ -81,9 +81,11 @@ if( $site_settings['handle'] != '' ) {
 					<a href="<?php echo $site_settings['forum']; ?>" target="_blank" class="btn blue-hoki">Forums</a>
 				</li>
 		<?php } ?>
+		<?php if( $site_settings['tournaments'] == 1 ) { ?>
 				<li class="main-nav">
 					<a href="view-tournaments.php" class="btn blue-steel">Tournaments</a>
 				</li>
+		<?php } ?>
 				<li class="main-nav">
 					<a href="about.php" class="btn blue-madison">About</a>
 				</li>
@@ -94,7 +96,7 @@ if( $site_settings['handle'] != '' ) {
 		<div class="top-menu">
 			<ul class="nav navbar-nav pull-right">
 				<!-- BEGIN USER LOGIN DROPDOWN -->
-				<?php if( !empty( $_SESSION['ez_username'] ) ) { ?>
+				<?php if( ! empty( $_SESSION['ez_username'] ) ) { ?>
 				<li class="dropdown dropdown-user">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
 					<?php if( $profile['avatar'] != '' ) { ?>
