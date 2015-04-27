@@ -51,7 +51,7 @@
                                     <td><?php echo $league['league']; ?></td>
                                 </tr>
                                 <tr>
-                                    <td><strong>Total Teams</strong></td>
+                                    <td><strong>Max Teams</strong></td>
                                     <td><?php echo $league['teams']; ?></td>
                                 </tr>
                                 <tr>
@@ -114,10 +114,17 @@
                 <div class="col-lg-6">
                    <div class="panel panel-default">
                     <div class="panel-heading">
-                        <i class="fa fa-file-o"></i> Teams in <em><?php echo $league['league']; ?></em>
+                    <?php 
+                        $teams = $ez_league->get_league_teams( $league_id );
+                        $current_teams_amount = count( $teams );
+                        $max_teams = $league['teams'];
+                    ?>
+                        <i class="fa fa-file-o"></i> Teams in <em><?php echo $league['league']; ?></em> (<?php echo $current_teams_amount . ' of ' . $max_teams; ?>)
+                        <div class="pull-right">
+                            <button <?php echo ( $current_teams_amount == $max_teams ? 'disabled' : '' ); ?> onclick="getAvailableLeagueTeams('<?php echo $league_id; ?>');" data-toggle="modal" data-target="#addLeagueTeamsModal" class="btn btn-info btn-xs league-add-team">Add Teams</button>
+                        </div>
                     </div>
                     <div class="panel-body">
-                     <?php $teams = $ez_league->get_league_teams( $league_id ); ?>
                      <?php $suspended_teams = $ez_league->get_suspended_teams( $league_id ); ?>
                         <div class="table-responsive">
                            <table class="table table-hover">
@@ -136,7 +143,7 @@
                       <?php if ( in_array( $team['id'], $suspended_teams ) ) { ?>
                                     <button onclick="unkickTeam('<?php echo $league_id; ?>', '<?php echo $team['id']; ?>')" class="btn btn-warning btn-xs">Reinstate Team</button>
                       <?php } else { ?>
-                                    <button onclick="kickTeam('<?php echo $league_id; ?>', '<?php echo $team['id']; ?>')" data-toggle="modal" data-target="#kickTeamModal" class="btn btn-danger btn-xs"><i class="fa fa-times"></i> Kick Team</button>
+                                    <button onclick="kickTeam('<?php echo $league_id; ?>', '<?php echo $team['id']; ?>')" data-toggle="modal" data-target="#kickTeamModal" class="btn btn-danger btn-xs"><i class="fa fa-times"></i> Suspend Team</button>
                       <?php } ?>
                                  </td>
                                 </tr>
@@ -157,3 +164,4 @@
     <div id="editTeamModal" class="modal"></div>
     <div id="editSeasonModal" class="modal"></div>
     <div id="kickTeamModal" class="modal"></div>
+    <div id="addLeagueTeamsModal" class="modal"></div>

@@ -488,6 +488,53 @@ class ezAdmin_League extends DB_Class {
 		}
 
 	}
+
+	/*
+	 * Get team league list
+	 *
+	 * @return string
+	 */
+	public function get_team_league_list($team_id) {
+
+		$team_id 	= $this->sanitize( $team_id );
+		$data = $this->fetch("SELECT leagues FROM `" . $this->prefix . "guilds` WHERE id = '$team_id'");
+		$current_leagues = '';
+		if( $data['0']['leagues'] != '' ) {
+			$current_leagues = $data['0']['leagues'];
+		} else {
+			$current_leagues = '';
+		}
+		return $current_leagues;
+
+	}
+
+	/*
+	 * Register team for league
+	 *
+	 * @return string
+	 */
+	public function register_league_team($team_id, $league_id) {
+		
+		$team_id 	= $this->sanitize( $team_id );
+		$league_id 	= $this->sanitize( $league_id );
+		$current_leagues = $this->get_team_league_list( $team_id );
+		$updated_leagues = '';
+		if( ! empty( $current_leagues ) ) {
+			$updated_leagues = $current_leagues . ',' . $league_id;
+		} else {
+			$updated_leagues = $league_id;
+		}
+		$this->link->query("UPDATE `" . $this->prefix . "guilds` SET leagues = '$updated_leagues' WHERE id = '$team_id'");
+		return;
+
+	}
+
+	public function get_available_teams($league_id) {
+		
+		$data = $this->fetch("SELECT id, guild FROM `" . $this->prefix . "guilds` WHERE leagues NOT LIKE '%$league_id%'");
+		return $data;
+		
+	}
 		
 }
 

@@ -277,6 +277,54 @@ $('#editRules').submit(function(e) {
 });
 
 /**
+ * Add a team to a league
+ * @param league_id
+ * @param team_id
+ */
+ function addLeagueTeam(league_id, team_id) {
+	
+	var max_teams   = $('.league-teams-heading').data('max-teams');
+		total_teams = $('.current-teams-amount').data('total-teams');
+
+	$.ajax({
+	     type: "POST",
+	     url: "lib/submit/submit-league-add-team.php",
+	     async:true,
+	     crossbrowser:true,
+	     data: { form: 'add-league-team', league_id: '' + league_id + '', team_id: '' + team_id + '', max_teams: '' + max_teams + '' }
+	   }).success(function( msg ) {
+	   		var new_total_teams = total_teams + 1;
+	   			$('.team-' + team_id).remove();
+	   			$('.current-teams-amount').attr('data-total-teams', '' + new_total_teams + '');
+	   			$('.current-teams-amount').html('Current Teams (' + new_total_teams + ')');
+	   			$('.league-teams-heading').html('League Teams (' + new_total_teams + ' of ' + max_teams + ')');
+		   		$('.league-teams').fadeIn("slow");
+		   		$('.league-teams').html(msg);
+		   		if( new_total_teams == max_teams ) {
+		   			$('.league-add-team').prop('disabled', true);
+		   		}
+	  });
+	
+}
+
+/**
+ * Get available league teams for the modal
+ * @param league_id
+ */
+function getAvailableLeagueTeams(league_id) {
+
+	$.ajax({
+	     type: "POST",
+	     async: false,
+	     url: "get_add_league_team.php",
+	     data: { id: '' + league_id + '' }
+	   }).success(function( msg ) {
+		   $('#addLeagueTeamsModal').html(msg);
+	  });
+	
+}
+
+/**
  * Lock league rosters
  */
  function rostersLock(league_id) {
