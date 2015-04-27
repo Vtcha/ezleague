@@ -217,6 +217,51 @@ class ezAdmin_Team extends DB_Class {
 		return $data;
 		
 	}
+
+	public function set_team_leader($team_id, $username) {
+
+		$team_id 	= $this->sanitize( $team_id );
+		$username 	= $this->sanitize( $username );
+		$this->link->query("UPDATE `" . $this->prefix . "guilds` SET gm = '$username' WHERE id = '$team_id'");
+		$this->success( 'Team Leader has been set' );
+		return;
+
+	}
+
+	public function set_team_coleader($team_id, $username) {
+
+		$team_id 	= $this->sanitize( $team_id );
+		$username 	= $this->sanitize( $username );
+		$this->link->query("UPDATE `" . $this->prefix . "guilds` SET agm = '$username' WHERE id = '$team_id'");
+		$this->success( 'Team Co-Leader has been set' );
+		return;
+		
+	}
+
+	public function set_team_admin($team_id, $username) {
+
+		$team_id 	= $this->sanitize( $team_id );
+		$username 	= $this->sanitize( $username );
+		$this->link->query("UPDATE `" . $this->prefix . "guilds` SET admin = '$username' WHERE id = '$team_id'");
+		$this->success( 'Team Admin has been set' );
+		return;
+		
+	}
+
+	public function change_team_name($team_id, $new_team_name) {
+
+		$team_id 		= $this->sanitize( $team_id );
+		$new_team_name 	= $this->sanitize( $new_team_name );
+
+		$this->link->query("UPDATE `" . $this->prefix . "guilds` SET guild = '$new_team_name' WHERE id = '$team_id'");
+		$this->link->query("UPDATE `" . $this->prefix . "leaguematches` SET homeTeam = '$new_team_name' WHERE homeTeamID = '$team_id'");
+		$this->link->query("UPDATE `" . $this->prefix . "leaguematches` SET awayTeam = '$new_team_name' WHERE awayTeamID = '$team_id'");
+		$this->link->query("UPDATE `" . $this->prefix . "tournament_matches` SET home_team = '$new_team_name' WHERE home_team_id = '$team_id'");
+		$this->link->query("UPDATE `" . $this->prefix . "tournament_matches` SET away_team = '$new_team_name' WHERE away_team_id = '$team_id'");
+		$this->success( 'Team Name has been modified' );
+		return;
+		
+	}
 				
 }
 
