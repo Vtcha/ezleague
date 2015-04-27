@@ -528,7 +528,7 @@ function getAvailableTournamentTeams(tournament_id) {
 
 /**
  * Add a team to a private tournament
- * @param league_id
+ * @param tournament_id
  * @param team_id
  */
  function addTournamentTeam(tournament_id, team_id) {
