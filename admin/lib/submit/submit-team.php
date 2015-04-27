@@ -29,6 +29,13 @@ $ez_team = new ezAdmin_Team();
                 $team_id    = $_POST['team_id'];
                  $ez_team->change_team_name( $team_id, $team_name );
                 break;
+
+            case 'create-team':
+                $team_name  = $_POST['team_name'];
+                $team_abbr  = $_POST['abbr'];
+                $team_admin = $_POST['admin'];
+                 $ez_team->create_team( $team_name, $team_abbr, $team_admin );
+                break;
     	 	
     	 	default:
     	 		break;

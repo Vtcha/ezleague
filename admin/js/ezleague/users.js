@@ -73,3 +73,39 @@ function deleteAccount(id) {
 		      setTimeout(function(){window.location='users.php?page=all'},3000);
 	  });
 }
+
+/**
+ * Create new user
+ */
+$('#createUser').submit(function(e) {
+
+	var username		= $("#create-username").val();
+		first_name 		= $("#create-first-name").val();
+		last_name 		= $("#create-last-name").val();
+		email	  		= $("#create-email").val();
+		role			= $("#create-role").val();
+		team 			= $("#create-team-id").val();
+		notification 	= $('#create-details').prop('checked');
+		send_email 		= '';
+		if( notification == true ) {
+			send_email = 'yes';
+		} else {
+			send_email = 'no';
+		}
+
+	 e.preventDefault();
+
+ $.ajax({
+     type: "POST",
+     url: "lib/submit/submit-user.php",
+     async:true,
+     crossbrowser:true,
+     data: { form: 'create-user', username: '' + username + '', email: '' + email + '', role: '' + role + '', team: '' + team + '', first_name: '' + first_name + '', last_name: '' + last_name + '', notification: '' + send_email + '' }
+   }).success(function( msg ) {
+	   		$('.success').css("display", "");
+	   		$(".success").fadeIn(1000, "linear");
+	   		$('.success_text').fadeIn("slow");
+	   		$('.success_text').html(msg);
+	   		setTimeout(function(){location.reload()},3000);
+  });
+});

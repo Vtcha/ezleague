@@ -76,7 +76,15 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="teams.php?page=all"><i class="fa fa-users"></i> Teams</a>
+                        <a href="#"><i class="fa fa-users"></i> Teams <span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="teams.php?page=all">View All</a>
+                            </li>
+                            <li>
+                                <a href="teams.php?page=create">Create Team</a>
+                            </li>
+                        </ul>
                     </li>
                     <li>
                         <a href="#"><i class="fa fa-cogs"></i> Site Settings<span class="fa arrow"></span></a>

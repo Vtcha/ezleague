@@ -11,6 +11,10 @@
         			case 'all':
         				include('tpls/teams/view-all.php');
         				break;
+
+                    case 'create':
+                        include('tpls/teams/create-team.php');
+                        break;
         			
         			default:
         				break;
