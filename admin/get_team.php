@@ -33,7 +33,7 @@ if(isset($_POST['id'])) {
               </div>
               <div style="height: auto;" id="collapseOne" class="panel-collapse">
                 <div class="panel-body">
-					<img class="img-responsive" src="../logos/<?php echo $team['logo']; ?>" />
+					<img class="img-responsive team-logo" src="../logos/<?php echo $team['logo']; ?>" />
                 </div>
               </div>
             </div>
@@ -116,6 +116,29 @@ if(isset($_POST['id'])) {
            <div class="col-lg-6"> 
             <div class="panel panel-default">
               <div class="panel-heading">
+                <h3 class="panel-title text-info">Team Name</h3>
+              </div>
+              <div style="height: auto;" id="collapseOne" class="panel-collapse">
+                <div class="panel-body">
+					<form method="POST" id="changeTeamName">
+						<input type="hidden" name="team-id" id="team-id" value="<?php echo $team_id; ?>" />
+						<div class="form-group">
+						    <input class="form-control" id="team-name" placeholder="Team Name" value="<?php echo $team['name']; ?>" />
+						    <small>* all league and tournament matches will reflect the updated team name</small>
+						</div>
+						<div class="form-group">
+						    <button class="btn btn-success" type="submit">Change Team Name</button>
+						</div>
+						<div class="success">
+						  <span class="success_text"></span>
+						</div>
+					</form>
+                </div>
+              </div>
+            </div>
+
+            <div class="panel panel-default">
+              <div class="panel-heading">
                 <h3 class="panel-title text-info">Team Roster</h3>
               </div>
               <div style="height: auto;" id="collapseOne" class="panel-collapse">
@@ -151,5 +174,5 @@ if(isset($_POST['id'])) {
 	<!-- /.modal-content -->
 </div>
 <!-- /.modal-dialog -->
-
+<script src="js/ezleague/teams.js"></script>
 <?php } ?>

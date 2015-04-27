@@ -247,6 +247,21 @@ class ezAdmin_Team extends DB_Class {
 		return;
 		
 	}
+
+	public function change_team_name($team_id, $new_team_name) {
+
+		$team_id 		= $this->sanitize( $team_id );
+		$new_team_name 	= $this->sanitize( $new_team_name );
+
+		$this->link->query("UPDATE `" . $this->prefix . "guilds` SET guild = '$new_team_name' WHERE id = '$team_id'");
+		$this->link->query("UPDATE `" . $this->prefix . "leaguematches` SET homeTeam = '$new_team_name' WHERE homeTeamID = '$team_id'");
+		$this->link->query("UPDATE `" . $this->prefix . "leaguematches` SET awayTeam = '$new_team_name' WHERE awayTeamID = '$team_id'");
+		$this->link->query("UPDATE `" . $this->prefix . "tournament_matches` SET home_team = '$new_team_name' WHERE home_team_id = '$team_id'");
+		$this->link->query("UPDATE `" . $this->prefix . "tournament_matches` SET away_team = '$new_team_name' WHERE away_team_id = '$team_id'");
+		$this->success( 'Team Name has been modified' );
+		return;
+		
+	}
 				
 }
 
