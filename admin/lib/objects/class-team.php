@@ -47,6 +47,29 @@ class ezAdmin_Team extends DB_Class {
 		}
 		
 	}
+
+	/*
+	 * Get all registered teams for a menu drop-down
+	 * 
+	 * @return array
+	 */
+	public function get_all_teams() {
+		
+		$teams = array();
+		$data = $this->fetch("SELECT * FROM `" . $this->prefix . "guilds` ORDER BY guild ASC");
+		if( $data ) {
+			foreach( $data as $item ) {
+				$team['id']			= $item['id'];
+				$team['team']		= $item['guild'];
+				$team['abbr']		= $item['abbreviation'];
+				array_push( $teams, $team );
+			}
+			return $teams;
+		} else {
+			return;
+		}
+		
+	}
 	
 	/*
 	 * Search for a team by name

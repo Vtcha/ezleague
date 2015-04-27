@@ -1,6 +1,126 @@
 <?php 
 
 class ezAdmin_User extends DB_Class {
+
+	public function create_user($username, $first_name, $last_name, $email, $role, $team_id, $send_email) {
+
+		$username 	= $this->sanitize( $username );
+		$first_name = $this->sanitize( $first_name );
+		$last_name  = $this->sanitize( $last_name );
+		$role 		= $this->sanitize( $role );
+		$team_id 	= $this->sanitize( $team_id );
+
+		$check_data = $this->fetch("SELECT username, email 
+									FROM `" . $this->prefix . "users` 
+									WHERE (username = '$username') 
+										OR (email = '$email')
+								  ");
+		if( count( $check_data ) > 0 ) {
+			$this->error( 'Username or E-Mail is already in use' );
+			return;
+		} else {
+			$random_password = $this->generate_random_password();
+			$strength = '5';
+			$salt = strtr(base64_encode(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM)), '+', '.');
+			$salt = sprintf("$2a$%02d$", $strength) . $salt;
+			$hash = crypt($random_password, $salt);
+
+			$this->link->query("INSERT INTO `" . $this->prefix . "users` 
+								SET username = '$username', email = '$email', role = '$role', 
+									first_name = '$first_name', last_name = '$last_name', 
+									guild = '$team_id', salt = '$salt', hash = '$hash'
+					");
+			if( $send_email == 'yes' ) {
+				$this->send_notification($username, $email, $random_password);
+			} else {
+				$this->success( 'Account has been created' );
+			}
+			return;
+		}
+
+	}
+
+	public function generate_random_password($length = 10) {
+
+		$characters = "abcdefghijklmnopqrstuxyvwzABCDEFGHIJKLMNOPQRSTUXYVWZ@!";
+		$total = strlen($characters);
+
+		$password = "";
+
+		for ( $i = 0; $i < $length; $i++ ) {
+			$index = mt_rand(0, $total - 1);
+			$password .= $characters[$index];
+		}
+
+		return $password;
+
+	}
+
+	/*
+	 * Send newly created user notification email
+	 *
+	 * @return string (success or error)
+	 */
+	public function send_notification($username, $email, $password) {
+
+		$username 	= $this->sanitize( $username );
+		$email 		= $this->sanitize( $email );
+
+		$data = $this->fetch("SELECT mandrill_username, mandrill_password, site_url, site_name, site_email FROM `" . $this->prefix . "settings` WHERE id = '1'");
+
+		if( $data ) {
+			require_once "Mail.php";
+			$mandrill_username 	= $data['0']['mandrill_username'];
+			$mandrill_password 	= $data['0']['mandrill_password'];
+			$site_url 			= $data['0']['site_url'];
+			$site_name 			= $data['0']['site_name'];
+
+			$name 		= $site_name . ' Accounts';
+			$from 		= $data['0']['site_email'];
+			$subject 	= $site_name . ' - New Account Creation';
+			$to 		= $email;
+
+			$message = '<html><body>';
+			$message .= "Greetings <strong>$username</strong>, <p>A <em>$site_name account</em> has been created with this email address.</p>";
+			$message .= '<table rules="all" style="border-color: #666;" cellpadding="10">';
+			$message .= "<tr><td><strong>Username</strong> </td><td>" . $username . "</td></tr>";
+			$message .= "<tr><td><strong>Password</strong> </td><td>" . $password . "</td></tr>";
+			$message .= "<tr><td></td><td>Head to " . $site_url . " to login, and change your password.</td></tr>";
+			$message .= "</table>";
+			$message .= "</body></html>";
+			if( class_exists( 'Mail' ) && ( $mandrill_username != '' && $mandrill_password != '' ) ) { 
+				$host = "smtp.mandrillapp.com"; 
+				$username = $mandrill_username; 
+				$password = $mandrill_password;
+				$headers = array ('From' => $from,   'To' => $to, 'MIME-Version' => '1.0', 'Content-Type' => 'text/html; charset=ISO-8859-1', 'Subject' => $subject); 
+				$smtp = Mail::factory(
+								'smtp',   
+								array (
+									'host' => $host,     
+									'auth' => true,
+									'port' => 587,     
+									'username' => $username,     
+									'password' => $password
+									)
+								);  
+				$mail = $smtp->send($to, $headers, $message);  
+				if (PEAR::isError($mail)) {   
+					$this->error($mail->getMessage());  
+				} else {   
+					$this->success('Account created, and a notification email has been sent');  
+				}
+			} else {
+				if( mail($to, $subject, $message, $headers) ) {
+					$this->success('Account created, and a notification email has been sent');
+				} else {
+					$this->error('Account created, but there was a problem sending the notification email, please try again');
+				}
+			}
+		}
+
+		return;
+
+	}
 	
 	public function get_user_settings($username) {
 		
