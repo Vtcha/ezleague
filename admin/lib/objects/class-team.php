@@ -3,6 +3,38 @@
 class ezAdmin_Team extends DB_Class {
 
 	/*
+	 * Create a new team
+	 *
+	 * @return string
+	 */
+	public function create_team($team_name, $abbreviation, $admin) {
+
+		$team_name 		= $this->sanitize( $team_name );
+		$abbreviation 	= $this->sanitize( $abbreviation );
+		$admin 			= $this->sanitize( $admin );
+
+		$check_data = $this->fetch("SELECT guild 
+									FROM `" . $this->prefix . "guilds` 
+									WHERE guild = '$team_name'
+								  ");
+		if( count( $check_data ) > 0 ) {
+			$this->error( 'Team Name is already in use' );
+			return;
+		} else {
+			if( strlen( $abbreviation ) > 5 ) {
+				$this->error( 'Team Abbreviation is greater than 5 characters' );
+			} else {
+				$this->link->query("INSERT INTO `" . $this->prefix . "guilds` 
+									SET guild = '$team_name', abbreviation = '$abbreviation', 
+										admin = '$admin', gm = '$admin', logo = 'team-logo.png'
+								  ");
+				$this->success( 'Team has been created' );
+			}
+			return;
+		}
+	}
+
+	/*
 	 * Count total registered teams
 	 * 
 	 * @return int

@@ -246,6 +246,28 @@ class ezAdmin_User extends DB_Class {
 		}
 
 	}
+
+	/*
+	 * Get a list of all users for a menu drop-down
+	 * 
+	 * @return array
+	 */
+	public function get_all_users() {
+		
+		$users = array();
+		$data = $this->fetch("SELECT * FROM `" . $this->prefix . "users` ORDER BY username ASC");
+		if( $data ) {
+			foreach( $data as $item ) {
+				$user['id']			= $item['id'];
+				$user['username'] 	= $item['username'];
+				array_push( $users, $user );
+			}
+			return $users;
+		} else {
+			return;
+		}
+
+	}
 	
 	/*
 	 * Count the total number of site users

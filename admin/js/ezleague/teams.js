@@ -1,4 +1,30 @@
 /**
+ * Create new team
+ */
+$('#createTeam').submit(function(e) {
+
+	var team		= $("#create-team").val();
+		abbr 		= $("#create-abbreviation").val();
+		admin 		= $("#create-admin").val();
+
+	 e.preventDefault();
+
+ $.ajax({
+     type: "POST",
+     url: "lib/submit/submit-team.php",
+     async:true,
+     crossbrowser:true,
+     data: { form: 'create-team', team_name: '' + team + '', abbr: '' + abbr + '', admin: '' + admin + '' }
+   }).success(function( msg ) {
+	   		$('.success').css("display", "");
+	   		$(".success").fadeIn(1000, "linear");
+	   		$('.success_text').fadeIn("slow");
+	   		$('.success_text').html(msg);
+	   		setTimeout(function(){location.reload()},3000);
+  });
+});
+
+/**
  * Get team details for modal
  * @param team_id
  */
