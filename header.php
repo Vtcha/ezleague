@@ -1,5 +1,5 @@
 <?php session_start();
-define( 'EZL_VERSION', '3.5.3' );
+define( 'EZL_VERSION', '3.5.4' );
 include('lib/class-db.php');
 include('lib/class-ezleague.php');
 
