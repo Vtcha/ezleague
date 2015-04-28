@@ -62,7 +62,7 @@
     <!-- SB Admin Scripts - Include with every page -->
     <script src="js/sb-admin.js"></script>
     <script src="js/ezleague/news.js"></script>
-    <script src="js/ckeditor/ckeditor.js"></script>
+    <script src="//cdn.ckeditor.com/4.4.7/standard/ckeditor.js"></script>
 	<script>
 	CKEDITOR.replace( 'body', {
 		toolbar: [

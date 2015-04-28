@@ -37,7 +37,6 @@
     <script src="js/sb-admin.js"></script>
     <script src="js/ezleague/tournament.js"></script>
     <script src="js/ezleague/teams.js"></script>
-    <script src="js/ckeditor/ckeditor.js"></script>
 	<script>
 
     $(function() {
