@@ -64,7 +64,7 @@
     <script src="js/sb-admin.js"></script>
     <script src="js/ezleague/settings.js"></script>
     <script src="js/ezleague/users.js"></script>
-    <script src="../assets/global/plugins/ckeditor/ckeditor.js" type="text/javascript"></script>
+    <script src="//cdn.ckeditor.com/4.4.7/standard/ckeditor.js"></script>
 	<script>
 	CKEDITOR.replace( 'content', {
 		toolbar: [

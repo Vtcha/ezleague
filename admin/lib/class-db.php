@@ -2,23 +2,23 @@
 /*
  * ######################################################
 * Author: Michael Loring
-* Project: Silent App
-* Began: February 1st, 2014
+* Project: ezLeague v3.x Gaming League Script
+* Began: July 27th, 2014
 * Finished: Code is never done, but in a working state
 * Notes: Database Connection class...
 * ######################################################
 */
 class DB_Class {
 	
-		var $link;
-	
-		var $host 	  = "localhost"; //database host (check with your hosting provider, but localhost is usually correct)
-		var $username = "root"; //database username
-		var $password = ""; //database password
-		var $database = "ezleague"; //mysql database
-		var $prefix	  = "ezl"; //table prefix
-		var $site_url = "http://localhost/ezleague"; //do not leave a trailing slash (ex: http://www.mdloring.com/ezleague/)
-	
+	var $link;
+
+	var $host 	  = "localhost"; //database host (check with your hosting provider, but localhost is usually correct)
+	var $username = "root"; //database username
+	var $password = "root"; //database password
+	var $database = "ezleague"; //mysql database
+	var $prefix	  = "ezl"; //table prefix
+	var $site_url = "http://localhost/ezleague"; //do not leave a trailing slash (ex: http://www.mdloring.com/ezleague/)
+
 	public function __construct() {
 		
 		global $connection;
@@ -38,6 +38,7 @@ class DB_Class {
 		
 		$result = mysqli_query($query, $this->link) or die ("Invalid query: " . mysqli_error());
 		return $result;
+		$this->disconnect();
 		 
 	}
 	
@@ -57,6 +58,7 @@ class DB_Class {
 			}
 
 	 	return $data;
+	 	$this->disconnect();
 		  
 	}
 	
