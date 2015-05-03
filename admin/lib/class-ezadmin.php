@@ -366,7 +366,7 @@ class ezAdmin extends DB_Class {
 			  PRIMARY KEY (`id`)
 			);
 			CREATE TABLE IF NOT EXISTS `" . $this->prefix . "tournaments` (
-			  `id` int(10) NOT NULL,
+			  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
 			  `tournament` varchar(250) NOT NULL,
 			  `max_teams` int(250) NOT NULL,
 			  `start_date` date NOT NULL,
@@ -383,14 +383,14 @@ class ezAdmin extends DB_Class {
 			  PRIMARY KEY (`id`)
 			);
 			CREATE TABLE IF NOT EXISTS `" . $this->prefix . "tournament_map_schedule` (
-			  `id` int(10) NOT NULL,
+			  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
 			  `map` varchar(250) DEFAULT NULL,
 			  `round` int(10) DEFAULT NULL,
 			  `tournament_id` int(10) DEFAULT NULL,
 			  PRIMARY KEY (`id`)
 			);
 			CREATE TABLE IF NOT EXISTS `" . $this->prefix . "tournament_matches` (
-			  `id` int(10) NOT NULL,
+			  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
 			  `tid` int(10) NOT NULL,
 			  `round` int(1) NOT NULL,
 			  `home_team` varchar(100) NOT NULL,
@@ -495,6 +495,12 @@ class ezAdmin extends DB_Class {
 		$test_connection = mysqli_connect($this->host, $this->username, $this->password, $this->database) or die("Error " . mysqli_error( $test_connection ) );
 		if( $test_connection ) {
 			$sql = "
+					ALTER TABLE `" . $this->prefix . "tournament_matches` 
+					CHANGE `id` `id` INT(10) NOT NULL AUTO_INCREMENT;
+					ALTER TABLE `" . $this->prefix . "tournament_map_schedule` 
+					CHANGE `id` `id` INT(10) NOT NULL AUTO_INCREMENT;
+					ALTER TABLE `" . $this->prefix . "tournaments` 
+					CHANGE `id` `id` INT(10) NOT NULL AUTO_INCREMENT;
 					CREATE TABLE IF NOT EXISTS `" . $this->prefix . "tournaments` (
 					  `id` int(10) NOT NULL,
 					  `tournament` varchar(250) NOT NULL,
