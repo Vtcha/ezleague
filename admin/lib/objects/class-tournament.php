@@ -453,6 +453,7 @@ class ezAdmin_Tournament extends DB_Class {
 		$match_status 	= $this->sanitize( $match_status );
 		$winner 		= '';
 		$loser 			= '';
+		$reporter 		= '';
 
 		if( is_numeric( $match_id ) && 
 			is_numeric( $home_score ) && 
@@ -462,9 +463,17 @@ class ezAdmin_Tournament extends DB_Class {
 			if( $home_score > $away_score ) {
 				$winner = $home_id;
 				$loser  = $away_id;
+				$match_status = 1;
+				$reporter = 'admin';
+			} elseif( $home_score == 0 && $away_score == 0) {
+				$winner = 0;
+				$loser = 0;
+				$match_status = 0;
 			} else {
 				$winner = $away_id;
 				$loser  = $home_id;
+				$match_status = 1;
+				$reporter = 'admin';
 			}
 			$this->link->query("UPDATE `" . $this->prefix . "tournament_matches` 
 								SET home_score = '$home_score', away_score = '$away_score', 
@@ -472,7 +481,7 @@ class ezAdmin_Tournament extends DB_Class {
 									match_date = '$date', match_time = '$time', match_zone = '$zone',
 									stream_url = '$stream_url', server_ip = '$ip', server_password = '$password',
 									match_moderator = '$moderator', winner = '$winner', loser = '$loser',
-									completed = '$match_status'
+									reporter = '$reporter', completed = '$match_status'
 								WHERE id = '$match_id'
 							");
 			
