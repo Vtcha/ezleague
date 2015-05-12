@@ -580,6 +580,26 @@ function getAvailableTournamentTeams(tournament_id) {
 	
 }
 
+ /**
+ * Set the status of a tournament match dispute
+ * @param dispute_id
+ * @param status
+ */
+ function disputeStatus(status, dispute_id) {
+
+ 	$.ajax({
+	     type: "POST",
+	     url: "lib/submit/submit-tournament.php",
+	     data: { form: 'edit-dispute', dispute_id: '' + dispute_id + '', status: '' + status + '' }
+	   }).success(function( msg ) {
+				    $('.success').css("display", "");
+			   		$(".success").fadeIn(1000, "linear");
+			   		$('.success_text').fadeIn("slow");
+			   		$('.success_text').html(msg);
+			   		setTimeout(function(){location.reload()},3000);
+	  });
+ }
+
 /**
  * Search and replace specifically used for CKEDITOR values to handle single quotes
  * 

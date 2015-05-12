@@ -84,7 +84,7 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-				<h4 class="modal-title">Match Dispute (<?php echo $match_details['home_team'] . ' vs ' . $match_details['away_team']; ?>)</h4>
+				<h4 class="modal-title">Match Dispute (<em><span class="text-primary"><?php echo $match_details['home'] . '</span></em> vs <em><span class="text-primary">' . $match_details['away']; ?></span></em>)</h4>
 			</div>
 			<div class="modal-body">
 				 <form role="form" id="disputeMatch" method="POST">
@@ -99,8 +99,7 @@
 		              <select id="dispute-category" class="form-control">
 		              	<option>Select Category</option>
 		              	<option value="cheating">Cheating</option>
-		              	<option value="player">Non-Roster Player</option>
-		              	<option value="other">Other</option>
+		              	<option value="other">Other (Detailed Explanation)</option>
 		              </select>
 		            </div>
 		         	<div class="success dispute">

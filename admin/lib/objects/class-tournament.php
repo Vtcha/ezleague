@@ -453,6 +453,7 @@ class ezAdmin_Tournament extends DB_Class {
 		$match_status 	= $this->sanitize( $match_status );
 		$winner 		= '';
 		$loser 			= '';
+		$reporter 		= '';
 
 		if( is_numeric( $match_id ) && 
 			is_numeric( $home_score ) && 
@@ -462,9 +463,17 @@ class ezAdmin_Tournament extends DB_Class {
 			if( $home_score > $away_score ) {
 				$winner = $home_id;
 				$loser  = $away_id;
+				$match_status = 1;
+				$reporter = 'admin';
+			} elseif( $home_score == 0 && $away_score == 0) {
+				$winner = 0;
+				$loser = 0;
+				$match_status = 0;
 			} else {
 				$winner = $away_id;
 				$loser  = $home_id;
+				$match_status = 1;
+				$reporter = 'admin';
 			}
 			$this->link->query("UPDATE `" . $this->prefix . "tournament_matches` 
 								SET home_score = '$home_score', away_score = '$away_score', 
@@ -472,7 +481,7 @@ class ezAdmin_Tournament extends DB_Class {
 									match_date = '$date', match_time = '$time', match_zone = '$zone',
 									stream_url = '$stream_url', server_ip = '$ip', server_password = '$password',
 									match_moderator = '$moderator', winner = '$winner', loser = '$loser',
-									completed = '$match_status'
+									reporter = '$reporter', completed = '$match_status'
 								WHERE id = '$match_id'
 							");
 			
@@ -904,6 +913,125 @@ class ezAdmin_Tournament extends DB_Class {
 		}
 
 		$this->success( 'Map has been removed from this tournament' );
+		return;
+
+	}
+
+	/*
+	 * Get a list of all match disputes
+	 * 
+	 * @return array
+	 */
+	public function get_disputes($status, $category) {
+		
+		$status	  = $this->sanitize( $status );
+		$status_query = "";
+		$category = $this->sanitize( $category );
+		$category_query = "";
+		$disputes = array();
+		switch( $status ) {
+			case 'open':
+				$status_query = " WHERE " . $this->prefix . "tournament_disputes.status = '0'";
+				break;
+			case 'closed':
+				$status_query = " WHERE " . $this->prefix . "tournament_disputes.status = '1'";
+				break;
+			default:
+				$status_query = "";
+				break;
+		}
+		
+		switch( $category ) {
+			case 'cheating':
+				$category_query = " AND " . $this->prefix . "tournament_disputes.category = 'cheating'";
+				break;
+			case 'other':
+				$category_query = " AND " . $this->prefix . "tournament_disputes.category = 'other' AND ";
+				break;
+			default:
+				$category_query = '';
+				break;
+		}
+		
+		$data = $this->fetch("SELECT *
+								FROM `" . $this->prefix . "tournament_disputes`
+								$status_query $category_query
+							");
+		
+		if( $data ) {
+			foreach( $data as $item ) {
+				$tournament_data = $this->fetch("SELECT 
+													`" . $this->prefix . "tournament_matches`.id AS m_mid,
+													`" . $this->prefix . "tournament_matches`.tid AS m_tid,
+													`" . $this->prefix . "tournaments`.id AS t_tid,
+													`" . $this->prefix . "tournaments`.tournament AS t_tournament
+												FROM `" . $this->prefix . "tournament_matches`, `" . $this->prefix . "tournaments`
+												WHERE `" . $this->prefix . "tournament_matches`.id = '$item[match_id]' AND (`" . $this->prefix . "tournament_matches`.tid = `" . $this->prefix . "tournaments`.id)
+											   ");
+
+				$dispute['id']			= $item['id'];
+				$dispute['match']		= $item['match_id'];
+				$dispute['cat']			= $item['category'];
+				$dispute['desc']		= $item['description'];
+				$dispute['filed']		= $item['filed_by'];
+				$dispute['status']  	= $item['status'];
+				$dispute['date']		= $item['created'];
+				$dispute['tournament']  = $tournament_data['0']['t_tournament'];
+				$dispute['tid']			= $tournament_data['0']['t_tid'];
+				array_push( $disputes, $dispute );
+			}
+			return $disputes;
+		} else {
+			return;
+		}
+		
+	}
+
+	/*
+	 * Get details of a match dispute
+	 * 
+	 * @return array
+	 */
+	public function get_dispute($dispute_id) {
+		
+		$dispute_id	= $this->sanitize( $dispute_id );
+		$dispute = array();
+		$data = $this->fetch("SELECT * FROM `" . $this->prefix . "tournament_disputes` WHERE id = '$dispute_id'");
+		if( $data ) {
+			$dispute['id']		= $data['0']['id'];
+			$dispute['match']	= $data['0']['match_id'];
+			$tournament_data = $this->fetch("SELECT 
+												`" . $this->prefix . "tournament_matches`.id AS m_mid,
+												`" . $this->prefix . "tournament_matches`.tid AS m_tid,
+												`" . $this->prefix . "tournaments`.id AS t_tid,
+												`" . $this->prefix . "tournaments`.tournament AS t_tournament
+											FROM `" . $this->prefix . "tournament_matches`, `" . $this->prefix . "tournaments`
+											WHERE `" . $this->prefix . "tournament_matches`.id = '$dispute[match]' AND (`" . $this->prefix . "tournament_matches`.tid = `" . $this->prefix . "tournaments`.id)
+										   ");
+			$dispute['cat']			= $data['0']['category'];
+			$dispute['desc']		= $data['0']['description'];
+			$dispute['filed']		= $data['0']['filed_by'];
+			$dispute['status']		= $data['0']['status'];
+			$dispute['date']		= $data['0']['created'];
+			$dispute['tournament']  = $tournament_data['0']['t_tournament'];
+			$dispute['tid']			= $tournament_data['0']['t_tid'];
+			return $dispute;	
+		} else {
+			return;
+		}
+		
+	}
+
+	/*
+	 * Edit the status of a dispute
+	 *
+	 * @return string
+	 */
+	public function edit_dispute_status($dispute_id, $status) {
+
+		$dispute_id	= $this->sanitize( $dispute_id );
+		$this->link->query("UPDATE `" . $this->prefix . "tournament_disputes` SET status = '$status' WHERE id = '$dispute_id'");
+		$this->success('Dispute Status has been updated');
 		return;
 
 	}

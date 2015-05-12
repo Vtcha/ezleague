@@ -51,6 +51,9 @@
                             <li>
                                 <a href="tournaments.php">View All</a>
                             </li>
+                            <li>
+                                <a href="tournaments.php?page=disputes">View Disputes</a>
+                            </li>
                         </ul>
                     </li>
                     <li>
