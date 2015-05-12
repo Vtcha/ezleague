@@ -32,6 +32,8 @@
 				<td>
 				<?php if( $tournament['status'] == '1' ) { ?>
 					<a class="btn blue btn-xs" href="settings-guild.php?page=tournaments&id=<?php echo $tournament['tournament_id']; ?>&view=schedule">View Schedule</a>
+				<?php } else { ?>
+					<a class="btn btn-info btn-xs" href="settings-guild.php?page=tournaments&id=<?php echo $tournament['tournament_id']; ?>&view=schedule">Completed Matches</a>
 				<?php } ?>
 				</td>
 			</tr>
