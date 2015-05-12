@@ -1,7 +1,18 @@
+<?php
+	if( $match_details['dispute'] != 'no' ) {
+		if( $match_details['dispute'] == 'pending' ) {
+			$dispute_text = " - Match Dispute is <span class='text-danger bolder'>" . $match_details['dispute'] . '</span>';
+		} else {
+			$dispute_text = " - Match Dispute is <span class='text-success bolder'>" . $match_details['dispute'] . '</span>';
+		}
+	} else {
+		$dispute_text = '';
+	}
+?>
 <div class="portlet box blue">
 	<div class="portlet-title">
 		<div class="caption">
-			<i class="fa fa-picture"></i><?php echo $match_details['tournament']; ?> Match Details 
+			<i class="fa fa-picture"></i><?php echo $match_details['tournament'] . ' Match Details' . $dispute_text; ?>
 		</div>
 		<div class="tools">
 			<a href="javascript:;" class="collapse">

@@ -10,19 +10,20 @@
 	 <div class="form-group col-lg-12">
 	 	<label class="control-label"><em><?php echo $match_details['home']; ?></em></label>
 	 	<div class="col-lg-6">
-	 		<input id="match-home-score" type="text" class="form-control" value="<?php echo $match_details['home_score']; ?>" />
+	 		<input <?php echo ( $match_details['dispute'] == 'pending' ? 'disabled' : '' ); ?> id="match-home-score" type="text" class="form-control" value="<?php echo $match_details['home_score']; ?>" />
 	 	</div>
 	 </div>
 	 <div class="form-group  col-lg-12">
 	 	<label class="control-label"><em><?php echo $match_details['away']; ?></em></label>
 	 	<div class="col-lg-6">
-	 		<input id="match-away-score" type="text" class="form-control" value="<?php echo $match_details['away_score']; ?>" />
+	 		<input <?php echo ( $match_details['dispute'] == 'pending' ? 'disabled' : '' ); ?> id="match-away-score" type="text" class="form-control" value="<?php echo $match_details['away_score']; ?>" />
 	 	</div>
 	 </div>
 	 <div class="form-group">
-	 	<button type="submit" class="btn btn-success">Submit</button>
+	 <small>* Scores cannot be modified while a match dispute is pending</small>
+	 	<button <?php echo ( $match_details['dispute'] == 'pending' ? 'disabled' : '' ); ?> type="submit" class="btn btn-success">Submit</button>
 <?php if( $match_details['status'] == 1 ) { ?>
-		<a href="#disputeMatch" class="btn btn-danger" data-toggle="modal">Dispute Match</a>
+		<a href="#disputeMatch" <?php echo ( $match_details['dispute'] == 'pending' ? 'disabled' : '' ); ?> class="btn btn-danger" data-toggle="modal">Dispute Match</a>
 <?php } ?>
 	 </div>
 	</form>
