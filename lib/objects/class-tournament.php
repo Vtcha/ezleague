@@ -298,6 +298,16 @@ class ezLeague_Tournament extends DB_Class {
 				$matchup['winner'] = $matchup['away_id'];
 				$matchup['loser'] = $matchup['home_id'];
 			}
+			$dispute_data = $this->fetch("SELECT * FROM `" . $this->prefix . "tournament_disputes` WHERE match_id = '$match_id'");
+			if( $dispute_data ) {
+				if( $dispute_data['0']['status'] == 0 ) {
+					$matchup['dispute'] = 'pending';
+				} else {
+					$matchup['dispute'] = 'resolved';
+				}
+			} else {
+				$matchup['dispute'] = 'no';
+			}
 			return $matchup;
 		} else {
 			return false;
@@ -394,6 +404,75 @@ class ezLeague_Tournament extends DB_Class {
 		$this->success( 'Match Information has been updated' );
 		return;
 
+	}
+
+	/*
+	 * Submit match dispute
+	 * 
+	 * @return string
+	 */
+	public function dispute_match($match_id, $category, $dispute, $reporter) {
+		
+		$match_id		= $this->sanitize( $match_id );
+		$category		= $this->sanitize( $category );
+		$dispute		= $this->sanitize( $dispute );
+		$reporter		= $this->sanitize( $reporter );
+		$this->link->query("INSERT INTO `" . $this->prefix . "tournament_disputes` 
+							SET match_id = '$match_id', category = '$category', description = '$dispute', filed_by = '$reporter'
+						");
+
+		$data = $this->fetch("SELECT mandrill_username, mandrill_password, site_email, site_name FROM `" . $this->prefix . "settings` WHERE id = '1'");
+		$site_name = $data['0']['site_name'];
+		$to = $data['0']['site_email'];
+
+		$subject = $site_name . ' - Tournament Dispute Filed';
+		$from = 'ezLeagueDisputes@ezleaguegaming.com';
+
+		$message = '<html><body>';
+		$message .= '<h2>Tournament Match Dispute</h2>';
+		$message .= '<table rules="all" style="border-color: #666;" cellpadding="10">';
+		$message .= "<tr><td><strong>Match ID</strong> </td><td> <a href='" . $this->site_url . "/settings-guild.php?page=tournament_match&view=details&mid=" . $match_id . "'> #" . strip_tags($match_id) . "</a></td></tr>";
+		$message .= "<tr><td><strong>Dispute:</strong> </td><td>" . strip_tags($dispute) . "</td></tr>";
+		$message .= "<tr><td><strong>Category:</strong> </td><td>" . strip_tags($category) . "</td></tr>";
+		$message .= "<tr><td><strong>Reporter:</strong> </td><td>" . strip_tags($reporter) . "</td></tr>";
+		$message .= "<tr><td></td><td>View dispute in your <em><a href='" . $this->site_url . "/admin'> Admin Panel</a></em> under <em>Tournaments > View Disputes</em>.</td></tr>";
+		$message .= "</table>";
+		$message .= "</body></html>";
+		if( $data ) {
+			require_once "Mail.php";
+			$mandrill_username = $data['0']['mandrill_username'];
+			$mandrill_password = $data['0']['mandrill_password']; 
+			if( class_exists( 'Mail' ) && ( $mandrill_username != '' && $mandrill_password != '' ) ) { 
+				$host = "smtp.mandrillapp.com"; 
+				$username = $mandrill_username; 
+				$password = $mandrill_password;
+				$headers = array ('From' => $from,   'To' => $to, 'MIME-Version' => '1.0', 'Content-Type' => 'text/html; charset=ISO-8859-1', 'Subject' => $subject); 
+				$smtp = Mail::factory(
+								'smtp',   
+								array (
+									'host' => $host,     
+									'auth' => true,
+									'port' => 587,     
+									'username' => $username,     
+									'password' => $password
+									)
+								);  
+				$mail = $smtp->send($to, $headers, $message);  
+				if (PEAR::isError($mail)) {   
+					$this->error('Match dispute submitted, but admin notification email failed');
+				} else {   
+					$this->success('Match dispute submitted');
+				}
+			} else {
+				if( mail($to, $subject, $message, $headers) ) {
+					$this->success('Match dispute submitted');
+				} else {
+					$this->error('Match dispute submitted, but admin notification email failed');
+				}
+			}
+		}
+		return;
+		
 	}
 
 	/*
