@@ -23,6 +23,14 @@
         			case 'create':
         				include('tpls/tournaments/create-tournament.php');
         				break;
+
+                    case 'disputes':
+                        include('tpls/tournaments/view-disputes.php');
+                        break;
+
+                    case 'dispute':
+                        include('tpls/tournaments/view-dispute.php');
+                        break;
         			
         			default:
         				break;

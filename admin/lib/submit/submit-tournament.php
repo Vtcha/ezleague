@@ -113,6 +113,12 @@ $ez_tournament = new ezAdmin_Tournament();
                  $ez_tournament->delete_map( $tournament_id, $map );
                 break;
 
+            case 'edit-dispute':
+                $dispute_id     = $_POST['dispute_id'];
+                $status         = $_POST['status'];
+                 $ez_tournament->edit_dispute_status( $dispute_id, $status );
+                break;
+
     	 	default:
     	 		break;
     	 }
