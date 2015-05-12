@@ -156,8 +156,8 @@
                         <div class="form-group">
                             <label>Match Status</label>
                             <select class="form-control" id="match-status">
-                                <option <?php echo ( $match_details[0]['completed'] == 0 ? 'selected' : '' ); ?> value="0">Pending</option>
-                                <option <?php echo ( $match_details[0]['completed'] == 1 ? 'selected' : '' ); ?> value="1">Completed</option>
+                                <option <?php echo ( $match_details[0]['completed'] == 1 ? 'selected' : '' ); ?> value="0">Pending</option>
+                                <option <?php echo ( $match_details[0]['completed'] == 0 ? 'selected' : '' ); ?> value="1">Completed</option>
                             </select>
                         </div>
                         <div class="form-group">
