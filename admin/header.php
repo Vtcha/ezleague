@@ -1,5 +1,5 @@
 <?php session_start();
-define( 'EZL_VERSION', '3.5.7' );
+define( 'EZL_VERSION', '3.5.8' );
 $check_for_update = file_get_contents( 'http://www.mdloring.com/ezleague_version.php', TRUE );
 include('lib/class-db.php');
 include('lib/class-ezadmin.php');
