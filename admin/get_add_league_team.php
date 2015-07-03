@@ -14,6 +14,7 @@ $ez_league = new ezAdmin_League();
 if(isset($_POST['id'])) {
 	$league_id = $_POST['id'];
 	 $league = $ez_league->get_league( $league_id );
+	 $max_teams = $league['teams'];
 	 $available_teams = $ez_league->get_available_teams( $league_id );
 	 $current_teams   = $ez_league->get_league_teams( $league_id );
 	 $current_teams_count = count( $current_teams );
@@ -67,7 +68,7 @@ if(isset($_POST['id'])) {
               <div style="height: auto;" id="collapseOne" class="panel-collapse">
                 <div class="panel-body">
               		<div class="table-responsive">
-	                    <table class="table table-hover league-teams">
+	                    <table class="table table-hover league-teams" data-max-teams="<?php echo $max_teams; ?>">
 	                        <thead>
 	                            <tr>
 	                            	<th>Team</th>

@@ -283,7 +283,7 @@ $('#editRules').submit(function(e) {
  */
  function addLeagueTeam(league_id, team_id) {
 	
-	var max_teams   = $('.league-teams-heading').data('max-teams');
+	var max_teams   = $('.league-teams').data('max-teams');
 		total_teams = $('.current-teams-amount').data('total-teams');
 
 	$.ajax({
