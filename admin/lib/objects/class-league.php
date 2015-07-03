@@ -531,7 +531,7 @@ class ezAdmin_League extends DB_Class {
 
 	public function get_available_teams($league_id) {
 		
-		$data = $this->fetch("SELECT id, guild FROM `" . $this->prefix . "guilds` WHERE leagues NOT LIKE '%$league_id%'");
+		$data = $this->fetch("SELECT id, guild FROM `" . $this->prefix . "guilds` WHERE (leagues IS NULL) OR (leagues NOT LIKE '%$league_id%')");
 		return $data;
 		
 	}
