@@ -20,7 +20,6 @@
                         <div class="form-group">
                             <label>Max Teams</label>
                             <select class="form-control" id="max-teams">
-                                <option value="5000">Unlimited</option>
                              <?php for( $i=2; $i <= 64; $i = $i + 2 ) { ?>
                                 <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
                              <?php } ?>
@@ -29,7 +28,6 @@
                         <div class="form-group">
                             <label>Total Games</label>
                             <select id="total-games" class="form-control select">
-                                <option value="0">0 (Unlimited)</option>
                              <?php for ( $i = 2; $i <= 20; $i = $i + 2 ) { ?>
                                 <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
                              <?php } ?>
