@@ -16,7 +16,7 @@
         </select>
     </div>
     <div class="form-group">
-        <label>Max Teams</label>
+        <label>Required (Max) Teams</label>
         <select class="form-control" id="max-teams">
             <option <?php echo ( $tournament['teams'] == 4 ? 'selected' : '' ); ?> value="4">4</option>
             <option <?php echo ( $tournament['teams'] == 8 ? 'selected' : '' ); ?> value="8">8</option>

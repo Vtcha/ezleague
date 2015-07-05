@@ -23,7 +23,7 @@
                             <input class="form-control" id="league" value="<?php echo $league['league']; ?>" placeholder="League Name" />
                         </div>
                         <div class="form-group">
-                            <label>Max Teams</label>
+                            <label>Required (Max) Teams</label>
                             <select class="form-control" id="max-teams">
                              <?php for( $i=2; $i <= 64; $i = $i + 2 ) { ?>
                                 <option <?php echo ( $league['teams'] == $i ? 'selected' : '' ); ?> value="<?php echo $i; ?>"><?php echo $i; ?></option>
