@@ -18,7 +18,7 @@ http://www.mdloring.com/ezleague/ezleague-sql-dummy-data.zip
 
 Installation
 ------------------------------------------------------------------------------------------------------------------------
-1. Open '/lib/db.class.php' & '/admin/lib/db.class.php' and modify your site URL and database values
+1. Open '/lib/class-db.php' & '/admin/lib/class-db.php' and modify your site URL and database values
 2. Navigate to the web address / directory where you uploaded the script
 3. Enter your Site Name, and check over the database information to make sure it is correct
 4. Run the installation, and if successful, you should be redirected to login to the admin page
